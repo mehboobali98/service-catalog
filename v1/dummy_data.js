@@ -1,4 +1,4 @@
-function ServiceCategories() {
+function serviceCategories() {
   return [
     'My IT Assets',
     'View Raised Requests',
