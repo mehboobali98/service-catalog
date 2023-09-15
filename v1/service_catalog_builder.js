@@ -31,3 +31,5 @@ function generateNavbar(navItems) {
 
   return navbar;
 }
+
+export { addMenuItem, buildServiceCatalog };

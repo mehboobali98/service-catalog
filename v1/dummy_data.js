@@ -8,4 +8,4 @@ function serviceCategories() {
   return categories;
 }
 
-export { serviceCategories }
+export { serviceCategories };
