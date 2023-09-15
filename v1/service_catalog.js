@@ -3,5 +3,5 @@ $(document).ready(function(){
   var link   = document.createTextNode('Service Catalog');
   anchor.appendChild(link);
   anchor.href = 'asdasd';
-  $('#user-nav').appendChild(anchor);
+  $('#user-nav').prepend(anchor);
 });
