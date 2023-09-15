@@ -10,13 +10,21 @@ function addMenuItem(name, url, parent_ele) {
 
 function buildServiceCatalog() {
   const newSection = $('<section>');
+  newSection.attr('id', 'service-catalog-section');
 
-  // Create a new vertical navbar (unordered list)
+  const serviceCatalogContainer = $('<div>').addClass('row');
+
+  const navbarContainer = $('<div>').addClass('col-4');
   const navbar = generateNavbar(serviceCategories());
+  navbarContainer.append(navbar);
 
-  // Append the navbar to the new section
-  newSection.append(navbar);
+  const serviceItemsContainer = $('<div>').addClass('col-8');
 
+  // Append the navbar to the container
+  serviceCatalogContainer.append(navbarContainer);
+  serviceCatalogContainer.append(serviceItemsContainer);
+
+  newSection.append(serviceCatalogContainer);
   $('main').append(newSection);
 }
 
