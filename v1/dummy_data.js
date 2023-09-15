@@ -1,11 +1,14 @@
-function serviceCategories() {
-  var categories = [
-                      { text: 'Home', link: '#' },
-                      { text: 'About', link: '#' },
-                      { text: 'Services', link: '#' },
-                      { text: 'Contact', link: '#' },
-                   ];
-  return categories;
+function ServiceCategories() {
+  return [
+    'My IT Assets',
+    'View Raised Requests',
+    'General IT Help',
+    'HR Services',
+    'Request New Software',
+    'Request Laptops',
+    'Request Mobile Devices',
+    'Software Access'
+  ].map(text => ({ text, link: '#' }));
 }
 
 export { serviceCategories };
