@@ -1,4 +1,4 @@
-function serviceCatalogCategories() {
+function serviceCategories() {
   var categories = [
                       { text: 'Home', link: '#' },
                       { text: 'About', link: '#' },
@@ -8,4 +8,4 @@ function serviceCatalogCategories() {
   return categories;
 }
 
-export { serviceCatalogCategories }
+export { serviceCategories }
