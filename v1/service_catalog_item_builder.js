@@ -14,12 +14,12 @@ function buildServiceCategoryItem(serviceCategoryItem) {
 }
 
 function buildItAssetServiceItem(serviceCategoryItem) {
-  const card = $('<div>').addClass('row service-item-card');
+  const card = $('<div>').addClass('row service-item-card mr-5');
 
   // Create the card image element
   const cardImageContainer = $('<div>').addClass('col-4');
   const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
-    .attr('alt', 'IT Asset');
+                              .attr('alt', 'IT Asset');
   cardImageContainer.append(cardImage);
 
   // Create the card body
@@ -30,12 +30,14 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   cardBody.append(cardTitle);
 
   $.each(serviceCategoryItem.display_fields, function(index, field) {
-    const cardField = $('<p>').append($('<span>').text(field.label + ':' + field.value));
+    const cardField = $('<p>').append($('<span>').text(field.label + ':       ' + field.value));
     cardBody.append(cardField);
   });
 
   // submit request button
-  const submitRequestBtn = $('<a>').attr('href', '#').text('Report Issue');
+  const submitRequestBtn = $('<a>').attr('href', '#')
+                                   .text('Report Issue')
+                                   .addClass('float-end');
   cardBody.append(submitRequestBtn);
 
   card.append(cardImageContainer, cardBody);
