@@ -9,7 +9,7 @@ function addMenuItem(name, url, parent_ele) {
 }
 
 function buildServiceCatalog() {
-  const newSection = $('<section>').attr('id', 'service-catalog-section');
+  const newSection = $('<section>').attr('id', 'service_catalog_section');
 
   const serviceCatalogContainer = $('<div>').addClass('row');
 
@@ -25,13 +25,13 @@ function buildServiceCatalog() {
   const navbar = generateNavbar(getServiceCategories());
   navbarContainer.append(navbar);
 
-  searchAndNavContainer.append(searchBar, navbarContainer)
+  searchAndNavContainer.append(searchBar, navbarContainer);
 
-  //const serviceItemsContainer = buildServiceCategoriesItems();
+  // const serviceItemsContainer = buildServiceCategoriesItems();
 
   // Append the navbar to the container
   serviceCatalogContainer.append(searchAndNavContainer);
-  //serviceCatalogContainer.append(serviceItemsContainer);
+  // serviceCatalogContainer.append(serviceItemsContainer);
 
   newSection.append(serviceCatalogContainer);
   $('main').append(newSection);
@@ -49,17 +49,18 @@ function generateNavbar(serviceCategories) {
       listItem.addClass('collapse');
     }
     navbar.append(listItem);
+  });
   
   return navbar;
 }
 
 function buildServiceCategoriesItems() {
-  const serviceCategories     = Object.keys(getServiceCategoriesItems());
+  const serviceCategories = Object.keys(getServiceCategoriesItems());
   const serviceItemsContainer = $('<div>').addClass('col-8');
-  const serviceCategoryItems = getServiceCategoryItems(serviceCategory);
 
   $.each(serviceCategories, function(index, serviceCategory) {
-    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems[serviceCategory]));
+    const serviceCategoryItems = getServiceCategoryItems(serviceCategory); // Move this line here
+    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems));
   });
 
   return serviceItemsContainer;
@@ -79,9 +80,12 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems) {
   $.each(serviceCategoryItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem));
   });
+
+  return serviceCategoryItemsContainer; // Add a return statement
 }
 
 function buildServiceCategoryItem(serviceCategoryItem) {
+  // Implement this function
 }
 
 export { addMenuItem, buildServiceCatalog };
