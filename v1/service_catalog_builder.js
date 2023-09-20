@@ -71,7 +71,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
   const serviceCategoryLabel = $('<p></p>').text(serviceCategory);
-  const serviceCategoryDescription = $('<p></p>').text(serviceCategoryItems[0].description); // Use the first item's description
+  const serviceCategoryDescription = $('<p></p>').text(serviceCategory.description); // Use the first item's description
 
   serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
