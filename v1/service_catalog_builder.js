@@ -38,10 +38,9 @@ function generateNavbar(serviceCategories) {
   const navbar = $('<ul></ul>');
 
   $.each(serviceCategories, function(index, serviceCategory) {
-    var listItem = $('<li><a id="' + serviceCategory.id + '_link''" + href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
+    var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
     navbar.append(listItem);
   });
-
   return navbar;
 }
 
