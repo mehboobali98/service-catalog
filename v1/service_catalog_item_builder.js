@@ -30,7 +30,7 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   cardBody.append(cardTitle);
 
   $.each(serviceCategoryItem.display_fields, function(index, field) {
-    const cardField = $('<p>').append($('<span>').text(field.label + ':       ' + field.value));
+    var cardField = $('<p>').append($('<span>').text(field.label + ':       ' + field.value));
     cardBody.append(cardField);
   });
 
