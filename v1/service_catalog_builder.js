@@ -36,12 +36,25 @@ function buildServiceCatalog() {
 // Create a function to generate the vertical navbar
 function generateNavbar(serviceCategories) {
   const navbar = $('<ul></ul>');
+  var appendItem;
 
   $.each(serviceCategories, function(index, serviceCategory) {
-    var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
-    navbar.append(listItem);
+    var listItem  = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
+    appendItem    = true;
+    if (serviceCategory === 'My IT Assets' && !loggedInUserExistsInAssetSonar()) {
+      appendItem = false;
+    } else if (serviceCategory === 'View Raised Requests') && (window.HelpCenter.user.role === 'anonymous') {
+      appendItem = false;
+    }
+    if (appendItem) { navbar.append(listItem); }
   });
   return navbar;
+}
+
+function loggedInUserExistsInAssetSonar() {
+  if (window.HelpCenter.user.role === 'anonymous') { return false; }
+
+  // to-do: handle it so that if user exists in assetsonar, the assigned it assets and software entitlements are loaded as well.
 }
 
 function buildServiceCategoriesItems() {
