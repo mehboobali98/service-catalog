@@ -1,16 +1,12 @@
 function buildServiceCategoryItem(serviceCategoryItem) {
-  debugger;
   const serviceItemType = serviceCategoryItem.type;
   switch (serviceItemType) {
     case 'assigned_it_asset':
-      buildItAssetServiceItem(serviceCategoryItem);
-      break;
+      return buildItAssetServiceItem(serviceCategoryItem);
     case 'assigned_software_entitlement':
-      buildSoftwareServiceItem(serviceCategoryItem);
-      break;
+      return buildSoftwareServiceItem(serviceCategoryItem);
     case 'software_request':
-      buildSoftwareRequestServiceItem(serviceCategoryItem);
-      break;
+      return buildSoftwareRequestServiceItem(serviceCategoryItem);
     default:
       // Handle unknown service type
       break;
@@ -44,7 +40,6 @@ function buildItAssetServiceItem(serviceCategoryItem) {
 
   card.append(cardImageContainer, cardBody);
 
-  debugger;
   return card;
 }
 

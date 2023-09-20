@@ -77,12 +77,10 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
 
   const serviceCategoryItemsFlex = $('<div>').addClass('d-flex');
 
-  debugger;
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem));
   });
 
-  debugger;
   serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container
 
   return serviceCategoryItemsContainer; // Add a return statement
