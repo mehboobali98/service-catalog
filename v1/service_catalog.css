@@ -19,3 +19,8 @@
 .service-categories-list a li {
   text-decoration: none;
 }
+
+.service-item-card {
+  width: 400px;
+  height: 400px;
+}

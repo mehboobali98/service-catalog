@@ -1,4 +1,5 @@
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems } from './dummy_data.js';
+import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
 
 function addMenuItem(name, url, parent_ele) {
   var anchor = document.createElement('a');
@@ -18,7 +19,7 @@ function buildServiceCatalog() {
   const searchField = $('<input>').attr('id', 'search-input')
                                   .attr('type', 'text')
                                   .attr('placeholder', 'Search...');
-  const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');;
+  const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
 
   const navbarContainer = $('<div>');
   const navbar = generateNavbar(getServiceCategories());
@@ -26,12 +27,10 @@ function buildServiceCatalog() {
 
   searchAndNavContainer.append(searchBar, navbarContainer);
 
-  // const serviceItemsContainer = buildServiceCategoriesItems();
+  const serviceItemsContainer = buildServiceCategoriesItems();
 
   // Append the navbar to the container
-  serviceCatalogContainer.append(searchAndNavContainer);
-  // serviceCatalogContainer.append(serviceItemsContainer);
-
+  serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer); // Add serviceItemsContainer
   newSection.append(serviceCatalogContainer);
   $('main').append(newSection);
 }
@@ -49,7 +48,7 @@ function generateNavbar(serviceCategories) {
     }
     navbar.append(listItem);
   });
-  
+
   return navbar;
 }
 
@@ -58,21 +57,23 @@ function buildServiceCategoriesItems() {
   const serviceItemsContainer = $('<div>').addClass('col-8');
 
   $.each(serviceCategories, function(index, serviceCategory) {
-    const serviceCategoryItems = getServiceCategoryItems(serviceCategory); // Move this line here
-    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems));
+    var serviceCategoryItems = getServiceCategoryItems(serviceCategory); // Move this line here
+    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, serviceCategory === 'My IT Assets'));
   });
 
   return serviceItemsContainer;
 }
 
-function buildServiceCategoryItems(serviceCategory, serviceCategoryItems) {
+function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visible) {
   const serviceCategoryItemsContainer = $('<div>');
-  serviceCategoryItemsContainer.attr('id', serviceCategory.toLowerCase().replace(/\s+/g, "_"));
+  serviceCategoryItemsContainer.attr('id', serviceCategory.toLowerCase().replace(/\s+/g, "_") + '_container');
+
+  if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
   const serviceCategoryLabel = $('<p></p>').text(serviceCategory);
-  const serviceCategoryDescription = $('<p></p>').text(serviceCategoryItems.description);
+  const serviceCategoryDescription = $('<p></p>').text(serviceCategoryItems[0].description); // Use the first item's description
 
-  serviceCategoryItemsContainer.append(serviceCategoryLabel).append(serviceCategoryDescription);
+  serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
   const serviceCategoryItemsFlex = $('<div>').addClass('d-flex');
 
@@ -80,11 +81,9 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem));
   });
 
-  return serviceCategoryItemsContainer; // Add a return statement
-}
+  serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container
 
-function buildServiceCategoryItem(serviceCategoryItem) {
-  // Implement this function
+  return serviceCategoryItemsContainer; // Add a return statement
 }
 
 export { addMenuItem, buildServiceCatalog };
