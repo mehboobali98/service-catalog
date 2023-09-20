@@ -2,14 +2,17 @@ function buildServiceCategoryItem(serviceCategoryItem) {
   const serviceItemType = serviceCategoryItem.type;
   switch (serviceItemType) {
     case 'assigned_it_asset':
-      return buildItAssetServiceItem(serviceCategoryItem);
+      buildItAssetServiceItem(serviceCategoryItem);
+      break;
     case 'assigned_software_entitlement':
-      return buildSoftwareServiceItem(serviceCategoryItem);
+      buildSoftwareServiceItem(serviceCategoryItem);
+      break;
     case 'software_request':
-      return buildSoftwareRequestServiceItem(serviceCategoryItem);
+      buildSoftwareRequestServiceItem(serviceCategoryItem);
+      break;
     default:
       // Handle unknown service type
-      return null;
+      break;
   }
 }
 
@@ -19,7 +22,7 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   // Create the card image element
   const cardImageContainer = $('<div>').addClass('col-4');
   const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
-                              .attr('alt', 'IT Asset');
+    .attr('alt', 'IT Asset');
   cardImageContainer.append(cardImage);
 
   // Create the card body
@@ -30,7 +33,7 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   cardBody.append(cardTitle);
 
   $.each(serviceCategoryItem.display_fields, function(index, field) {
-    var cardField = $('<p>').append($('<span>').text(field.label + ':' + field.value));
+    const cardField = $('<p>').append($('<span>').text(field.label + ':' + field.value));
     cardBody.append(cardField);
   });
 
@@ -41,6 +44,14 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   card.append(cardImageContainer, cardBody);
 
   return card;
+}
+
+function buildSoftwareServiceItem(serviceCategoryItem) {
+  return '';
+}
+
+function buildSoftwareRequestServiceItem(serviceCategoryItem) {
+  return '';
 }
 
 export { buildServiceCategoryItem, buildItAssetServiceItem };
