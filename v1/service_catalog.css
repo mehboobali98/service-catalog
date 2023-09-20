@@ -10,3 +10,12 @@
   padding: 0;
   list-style: none;
 }
+
+.service-categories-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.service-categories-list a li {
+  text-decoration: none;
+}

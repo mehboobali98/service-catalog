@@ -13,13 +13,12 @@ function buildServiceCatalog() {
 
   const serviceCatalogContainer = $('<div>').addClass('row');
 
-  const searchAndNavContainer = $('<div>').addClass('col-4');
+  const searchAndNavContainer = $('<div>').addClass('col-4 mr-4');
 
   const searchField = $('<input>').attr('id', 'search-input')
                                   .attr('type', 'text')
-                                  .attr('placeholder', 'Search...')
-                                  .addClass('service-catalog-search');
-  const searchBar = $('<div>').append(searchField);
+                                  .attr('placeholder', 'Search...');
+  const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');;
 
   const navbarContainer = $('<div>');
   const navbar = generateNavbar(getServiceCategories());
