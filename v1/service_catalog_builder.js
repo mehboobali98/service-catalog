@@ -53,12 +53,6 @@ function generateNavbar(serviceCategories) {
   return navbar;
 }
 
-function loggedInUserExistsInAssetSonar() {
-  if (window.HelpCenter.user.role === 'anonymous') { return false; }
-
-  // to-do: handle it so that if user exists in assetsonar, the assigned it assets and software entitlements are loaded as well.
-}
-
 function buildServiceCategoriesItems() {
   const serviceCategories     = Object.keys(getServiceCategoriesItems());
   const serviceItemsContainer = $('<div>').addClass('col-8');
