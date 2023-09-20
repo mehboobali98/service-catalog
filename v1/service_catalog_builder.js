@@ -15,7 +15,11 @@ function buildServiceCatalog() {
 
   const searchAndNavContainer = $('<div>').addClass('col-4');
 
-  const searchBar = $('<div>').append($('<input>').attr('id', 'search-input').attr('type', 'text').attr('placeholder', 'Search...'));
+  const searchField = $('<input>').attr('id', 'search-input')
+                                  .attr('type', 'text')
+                                  .attr('placeholder', 'Search...')
+                                  .addClass('service-catalog-search');
+  const searchBar = $('<div>').append(searchField);
 
   const navbarContainer = $('<div>');
   const navbar = generateNavbar(serviceCategories());
@@ -36,18 +40,22 @@ function buildServiceCatalog() {
 // Create a function to generate the vertical navbar
 function generateNavbar(serviceCategories) {
   const navbar = $('<ul></ul>');
-  var appendItem;
-
+  
   $.each(serviceCategories, function(index, serviceCategory) {
-    var listItem  = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
-    appendItem    = true;
-    if (serviceCategory === 'My IT Assets' && !loggedInUserExistsInAssetSonar()) {
+    var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
+    var appendItem = true;
+    
+    if (serviceCategory.name === 'My IT Assets' && !loggedInUserExistsInAssetSonar()) {
       appendItem = false;
-    } else if (serviceCategory === 'View Raised Requests') && (window.HelpCenter.user.role === 'anonymous') {
+    } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
       appendItem = false;
     }
-    if (appendItem) { navbar.append(listItem); }
+    
+    if (appendItem) {
+      navbar.append(listItem);
+    }
   });
+  
   return navbar;
 }
 
@@ -86,7 +94,6 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems) {
 }
 
 function buildServiceCategoryItem(serviceCategoryItem) {
-  k
 }
 
 export { addMenuItem, buildServiceCatalog };
