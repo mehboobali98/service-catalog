@@ -1,4 +1,5 @@
 function buildServiceCategoryItem(serviceCategoryItem) {
+  debugger;
   const serviceItemType = serviceCategoryItem.type;
   switch (serviceItemType) {
     case 'assigned_it_asset':
@@ -43,6 +44,7 @@ function buildItAssetServiceItem(serviceCategoryItem) {
 
   card.append(cardImageContainer, cardBody);
 
+  debugger;
   return card;
 }
 
