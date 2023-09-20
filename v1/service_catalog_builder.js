@@ -77,7 +77,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
 
   const serviceCategoryItemsFlex = $('<div>').addClass('d-flex');
 
-  $.each(serviceCategoryItems, function(index, serviceCategoryItem) {
+  $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem));
   });
 
