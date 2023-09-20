@@ -30,7 +30,7 @@ function buildServiceCatalog() {
   //const serviceItemsContainer = buildServiceCategoriesItems();
 
   // Append the navbar to the container
-  serviceCatalogContainer.append(navbarContainer);
+  serviceCatalogContainer.append(searchAndNavContainer);
   //serviceCatalogContainer.append(serviceItemsContainer);
 
   newSection.append(serviceCatalogContainer);
@@ -43,18 +43,12 @@ function generateNavbar(serviceCategories) {
   
   $.each(serviceCategories, function(index, serviceCategory) {
     var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
-    var appendItem = true;
-    
-    if (serviceCategory.name === 'My IT Assets' && !loggedInUserExistsInAssetSonar()) {
-      appendItem = false;
+    if (serviceCategory.name === 'My IT Assets' && window.HelpCenter.user.role === 'anonymous') {
+      listItem.addClass('collapse');
     } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
-      appendItem = false;
+      listItem.addClass('collapse');
     }
-    
-    if (appendItem) {
-      navbar.append(listItem);
-    }
-  });
+    navbar.append(listItem);
   
   return navbar;
 }
