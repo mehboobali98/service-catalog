@@ -35,7 +35,7 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   });
 
   // submit request button
-  const submitRequestBtn = $('<a>').attr('href', 'hc/requests/new')
+  const submitRequestBtn = $('<a>').attr('href', '/hc/requests/new')
                                    .text('Report Issue')
                                    .addClass('float-end');
   cardBody.append(submitRequestBtn);
