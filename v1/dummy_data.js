@@ -57,7 +57,7 @@ const serviceCategories = [
 // ];
 
 function getServiceCategories() {
-  return serviceCategories.map(serviceCategory => ({ id: generateId(str), name: serviceCategory, link: '#' }));
+  return serviceCategories.map(serviceCategory => ({ id: generateId(serviceCategory), name: serviceCategory, link: '#' }));
 }
 
 function getServiceCategoriesItems() {
