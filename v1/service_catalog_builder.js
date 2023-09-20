@@ -22,7 +22,7 @@ function buildServiceCatalog() {
   const searchBar = $('<div>').append(searchField);
 
   const navbarContainer = $('<div>');
-  const navbar = generateNavbar(serviceCategories());
+  const navbar = generateNavbar(getServiceCategories());
   navbarContainer.append(navbar);
 
   searchAndNavContainer.append(searchBar, navbarContainer)
@@ -39,7 +39,7 @@ function buildServiceCatalog() {
 
 // Create a function to generate the vertical navbar
 function generateNavbar(serviceCategories) {
-  const navbar = $('<ul></ul>');
+  const navbar = $('<ul></ul>').addClass('service-categories-list');
   
   $.each(serviceCategories, function(index, serviceCategory) {
     var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
