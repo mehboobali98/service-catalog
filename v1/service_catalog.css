@@ -9,6 +9,10 @@
   margin-bottom: 15px;
 }
 
+.service-catalog-search input {
+  border-radius: 5px;
+}
+
 .service-categories-list {
   margin: 0;
   padding: 0;
