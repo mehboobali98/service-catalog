@@ -99,7 +99,7 @@ function bindEventListeners(serviceCategories) {
 
     // hide service items of remaining categories
     $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
-      if ($(this).attr('id') === serviceCategoryId) {
+      if ('#' + $(this).attr('id') === serviceCategoryId) {
         // do nothing
       } else {
         $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
