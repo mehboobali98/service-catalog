@@ -75,7 +75,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
 
   // card footer (price and arrow)
   const arrow = $('<i>').addClass('bi bi-arrow-right');
-  const cardFooter = $('div');
+  const cardFooter = $('<div>');
   if (serviceCategoryItem.price) {
     cardFooter.addClass('d-flex');
     const price = $('<span>').text(serviceCategoryItem.price);
