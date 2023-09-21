@@ -102,7 +102,7 @@ function bindEventListeners(serviceCategories) {
       if ('#' + $(this).attr('id') === serviceCategoryId) {
         // do nothing
       } else {
-        $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
+        $('#' + serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
       }
     });
 
