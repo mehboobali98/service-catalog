@@ -68,10 +68,10 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
   cardBody.append(cardTitle);
 
 
-  // // card description
-  // const cardDescription = $('<p>').text(serviceCategoryItem.description)
-  //                                 .addClass('text-truncate');
-  // cardBody.append(cardDescription);
+  // card description
+  const cardDescription = $('<p>').text(serviceCategoryItem.description)
+                                  .addClass('text-truncate');
+  cardBody.append(cardDescription);
 
   // // card footer (price and arrow)
   // const cardFooter = $('div').addClass('d-flex justify-content-between')
@@ -80,7 +80,6 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
 
   // cardFooter.append(price, arrow);
 
-  debugger;
   card.append(cardImageContainer, cardBody);
 
   return card;
