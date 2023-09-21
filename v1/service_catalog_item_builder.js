@@ -36,7 +36,7 @@ function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
 
   // submit request button
   var queryParams = {
-    ticket_form_id: requestFormId;
+    ticket_form_id: requestFormId
   };
   var url = '/hc/requests/new' + '?' + $.query(queryParams);
   const submitRequestBtn = $('<a>').attr('href', url)
