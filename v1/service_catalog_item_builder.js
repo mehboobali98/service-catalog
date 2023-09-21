@@ -1,8 +1,8 @@
-function buildServiceCategoryItem(serviceCategoryItem) {
+function buildServiceCategoryItem(serviceCategoryItem, requestFormId) {
   const serviceItemType = serviceCategoryItem.type;
   switch (serviceItemType) {
     case 'assigned_it_asset':
-      return buildItAssetServiceItem(serviceCategoryItem);
+      return buildItAssetServiceItem(serviceCategoryItem, requestFormId);
     case 'assigned_software_entitlement':
       return buildSoftwareServiceItem(serviceCategoryItem);
     case 'software_request':
