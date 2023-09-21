@@ -97,20 +97,16 @@ function bindEventListeners(serviceCategories) {
 
     var categoryLinkId = $(this).attr('id');
     var containerId = categoryLinkId.replace('_link', '_container');
-    debugger;
 
     // hide service items of remaining categories
     $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
-      debugger;
       if ('#' + categoryLinkId === serviceCategoryId) {
         // do nothing
       } else {
-        debugger;
         $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
       }
     });
 
-    debugger;
     $('#' + containerId).show();
   });
 }
