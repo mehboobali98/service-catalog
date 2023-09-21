@@ -98,11 +98,11 @@ function bindEventListeners(serviceCategories) {
 
     var containerId = $(this).attr('id').replace('_link', '_container'); // Fix the containerId calculation.
 
-    debugger;
     // hide service items of remaining categories
     $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
       if ('#' + $(this).attr('id') !== serviceCategoryId) {
-        $('#' + serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
+        debugger;
+        $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
       }
     });
 
