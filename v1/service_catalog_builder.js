@@ -60,7 +60,7 @@ function buildServiceCategoriesItems() {
   const serviceItemsContainer = $('<div>').addClass('col-10 service-items-container');
 
   $.each(serviceCategories, function(index, serviceCategory) {
-    var serviceCategoryItems = getServiceCategoryItems(serviceCategory); // Move this line here
+    var serviceCategoryItems = getServiceCategoryItems(serviceCategory);
     serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, serviceCategory === 'My IT Assets'));
   });
 
@@ -86,7 +86,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
 
   serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container
 
-  return serviceCategoryItemsContainer; // Add a return statement
+  return serviceCategoryItemsContainer;
 }
 
 function bindEventListeners(serviceCategories) {
