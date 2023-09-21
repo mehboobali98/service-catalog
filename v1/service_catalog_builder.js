@@ -95,12 +95,14 @@ function bindEventListeners(serviceCategories) {
   $(serviceCategoriesIds.join(', ')).click(function(e) {
     e.preventDefault();
 
-    var containerId = $(this).attr('id').replace('_link', '_container');
+    var categoryLinkId = $(this).attr('id');
+    var containerId = categoryLinkId.replace('_link', '_container');
+    debugger;
 
     // hide service items of remaining categories
     $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
       debugger;
-      if ('#' + $(this).attr('id') === serviceCategoryId) {
+      if ('#' + categoryLinkId === serviceCategoryId) {
         // do nothing
       } else {
         debugger;
@@ -108,6 +110,7 @@ function bindEventListeners(serviceCategories) {
       }
     });
 
+    debugger;
     $('#' + containerId).show();
   });
 }
