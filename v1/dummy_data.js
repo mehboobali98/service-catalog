@@ -11,6 +11,10 @@ const serviceCategories = [
 
 const serviceCategoriesItems = {
   'My IT Assets': {
+    custom_field_id:      '13884803612562',
+    request_form_id:      '13884860165010',
+    custom_field_value:   'Report My Hardware Issue',
+    request_form_subject: 'Report Hardware Issue - ',
     description: 'List of everything within your custody. Easily report issues with your assigned devices or software.',
     serviceItems: [
       { 

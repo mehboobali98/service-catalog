@@ -13,7 +13,7 @@ function buildServiceCategoryItem(serviceCategoryItem) {
   }
 }
 
-function buildItAssetServiceItem(serviceCategoryItem) {
+function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Create the card image element
@@ -35,7 +35,11 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   });
 
   // submit request button
-  const submitRequestBtn = $('<a>').attr('href', '/hc/requests/new')
+  var queryParams = {
+    ticket_form_id: requestFormId;
+  };
+  var url = '/hc/requests/new' + '?' + $.query(queryParams);
+  const submitRequestBtn = $('<a>').attr('href', url)
                                    .attr('target', '_blank')
                                    .text('Report Issue')
                                    .addClass('float-end');
