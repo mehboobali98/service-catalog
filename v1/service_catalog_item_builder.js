@@ -51,7 +51,6 @@ function buildSoftwareServiceItem(serviceCategoryItem) {
 }
 
 function buildSoftwareRequestServiceItem(serviceCategoryItem) {
-  debugger;
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Create the card image element
@@ -74,17 +73,17 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
   cardBody.append(cardDescription);
 
   // card footer (price and arrow)
-  const arrow = $('<i>').addClass('bi bi-arrow-right');
-  const cardFooter = $('<div>');
-  if (serviceCategoryItem.price) {
-    cardFooter.addClass('d-flex');
-    const price = $('<span>').text(serviceCategoryItem.price);
-    cardFooter.append(price);
-  } else {
-    arrow.addClass('float-end');
-  }
-  cardFooter.append(arrow);
-  card.append(cardImageContainer, cardBody, cardFooter);
+  // const arrow = $('<i>').addClass('bi bi-arrow-right');
+  // const cardFooter = $('<div>');
+  // if (serviceCategoryItem.price) {
+  //   cardFooter.addClass('d-flex');
+  //   const price = $('<span>').text(serviceCategoryItem.price);
+  //   cardFooter.append(price);
+  // } else {
+  //   arrow.addClass('float-end');
+  // }
+  // cardFooter.append(arrow);
+  card.append(cardImageContainer, cardBody);
 
   return card;
 }
