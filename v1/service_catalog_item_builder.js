@@ -74,11 +74,11 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
   cardBody.append(cardDescription);
 
   // card footer (price and arrow)
-  const arrow = $('i').addClass('bi bi-arrow-right');
+  const arrow = $('<i>').addClass('bi bi-arrow-right');
   const cardFooter = $('div');
   if (serviceCategoryItem.price) {
-    cardFooter.addClass('d-flex justify-content-between');
-    const price = $('span').text(serviceCategoryItem.price);
+    cardFooter.addClass('d-flex');
+    const price = $('<span>').text(serviceCategoryItem.price);
     cardFooter.append(price);
   } else {
     arrow.addClass('float-end');
