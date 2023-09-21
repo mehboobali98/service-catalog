@@ -73,14 +73,18 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
                                   .addClass('text-truncate');
   cardBody.append(cardDescription);
 
-  // // card footer (price and arrow)
-  // const cardFooter = $('div').addClass('d-flex justify-content-between')
-  // const price = $('span').text(serviceCategoryItem.price);
-  // const arrow = $('i').addClass('bi bi-arrow-right');
-
-  // cardFooter.append(price, arrow);
-
-  card.append(cardImageContainer, cardBody);
+  // card footer (price and arrow)
+  const arrow = $('i').addClass('bi bi-arrow-right');
+  const cardFooter = $('div');
+  if (serviceCategoryItem.price) {
+    cardFooter.addClass('d-flex justify-content-between');
+    const price = $('span').text(serviceCategoryItem.price);
+    cardFooter.append(price);
+  } else {
+    arrow.addClass('float-end');
+  }
+  cardFooter.append(arrow);
+  card.append(cardImageContainer, cardBody, cardFooter);
 
   return card;
 }
