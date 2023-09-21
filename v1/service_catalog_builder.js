@@ -34,6 +34,7 @@ function buildServiceCatalog() {
   serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer); // Add serviceItemsContainer
   newSection.append(serviceCatalogContainer);
   $('main').append(newSection);
+  bindEventListeners(getServiceCategories());
 }
 
 // Create a function to generate the vertical navbar
@@ -47,6 +48,7 @@ function generateNavbar(serviceCategories) {
     } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
       listItem.addClass('collapse');
     }
+
     navbar.append(listItem);
   });
 
@@ -85,6 +87,25 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container
 
   return serviceCategoryItemsContainer; // Add a return statement
+}
+
+function bindEventListeners(serviceCategories) {
+  const serviceCategoriesIds = serviceCategories.map(serviceCategory => ('#' + serviceCategory.id + '_link'));
+
+  $(serviceCategoriesIds.join(', ')).click(function(e) {
+    e.preventDefault();
+
+    var containerId = $(this).attr('id').replace('_link', '_container'); // Fix the containerId calculation.
+
+    // hide service items of remaining categories
+    $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
+      if ('#' + $(this).attr('id') !== serviceCategoryId) {
+        $('#' + serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
+      }
+    });
+
+    $('#' + containerId).show();
+  });
 }
 
 export { addMenuItem, buildServiceCatalog };
