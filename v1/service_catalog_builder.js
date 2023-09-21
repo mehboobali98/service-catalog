@@ -90,18 +90,18 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
 }
 
 function bindEventListeners(serviceCategories) {
-  const serviceCategoriesIds = serviceCategories.map(serviceCategory => ('#' + serviceCategory.id + '_link'));
+  const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
 
   $(serviceCategoriesIds.join(', ')).click(function(e) {
     e.preventDefault();
 
-    var containerId = $(this).attr('id').replace('_link', '_container'); // Fix the containerId calculation.
+    var containerId = $(this).attr('id').replace('_link', '_container');
 
     // hide service items of remaining categories
     $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
-      if ('#' + $(this).attr('id') === serviceCategoryId) {
+      if ($(this).attr('id') === serviceCategoryId) {
         // do nothing
-      } else if {
+      } else {
         $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
       }
     });
