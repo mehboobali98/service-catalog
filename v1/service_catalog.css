@@ -22,6 +22,7 @@
 }
 
 .service-categories-list ul li a {
+  color: inherit;
   text-decoration: none;
 }
 
