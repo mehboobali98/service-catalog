@@ -72,17 +72,17 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
                                   .addClass('text-truncate');
   cardBody.append(cardDescription);
 
-  // card footer (price and arrow)
-  // const arrow = $('<i>').addClass('bi bi-arrow-right');
-  // const cardFooter = $('<div>');
-  // if (serviceCategoryItem.price) {
-  //   cardFooter.addClass('d-flex');
-  //   const price = $('<span>').text(serviceCategoryItem.price);
-  //   cardFooter.append(price);
-  // } else {
-  //   arrow.addClass('float-end');
-  // }
-  // cardFooter.append(arrow);
+  //card footer (price and arrow)
+  const arrow = $('<i>').addClass('bi bi-arrow-right');
+  const cardFooter = $('<div>');
+  if (serviceCategoryItem.price) {
+    cardFooter.addClass('d-flex');
+    const price = $('<span>').text(serviceCategoryItem.price);
+    cardFooter.append(price);
+  } else {
+    arrow.addClass('float-end');
+  }
+  cardFooter.append(arrow);
   card.append(cardImageContainer, cardBody);
 
   return card;

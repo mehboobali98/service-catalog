@@ -78,7 +78,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
 
   serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
-  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
+  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem));
