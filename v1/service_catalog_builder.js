@@ -14,7 +14,7 @@ function buildServiceCatalog() {
 
   const serviceCatalogContainer = $('<div>').addClass('row');
 
-  const searchAndNavContainer = $('<div>').addClass('col-4 ml-4');
+  const searchAndNavContainer = $('<div>').addClass('col-2');
 
   const searchField = $('<input>').attr('id', 'search-input')
                                   .attr('type', 'text')
@@ -54,7 +54,7 @@ function generateNavbar(serviceCategories) {
 
 function buildServiceCategoriesItems() {
   const serviceCategories = Object.keys(getServiceCategoriesItems());
-  const serviceItemsContainer = $('<div>').addClass('col-8 service-items-container');
+  const serviceItemsContainer = $('<div>').addClass('col-10 service-items-container');
 
   $.each(serviceCategories, function(index, serviceCategory) {
     var serviceCategoryItems = getServiceCategoryItems(serviceCategory); // Move this line here

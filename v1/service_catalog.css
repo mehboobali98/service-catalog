@@ -14,14 +14,11 @@
 }
 
 .service-categories-list {
-  margin: 0;
-  padding: 0;
   list-style: none;
 }
 
 .service-categories-list ul li {
   padding: 10px;
-  border-bottom: 1px solid #ccc;
 }
 
 .service-categories-list ul li a {
