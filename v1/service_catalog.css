@@ -1,3 +1,7 @@
+.service-catalog-section {
+  margin-left: 50px;
+}
+
 .service-catalog-search {
   width: 100%;
   padding: 10px;
@@ -11,22 +15,21 @@
   list-style: none;
 }
 
-.service-categories-list li {
+.service-categories-list ul li {
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }
 
-.service-categories-list li a {
+.service-categories-list ul li a {
   text-decoration: none;
 }
 
-.service-item-card {
+.service-items-container service-item-card {
   width: 400px;
   height: 400px;
   border: 2px solid !important;
-  margin-right: 40px !important;
 }
 
-.service-item-card a {
+.service-items-container service-item-card a {
   text-decoration: none;
 }

@@ -14,7 +14,7 @@ function buildServiceCategoryItem(serviceCategoryItem) {
 }
 
 function buildItAssetServiceItem(serviceCategoryItem) {
-  const card = $('<div>').addClass('row service-item-card mr-5');
+  const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Create the card image element
   const cardImageContainer = $('<div>').addClass('col-4');
@@ -36,6 +36,7 @@ function buildItAssetServiceItem(serviceCategoryItem) {
 
   // submit request button
   const submitRequestBtn = $('<a>').attr('href', '/hc/requests/new')
+                                   .attr('target', '_blank')
                                    .text('Report Issue')
                                    .addClass('float-end');
   cardBody.append(submitRequestBtn);

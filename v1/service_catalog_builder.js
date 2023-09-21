@@ -10,15 +10,15 @@ function addMenuItem(name, url, parent_ele) {
 }
 
 function buildServiceCatalog() {
-  const newSection = $('<section>').attr('id', 'service_catalog_section');
+  const newSection = $('<section>').attr('id', 'service_catalog_section').addClass('service-catalog-section');
 
   const serviceCatalogContainer = $('<div>').addClass('row');
 
-  const searchAndNavContainer = $('<div>').addClass('col-4 mr-4');
+  const searchAndNavContainer = $('<div>').addClass('col-4 ml-4');
 
   const searchField = $('<input>').attr('id', 'search-input')
                                   .attr('type', 'text')
-                                  .attr('placeholder', 'Search...');
+                                  .attr('placeholder', 'search...');
   const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
 
   const navbarContainer = $('<div>');
@@ -54,7 +54,7 @@ function generateNavbar(serviceCategories) {
 
 function buildServiceCategoriesItems() {
   const serviceCategories = Object.keys(getServiceCategoriesItems());
-  const serviceItemsContainer = $('<div>').addClass('col-8');
+  const serviceItemsContainer = $('<div>').addClass('col-8 service-items-container');
 
   $.each(serviceCategories, function(index, serviceCategory) {
     var serviceCategoryItems = getServiceCategoryItems(serviceCategory); // Move this line here
@@ -75,7 +75,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
 
   serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
-  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap');
+  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem));
