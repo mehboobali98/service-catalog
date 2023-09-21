@@ -38,7 +38,7 @@ function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
   var queryParams = {
     ticket_form_id: requestFormId
   };
-  var url = '/hc/requests/new' + '?' + $.query(queryParams);
+  var url = '/hc/requests/new' + '?' + $.param(queryParams);
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .attr('target', '_blank')
                                    .text('Report Issue')
