@@ -26,7 +26,7 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   const cardBody = $('<div>').addClass('col-8');
 
   // Create the card title
-  const cardTitle = $('<h4>').text(serviceCategoryItem.name);
+  const cardTitle = $('<p>').text(serviceCategoryItem.name);
   cardBody.append(cardTitle);
 
   $.each(serviceCategoryItem.display_fields, function(index, field) {
