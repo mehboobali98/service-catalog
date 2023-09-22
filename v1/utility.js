@@ -4,7 +4,7 @@ function generateId(str) {
 
 function isNewRequestPage() {
   const regex = /\/hc(\/en-us)?\/p\/requests\/new/;
-  return isCorrectPage();
+  return isCorrectPage(regex);
 }
 
 function isServiceCatalogPage() {

@@ -8,4 +8,9 @@ function updateNewRequestForm() {
   }
 }
 
+function extractQueryParams(url) {
+  const url = new URL(url);
+  return url.searchParams;
+}
+
 export { updateNewRequestForm };
