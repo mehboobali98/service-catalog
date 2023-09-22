@@ -17,10 +17,14 @@ function isCorrectPage(regex) {
 }
 
 function setDataAttributes(element, dataAttributes) {
-  Object.keys(dataAttributes).forEach(function(dataAttributeName) {
-    element.data(dataAttributeName, dataAttributes[dataAttributeName]);
-  });
+  if (dataAttributes && typeof dataAttributes === 'object') {
+    Object.keys(dataAttributes).forEach(function(dataAttributeName) {
+      const value = dataAttributes[dataAttributeName];
+      if (value !== null && value !== undefined && value !== '') {
+        element.data(dataAttributeName, value);
+      }
+    });
+  }
 }
-
 
 export { generateId, isCorrectPage, isNewRequestPage, isServiceCatalogPage, setDataAttributes };
