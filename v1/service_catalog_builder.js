@@ -75,11 +75,13 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   const serviceCategoryItemsContainer = $('<div>');
   serviceCategoryItemsContainer.attr('id', serviceCategory.toLowerCase().replace(/\s+/g, "_") + '_container');
 
+  debugger;
   // to-do: refactor. Store these in dummy data against data_attributes key for dynamic handling.
   serviceCategoryItemsContainer.data('custom-field-id', serviceCategoryItems.custom_field_id);
   serviceCategoryItemsContainer.data('request-form-id', serviceCategoryItems.request_form_id);
   serviceCategoryItemsContainer.data('custom-field-value', serviceCategoryItems.custom_field_value);
   serviceCategoryItemsContainer.data('request-form-subject', serviceCategoryItems.request_form_subject);
+  debugger;
 
   if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 

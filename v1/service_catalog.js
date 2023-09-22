@@ -17,14 +17,16 @@ function initServiceCatalog() {
 }
 
 function isServiceCatalogPage() {
-  return isCorrectPage(/\/hc(\/en-us)?\/p\/service_catalog/)
+  const regex = /\/hc(\/en-us)?\/p\/service_catalog/;
+  return isCorrectPage(regex);
 }
 
 function isNewRequestPage() {
-  return isCorrectPage(/\/hc(\/en-us)?\/p\/requests\/new/);
+  const regex = /\/hc(\/en-us)?\/p\/requests\/new/;
+  return isCorrectPage();
 }
 
 function isCorrectPage(regex) {
   const pathname = window.location.pathname;
-  return regex.test(pathname)
+  return regex.test(pathname);
 }
