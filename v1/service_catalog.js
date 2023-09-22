@@ -7,12 +7,12 @@ $(document).ready(function(){
 });
 
 function initServiceCatalog() {
+  debugger;
   if (isServiceCatalogPage()) {
     buildServiceCatalog();
   } else if(isNewRequestPage()) {
     updateNewRequestForm();
   } else {
-
   }
 }
 
