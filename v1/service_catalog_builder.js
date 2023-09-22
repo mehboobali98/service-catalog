@@ -1,12 +1,12 @@
-import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
+import { buildServiceCategoryItem }      from './service_catalog_item_builder.js';
+import { generateId, setDataAttributes } from './utility.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
-  var anchor = document.createElement('a');
-  var link   = document.createTextNode(name);
-  anchor.appendChild(link);
-  anchor.href = url;
-  $("#" + parent_ele).prepend(anchor);
+  const serviceCatalog = $('<a>').attr('href', url)
+                                 .text(name)
+                                 .attr('id', 'service-catalog-nav-item');
+  $("#" + parent_ele).prepend(serviceCatalog);
 }
 
 function buildServiceCatalog() {
@@ -36,7 +36,7 @@ function buildUI() {
   const serviceItemsContainer = buildServiceCategoriesItems();
 
   // Append the navbar to the container
-  serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer); // Add serviceItemsContainer
+  serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer);
   newSection.append(serviceCatalogContainer);
   $('main').append(newSection);
 }
@@ -73,7 +73,7 @@ function buildServiceCategoriesItems() {
 
 function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visible) {
   const serviceCategoryItemsContainer = $('<div>');
-  serviceCategoryItemsContainer.attr('id', serviceCategory.toLowerCase().replace(/\s+/g, "_") + '_container');
+  serviceCategoryItemsContainer.attr('id', generateId(serviceCategory) + '_container');
 
   setDataAttributes(serviceCategoryItemsContainer, serviceCategoryItems.dataAttributes);
 
@@ -93,12 +93,6 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container
 
   return serviceCategoryItemsContainer;
-}
-
-function setDataAttributes(element, dataAttributes) {
-  Object.keys(dataAttributes).forEach(function(dataAttributeName) {
-    element.data(dataAttributeName, dataAttributes[dataAttributeName]);
-  });
 }
 
 function bindEventListeners(serviceCategories) {

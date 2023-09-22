@@ -1,3 +1,5 @@
+import { generateId } from './utility.js';
+
 const serviceCategories = [
   'My IT Assets',
   'View Raised Requests',
@@ -78,10 +80,6 @@ function getServiceCategoryItems(serviceCategory) {
 
 function getServiceCategoriesItems() {
   return serviceCategoriesItems;
-}
-
-function generateId(str) {
-  return str.toLowerCase().replace(/\s+/g, "_"); // Added 'return' statement
 }
 
 export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems };
