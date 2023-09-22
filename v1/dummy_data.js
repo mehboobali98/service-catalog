@@ -45,7 +45,7 @@ const serviceCategoriesItems = {
     ],
     dataAttributes: {
       'custom-field-id':      '13884803612562',
-      'request-form-id:'      '13884860165010',
+      'request-form-id':      '13884860165010',
       'custom-field-value':   'Report My Hardware Issue',
       'request-form-subject': 'Report Hardware Issue - '
     }
