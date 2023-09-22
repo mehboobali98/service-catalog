@@ -1,5 +1,5 @@
-import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems } from './dummy_data.js';
+import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
 
 function addMenuItem(name, url, parent_ele) {
   var anchor = document.createElement('a');
@@ -10,11 +10,6 @@ function addMenuItem(name, url, parent_ele) {
 }
 
 function buildServiceCatalog() {
-  buildUI();
-  bindEventListeners(getServiceCategories());
-}
-
-function buildUI() {
   const newSection = $('<section>').attr('id', 'service_catalog_section').addClass('service-catalog-section');
 
   const serviceCatalogContainer = $('<div>').addClass('row');
@@ -39,6 +34,7 @@ function buildUI() {
   serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer); // Add serviceItemsContainer
   newSection.append(serviceCatalogContainer);
   $('main').append(newSection);
+  bindEventListeners(getServiceCategories());
 }
 
 // Create a function to generate the vertical navbar
@@ -74,14 +70,6 @@ function buildServiceCategoriesItems() {
 function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visible) {
   const serviceCategoryItemsContainer = $('<div>');
   serviceCategoryItemsContainer.attr('id', serviceCategory.toLowerCase().replace(/\s+/g, "_") + '_container');
-
-  debugger;
-  // to-do: refactor. Store these in dummy data against data_attributes key for dynamic handling.
-  serviceCategoryItemsContainer.data('custom-field-id', serviceCategoryItems.custom_field_id);
-  serviceCategoryItemsContainer.data('request-form-id', serviceCategoryItems.request_form_id);
-  serviceCategoryItemsContainer.data('custom-field-value', serviceCategoryItems.custom_field_value);
-  serviceCategoryItemsContainer.data('request-form-subject', serviceCategoryItems.request_form_subject);
-  debugger;
 
   if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
