@@ -75,13 +75,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   const serviceCategoryItemsContainer = $('<div>');
   serviceCategoryItemsContainer.attr('id', serviceCategory.toLowerCase().replace(/\s+/g, "_") + '_container');
 
-  debugger;
-  // to-do: refactor. Store these in dummy data against data_attributes key for dynamic handling.
-  serviceCategoryItemsContainer.data('custom-field-id', serviceCategoryItems.custom_field_id);
-  serviceCategoryItemsContainer.data('request-form-id', serviceCategoryItems.request_form_id);
-  serviceCategoryItemsContainer.data('custom-field-value', serviceCategoryItems.custom_field_value);
-  serviceCategoryItemsContainer.data('request-form-subject', serviceCategoryItems.request_form_subject);
-  debugger;
+  setDataAttributes(serviceCategoryItemsContainer, serviceCategoryItems.dataAttributes);
 
   if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
@@ -93,12 +87,18 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
-    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem, serviceCategoryItems.request_form_id));
+    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem, serviceCategoryItems.dataAttributes['request-form-id']));
   });
 
   serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container
 
   return serviceCategoryItemsContainer;
+}
+
+function setDataAttributes(element, dataAttributes) {
+  Object.keys(dataAttributes).forEach(function(dataAttributeName) {
+    element.data(dataAttributeName, dataAttributes[dataAttributeName]);
+  });
 }
 
 function bindEventListeners(serviceCategories) {
