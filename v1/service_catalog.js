@@ -1,3 +1,4 @@
+import { updateNewRequestForm } from './new_request_form.js';
 import { addMenuItem, buildServiceCatalog } from './service_catalog_builder.js';
 
 $(document).ready(function(){
@@ -6,13 +7,26 @@ $(document).ready(function(){
 });
 
 function initServiceCatalog() {
-  if (!isServiceCatalogPage()) { return; }
-
-  buildServiceCatalog();
+  debugger;
+  if (isServiceCatalogPage()) {
+    buildServiceCatalog();
+  } else if(isNewRequestPage()) {
+    updateNewRequestForm();
+  } else {
+  }
 }
 
 function isServiceCatalogPage() {
-  const pattern  = /\/hc(\/en-us)?\/p\/service_catalog/;
+  const regex = /\/hc(\/en-us)?\/p\/service_catalog/;
+  return isCorrectPage(regex);
+}
+
+function isNewRequestPage() {
+  const regex = /\/hc(\/en-us)?\/p\/requests\/new/;
+  return isCorrectPage();
+}
+
+function isCorrectPage(regex) {
   const pathname = window.location.pathname;
-  return pattern.test(pathname);
+  return regex.test(pathname);
 }
