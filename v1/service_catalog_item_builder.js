@@ -26,7 +26,8 @@ function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
   const cardBody = $('<div>').addClass('col-8');
 
   // Create the card title
-  const cardTitle = $('<p>').text(serviceCategoryItem.name);
+  const assetName = serviceCategoryItem.name;
+  const cardTitle = $('<p>').text(assetName);
   cardBody.append(cardTitle);
 
   $.each(serviceCategoryItem.display_fields, function(index, field) {
@@ -36,6 +37,8 @@ function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
 
   // submit request button
   var queryParams = {
+    category:       'my_it_assets',
+    asset_name:     assetName,
     ticket_form_id: requestFormId
   };
   var url = '/hc/requests/new' + '?' + $.param(queryParams);
