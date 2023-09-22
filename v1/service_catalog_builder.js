@@ -75,7 +75,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   const serviceCategoryItemsContainer = $('<div>');
   serviceCategoryItemsContainer.attr('id', generateId(serviceCategory) + '_container');
 
-  setDataAttributes(serviceCategoryItemsContainer, serviceCategoryItems.dataAttributes);
+  if (serviceCategoryItems.dataAttributes) { setDataAttributes(serviceCategoryItemsContainer, serviceCategoryItems.dataAttributes); }
 
   if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
