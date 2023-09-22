@@ -34,13 +34,12 @@ function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
     cardBody.append(cardField);
   });
 
-  // submit request button
+  // submit request button 
   var queryParams = {
     ticket_form_id: requestFormId
   };
   var url = '/hc/requests/new' + '?' + $.param(queryParams);
   const submitRequestBtn = $('<a>').attr('href', url)
-                                   .attr('target', '_blank')
                                    .text('Report Issue')
                                    .addClass('float-end');
   cardBody.append(submitRequestBtn);
