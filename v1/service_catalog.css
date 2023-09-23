@@ -26,12 +26,16 @@
   text-decoration: none;
 }
 
-.service-items-container service-item-card {
-  width: 400px;
-  height: 400px;
+.service-items-container .service-item-card {
+  width:  600px;
+  height: 600px;
   border: 2px solid !important;
 }
 
-.service-items-container service-item-card a {
+.service-items-container .service-item-card .description {
+  word-wrap: break-word;
+}
+
+.service-items-container .service-item-card a {
   text-decoration: none;
 }

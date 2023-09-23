@@ -1,5 +1,5 @@
-import { generateId } from './utility.js';
 import { buildServiceCategoryItem }      from './service_catalog_item_builder.js';
+import { generateId } from './utility.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {

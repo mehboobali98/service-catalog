@@ -72,7 +72,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
 
   // card description
   const cardDescription = $('<p>').text(serviceCategoryItem.description)
-                                  .addClass('text-truncate');
+                                  .addClass('text-truncate description');
   cardBody.append(cardDescription);
 
   //card footer (price and arrow)
