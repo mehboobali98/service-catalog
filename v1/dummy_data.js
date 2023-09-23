@@ -44,11 +44,11 @@ const serviceCategoriesItems = {
       }
     ],
     queryParams: {
+      'ticket_form_id':       '13884860165010',
       'custom_field_id':      '13884803612562',
-      'request_form_id':      '13884860165010',
       'service_category':     'my_it_assets',
       'custom_field_value':   'Report My Hardware Issue',
-      'request_form_subject': 'Report Hardware Issue - '
+      'ticket_form_subject':  'Report Hardware Issue - '
     }
   },
   'Request New Software': {
@@ -69,11 +69,11 @@ const serviceCategoriesItems = {
       }
     ],
     queryParams: {
+      'ticket_form_id':       '13884860165010',
       'custom_field_id':      '13884803612562',
-      'request_form_id':      '13884860165010',
       'service_category':     'request_new_software',
       'custom_field_value':   'Request New Software',
-      'request_form_subject': 'Request New Software - '
+      'ticket_form_subject':  'Request New Software - '
     }
   }
 };
