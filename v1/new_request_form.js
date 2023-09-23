@@ -7,8 +7,6 @@ function updateNewRequestForm() {
   let serviceCategory      = searchParams.get('service_category');
   let serviceCategoryItems = getServiceCategoryItems(serviceCategory);
 
-  debugger;
-
   if (serviceCategoryItems) {
     let ticketFormData    = serviceCategoryItems.ticketFormData;
 

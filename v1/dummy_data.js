@@ -45,7 +45,7 @@ const serviceCategoriesItems = {
     ],
     queryParams: {
       'ticket_form_id':       '13884860165010',
-      'service_category':     'my_it_assets'
+      'service_category':     'My IT Assets'
     },
     ticketFormData: {
       'custom_field_id':      '13884803612562',
@@ -72,7 +72,7 @@ const serviceCategoriesItems = {
     ],
     queryParams: {
       'ticket_form_id':       '13884860165010',
-      'service_category':     'request_new_software'
+      'service_category':     'Request New Software'
     },
     ticketFormData: {
       'custom_field_id':      '13884803612562',
