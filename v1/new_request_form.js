@@ -10,11 +10,12 @@ function updateNewRequestForm() {
   if (serviceCategoryItems) {
     let ticketFormData    = serviceCategoryItems.ticketFormData;
 
+    let assetName         = searchParams.get('asset_name');
     let customFieldId     = ticketFormData.custom_field_id;
     let customFieldValue  = ticketFormData.custom_field_value;
     let ticketFormSubject = ticketFormData.ticket_form_subject;
 
-    $('#request_subject').val(ticketFormSubject);
+    $('#request_subject').val(ticketFormSubject + assetName);
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
 }
