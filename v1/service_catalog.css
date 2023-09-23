@@ -28,8 +28,9 @@
 
 .service-items-container .service-item-card {
   width:  600px;
-  height: 600px;
+  height: 400px;
   border: 2px solid !important;
+  margin-right: 40px;
 }
 
 .service-items-container .service-item-card .description {
