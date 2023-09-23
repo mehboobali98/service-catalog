@@ -6,7 +6,7 @@ function buildServiceCategoryItem(serviceCategoryItem, queryParams) {
     case 'assigned_software_entitlement':
       return buildSoftwareServiceItem(serviceCategoryItem);
     case 'software_request':
-      return buildSoftwareRequestServiceItem(serviceCategoryItem);
+      return buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams);
     default:
       // Handle unknown service type
       break;
@@ -52,7 +52,7 @@ function buildSoftwareServiceItem(serviceCategoryItem) {
   return '';
 }
 
-function buildSoftwareRequestServiceItem(serviceCategoryItem) {
+function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Create the card image element
@@ -65,7 +65,8 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
   const cardBody = $('<div>').addClass('col-8');
 
   // card title
-  const cardTitle = $('<p>').text(serviceCategoryItem.name);
+  let softwareName = serviceCategoryItem.name;
+  const cardTitle  = $('<p>').text(softwareName);
   cardBody.append(cardTitle);
 
 
@@ -85,7 +86,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem) {
     arrow.addClass('float-end');
   }
   cardFooter.append(arrow);
-  card.append(cardImageContainer, cardBody);
+  card.append(cardImageContainer, cardBody, cardFooter);
 
   return card;
 }
