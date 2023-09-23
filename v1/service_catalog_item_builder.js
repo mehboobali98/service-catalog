@@ -35,6 +35,8 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
     cardBody.append(cardField);
   });
 
+  queryParams['asset_name'] = assetName;
+
   var url = '/hc/requests/new' + '?' + $.param(queryParams);
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')
