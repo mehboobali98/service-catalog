@@ -3,9 +3,11 @@ import { getServiceCategoryItems } from './dummy_data.js';
 function updateNewRequestForm() {
   if ($('.nesty-input')[0].text === "-") { return; }
 
-  searchParams = extractQueryParams(window.location);
-  let serviceCategory = searchParams.get('service_category');
+  let searchParams         = extractQueryParams(window.location);
+  let serviceCategory      = searchParams.get('service_category');
   let serviceCategoryItems = getServiceCategoryItems(serviceCategory);
+
+  debugger;
 
   if (serviceCategoryItems) {
     let ticketFormData    = serviceCategoryItems.ticketFormData;
