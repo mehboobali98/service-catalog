@@ -16,4 +16,4 @@ function isCorrectPage(regex) {
   return regex.test(window.location.pathname);
 }
 
-export { generateId, isCorrectPage, isNewRequestPage, isServiceCatalogPage, setDataAttributes };
+export { generateId, isCorrectPage, isNewRequestPage, isServiceCatalogPage };
