@@ -43,11 +43,12 @@ const serviceCategoriesItems = {
         ]
       }
     ],
-    dataAttributes: {
-      'custom-field-id':      '13884803612562',
-      'request-form-id':      '13884860165010',
-      'custom-field-value':   'Report My Hardware Issue',
-      'request-form-subject': 'Report Hardware Issue - '
+    queryParams: {
+      'custom_field_id':      '13884803612562',
+      'request_form_id':      '13884860165010',
+      'service_category':     'my_it_assets',
+      'custom_field_value':   'Report My Hardware Issue',
+      'request_form_subject': 'Report Hardware Issue - '
     }
   },
   'Request New Software': {
@@ -67,11 +68,12 @@ const serviceCategoriesItems = {
         description: "SlackConnect Plus is the ultimate productivity-enhancing app for Slack, designed to supercharge your team's collaboration and communication experience. Elevate your Slack workspace to a whole new level with a range of powerful features that streamline workflows, boost efficiency, and facilitate seamless collaboration like never before."
       }
     ],
-    dataAttributes: {
-      'custom-field-id':      '13884803612562',
-      'request-form-id':      '13884860165010',
-      'custom-field-value':   'Request New Software',
-      'request-form-subject': 'Request New Software - '
+    queryParams: {
+      'custom_field_id':      '13884803612562',
+      'request_form_id':      '13884860165010',
+      'service_category':     'request_new_software',
+      'custom_field_value':   'Request New Software',
+      'request_form_subject': 'Request New Software - '
     }
   }
 };

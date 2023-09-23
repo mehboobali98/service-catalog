@@ -75,8 +75,6 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   const serviceCategoryItemsContainer = $('<div>');
   serviceCategoryItemsContainer.attr('id', generateId(serviceCategory) + '_container');
 
-  if (serviceCategoryItems.dataAttributes) { setDataAttributes(serviceCategoryItemsContainer, serviceCategoryItems.dataAttributes); }
-
   if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
   const serviceCategoryLabel = $('<p></p>').text(serviceCategory);
@@ -87,7 +85,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
   const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
-    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem, serviceCategoryItems.dataAttributes['request-form-id']));
+    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem, serviceCategoryItems.queryParams));
   });
 
   serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container

@@ -1,8 +1,8 @@
-function buildServiceCategoryItem(serviceCategoryItem, requestFormId) {
+function buildServiceCategoryItem(serviceCategoryItem, queryParams) {
   const serviceItemType = serviceCategoryItem.type;
   switch (serviceItemType) {
     case 'assigned_it_asset':
-      return buildItAssetServiceItem(serviceCategoryItem, requestFormId);
+      return buildItAssetServiceItem(serviceCategoryItem, queryParams);
     case 'assigned_software_entitlement':
       return buildSoftwareServiceItem(serviceCategoryItem);
     case 'software_request':
@@ -13,7 +13,7 @@ function buildServiceCategoryItem(serviceCategoryItem, requestFormId) {
   }
 }
 
-function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
+function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Create the card image element
@@ -35,12 +35,6 @@ function buildItAssetServiceItem(serviceCategoryItem, requestFormId) {
     cardBody.append(cardField);
   });
 
-  // submit request button 
-  var queryParams = {
-    category:       'my_it_assets',
-    asset_name:     assetName,
-    ticket_form_id: requestFormId
-  };
   var url = '/hc/requests/new' + '?' + $.param(queryParams);
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')

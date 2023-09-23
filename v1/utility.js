@@ -16,15 +16,4 @@ function isCorrectPage(regex) {
   return regex.test(window.location.pathname);
 }
 
-function setDataAttributes(element, dataAttributes) {
-  if (dataAttributes && typeof dataAttributes === 'object') {
-    Object.keys(dataAttributes).forEach(function(dataAttributeName) {
-      const value = dataAttributes[dataAttributeName];
-      if (value !== null && value !== undefined && value !== '') {
-        element.data(dataAttributeName, value);
-      }
-    });
-  }
-}
-
 export { generateId, isCorrectPage, isNewRequestPage, isServiceCatalogPage, setDataAttributes };
