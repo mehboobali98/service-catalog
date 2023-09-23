@@ -3,7 +3,7 @@ function generateId(str) {
 }
 
 function isNewRequestPage() {
-  const regex = /\/hc(\/en-us)?\/p\/requests\/new/;
+  const regex = /\/hc(\/en-us)?\/requests\/new/;
   return isCorrectPage(regex);
 }
 
