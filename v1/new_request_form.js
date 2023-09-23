@@ -9,8 +9,7 @@ function updateNewRequestForm() {
 }
 
 function extractQueryParams(url) {
-  const url = new URL(url);
-  return url.searchParams;
+  return new URL(url).searchParams;
 }
 
 export { updateNewRequestForm };
