@@ -37,6 +37,7 @@ function getTokenAndFetchAssignedAssets(searchParams) {
   };
 
   const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
+  debugger;
   return populateAssignedAssets(url, options, searchParams);
 }
 
