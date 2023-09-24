@@ -17,6 +17,7 @@ function updateNewRequestForm() {
     $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
+  getTokenAndFetchAssignedAssets();
   preselectAssetsCustomField(searchParams);
 }
 
