@@ -25,20 +25,19 @@ function extractQueryParams(url) {
 }
 
 function getTokenAndFetchAssignedAssets(searchParams) {
-  return withToken().then((token, searchParams) => {
-    if (token) {
-      const options = {
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + token,
-          'ngrok-skip-browser-warning': true
-        }
-      };
+  const token = withToken();
+  if (!token) { return; }
 
-      const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
-      return populateAssignedAssets(url, options, searchParams);
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'ngrok-skip-browser-warning': true
     }
-  });
+  };
+
+  const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
+  return populateAssignedAssets(url, options, searchParams);
 }
 
 function withToken() {
@@ -61,6 +60,7 @@ function populateAssignedAssets(url, options, searchParams) {
     ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
     renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
+    debugger;
     preselectAssetsCustomField(searchParams);
 
     $('form.request-form').on('submit', function (e) {
