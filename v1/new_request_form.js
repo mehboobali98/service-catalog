@@ -36,14 +36,15 @@ function updateSubject(subject, searchParams, serviceCategory) {
 }
 
 function preselectAssetsCustomField(searchParams) {
-  debugger;
-  if (!assetsCustomFieldPresent(ezoFieldId)) { return; }
+  let ezoCustomFieldEle = $('#request_custom_fields_' + ezoFieldId);
+  if (!assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
   let assetId    = searchParams.get('asset_id');
   let assetName  = searchParams.get('asset_name');
 
-  debugger;
   if (!assetName || !assetId) { return; }
+
+  renderEzoSelect2Field(ezoCustomFieldEle);
 
   // Set the value, creating a new option if necessary
   if ($('#ezo-asset-select').find("option[value='" + assetId + "']").length) {
@@ -54,8 +55,20 @@ function preselectAssetsCustomField(searchParams) {
   } 
 }
 
-function assetsCustomFieldPresent(ezoFieldId) {
-  return $('#request_custom_fields_' + ezoFieldId).length > 0;
+function assetsCustomFieldPresent(ezoCustomFieldEle) {
+  return ezoCustomFieldEle.length > 0;
+}
+
+function renderEzoSelect2Field(ezoCustomFieldEle) {
+  let ezoSelectEle = $('#ezo-asset-select');
+  if (ezoSelectEle.length > 0) { return };
+
+  ezoCustomFieldEle.hide();
+  let ezoSelect2Field = $('select').attr('id', 'ezo-asset-select')
+                                   .attr('multiple', 'multiple')
+                                   .addClass('w-100');
+
+  ezoCustomFieldEle.after(ezoSelect2Field);
 }
 
 
