@@ -31,7 +31,8 @@ function getTokenAndFetchAssignedAssets() {
       const options = {
         method: 'GET',
         headers: {
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + token,
+          'ngrok-skip-browser-warning': true
         }
       };
 
