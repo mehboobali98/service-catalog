@@ -17,6 +17,7 @@ function updateNewRequestForm() {
     $('#request_subject').val(updateSubject);
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
+  preselectAssetsCustomField(searchParams);
 }
 
 function extractQueryParams(url) {
@@ -33,5 +34,27 @@ function updateSubject(subject, searchParams, serviceCategory) {
       return subject; 
   }
 }
+
+function preselectAssetsCustomField(searchParams) {
+  if (!assetsCustomFieldPresent(ezoFieldId)) { return; }
+
+  let assetId    = searchParams.get('asset_id');
+  let assetName  = searchParams.get('asset_name');
+
+  if (!assetName && !assetId) { return; }
+
+  // Set the value, creating a new option if necessary
+  if ($('#ezo-asset-select').find("option[value='" + assetId + "']").length) {
+      $('#ezo-asset-select').val(data.id).trigger('change');
+  } else { 
+    var newOption = new Option(assetName, assetId, true, true);
+    $('#ezo-asset-select').append(newOption).trigger('change');
+  } 
+}
+
+function assetsCustomFieldPresent(ezoFieldId) {
+  return $('#request_custom_fields_' + ezoFieldId).length > 0;
+}
+
 
 export { updateNewRequestForm };

@@ -1,5 +1,4 @@
-import { buildServiceCategoryItem }      from './service_catalog_item_builder.js';
-import { generateId } from './utility.js';
+import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
@@ -65,7 +64,7 @@ function buildServiceCategoriesItems() {
 
   $.each(serviceCategories, function(index, serviceCategory) {
     var serviceCategoryItems = getServiceCategoryItems(serviceCategory);
-    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, serviceCategory === 'My IT Assets'));
+    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, serviceCategory === 'my_it_assets'));
   });
 
   return serviceItemsContainer;
@@ -73,12 +72,12 @@ function buildServiceCategoriesItems() {
 
 function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visible) {
   const serviceCategoryItemsContainer = $('<div>');
-  serviceCategoryItemsContainer.attr('id', generateId(serviceCategory) + '_container');
+  serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
 
   if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-  const serviceCategoryLabel = $('<p></p>').text(serviceCategory);
-  const serviceCategoryDescription = $('<p></p>').text(serviceCategoryItems.description);
+  const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label);
+  const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description);
 
   serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 

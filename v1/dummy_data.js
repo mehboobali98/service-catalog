@@ -12,10 +12,12 @@ const serviceCategories = [
 ];
 
 const serviceCategoriesItems = {
-  'My IT Assets': {
+  'my_it_assets': {
+    label:       'My IT Assets'
     description: 'List of everything within your custody. Easily report issues with your assigned devices or software.',
     serviceItems: [
       { 
+        id:    '134',
         name:  'Dell Inspiron 15 311',
         type:  'assigned_it_asset',  
         img_src: 'adasd',
@@ -25,6 +27,7 @@ const serviceCategoriesItems = {
         ]
       },
       {
+        id:    '135',
         name:  'Jabra Evolve Headset',
         type:  'assigned_it_asset',   
         img_src: 'asdasd',
@@ -34,6 +37,7 @@ const serviceCategoriesItems = {
         ]
       },
       {
+        id:      '136',
         name:    'Zoom',
         type:    'assigned_software_entitlement',
         img_src: 'asdasd',
@@ -44,7 +48,7 @@ const serviceCategoriesItems = {
       }
     ],
     queryParams: {
-      'ticket_form_id':       '13884860165010',
+      'ticket_form_id':       '13884864036114',
       'service_category':     'My IT Assets'
     },
     ticketFormData: {
@@ -53,7 +57,8 @@ const serviceCategoriesItems = {
       'ticket_form_subject':  'Report Hardware Issue - '
     }
   },
-  'Request New Software': {
+  'request_new_software': {
+    label:       'Request New Software'
     description: 'Browse and request available software for your needs or request a new one!',
     serviceItems: [
       {
