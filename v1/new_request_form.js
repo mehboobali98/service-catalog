@@ -17,17 +17,15 @@ function updateNewRequestForm() {
     $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
-  getTokenAndFetchAssignedAssets();
-  debugger;
-  preselectAssetsCustomField(searchParams);
+  getTokenAndFetchAssignedAssets(searchParams);
 }
 
 function extractQueryParams(url) {
   return new URL(url).searchParams;
 }
 
-function getTokenAndFetchAssignedAssets() {
-  return withToken().then(token => {
+function getTokenAndFetchAssignedAssets(searchParams) {
+  return withToken().then((token, searchParams) => {
     if (token) {
       const options = {
         method: 'GET',
@@ -38,7 +36,7 @@ function getTokenAndFetchAssignedAssets() {
       };
 
       const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
-      return populateAssignedAssets(url, options);
+      return populateAssignedAssets(url, options, searchParams);
     }
   });
 }
@@ -47,7 +45,7 @@ function withToken() {
   return $.getJSON('/hc/api/v2/integration/token').then(data => data.token);
 }
 
-function populateAssignedAssets(url, options) {
+function populateAssignedAssets(url, options, searchParams) {
   fetch(url, options).then(response => response.json())
                      .then(data => {
 
@@ -63,6 +61,7 @@ function populateAssignedAssets(url, options) {
     ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
     renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
+    preselectAssetsCustomField(searchParams);
 
     $('form.request-form').on('submit', function (e) {
       const selectedIds = $('#ezo-asset-select').val();
