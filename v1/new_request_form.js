@@ -1,12 +1,14 @@
 import { getServiceCategoryItems } from './dummy_data.js';
 
 function updateNewRequestForm() {
+  debugger;
   if ($('.nesty-input')[0].text === "-") { return; }
 
   let searchParams         = extractQueryParams(window.location);
   let serviceCategory      = searchParams.get('service_category');
   let serviceCategoryItems = getServiceCategoryItems(serviceCategory);
 
+  debugger;
   if (serviceCategoryItems) {
     let ticketFormData    = serviceCategoryItems.ticketFormData;
 
@@ -17,6 +19,7 @@ function updateNewRequestForm() {
     $('#request_subject').val(updateSubject);
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
+  debugger;
   preselectAssetsCustomField(searchParams);
 }
 
@@ -36,11 +39,13 @@ function updateSubject(subject, searchParams, serviceCategory) {
 }
 
 function preselectAssetsCustomField(searchParams) {
+  debugger;
   if (!assetsCustomFieldPresent(ezoFieldId)) { return; }
 
   let assetId    = searchParams.get('asset_id');
   let assetName  = searchParams.get('asset_name');
 
+  debugger;
   if (!assetName && !assetId) { return; }
 
   // Set the value, creating a new option if necessary
