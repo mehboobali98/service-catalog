@@ -17,35 +17,35 @@ function updateNewRequestForm() {
     $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
-  getTokenAndFetchAssignedAssets(searchParams);
+  getTokenAndFetchAssignedAssets();
 }
 
 function extractQueryParams(url) {
   return new URL(url).searchParams;
 }
 
-function getTokenAndFetchAssignedAssets(searchParams) {
-  const token = withToken();
-  if (!token) { return; }
+function getTokenAndFetchAssignedAssets() {
+  return withToken().then(token => {
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'ngrok-skip-browser-warning': true
+        }
+      };
 
-  const options = {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + token,
-      'ngrok-skip-browser-warning': true
+      const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
+      return populateAssignedAssets(url, options);
     }
-  };
-
-  const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
-  debugger;
-  return populateAssignedAssets(url, options, searchParams);
+  });
 }
 
 function withToken() {
   return $.getJSON('/hc/api/v2/integration/token').then(data => data.token);
 }
 
-function populateAssignedAssets(url, options, searchParams) {
+function populateAssignedAssets(url, options) {
   fetch(url, options).then(response => response.json())
                      .then(data => {
 
@@ -61,8 +61,7 @@ function populateAssignedAssets(url, options, searchParams) {
     ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
     renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
-    debugger;
-    preselectAssetsCustomField(searchParams);
+    preselectAssetsCustomField(extractQueryParams(window.location));
 
     $('form.request-form').on('submit', function (e) {
       const selectedIds = $('#ezo-asset-select').val();
