@@ -35,6 +35,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
     cardBody.append(cardField);
   });
 
+  queryParams['asset_id']   = serviceCategoryItem.id;
   queryParams['asset_name'] = assetName;
 
   var url = '/hc/requests/new' + '?' + $.param(queryParams);

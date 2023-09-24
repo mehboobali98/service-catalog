@@ -14,7 +14,7 @@ function updateNewRequestForm() {
     let customFieldValue  = ticketFormData.custom_field_value;
     let ticketFormSubject = ticketFormData.ticket_form_subject;
 
-    $('#request_subject').val(updateSubject);
+    $('#request_subject').val(updateSubject(ticketFormData, searchParams, serviceCategory));
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
   preselectAssetsCustomField(searchParams);
