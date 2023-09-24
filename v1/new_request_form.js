@@ -14,7 +14,7 @@ function updateNewRequestForm() {
     let customFieldValue  = ticketFormData.custom_field_value;
     let ticketFormSubject = ticketFormData.ticket_form_subject;
 
-    $('#request_subject').val(updateSubject(ticketFormData, searchParams, serviceCategory));
+    $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
   preselectAssetsCustomField(searchParams);
@@ -36,16 +36,18 @@ function updateSubject(subject, searchParams, serviceCategory) {
 }
 
 function preselectAssetsCustomField(searchParams) {
+  debugger;
   if (!assetsCustomFieldPresent(ezoFieldId)) { return; }
 
   let assetId    = searchParams.get('asset_id');
   let assetName  = searchParams.get('asset_name');
 
-  if (!assetName && !assetId) { return; }
+  debugger;
+  if (!assetName || !assetId) { return; }
 
   // Set the value, creating a new option if necessary
   if ($('#ezo-asset-select').find("option[value='" + assetId + "']").length) {
-      $('#ezo-asset-select').val(data.id).trigger('change');
+      $('#ezo-asset-select').val(assetId).trigger('change');
   } else { 
     var newOption = new Option(assetName, assetId, true, true);
     $('#ezo-asset-select').append(newOption).trigger('change');
