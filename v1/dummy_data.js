@@ -13,7 +13,7 @@ const serviceCategories = [
 
 const serviceCategoriesItems = {
   'my_it_assets': {
-    label:       'My IT Assets'
+    label:       'My IT Assets',
     description: 'List of everything within your custody. Easily report issues with your assigned devices or software.',
     serviceItems: [
       { 
@@ -58,7 +58,7 @@ const serviceCategoriesItems = {
     }
   },
   'request_new_software': {
-    label:       'Request New Software'
+    label:       'Request New Software',
     description: 'Browse and request available software for your needs or request a new one!',
     serviceItems: [
       {
