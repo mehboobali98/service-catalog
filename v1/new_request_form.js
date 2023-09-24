@@ -36,6 +36,7 @@ function getTokenAndFetchAssignedAssets() {
       };
 
       const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
+      debugger;
       return populateAssignedAssets(url, options);
     }
   });
@@ -46,6 +47,7 @@ function withToken() {
 }
 
 function populateAssignedAssets(url, options) {
+  debugger;
   fetch(url, options).then(response => response.json())
                      .then(data => {
 
