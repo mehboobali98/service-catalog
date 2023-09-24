@@ -18,6 +18,7 @@ function updateNewRequestForm() {
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
   getTokenAndFetchAssignedAssets();
+  debugger;
   preselectAssetsCustomField(searchParams);
 }
 
@@ -37,7 +38,6 @@ function getTokenAndFetchAssignedAssets() {
       };
 
       const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
-      debugger;
       return populateAssignedAssets(url, options);
     }
   });
@@ -48,7 +48,6 @@ function withToken() {
 }
 
 function populateAssignedAssets(url, options) {
-  debugger;
   fetch(url, options).then(response => response.json())
                      .then(data => {
 
@@ -136,6 +135,7 @@ function preselectAssetsCustomField(searchParams) {
 
   if (!assetName || !assetId) { return; }
 
+  debugger;
   renderEzoSelect2Field(ezoCustomFieldEle);
 
   // Set the value, creating a new option if necessary
@@ -153,6 +153,7 @@ function assetsCustomFieldPresent(ezoCustomFieldEle) {
 
 function renderEzoSelect2Field(ezoCustomFieldEle) {
   let ezoSelectEle = $('#ezo-asset-select');
+  debugger;
   if (ezoSelectEle.length > 0) { return };
 
   ezoCustomFieldEle.hide();
