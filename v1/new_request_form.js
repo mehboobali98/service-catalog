@@ -52,7 +52,8 @@ function preselectAssetsCustomField(searchParams) {
   } else { 
     var newOption = new Option(assetName, assetId, true, true);
     $('#ezo-asset-select').append(newOption).trigger('change');
-  } 
+  }
+  debugger;
 }
 
 function assetsCustomFieldPresent(ezoCustomFieldEle) {
