@@ -62,14 +62,16 @@ function assetsCustomFieldPresent(ezoCustomFieldEle) {
 
 function renderEzoSelect2Field(ezoCustomFieldEle) {
   let ezoSelectEle = $('#ezo-asset-select');
+  debugger;
   if (ezoSelectEle.length > 0) { return };
 
   ezoCustomFieldEle.hide();
-  let ezoSelect2Field = $('select').attr('id', 'ezo-asset-select')
-                                   .attr('multiple', 'multiple')
-                                   .addClass('w-100');
+  // let ezoSelect2Field = $('select').attr('id', 'ezo-asset-select')
+  //                                  .attr('multiple', 'multiple')
+  //                                  .addClass('w-100');
 
-  ezoCustomFieldEle.after(ezoSelect2Field);
+  //ezoCustomFieldEle.after(ezoSelect2Field);
+  ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 }
 
 
