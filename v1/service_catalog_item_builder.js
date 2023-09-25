@@ -50,16 +50,12 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')
                                    .addClass('card-footer');
-  submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow '));
+  submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
 
   cardBody.append(submitRequestBtn);
   card.append(cardImageContainer, cardBody);
 
   return card;
-}
-
-function buildSoftwareServiceItem(serviceCategoryItem) {
-  return '';
 }
 
 function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
@@ -75,8 +71,8 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   const cardBody = $('<div>').addClass('col-8 card-body');
 
   // card title
-  let softwareName = serviceCategoryItem.name;
-  const cardTitle  = $('<p>').text(softwareName);
+  const softwareName = serviceCategoryItem.name;
+  const cardTitle  = $('<p>').text(softwareName).addClass('card-title');
   cardBody.append(cardTitle);
 
 
@@ -86,10 +82,11 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   cardBody.append(cardDescription);
 
   //card footer (price and arrow)
-  const arrow = $('<span>').text('&#8594;');
+  const arrow = $('<span>').html('&#8594;').addClass('footer-arrow');
+
   const cardFooter = $('<div>').addClass('card-footer');
   if (serviceCategoryItem.price) {
-    cardFooter.addClass('d-flex justify-content-end');
+    cardFooter.addClass('d-flex justify-between-end');
     const price = $('<span>').text(serviceCategoryItem.price);
     cardFooter.append(price);
   } else {
