@@ -43,8 +43,8 @@
 .service-items-container .service-item-card .card-footer {
   right: 0;
   bottom: 0;
-  position: absolute;
   padding: 10px;
+  position: absolute;
 }
 
 .service-items-container .service-item-card a {

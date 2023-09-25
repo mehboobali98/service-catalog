@@ -87,7 +87,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visibl
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem, serviceCategoryItems.queryParams));
   });
 
-  serviceCategoryItemsContainer.append(serviceCategoryItemsFlex); // Append the flex container
+  serviceCategoryItemsContainer.append(serviceCategoryItemsFlex);
 
   return serviceCategoryItemsContainer;
 }
