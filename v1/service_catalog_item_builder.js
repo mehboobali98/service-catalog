@@ -36,7 +36,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   $.each(serviceCategoryItem.display_fields, function(index, rowData) {
     let newRow = $("<tr>");
     newRow.append($('<th>').text(rowData.label));
-    newRow.append($('<th>').text(rowData.value));
+    newRow.append($('<td>').text(rowData.value));
     cardContent.append(newRow);
   });
   cardContentContainer.append(cardContent);
@@ -50,7 +50,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')
                                    .addClass('card-footer');
-  submitRequestBtn.append($('<span>').text('&#8594;'));
+  submitRequestBtn.append($('<span>').html('&#8594;').css({ 'font-size': '30px' }));
 
   cardBody.append(submitRequestBtn);
   card.append(cardImageContainer, cardBody);
