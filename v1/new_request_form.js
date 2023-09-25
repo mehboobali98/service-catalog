@@ -8,9 +8,7 @@ function updateNewRequestForm() {
   const serviceCategoryItems = getServiceCategoryItems(serviceCategory);
 
   if (serviceCategoryItems) {
-    debugger;
-    const serviceCategoryItem = findServiceCategoryItem(searchParams, serviceCategoryItems);
-    debugger;
+    const serviceCategoryItem = findServiceCategoryItem(searchParams, serviceCategoryItems.serviceItems);
     if (serviceCategoryItem) {
       const ticketFormData    = serviceCategoryItem.ticketFormData;
       const customFieldId     = ticketFormData.custom_field_id;
