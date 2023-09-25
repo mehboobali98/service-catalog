@@ -45,7 +45,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')
                                    .addClass('card-footer');
-  submitRequestBtn.append($('<span>').text('&#8594'));
+  submitRequestBtn.append($('<span>').text('&#8594;'));
 
   cardBody.append(submitRequestBtn);
   card.append(cardImageContainer, cardBody);
@@ -81,7 +81,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   cardBody.append(cardDescription);
 
   //card footer (price and arrow)
-  const arrow = $('<span>').text('&#8594');
+  const arrow = $('<span>').text('&#8594;');
   const cardFooter = $('<div>').addClass('card-footer');
   if (serviceCategoryItem.price) {
     cardFooter.addClass('d-flex justify-content-end');
