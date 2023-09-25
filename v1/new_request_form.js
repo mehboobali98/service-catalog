@@ -63,19 +63,18 @@ function populateAssignedAssets(url, options) {
     renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
     preselectAssetsCustomField(extractQueryParams(window.location));
 
-    $('form.request-form').on('submit', function (e) {
-      const selectedIds = $('#ezo-asset-select').val();
-
+    $('form.request-form').on('submit', function () {
+      var selectedIds = $('#ezo-asset-select').val();
+      debugger;
       if (selectedIds.length > 0) {
-        const data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
-
+        let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
         data = data.map((asset) => {
           let assetObj = { [asset.id]: asset.text };
             return assetObj;
           } 
         );
-
-        ezoCustomFieldEle.val(JSON.stringify({ assets: data }));
+        debugger;
+        ezoField.val(JSON.stringify({ assets: data }));
       }
     });
   });
@@ -134,14 +133,15 @@ function preselectAssetsCustomField(searchParams) {
 
   if (!assetName || !assetId) { return; }
 
-  renderEzoSelect2Field(ezoCustomFieldEle);
+  let ezoSelectEle = $('#ezo-asset-select');
+  if (ezoSelectEle.length === 0) { renderEzoSelect2Field(ezoCustomFieldEle); }
 
   // Set the value, creating a new option if necessary
-  if ($('#ezo-asset-select').find("option[value='" + assetId + "']").length) {
-      $('#ezo-asset-select').val(assetId).trigger('change');
+  if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
+      ezoSelectEle.val(assetId).trigger('change');
   } else { 
     var newOption = new Option(assetName, assetId, true, true);
-    $('#ezo-asset-select').append(newOption).trigger('change');
+    ezoSelectEle.append(newOption).trigger('change');
   }
 }
 
@@ -150,9 +150,6 @@ function assetsCustomFieldPresent(ezoCustomFieldEle) {
 }
 
 function renderEzoSelect2Field(ezoCustomFieldEle) {
-  let ezoSelectEle = $('#ezo-asset-select');
-  if (ezoSelectEle.length > 0) { return };
-
   ezoCustomFieldEle.hide();
   ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 }
