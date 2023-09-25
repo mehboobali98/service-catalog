@@ -65,7 +65,6 @@ function populateAssignedAssets(url, options) {
 
     $('form.request-form').on('submit', function () {
       var selectedIds = $('#ezo-asset-select').val();
-      debugger;
       if (selectedIds.length > 0) {
         let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
         data = data.map((asset) => {
@@ -74,7 +73,6 @@ function populateAssignedAssets(url, options) {
           } 
         );
         ezoCustomFieldEle.val(JSON.stringify({ assets: data }));
-        debugger;
       }
     });
   });
