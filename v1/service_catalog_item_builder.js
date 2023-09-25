@@ -93,7 +93,9 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
     arrow.addClass('float-end');
   }
   cardFooter.append(arrow);
-  card.append(cardImageContainer, cardBody, cardFooter);
+  cardBody.append(cardFooter);
+
+  card.append(cardImageContainer, cardBody);
 
   return card;
 }
