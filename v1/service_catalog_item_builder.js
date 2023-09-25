@@ -50,7 +50,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')
                                    .addClass('card-footer');
-  submitRequestBtn.append($('<span>').html('&#8594;').css({ 'font-size': '30px' }));
+  submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow '));
 
   cardBody.append(submitRequestBtn);
   card.append(cardImageContainer, cardBody);
