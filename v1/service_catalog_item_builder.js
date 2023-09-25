@@ -27,14 +27,15 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
 
   // Card title
   const assetName = serviceCategoryItem.name;
-  const cardTitle = $('<p>').text(assetName);
+  const cardTitle = $('<p>').text(assetName).addClass('card-title');
   cardBody.append(cardTitle);
 
 
   // Card content
+  const cardContent = $('<div>').addClass('card-content');
   $.each(serviceCategoryItem.display_fields, function(index, field) {
     let cardField = $('<p>').append($('<span>').text(field.label + ':       ' + field.value));
-    cardBody.append(cardField);
+    cardContent.append(cardField);
   });
 
   queryParams['asset_id']   = serviceCategoryItem.id;
