@@ -63,7 +63,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   cardImageContainer.append(cardImage);
 
   // Create the card body
-  const cardBody = $('<div>').addClass('col-8');
+  const cardBody = $('<div>').addClass('col-8 card-body');
 
   // card title
   let softwareName = serviceCategoryItem.name;
@@ -78,7 +78,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
 
   //card footer (price and arrow)
   const arrow = $('<i>').addClass('bi bi-arrow-right');
-  const cardFooter = $('<div>');
+  const cardFooter = $('<div>').addClass('card-footer');
   if (serviceCategoryItem.price) {
     cardFooter.addClass('d-flex');
     const price = $('<span>').text(serviceCategoryItem.price);
