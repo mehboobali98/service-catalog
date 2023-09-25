@@ -130,8 +130,10 @@ function findServiceCategoryItem(searchParams, serviceCategoryItems) {
   const id   = searchParams.get('asset_id');
   const name = searchParams.get('asset_name');
 
-  if (!id || !name) { return; }
+  debugger;
+  if (!id || !name) { return null; }
 
+  debugger;
   for (let i = 0; i < serviceCategoryItems.length; i++) {
     if (serviceCategoryItems[i].id === id && serviceCategoryItems[i].name === name) {
       return serviceCategoryItems[i];
