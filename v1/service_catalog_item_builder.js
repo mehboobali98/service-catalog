@@ -31,8 +31,8 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   cardBody.append(cardTitle);
 
   // Card content
-  const cardContentContainer = $('<div>')
-  const cardContent = $('<table>').addClass('card-content');
+  const cardContentContainer = $('<div>').addClass('card-content-container');
+  const cardContent = $('<table>').addClass('card-content-table');
   $.each(serviceCategoryItem.display_fields, function(index, rowData) {
     let newRow = $("<tr>");
     newRow.append($('<th>').text(rowData.label));
