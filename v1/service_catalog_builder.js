@@ -1,4 +1,5 @@
-import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
+import { buildServiceCategoryItem }       from './service_catalog_item_builder.js';
+import { getTokenAndFetchAssignedAssets } from './utility.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
@@ -27,6 +28,12 @@ function buildUI() {
   const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
 
   const navbarContainer = $('<div>').addClass('service-categories-list');
+
+  debugger;
+  getTokenAndFetchAssignedAssets('user_assigned_assets_and_software_entitlements');
+  debugger;
+  // prepare data to be rendered.
+
   const navbar = generateNavbar(getServiceCategories());
   navbarContainer.append(navbar);
 
