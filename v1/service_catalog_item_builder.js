@@ -82,15 +82,12 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   cardBody.append(cardDescription);
 
   //card footer (price and arrow)
-  const arrow = $('<span>').html('&#8594;').addClass('footer-arrow');
-
   const cardFooter = $('<div>').addClass('card-footer');
+  const arrow = $('<span>').html('&#8594;').addClass('footer-arrow float-end');
+  const price = $('<span>').text(serviceCategoryItem.price);
+
   if (serviceCategoryItem.price) {
-    cardFooter.addClass('d-flex justify-content-between');
-    const price = $('<span>').text(serviceCategoryItem.price);
     cardFooter.append(price);
-  } else {
-    arrow.addClass('float-end');
   }
   cardFooter.append(arrow);
   cardBody.append(cardFooter);
