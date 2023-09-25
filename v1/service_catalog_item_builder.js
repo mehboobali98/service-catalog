@@ -30,13 +30,17 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   const cardTitle = $('<p>').text(assetName).addClass('card-title');
   cardBody.append(cardTitle);
 
-
   // Card content
-  const cardContent = $('<div>').addClass('card-content');
-  $.each(serviceCategoryItem.display_fields, function(index, field) {
-    let cardField = $('<p>').append($('<span>').text(field.label + ':       ' + field.value));
-    cardContent.append(cardField);
+  const cardContentContainer = $('<div>')
+  const cardContent = $('<table>').addClass('card-content');
+  $.each(serviceCategoryItem.display_fields, function(index, rowData) {
+    let newRow = $("<tr>");
+    newRow.append($('<th>').text(rowData.label));
+    newRow.append($('<th>').text(rowData.value));
+    cardContent.append(newRow);
   });
+  cardContentContainer.append(cardContent);
+  cardBody.append(cardContentContainer);
 
   queryParams['asset_id']   = serviceCategoryItem.id;
   queryParams['asset_name'] = assetName;
