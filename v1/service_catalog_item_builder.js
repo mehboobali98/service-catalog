@@ -86,7 +86,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
 
   const cardFooter = $('<div>').addClass('card-footer');
   if (serviceCategoryItem.price) {
-    cardFooter.addClass('d-flex justify-between-end');
+    cardFooter.addClass('d-flex justify-content-between');
     const price = $('<span>').text(serviceCategoryItem.price);
     cardFooter.append(price);
   } else {
