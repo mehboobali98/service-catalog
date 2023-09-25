@@ -3,7 +3,7 @@ function buildServiceCategoryItem(serviceCategoryItem) {
   switch (serviceItemType) {
     case 'assigned_it_asset':
     case 'assigned_software_entitlement':
-      return buildSoftwareServiceItem(serviceCategoryItem);
+      return buildItAssetServiceItem(serviceCategoryItem);
     case 'software_request':
       return buildSoftwareRequestServiceItem(serviceCategoryItem);
     default:
