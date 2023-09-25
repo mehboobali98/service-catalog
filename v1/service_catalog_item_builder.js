@@ -1,19 +1,19 @@
-function buildServiceCategoryItem(serviceCategoryItem, queryParams) {
+function buildServiceCategoryItem(serviceCategoryItem) {
   const serviceItemType = serviceCategoryItem.type;
   switch (serviceItemType) {
     case 'assigned_it_asset':
-      return buildItAssetServiceItem(serviceCategoryItem, queryParams);
+      return buildItAssetServiceItem(serviceCategoryItem);
     case 'assigned_software_entitlement':
       return buildSoftwareServiceItem(serviceCategoryItem);
     case 'software_request':
-      return buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams);
+      return buildSoftwareRequestServiceItem(serviceCategoryItem);
     default:
       // Handle unknown service type
       break;
   }
 }
 
-function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
+function buildItAssetServiceItem(serviceCategoryItem) {
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Card image
@@ -42,6 +42,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   cardContentContainer.append(cardContent);
   cardBody.append(cardContentContainer);
 
+  const queryParams         = serviceCategoryItem.queryParams;
   queryParams['asset_id']   = serviceCategoryItem.id;
   queryParams['asset_name'] = assetName;
 
