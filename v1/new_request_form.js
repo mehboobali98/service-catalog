@@ -73,8 +73,8 @@ function populateAssignedAssets(url, options) {
             return assetObj;
           } 
         );
+        ezoCustomFieldEle.val(JSON.stringify({ assets: data }));
         debugger;
-        ezoField.val(JSON.stringify({ assets: data }));
       }
     });
   });
