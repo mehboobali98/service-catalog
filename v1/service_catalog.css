@@ -27,14 +27,24 @@
 }
 
 .service-items-container .service-item-card {
-  width:  600px;
-  height: 400px;
-  border: 2px solid !important;
+  width:  500px;
+  height: 300px;
   margin-right: 40px;
+}
+
+.service-items-container .service-item-card .card-body {
+  position: relative;
 }
 
 .service-items-container .service-item-card .description {
   word-wrap: break-word;
+}
+
+.service-items-container .service-item-card .card-footer {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  padding: 10px;
 }
 
 .service-items-container .service-item-card a {

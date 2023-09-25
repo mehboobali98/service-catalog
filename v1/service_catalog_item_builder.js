@@ -23,7 +23,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   cardImageContainer.append(cardImage);
 
   // Create the card body
-  const cardBody = $('<div>').addClass('col-8');
+  const cardBody = $('<div>').addClass('col-8 card-body');
 
   // Create the card title
   const assetName = serviceCategoryItem.name;
@@ -41,7 +41,7 @@ function buildItAssetServiceItem(serviceCategoryItem, queryParams) {
   var url = '/hc/requests/new' + '?' + $.param(queryParams);
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')
-                                   .addClass('float-end');
+                                   .addClass('float-end card-footer');
   cardBody.append(submitRequestBtn);
 
   card.append(cardImageContainer, cardBody);
