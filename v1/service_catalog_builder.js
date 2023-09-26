@@ -72,7 +72,7 @@ function createServiceCategoriesView(containers, userExists) {
   newSection.append(serviceCatalogContainer);
 
   $('main').append(newSection);
-  buildServiceItemsDetailPage();
+  //buildServiceItemsDetailPage();
   bindEventListeners(getServiceCategories());
 }
 
