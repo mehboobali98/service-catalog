@@ -222,7 +222,7 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
   detailPageContent.append(detailPageHeader, detailPageBody);
   detailPageContainer.append(imageContainer, detailPageContent);
 
-  return detailPageContent;
+  return detailPageContainer;
 }
 
 function bindEventListener(serviceCategoryItem) {
