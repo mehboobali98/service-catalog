@@ -160,7 +160,7 @@ function bindEventListeners(serviceCategories) {
       }
     });
 
-    const detailPageElements = $("[id*='detail_page_container_']");
+    const detailPageElements = $("[class*='detail_page_container_']");
     debugger;
     $.each(detailPageElements, function(index, element) {
       element.hide();
