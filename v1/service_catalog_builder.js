@@ -161,10 +161,9 @@ function bindEventListeners(serviceCategories) {
       }
     });
 
-    debugger;
-    const detailPageElements = $("[id*='detail_page_container_']").hide();
-    debugger;
+    $("[id*='detail_page_container']").hide();
     $('#' + containerId).show();
+    $('#' + containerId + '_service_items_container').show();
   });
 }
 
