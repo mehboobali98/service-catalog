@@ -9,8 +9,8 @@ function buildServiceItemsDetailPage(serviceCategoriesItems) {
     } else {
       $.each(data.serviceItems, function(index, serviceCategoryItem) {
         let zendeskFormData = getZendeskTicketFormData(serviceCategory);
-        container.after(buildDetailPage(serviceCategoryItem, zendeskFormData));
         debugger;
+        container.after(buildDetailPage(serviceCategoryItem, zendeskFormData));
         bindEventListener(serviceCategoryItem);
       });
     }
