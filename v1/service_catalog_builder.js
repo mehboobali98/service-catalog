@@ -9,12 +9,8 @@ function addMenuItem(name, url, parent_ele) {
 }
 
 function buildServiceCatalog() {
-  debugger;
   const containers = buildUI();
-  debugger;
   fetchUserAssetsAndSoftwareEntitlements(containers);
-  debugger;
-  bindEventListeners(getServiceCategories());
 }
 
 function buildUI() {
@@ -37,8 +33,7 @@ function buildUI() {
     searchAndNavContainer: searchAndNavContainer,
     serviceCatalogContainer: serviceCatalogContainer
   };
-  
-  debugger;
+
   return containers;
 }
 
@@ -46,26 +41,21 @@ function fetchUserAssetsAndSoftwareEntitlements(containers) {
   $.getJSON('/hc/api/v2/integration/token')
     .then(data => data.token)
     .then(token => {
-      debugger;
       if (token) {
         const options = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
         const endPoint = 'user_assigned_assets_and_software_entitlements';
         const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
-        
-        debugger;
         fetch(url, options)
           .then(response => response.json())
           .then(data => {
-            debugger;
             updateServiceCategoryItems('my_it_assets', data);
-            debugger;
             createServiceCategoriesView(containers, true);
           });
       } else {
-        debugger;
         createServiceCategoriesView(containers, false);
       }
     });
+  bindEventListeners(getServiceCategories());
 }
 
 function createServiceCategoriesView(containers, userExists) {
@@ -73,29 +63,25 @@ function createServiceCategoriesView(containers, userExists) {
   const navbar = generateNavbar(getServiceCategories(), userExists);
   navbarContainer.append(navbar);
 
-  debugger;
   const newSection              = containers['newSection'];
   const searchAndNavContainer   = containers['searchAndNavContainer'];
   const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
-  debugger;
   searchAndNavContainer.append(navbarContainer);
   const serviceItemsContainer = buildServiceCategoriesItems(userExists);
   serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer);
   newSection.append(serviceCatalogContainer);
 
-  debugger;
   $('main').append(newSection);
 }
 
 // Create a function to generate the vertical navbar
 function generateNavbar(serviceCategories, userExists) {
   const navbar = $('<ul></ul>');
-  
-  debugger;
+
   $.each(serviceCategories, function(index, serviceCategory) {
     var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
-    if (serviceCategory.name === 'My IT Assets' && userExists) {
+    if (serviceCategory.name === 'My IT Assets' && !userExists) {
       listItem.addClass('collapse');
     } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
       listItem.addClass('collapse');
@@ -110,17 +96,14 @@ function generateNavbar(serviceCategories, userExists) {
 function buildServiceCategoriesItems(userAuthenticated) {
   const serviceCategories = Object.keys(getServiceCategoriesItems());
   const serviceItemsContainer = $('<div>').addClass('col-10 service-items-container');
-  debugger;
   const defaultVisibleCategoryIndex = getDefaultVisibleCategoryIndex(userAuthenticated);
 
-  // handle if no service categories present.
+  // to-do: handle if no service categories present.
   serviceCategories.forEach((serviceCategory, index) => {
     const serviceCategoryItems = getServiceCategoryItems(serviceCategory);
     const isVisible = index === defaultVisibleCategoryIndex;
-    debugger;
     serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
   });
-  debugger;
 
   return serviceItemsContainer;
 }

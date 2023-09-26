@@ -141,12 +141,10 @@ function findServiceCategoryItem(searchParams, serviceCategoryItems) {
 
 function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwareLicenses) {
   const newServiceItems = [];
-  debugger;
-  $.each(userAssignedAssetsAndSoftwareLicenses, function(key, value) {
-    debugger;
+  $.each(userAssignedAssetsAndSoftwareLicenses, function(key, records) {
     value = JSON.parse(value);
     if (key === 'assets' || key === 'software_entitlements') {
-      $.each(value, function(index, record){
+      $.each(records, function(index, record){
         let serviceItemData = {
           id:             record['id'],
           name:           record['name'],
@@ -156,16 +154,13 @@ function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwa
                             { label: 'Assigned On', value: record['assigned_on'] }
                           ]
         };
-        debugger;
         newServiceItems.push(serviceItemData);
       });
     }
   });
-  debugger;
   if (newServiceItems.length > 0) {
     serviceCategoriesItems[serviceCategory]['serviceItems'] = newServiceItems;
   }
-  debugger;
 }
 
 function prepareDisplayFieldsData(type, record) {
@@ -180,7 +175,6 @@ function prepareDisplayFieldsData(type, record) {
     })
   }
   displayFields.push({ label: 'Assigned On', value: record['assigned_on'] });
-  debugger;
   return displayFields;
 }
 

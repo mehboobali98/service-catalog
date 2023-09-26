@@ -5,10 +5,7 @@ function updateNewRequestForm() {
 
   const searchParams     = extractQueryParams(window.location);
   const serviceCategory  = searchParams.get('service_category');
-  debugger;
   const ticketFormData   = extractTicketFormData(serviceCategory, searchParams);
-
-  debugger;
   if (ticketFormData) {
     const customFieldId     = ticketFormData.custom_field_id;
     const customFieldValue  = ticketFormData.custom_field_value;
@@ -17,7 +14,6 @@ function updateNewRequestForm() {
     $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
-  debugger;
   getTokenAndFetchAssignedAssets();
 }
 
@@ -27,7 +23,6 @@ function extractQueryParams(url) {
 
 function extractTicketFormData(serviceCategory, searchParams) {
   const zendeskFormData = getZendeskTicketFormData(serviceCategory);
-  debugger;
   if (serviceCategory === 'my_it_assets') {
     const type = searchParams.get('type');
     return zendeskFormData[type]['ticketFormData'];
@@ -163,6 +158,5 @@ function renderEzoSelect2Field(ezoCustomFieldEle) {
   ezoCustomFieldEle.hide();
   ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 }
-
 
 export { updateNewRequestForm };
