@@ -79,7 +79,6 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   const cardTitle  = $('<p>').text(softwareName).addClass('card-title');
   cardBody.append(cardTitle);
 
-
   // card description
   const cardDescription = $('<p>').text(serviceCategoryItem.description)
                                   .addClass('description');

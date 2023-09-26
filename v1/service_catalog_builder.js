@@ -184,7 +184,7 @@ function buildServiceItemsDetailPage() {
         bindEventListener(serviceCategoryItem);
       });
     }
-  }
+  });
 }
 
 function buildDetailPage(serviceCategoryItem, categoryContainerId) {
