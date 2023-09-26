@@ -102,7 +102,7 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
 
   card.append(cardImageContainer, cardBody);
   debugger;
-  buildDetailPage(serviceCategoryItem.detail_page_fields, serviceCategory + '_service_items_container');
+  buildDetailPage(serviceCategoryItem, serviceCategory + '_service_items_container');
   bindEventListener(serviceCategory + '_service_items_container');
 
   return card;
@@ -143,6 +143,8 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
 
   debugger;
   detailPageContainer.append(imageContainer, detailPageContent);
+  debugger;
+  $('#' + categoryContainerId).after(detailPageContainer);
 }
 
 function bindEventListener(containerId) {
