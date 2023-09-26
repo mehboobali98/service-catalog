@@ -9,7 +9,6 @@ function buildServiceItemsDetailPage(serviceCategoriesItems) {
     } else {
       $.each(data.serviceItems, function(index, serviceCategoryItem) {
         let zendeskFormData = getZendeskTicketFormData(serviceCategory);
-        debugger;
         container.after(buildDetailPage(serviceCategoryItem, zendeskFormData));
         bindEventListener(serviceCategoryItem);
       });
@@ -17,7 +16,7 @@ function buildServiceItemsDetailPage(serviceCategoriesItems) {
   });
 }
 
-function buildDetailPage(serviceCategoryItem, categoryContainerId, zendeskFormData) {
+function buildDetailPage(serviceCategoryItem, zendeskFormData) {
   const queryParams         = zendeskFormData['queryParams'] || {};
   const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
                                         .addClass('row collapse');
@@ -59,11 +58,9 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId, zendeskFormDa
 }
 
 function bindEventListener(serviceCategoryItem) {
-  debugger;
   $('body').on('click', '#service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase(), function(e) {
     e.preventDefault();
 
-    debugger;
     const id   = $(this).data('id');
     const name = $(this).data('name');
     const containerId = $(this).data('container-id');
