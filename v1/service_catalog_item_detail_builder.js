@@ -1,3 +1,5 @@
+import { getZendeskTicketFormData } from './dummy_data.js';
+
 function buildServiceItemsDetailPage(serviceCategoriesItems) {
   $.each(serviceCategoriesItems, function(serviceCategory, data) {
     let containerId = serviceCategory + '_container';
@@ -6,7 +8,8 @@ function buildServiceItemsDetailPage(serviceCategoriesItems) {
       // do-nothing
     } else {
       $.each(data.serviceItems, function(index, serviceCategoryItem) {
-        container.after(buildDetailPage(serviceCategoryItem));
+        let zendeskFormData = getZendeskTicketFormData(serviceCategory);
+        container.after(buildDetailPage(serviceCategoryItem, zendeskFormData));
         debugger;
         bindEventListener(serviceCategoryItem);
       });
@@ -14,7 +17,8 @@ function buildServiceItemsDetailPage(serviceCategoriesItems) {
   });
 }
 
-function buildDetailPage(serviceCategoryItem, categoryContainerId) {
+function buildDetailPage(serviceCategoryItem, categoryContainerId, zendeskFormData) {
+  const queryParams         = zendeskFormData['queryParams'] || {};
   const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
                                         .addClass('row collapse');
 
@@ -29,7 +33,14 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
   const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name))
                                   .append($('<p>').text(serviceCategoryItem.price));
   // to-do: (add request service button)
-  detailPageHeader.append(headerContent);
+  
+//<a href="#" class="btn btn-info" role="button">Link Button</a>
+  const url = '/hc/requests/new' + '?' + $.param(queryParams);
+  const requestServiceBtn = $('<a>').attr('role', 'button')
+                                    .attr('href', url);
+                                    .text('Request Service');
+                                    .addClass('btn')
+  detailPageHeader.append(headerContent, requestServiceBtn);
 
   const detailPageBody = $('<div>');
   const detailPageFields = serviceCategoryItem.detail_page_fields;
