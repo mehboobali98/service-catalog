@@ -140,4 +140,40 @@ function findServiceCategoryItem(searchParams, serviceCategoryItems) {
   return null; // Return null if no matching object is found
 }
 
-export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, findServiceCategoryItem };
+function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwareLicenses) {
+  const newServiceItems = [];
+  $.each(userAssignedAssetsAndSoftwareLicenses, function(key, value) {
+    if (key === 'assets' || key === 'software_entitlements') {
+      $.each(value, function(record){
+        let serviceItemData = {
+          id:             record['id'],
+          name:           record['name'],
+          type:           key === 'assets' ? 'assigned_it_asset' : 'assigned_software_entitlement',
+          img_src:        record['img_src'],
+          display_fields: [ { label: 'Serial #',    value: record['bios_serial_number'] },
+                            { label: 'Assigned On', value: record['assigned_on'] }
+                          ]
+        };
+        newServiceItems.push(serviceItemData);
+      });
+    }
+  });
+  serviceCategoriesItems[serviceCategory]['serviceItems'] = newServiceItems;
+}
+
+function prepareDisplayFieldsData(type, record) {
+  const displayFields = [];
+  if (type === 'assets') {
+    displayFields.push({
+      label: 'Serial #', value: record['bios_serial_number']
+    });
+  } else if (type === 'software_entitlements') {
+    displayFields.push({
+      label: 'Seats Given', value: record['seats_given'];
+    })
+  }
+  displayFields.push({ label: 'Assigned On', value: record['assigned_on'] });
+  return displayFields;
+}
+
+export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, findServiceCategoryItem, updateServiceCategoryItems };

@@ -1,6 +1,6 @@
 import { buildServiceCategoryItem }       from './service_catalog_item_builder.js';
 import { getTokenAndFetchAssignedAssets } from './utility.js';
-import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems } from './dummy_data.js';
+import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, updateServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
   const serviceCatalog = $('<a>').attr('href', url)
@@ -10,50 +10,78 @@ function addMenuItem(name, url, parent_ele) {
 }
 
 function buildServiceCatalog() {
-  buildUI();
+  const containers = buildUI();
+  fetchUserAssetsAndSoftwareEntitlements(containers);
   bindEventListeners(getServiceCategories());
 }
 
 function buildUI() {
   const newSection = $('<section>').attr('id', 'service_catalog_section').addClass('service-catalog-section');
-
   const serviceCatalogContainer = $('<div>').addClass('row');
-
   const searchAndNavContainer = $('<div>').addClass('col-2');
   const searchAndNavContainerText = $('<h1>').text('Categories');
-
-  const searchField = $('<input>').attr('id', 'search-input')
-                                  .attr('type', 'text')
-                                  .attr('placeholder', 'search...');
+  const searchField = $('<input>')
+    .attr('id', 'search-input')
+    .attr('type', 'text')
+    .attr('placeholder', 'search...');
   const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
+  
+  searchAndNavContainer.append(searchAndNavContainerText, searchField);
+  const containers = {
+    newSection: newSection,
+    searchAndNavContainer: searchAndNavContainer,
+    serviceCatalogContainer: serviceCatalogContainer
+  };
+  
+  return containers;
+}
 
+function fetchUserAssetsAndSoftwareEntitlements(containers) {
+  $.getJSON('/hc/api/v2/integration/token')
+    .then(data => data.token)
+    .then(token => {
+      debugger;
+      if (token) {
+        const options = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+        const endPoint = 'user_assigned_assets_and_software_entitlements';
+        const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
+        
+        fetch(url, options)
+          .then(response => response.json())
+          .then(data => {
+            updateServiceCategoryItems('my_it_assets', data);
+            createServiceCategoriesView(containers, true);
+          });
+      } else {
+        createServiceCategoriesView(containers, false);
+      }
+    });
+}
+
+function createServiceCategoriesView(containers, userExists) {
   const navbarContainer = $('<div>').addClass('service-categories-list');
-
-  debugger;
-  getTokenAndFetchAssignedAssets('user_assigned_assets_and_software_entitlements');
-  debugger;
-  // prepare data to be rendered.
-
-  const navbar = generateNavbar(getServiceCategories());
+  const navbar = generateNavbar(getServiceCategories(), userExists);
   navbarContainer.append(navbar);
 
-  searchAndNavContainer.append(searchAndNavContainerText, searchBar, navbarContainer);
+  const newSection = containers['newSection'];
+  const searchAndNavContainer = containers['searchAndNavContainer'];
+  const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
+  searchAndNavContainer.append(navbarContainer);
   const serviceItemsContainer = buildServiceCategoriesItems();
-
-  // Append the navbar to the container
   serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer);
   newSection.append(serviceCatalogContainer);
+
   $('main').append(newSection);
 }
 
 // Create a function to generate the vertical navbar
-function generateNavbar(serviceCategories) {
+function generateNavbar(serviceCategories, userAuthenticated) {
   const navbar = $('<ul></ul>');
   
   $.each(serviceCategories, function(index, serviceCategory) {
     var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
-    if (serviceCategory.name === 'My IT Assets' && window.HelpCenter.user.role === 'anonymous') {
+    if (serviceCategory.name === 'My IT Assets' && userAuthenticated) {
       listItem.addClass('collapse');
     } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
       listItem.addClass('collapse');

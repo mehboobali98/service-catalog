@@ -18,6 +18,7 @@ function isCorrectPage(regex) {
 
 function getTokenAndFetchAssignedAssets(endPoint) {
   return withToken().then(token => {
+    debugger;
     if (token) {
       const options = {
         method: 'GET',
