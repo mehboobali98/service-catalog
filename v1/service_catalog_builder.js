@@ -161,6 +161,7 @@ function bindEventListeners(serviceCategories) {
     });
 
     const detailPageElements = $("[class*='detail_page_container_']");
+    debugger;
     $.each(detailPageElements, function(index, element) {
       element.hide();
     });
