@@ -130,14 +130,15 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisi
 
   serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
-  const serviceCategoryItemsFlex = $('<div>').attr('id', serviceCategory + '_service_items_container')
-                                             .addClass('d-flex gap-3');
+  const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
+  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
   });
 
-  serviceCategoryItemsContainer.append(serviceCategoryItemsFlex);
+  serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
+  serviceCategoryItemsContainer.append(serviceCategoryItemsFlexContainer);
 
   return serviceCategoryItemsContainer;
 }
