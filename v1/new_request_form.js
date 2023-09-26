@@ -1,29 +1,34 @@
-import { getServiceCategoryItems, findServiceCategoryItem } from './dummy_data.js';
+import { getZendeskTicketFormData } from './dummy_data.js';
 
 function updateNewRequestForm() {
   if ($('.nesty-input')[0].text === "-") { return; }
-  let searchParams         = extractQueryParams(window.location);
 
-  const serviceCategory      = searchParams.get('service_category');
-  const serviceCategoryItems = getServiceCategoryItems(serviceCategory);
+  const searchParams     = extractQueryParams(window.location);
+  const serviceCategory  = searchParams.get('service_category');
+  const ticketFormData   = extractTicketFormData(serviceCategory, searchParams);
+  if (ticketFormData) {
+    const customFieldId     = ticketFormData.custom_field_id;
+    const customFieldValue  = ticketFormData.custom_field_value;
+    const ticketFormSubject = ticketFormData.ticket_form_subject;
 
-  if (serviceCategoryItems) {
-    const serviceCategoryItem = findServiceCategoryItem(searchParams, serviceCategoryItems.serviceItems);
-    if (serviceCategoryItem) {
-      const ticketFormData    = serviceCategoryItem.ticketFormData;
-      const customFieldId     = ticketFormData.custom_field_id;
-      const customFieldValue  = ticketFormData.custom_field_value;
-      const ticketFormSubject = ticketFormData.ticket_form_subject;
-
-      $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
-      $('#request_custom_fields_' + customFieldId).val(customFieldValue);
-    }
+    $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
+    $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
   getTokenAndFetchAssignedAssets();
 }
 
 function extractQueryParams(url) {
   return new URL(url).searchParams;
+}
+
+function extractTicketFormData(serviceCategory, searchParams) {
+  const zendeskFormData = getZendeskTicketFormData(serviceCategory);
+  if (serviceCategory === 'my_it_assets') {
+    const type = searchParams.get('type');
+    return zendeskFormData[type]['ticketFormData'];
+  } else {
+    return zendeskFormData['ticketFormData'];
+  }
 }
 
 function getTokenAndFetchAssignedAssets() {
@@ -153,6 +158,5 @@ function renderEzoSelect2Field(ezoCustomFieldEle) {
   ezoCustomFieldEle.hide();
   ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 }
-
 
 export { updateNewRequestForm };

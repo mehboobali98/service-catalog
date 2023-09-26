@@ -73,9 +73,9 @@
   right:        0;
   color:        #B29962;
   bottom:       0;
-  padding:      10px;
   position:     absolute;
   font-size:    11px;
+  padding-top:  10px;
   font-weight:  700;
   padding-top:  10px;
 }

@@ -1,18 +1,46 @@
-function buildServiceCategoryItem(serviceCategoryItem) {
+import { getZendeskTicketFormData } from './dummy_data.js';
+
+function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
+  const serviceCategoryItemsContainer = $('<div>');
+  serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
+
+  if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
+
+  const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label);
+  const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description);
+
+  serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
+
+  const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
+  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
+
+  $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
+    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
+  });
+
+  serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
+  serviceCategoryItemsContainer.append(serviceCategoryItemsFlexContainer);
+
+  return serviceCategoryItemsContainer;
+}
+
+function buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
   const serviceItemType = serviceCategoryItem.type;
+  const zendeskFormData = getZendeskTicketFormData(serviceCategory);
   switch (serviceItemType) {
     case 'assigned_it_asset':
     case 'assigned_software_entitlement':
-      return buildItAssetServiceItem(serviceCategoryItem);
+      return buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
     case 'software_request':
-      return buildSoftwareRequestServiceItem(serviceCategoryItem);
+      return buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory);
     default:
       // Handle unknown service type
       break;
   }
 }
 
-function buildItAssetServiceItem(serviceCategoryItem) {
+function buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
+  const queryParams = zendeskFormData[serviceCategoryItem.type]['queryParams'] || {};
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Card image
@@ -41,7 +69,6 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   cardContentContainer.append(cardContent);
   cardBody.append(cardContentContainer);
 
-  const queryParams         = serviceCategoryItem.queryParams;
   queryParams['asset_id']   = serviceCategoryItem.id;
   queryParams['asset_name'] = assetName;
 
@@ -58,7 +85,8 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   return card;
 }
 
-function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
+function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory) {
+  const queryParams = zendeskFormData['queryParams'];
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Create the card image element
@@ -75,7 +103,6 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   const cardTitle  = $('<p>').text(softwareName).addClass('card-title');
   cardBody.append(cardTitle);
 
-
   // card description
   const cardDescription = $('<p>').text(serviceCategoryItem.description)
                                   .addClass('description');
@@ -83,8 +110,13 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
 
   //card footer (price and arrow)
   const cardFooter = $('<div>').addClass('card-footer');
-  const arrow = $('<span>').html('&#8594;').addClass('footer-arrow float-end');
   const price = $('<span>').text(serviceCategoryItem.price);
+  const arrow = $('<span>').attr('id', 'service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase())
+                           .html('&#8594;')
+                           .addClass('footer-arrow float-end')
+                           .data('id', serviceCategoryItem.id)
+                           .data('name', serviceCategoryItem.name)
+                           .data('container-id', serviceCategory + '_service_items_container');
 
   if (serviceCategoryItem.price) {
     cardFooter.append(price);
@@ -97,4 +129,4 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
   return card;
 }
 
-export { buildServiceCategoryItem, buildItAssetServiceItem };
+export { buildServiceCategoryItems };
