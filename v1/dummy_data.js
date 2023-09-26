@@ -97,6 +97,9 @@ const serviceCategoriesItems = {
         type:    'software_request',
         img_src: 'asdsad',
         description: "Can't find the software you're looking for? Request a new one!"
+        detail_page_fields: [
+          { label: 'Details', value: "Can't find the software you're looking for? Request a new one!" }
+        ]
       },
       {
         name:    'Slack',
@@ -104,6 +107,10 @@ const serviceCategoriesItems = {
         price:   '10.99',
         img_src: 'sdasd',
         description: "SlackConnect Plus is the ultimate productivity-enhancing app for Slack, designed to supercharge your team's collaboration and communication experience. Elevate your Slack workspace to a whole new level with a range of powerful features that streamline workflows, boost efficiency, and facilitate seamless collaboration like never before."
+        detail_page_fields: [
+          { label: 'Details',      value: "SlackConnect Plus is the ultimate productivity-enhancing app for Slack, designed to supercharge your team's collaboration and communication experience. Elevate your Slack workspace to a whole new level with a range of powerful features that streamline workflows, boost efficiency, and facilitate seamless collaboration like never before." },
+          { label: 'Key features', value: "test" }
+        ]
       }
     ]
   }

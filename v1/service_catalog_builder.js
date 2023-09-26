@@ -129,7 +129,8 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisi
 
   serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
-  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
+  const serviceCategoryItemsFlex = $('<div>').attr('id', serviceCategory + '_service_items_container')
+                                             .addClass('d-flex gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
@@ -158,6 +159,10 @@ function bindEventListeners(serviceCategories) {
       }
     });
 
+    const detailPageElements = $("[class*='detail_page_container_']");
+    $.each(detailPageElements, function(index, element) {
+      element.hide():
+    });
     $('#' + containerId).show();
   });
 }
