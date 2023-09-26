@@ -147,7 +147,7 @@ function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwa
     debugger;
     value = JSON.parse(value);
     if (key === 'assets' || key === 'software_entitlements') {
-      $.each(value, function(record){
+      $.each(value, function(index, record){
         let serviceItemData = {
           id:             record['id'],
           name:           record['name'],
