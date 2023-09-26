@@ -37,7 +37,7 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId, zendeskFormDa
 //<a href="#" class="btn btn-info" role="button">Link Button</a>
   const url = '/hc/requests/new' + '?' + $.param(queryParams);
   const requestServiceBtn = $('<a>').attr('role', 'button')
-                                    .attr('href', url);
+                                    .attr('href', url)
                                     .text('Request Service');
                                     .addClass('btn')
   detailPageHeader.append(headerContent, requestServiceBtn);
