@@ -162,6 +162,7 @@ function bindEventListeners(serviceCategories) {
     });
 
     $("[id*='detail_page_container']").hide();
+    debugger;
     $('#' + containerId).show();
     $('#' + containerId + '_service_items_container').show();
   });
@@ -227,7 +228,7 @@ function bindEventListener(serviceCategoryItem) {
     const containerEle = $('#' + containerId);
     const detailPageContainerId = 'detail_page_container' + id + name;
     containerEle.hide();
-    $('#' + detailPageContainerId).removeClass('collapse');
+    $('#' + detailPageContainerId).removeClass('collapse').show();
   });
 }
 
