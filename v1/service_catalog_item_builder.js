@@ -1,4 +1,4 @@
-import { zendeskTicketFormData } from './dummy_data.js';
+import { getZendeskTicketFormData } from './dummy_data.js';
 
 function buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
   const serviceItemType = serviceCategoryItem.type;
