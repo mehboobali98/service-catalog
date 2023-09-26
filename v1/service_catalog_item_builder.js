@@ -148,6 +148,7 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
 }
 
 function bindEventListener(containerId) {
+  debugger;
   $('#service_item_detail_page_btn').on('click', function(e) {
     e.preventDefault();
 
