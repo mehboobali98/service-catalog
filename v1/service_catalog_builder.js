@@ -147,7 +147,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisi
   const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
-    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategoryItem));
+    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
   });
 
   serviceCategoryItemsContainer.append(serviceCategoryItemsFlex);

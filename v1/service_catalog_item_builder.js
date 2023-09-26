@@ -1,18 +1,22 @@
-function buildServiceCategoryItem(serviceCategoryItem) {
+import { zendeskTicketFormData } from './dummy_data.js';
+
+function buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
   const serviceItemType = serviceCategoryItem.type;
+  const zendeskFormData = getZendeskTicketFormData(serviceCategory);
   switch (serviceItemType) {
     case 'assigned_it_asset':
     case 'assigned_software_entitlement':
-      return buildItAssetServiceItem(serviceCategoryItem);
+      return buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
     case 'software_request':
-      return buildSoftwareRequestServiceItem(serviceCategoryItem);
+      return buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData);
     default:
       // Handle unknown service type
       break;
   }
 }
 
-function buildItAssetServiceItem(serviceCategoryItem) {
+function buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
+  const queryParams = zendeskFormData[serviceCategoryItem.type]['queryParams'] || {};
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Card image
@@ -58,7 +62,8 @@ function buildItAssetServiceItem(serviceCategoryItem) {
   return card;
 }
 
-function buildSoftwareRequestServiceItem(serviceCategoryItem, queryParams) {
+function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData) {
+  const queryParams = zendeskFormData['queryParams'];
   const card = $('<div>').addClass('row service-item-card border border-light');
 
   // Create the card image element
