@@ -161,28 +161,20 @@ function bindEventListeners(serviceCategories) {
       }
     });
 
-    const detailPageElements = $("[class*='detail_page_container_']");
-    debugger;
-    $.each(detailPageElements, function(index, element) {
-      element.hide();
-    });
+    const detailPageElements = $("[id*='detail_page_container_']").hide();
     $('#' + containerId).show();
   });
 }
 
 function buildServiceItemsDetailPage() {
-  debugger;
   $.each(getServiceCategoriesItems(), function(serviceCategory, data) {
     let containerId = serviceCategory + '_container';
     let container   = $('#' + containerId);
-    debugger;
     if (serviceCategory === 'my_it_assets') {
       // do-nothing
     } else {
       $.each(data.serviceItems, function(index, serviceCategoryItem) {
-        debugger;
         container.after(buildDetailPage(serviceCategoryItem));
-        debugger;
         bindEventListener(serviceCategoryItem);
       });
     }
