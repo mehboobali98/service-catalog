@@ -5,6 +5,7 @@ function updateNewRequestForm() {
 
   const searchParams     = extractQueryParams(window.location);
   const serviceCategory  = searchParams.get('service_category');
+  debugger;
   const ticketFormData   = extractTicketFormData(serviceCategory, searchParams);
 
   debugger;
@@ -26,6 +27,7 @@ function extractQueryParams(url) {
 
 function extractTicketFormData(serviceCategory, searchParams) {
   const zendeskFormData = getZendeskTicketFormData(serviceCategory);
+  debugger;
   if (serviceCategory === 'my_it_assets') {
     const type = searchParams.get('type');
     return zendeskFormData['type']['ticketFormData'];

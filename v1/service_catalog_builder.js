@@ -92,6 +92,7 @@ function createServiceCategoriesView(containers, userExists) {
 function generateNavbar(serviceCategories, userExists) {
   const navbar = $('<ul></ul>');
   
+  debugger;
   $.each(serviceCategories, function(index, serviceCategory) {
     var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
     if (serviceCategory.name === 'My IT Assets' && userExists) {
@@ -116,6 +117,7 @@ function buildServiceCategoriesItems(userAuthenticated) {
   serviceCategories.forEach((serviceCategory, index) => {
     const serviceCategoryItems = getServiceCategoryItems(serviceCategory);
     const isVisible = index === defaultVisibleCategoryIndex;
+    debugger;
     serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
   });
   debugger;
