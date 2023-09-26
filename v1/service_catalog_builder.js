@@ -188,7 +188,7 @@ function buildServiceItemsDetailPage() {
 }
 
 function buildDetailPage(serviceCategoryItem, categoryContainerId) {
-  const detailPageContainer = $('div').attr('id', 'detail_page_container_' + serviceCategoryItem.id + '_' + serviceCategoryItem.name)
+  const detailPageContainer = $('<div>').attr('id', 'detail_page_container_' + serviceCategoryItem.id + '_' + serviceCategoryItem.name)
                                       .addClass('row collapse');
   debugger;
 
