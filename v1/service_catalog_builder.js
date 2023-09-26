@@ -55,7 +55,6 @@ function fetchUserAssetsAndSoftwareEntitlements(containers) {
         createServiceCategoriesView(containers, false);
       }
     });
-  bindEventListeners(getServiceCategories());
 }
 
 function createServiceCategoriesView(containers, userExists) {
@@ -73,6 +72,7 @@ function createServiceCategoriesView(containers, userExists) {
   newSection.append(serviceCatalogContainer);
 
   $('main').append(newSection);
+  bindEventListeners(getServiceCategories());
 }
 
 // Create a function to generate the vertical navbar
