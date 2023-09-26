@@ -164,7 +164,7 @@ function bindEventListeners(serviceCategories) {
     $("[id*='detail_page_container']").hide();
     debugger;
     $('#' + containerId).show();
-    $('#' + containerId + '_service_items_container').show();
+    $('#' + containerId.replace('_container', '_service_items_container')).show();
   });
 }
 
