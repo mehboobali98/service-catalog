@@ -161,7 +161,9 @@ function bindEventListeners(serviceCategories) {
       }
     });
 
+    debugger;
     const detailPageElements = $("[id*='detail_page_container_']").hide();
+    debugger;
     $('#' + containerId).show();
   });
 }
@@ -183,13 +185,11 @@ function buildServiceItemsDetailPage() {
 
 function buildDetailPage(serviceCategoryItem, categoryContainerId) {
   const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
-                                      .addClass('row collapse');
-  debugger;
+                                        .addClass('row collapse');
 
   const imageContainer = $('<div>').addClass('col-3');
   const image = $('<img>').attr('src', serviceCategoryItem.img_src)
                           .attr('alt', 'Software');
-  debugger;
   imageContainer.append(image);
 
   const detailPageContent = $('<div>').addClass('col-9');
@@ -202,7 +202,6 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
 
   const detailPageBody = $('<div>');
   const detailPageFields = serviceCategoryItem.detail_page_fields;
-  debugger;
   if (detailPageFields) {
     $.each(detailPageFields, function(index, fieldData) {
       let section         = $('<section>');
@@ -220,17 +219,14 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
 }
 
 function bindEventListener(serviceCategoryItem) {
-  debugger;
   $('body').on('click', '#service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase(), function(e) {
     e.preventDefault();
 
     const id   = $(this).data('id');
     const name = $(this).data('name');
     const containerId = $(this).data('container-id');
-    debugger;
     const containerEle = $('#' + containerId);
     const detailPageContainerId = 'detail_page_container' + id + name;
-    debugger;
     containerEle.hide();
     $('#' + detailPageContainerId).removeClass('collapse');
   });
