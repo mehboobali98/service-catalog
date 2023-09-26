@@ -88,11 +88,12 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   //card footer (price and arrow)
   const cardFooter = $('<div>').addClass('card-footer');
   const price = $('<span>').text(serviceCategoryItem.price);
-  const arrow = $('<span>').attr('id', 'service_item_detail_page_btn')
+  const arrow = $('<span>').attr('id', 'service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase())
                            .html('&#8594;')
                            .addClass('footer-arrow float-end')
                            .data('id', serviceCategoryItem.id)
-                           .data('name', serviceCategoryItem.name);
+                           .data('name', serviceCategoryItem.name)
+                           .data('container-id', serviceCategory + '_service_items_container');
 
   if (serviceCategoryItem.price) {
     cardFooter.append(price);
@@ -101,65 +102,8 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   cardBody.append(cardFooter);
 
   card.append(cardImageContainer, cardBody);
-  debugger;
-  buildDetailPage(serviceCategoryItem, serviceCategory + '_service_items_container');
-  bindEventListener(serviceCategory + '_service_items_container');
 
   return card;
-}
-
-function buildDetailPage(serviceCategoryItem, categoryContainerId) {
-  const detailPageContainer = $('div').attr('id', 'detail_page_container_' + serviceCategoryItem.id + '_' + serviceCategoryItem.name)
-                                      .addClass('row collapse');
-
-  const imageContainer = $('<div>').addClass('col-3');
-  const image = $('<img>').attr('src', serviceCategoryItem.img_src)
-                          .attr('alt', 'Software');
-  debugger;
-  imageContainer.append(image);
-
-  const detailPageContent = $('<div>').addClass('col-9');
-
-  const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-  const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name))
-                                  .append($('<p>').text(serviceCategoryItem.price));
-  // to-do: (add request service button)
-  detailPageHeader.append(headerContent);
-
-  const detailPageBody = $('<div>');
-  const detailPageFields = serviceCategoryItem.detail_page_fields;
-  debugger;
-  if (detailPageFields) {
-    $.each(detailPageFields, function(index, fieldData) {
-      let section         = $('<section>');
-      let sectionHeader   = $('<h4>').text(fieldData['label']);
-      let sectionContent  = $('<p>').text(fieldData['value']);
-      section.append(sectionHeader, sectionContent);
-      detailPageBody.append(section);
-    });
-  }
-
-  detailPageContent.append(detailPageHeader, detailPageBody);
-
-  debugger;
-  detailPageContainer.append(imageContainer, detailPageContent);
-  debugger;
-  $('#' + categoryContainerId).after(detailPageContainer);
-}
-
-function bindEventListener(containerId) {
-  debugger;
-  $('#service_item_detail_page_btn').on('click', function(e) {
-    e.preventDefault();
-
-    const id   = $(this).data('id');
-    const name = $(this).data('name');
-    const containerEle = $('#' + containerId);
-    const detailPageContainerId = 'detail_page_container_' + id + name;
-    debugger;
-    containerEle.hide();
-    $('#' + detailPageContainerId).show();
-  });
 }
 
 export { buildServiceCategoryItem, buildItAssetServiceItem };

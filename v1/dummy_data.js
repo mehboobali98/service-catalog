@@ -93,6 +93,7 @@ const serviceCategoriesItems = {
     description: 'Browse and request available software for your needs or request a new one!',
     serviceItems: [
       {
+        id:      '1',
         name:    'Request New Software',
         type:    'software_request',
         img_src: 'asdsad',
@@ -102,6 +103,7 @@ const serviceCategoriesItems = {
         ]
       },
       {
+        id:      '2',
         name:    'Slack',
         type:    'software_request',
         price:   '10.99',
