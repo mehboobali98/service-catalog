@@ -115,7 +115,8 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
   const imageContainer = $('<div>').addClass('col-3');
   const image = $('<img>').attr('src', serviceCategoryItem.img_src)
                           .attr('alt', 'Software');
-  imageContainer.append(cardImage);
+  debugger;
+  imageContainer.append(image);
 
   const detailPageContent = $('<div>').addClass('col-9');
 
