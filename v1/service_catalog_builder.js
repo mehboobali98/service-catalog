@@ -177,7 +177,7 @@ function buildServiceItemsDetailPage() {
     if (serviceCategory === 'my_it_assets') {
       // do-nothing
     } else {
-      $.each(data, function(index, serviceCategoryItem) {
+      $.each(data.serviceItems, function(index, serviceCategoryItem) {
         debugger;
         container.after(buildDetailPage(serviceCategoryItem));
         debugger;
