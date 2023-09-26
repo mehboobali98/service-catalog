@@ -72,7 +72,7 @@ function createServiceCategoriesView(containers, userExists) {
   newSection.append(serviceCatalogContainer);
 
   $('main').append(newSection);
-  //buildServiceItemsDetailPage();
+  buildServiceItemsDetailPage();
   bindEventListeners(getServiceCategories());
 }
 
@@ -171,7 +171,7 @@ function bindEventListeners(serviceCategories) {
 function buildServiceItemsDetailPage() {
   debugger;
   $.each(getServiceCategoriesItems(), function(serviceCategory, data) {
-    let containerId = serviceCategory + '_service_items_container';
+    let containerId = serviceCategory + '_container';
     let container   = $('#' + containerId);
     debugger;
     if (serviceCategory === 'my_it_assets') {
