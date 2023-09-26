@@ -22,16 +22,69 @@
 }
 
 .service-categories-list ul li a {
-  color: inherit;
+  color:           inherit;
   text-decoration: none;
 }
 
-.service-items-container service-item-card {
-  width: 400px;
-  height: 400px;
-  border: 2px solid !important;
+.service-items-container .service-item-card {
+  width:        280px;
+  height:       120px;
+  margin-right: 40px;
 }
 
-.service-items-container service-item-card a {
+.service-items-container .service-item-card .card-body {
+  position: relative;
+}
+
+.service-items-container .service-item-card .card-body .card-title {
+  font-size:     12px;
+  padding-top:   10px;
+  padding-right: 10px;
+}
+
+.service-items-container .service-item-card .card-body .card-content-container {
+  padding-top: 10px;
+}
+
+.service-items-container .service-item-card .card-body .card-content-table {
+  width:        100%;
+  font-size:    11px;
+  word-wrap:    break-word; 
+  font-weight:  400;
+  line-height:  14px;
+  padding-top:  10px;
+}
+
+.service-items-container .service-item-card .description {
+  color:        #595959;
+  word-wrap:    break-word;
+  font-size:    11px;
+  font-weight:  400;
+  line-height:  14px;
+  padding-top:  10px;
+  display:      -webkit-box;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.service-items-container .service-item-card .card-footer {
+  right:        0;
+  color:        #B29962;
+  bottom:       0;
+  padding:      10px;
+  position:     absolute;
+  font-size:    11px;
+  font-weight:  700;
+  padding-top:  10px;
+}
+
+.service-items-container .service-item-card .card-footer .footer-arrow {
+  font-size: 15px;
+  font-weight: 700; 
+}
+
+.service-items-container .service-item-card a {
   text-decoration: none;
 }
