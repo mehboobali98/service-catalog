@@ -1,5 +1,5 @@
-function buildServiceItemsDetailPage() {
-  $.each(getServiceCategoriesItems(), function(serviceCategory, data) {
+function buildServiceItemsDetailPage(serviceCategoriesItems) {
+  $.each(serviceCategoriesItems, function(serviceCategory, data) {
     let containerId = serviceCategory + '_container';
     let container   = $('#' + containerId);
     if (serviceCategory === 'my_it_assets') {
