@@ -45,7 +45,6 @@ function buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
   cardContentContainer.append(cardContent);
   cardBody.append(cardContentContainer);
 
-  const queryParams         = serviceCategoryItem.queryParams;
   queryParams['asset_id']   = serviceCategoryItem.id;
   queryParams['asset_name'] = assetName;
 
