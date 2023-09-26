@@ -190,6 +190,7 @@ function buildServiceItemsDetailPage() {
 function buildDetailPage(serviceCategoryItem, categoryContainerId) {
   const detailPageContainer = $('div').attr('id', 'detail_page_container_' + serviceCategoryItem.id + '_' + serviceCategoryItem.name)
                                       .addClass('row collapse');
+  debugger;
 
   const imageContainer = $('<div>').addClass('col-3');
   const image = $('<img>').attr('src', serviceCategoryItem.img_src)
