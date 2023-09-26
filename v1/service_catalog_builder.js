@@ -189,7 +189,7 @@ function buildServiceItemsDetailPage() {
 }
 
 function buildDetailPage(serviceCategoryItem, categoryContainerId) {
-  const detailPageContainer = $('<div>').attr('id', 'detail_page_container_' + serviceCategoryItem.id + '_' + serviceCategoryItem.name)
+  const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
                                       .addClass('row collapse');
   debugger;
 
@@ -236,10 +236,10 @@ function bindEventListener(serviceCategoryItem) {
     const containerId = $(this).data('container-id');
     debugger;
     const containerEle = $('#' + containerId);
-    const detailPageContainerId = 'detail_page_container_' + id + name;
+    const detailPageContainerId = 'detail_page_container' + id + name;
     debugger;
     containerEle.hide();
-    $('#' + detailPageContainerId).show();
+    $('#' + detailPageContainerId).removeClass('collapse');
   });
 }
 
