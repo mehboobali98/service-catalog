@@ -7,6 +7,7 @@ function buildServiceItemsDetailPage(serviceCategoriesItems) {
     } else {
       $.each(data.serviceItems, function(index, serviceCategoryItem) {
         container.after(buildDetailPage(serviceCategoryItem));
+        debugger;
         bindEventListener(serviceCategoryItem);
       });
     }
