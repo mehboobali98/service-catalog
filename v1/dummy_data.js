@@ -142,7 +142,9 @@ function findServiceCategoryItem(searchParams, serviceCategoryItems) {
 
 function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwareLicenses) {
   const newServiceItems = [];
+  debugger;
   $.each(userAssignedAssetsAndSoftwareLicenses, function(key, value) {
+    debugger;
     if (key === 'assets' || key === 'software_entitlements') {
       $.each(value, function(record){
         let serviceItemData = {
@@ -154,11 +156,16 @@ function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwa
                             { label: 'Assigned On', value: record['assigned_on'] }
                           ]
         };
+        debugger;
         newServiceItems.push(serviceItemData);
       });
     }
   });
-  serviceCategoriesItems[serviceCategory]['serviceItems'] = newServiceItems;
+  debugger;
+  if (newServiceItems.length > 0) {
+    serviceCategoriesItems[serviceCategory]['serviceItems'] = newServiceItems;
+  }
+  debugger;
 }
 
 function prepareDisplayFieldsData(type, record) {
@@ -169,10 +176,11 @@ function prepareDisplayFieldsData(type, record) {
     });
   } else if (type === 'software_entitlements') {
     displayFields.push({
-      label: 'Seats Given', value: record['seats_given'];
+      label: 'Seats Given', value: record['seats_given']
     })
   }
   displayFields.push({ label: 'Assigned On', value: record['assigned_on'] });
+  debugger;
   return displayFields;
 }
 

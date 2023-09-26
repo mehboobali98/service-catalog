@@ -1,5 +1,4 @@
-import { buildServiceCategoryItem }       from './service_catalog_item_builder.js';
-import { getTokenAndFetchAssignedAssets } from './utility.js';
+import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, updateServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
@@ -10,29 +9,36 @@ function addMenuItem(name, url, parent_ele) {
 }
 
 function buildServiceCatalog() {
+  debugger;
   const containers = buildUI();
+  debugger;
   fetchUserAssetsAndSoftwareEntitlements(containers);
+  debugger;
   bindEventListeners(getServiceCategories());
 }
 
 function buildUI() {
-  const newSection = $('<section>').attr('id', 'service_catalog_section').addClass('service-catalog-section');
+  const newSection = $('<section>').attr('id', 'service_catalog_section')
+                                   .addClass('service-catalog-section');
+
   const serviceCatalogContainer = $('<div>').addClass('row');
+
   const searchAndNavContainer = $('<div>').addClass('col-2');
   const searchAndNavContainerText = $('<h1>').text('Categories');
-  const searchField = $('<input>')
-    .attr('id', 'search-input')
-    .attr('type', 'text')
-    .attr('placeholder', 'search...');
+
+  const searchField = $('<input>').attr('id', 'search-input')
+                                  .attr('type', 'text')
+                                  .attr('placeholder', 'search...');
   const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
-  
   searchAndNavContainer.append(searchAndNavContainerText, searchField);
+
   const containers = {
     newSection: newSection,
     searchAndNavContainer: searchAndNavContainer,
     serviceCatalogContainer: serviceCatalogContainer
   };
   
+  debugger;
   return containers;
 }
 
@@ -46,13 +52,17 @@ function fetchUserAssetsAndSoftwareEntitlements(containers) {
         const endPoint = 'user_assigned_assets_and_software_entitlements';
         const url = 'https://' + ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
         
+        debugger;
         fetch(url, options)
           .then(response => response.json())
           .then(data => {
+            debugger;
             updateServiceCategoryItems('my_it_assets', data);
+            debugger;
             createServiceCategoriesView(containers, true);
           });
       } else {
+        debugger;
         createServiceCategoriesView(containers, false);
       }
     });
@@ -63,25 +73,28 @@ function createServiceCategoriesView(containers, userExists) {
   const navbar = generateNavbar(getServiceCategories(), userExists);
   navbarContainer.append(navbar);
 
-  const newSection = containers['newSection'];
-  const searchAndNavContainer = containers['searchAndNavContainer'];
+  debugger;
+  const newSection              = containers['newSection'];
+  const searchAndNavContainer   = containers['searchAndNavContainer'];
   const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
+  debugger;
   searchAndNavContainer.append(navbarContainer);
-  const serviceItemsContainer = buildServiceCategoriesItems();
+  const serviceItemsContainer = buildServiceCategoriesItems(userExists);
   serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer);
   newSection.append(serviceCatalogContainer);
 
+  debugger;
   $('main').append(newSection);
 }
 
 // Create a function to generate the vertical navbar
-function generateNavbar(serviceCategories, userAuthenticated) {
+function generateNavbar(serviceCategories, userExists) {
   const navbar = $('<ul></ul>');
   
   $.each(serviceCategories, function(index, serviceCategory) {
     var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
-    if (serviceCategory.name === 'My IT Assets' && userAuthenticated) {
+    if (serviceCategory.name === 'My IT Assets' && userExists) {
       listItem.addClass('collapse');
     } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
       listItem.addClass('collapse');
@@ -93,23 +106,38 @@ function generateNavbar(serviceCategories, userAuthenticated) {
   return navbar;
 }
 
-function buildServiceCategoriesItems() {
+function buildServiceCategoriesItems(userAuthenticated) {
   const serviceCategories = Object.keys(getServiceCategoriesItems());
   const serviceItemsContainer = $('<div>').addClass('col-10 service-items-container');
+  debugger;
+  const defaultVisibleCategoryIndex = getDefaultVisibleCategoryIndex(userAuthenticated);
 
-  $.each(serviceCategories, function(index, serviceCategory) {
-    var serviceCategoryItems = getServiceCategoryItems(serviceCategory);
-    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, serviceCategory === 'my_it_assets'));
+  // handle if no service categories present.
+  serviceCategories.forEach((serviceCategory, index) => {
+    const serviceCategoryItems = getServiceCategoryItems(serviceCategory);
+    const isVisible = index === defaultVisibleCategoryIndex;
+    serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
   });
+  debugger;
 
   return serviceItemsContainer;
 }
 
-function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, visible) {
+function getDefaultVisibleCategoryIndex(userExists) {
+  if (userExists) {
+    return 0;
+  } else if (window.HelpCenter.user.role === 'anonymous') {
+    return 2;
+  } else {
+    return 1;
+  }
+}
+
+function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
   const serviceCategoryItemsContainer = $('<div>');
   serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
 
-  if (!visible) { serviceCategoryItemsContainer.addClass('collapse'); }
+  if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
   const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label);
   const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description);
