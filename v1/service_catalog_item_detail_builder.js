@@ -32,14 +32,12 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId, zendeskFormDa
   const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
   const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name))
                                   .append($('<p>').text(serviceCategoryItem.price));
-  // to-do: (add request service button)
-  
-//<a href="#" class="btn btn-info" role="button">Link Button</a>
+
   const url = '/hc/requests/new' + '?' + $.param(queryParams);
   const requestServiceBtn = $('<a>').attr('role', 'button')
                                     .attr('href', url)
-                                    .text('Request Service');
-                                    .addClass('btn')
+                                    .text('Request Service')
+                                    .addClass('btn');
   detailPageHeader.append(headerContent, requestServiceBtn);
 
   const detailPageBody = $('<div>');
