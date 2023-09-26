@@ -49,6 +49,7 @@ function buildDetailPage(serviceCategoryItem, categoryContainerId) {
 }
 
 function bindEventListener(serviceCategoryItem) {
+  debugger;
   $('body').on('click', '#service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase(), function(e) {
     e.preventDefault();
 
