@@ -142,7 +142,7 @@ function findServiceCategoryItem(searchParams, serviceCategoryItems) {
 function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwareLicenses) {
   const newServiceItems = [];
   $.each(userAssignedAssetsAndSoftwareLicenses, function(key, records) {
-    value = JSON.parse(value);
+    records = JSON.parse(records);
     if (key === 'assets' || key === 'software_entitlements') {
       $.each(records, function(index, record){
         let serviceItemData = {
