@@ -30,7 +30,7 @@ function extractTicketFormData(serviceCategory, searchParams) {
   debugger;
   if (serviceCategory === 'my_it_assets') {
     const type = searchParams.get('type');
-    return zendeskFormData['type']['ticketFormData'];
+    return zendeskFormData[type]['ticketFormData'];
   } else {
     return zendeskFormData['ticketFormData'];
   }
