@@ -1,4 +1,5 @@
-import { buildServiceCategoryItem } from './service_catalog_item_builder.js';
+import { buildServiceCategoryItems }    from './service_catalog_item_builder.js';
+import { buildServiceItemsDetailPage }  from './service_catalog_item_detail_builder.js'
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, updateServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
@@ -119,30 +120,6 @@ function getDefaultVisibleCategoryIndex(userExists) {
   }
 }
 
-function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
-  const serviceCategoryItemsContainer = $('<div>');
-  serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
-
-  if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
-
-  const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label);
-  const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description);
-
-  serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
-
-  const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
-  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
-
-  $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
-    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
-  });
-
-  serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
-  serviceCategoryItemsContainer.append(serviceCategoryItemsFlexContainer);
-
-  return serviceCategoryItemsContainer;
-}
-
 function bindEventListeners(serviceCategories) {
   const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
 
@@ -164,70 +141,6 @@ function bindEventListeners(serviceCategories) {
     $("[id*='detail_page_container']").hide();
     $('#' + containerId).show();
     $('#' + containerId.replace('_container', '_service_items_container')).show();
-  });
-}
-
-function buildServiceItemsDetailPage() {
-  $.each(getServiceCategoriesItems(), function(serviceCategory, data) {
-    let containerId = serviceCategory + '_container';
-    let container   = $('#' + containerId);
-    if (serviceCategory === 'my_it_assets') {
-      // do-nothing
-    } else {
-      $.each(data.serviceItems, function(index, serviceCategoryItem) {
-        container.after(buildDetailPage(serviceCategoryItem));
-        bindEventListener(serviceCategoryItem);
-      });
-    }
-  });
-}
-
-function buildDetailPage(serviceCategoryItem, categoryContainerId) {
-  const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
-                                        .addClass('row collapse');
-
-  const imageContainer = $('<div>').addClass('col-3');
-  const image = $('<img>').attr('src', serviceCategoryItem.img_src)
-                          .attr('alt', 'Software');
-  imageContainer.append(image);
-
-  const detailPageContent = $('<div>').addClass('col-9');
-
-  const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-  const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name))
-                                  .append($('<p>').text(serviceCategoryItem.price));
-  // to-do: (add request service button)
-  detailPageHeader.append(headerContent);
-
-  const detailPageBody = $('<div>');
-  const detailPageFields = serviceCategoryItem.detail_page_fields;
-  if (detailPageFields) {
-    $.each(detailPageFields, function(index, fieldData) {
-      let section         = $('<section>');
-      let sectionHeader   = $('<h4>').text(fieldData['label']);
-      let sectionContent  = $('<p>').text(fieldData['value']);
-      section.append(sectionHeader, sectionContent);
-      detailPageBody.append(section);
-    });
-  }
-
-  detailPageContent.append(detailPageHeader, detailPageBody);
-  detailPageContainer.append(imageContainer, detailPageContent);
-
-  return detailPageContainer;
-}
-
-function bindEventListener(serviceCategoryItem) {
-  $('body').on('click', '#service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase(), function(e) {
-    e.preventDefault();
-
-    const id   = $(this).data('id');
-    const name = $(this).data('name');
-    const containerId = $(this).data('container-id');
-    const containerEle = $('#' + containerId);
-    const detailPageContainerId = 'detail_page_container' + id + name;
-    containerEle.hide();
-    $('#' + detailPageContainerId).removeClass('collapse').show();
   });
 }
 

@@ -1,5 +1,29 @@
 import { getZendeskTicketFormData } from './dummy_data.js';
 
+function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
+  const serviceCategoryItemsContainer = $('<div>');
+  serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
+
+  if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
+
+  const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label);
+  const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description);
+
+  serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
+
+  const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
+  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
+
+  $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
+    serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
+  });
+
+  serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
+  serviceCategoryItemsContainer.append(serviceCategoryItemsFlexContainer);
+
+  return serviceCategoryItemsContainer;
+}
+
 function buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
   const serviceItemType = serviceCategoryItem.type;
   const zendeskFormData = getZendeskTicketFormData(serviceCategory);
@@ -105,4 +129,4 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   return card;
 }
 
-export { buildServiceCategoryItem, buildItAssetServiceItem };
+export { buildServiceCategoryItems };
