@@ -52,6 +52,7 @@ function bindEventListener(serviceCategoryItem) {
   $('body').on('click', '#service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase(), function(e) {
     e.preventDefault();
 
+    debugger;
     const id   = $(this).data('id');
     const name = $(this).data('name');
     const containerId = $(this).data('container-id');
