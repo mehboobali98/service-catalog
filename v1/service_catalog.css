@@ -14,7 +14,9 @@
 }
 
 .service-categories-list {
+  height:     450px;
   list-style: none;
+  overflow-y: scroll;
 }
 
 .service-categories-list ul li {
