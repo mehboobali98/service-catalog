@@ -1,3 +1,8 @@
+:root {
+  --white: #ffffff;
+  --brown: #B29962;
+}
+
 .service-catalog-section {
   margin-left: 50px;
 }
@@ -73,7 +78,7 @@
 
 .service-items-container .service-item-card .card-footer {
   right:        0;
-  color:        #B29962;
+  color:        var(--brown);
   bottom:       0;
   position:     absolute;
   font-size:    11px;
@@ -93,14 +98,14 @@
 }
 
 .request-service-btn {
-  color:            #FFF;
+  color:            var(--white);
   width:            140px;
   height:           42px;
-  border:           2px solid #B29962;
+  border:           2px solid var(--brown);
   font-size:        14px;
   text-align:       center;
   font-style:       normal;
-  background:       #B29962;
+  background:       var(--brown);
   font-weight:      700;
   line-height:      17px;
   border-radius:    10px;
