@@ -152,9 +152,13 @@ function bindEventListeners(serviceCategories) {
     e.preventDefault();
 
     const query = $(this).val().trim();
-    if (query.length > 0) {
-      const searchResultsContainer = $('#service_catalog_item_search_results_container');
-      $('#service_items_container').hide();
+    const serviceItemsContainer  = $('#service_items_container');
+    const searchResultsContainer = $('#service_catalog_item_search_results_container');
+    if (query.length === 0) {
+      searchResultsContainer.hide();
+      serviceItemsContainer.show();
+    } else {
+      serviceItemsContainer.hide();
       searchResultsContainer.show();
       updateResults(fuse, query, searchResultsContainer);
     }
