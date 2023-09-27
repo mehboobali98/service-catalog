@@ -103,11 +103,8 @@
   height:           42px;
   border:           2px solid var(--brown);
   font-size:        14px;
-  text-align:       center;
-  font-style:       normal;
   background:       var(--brown);
   font-weight:      700;
-  line-height:      17px;
   border-radius:    10px;
-  text-decoration:  none;
+  text-decoration:  none !important;
 }
