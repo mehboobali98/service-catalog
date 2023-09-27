@@ -71,7 +71,7 @@ function createServiceCategoriesView(containers, userExists) {
   searchAndNavContainer.append(navbarContainer);
   const serviceItemsContainer = buildServiceCategoriesItems(userExists);
   const searchResultsContainer = $('<div>').attr('id', 'service_catalog_item_search_results_container')
-                                           .addClass('col-10 collapse');
+                                           .addClass('col-10 collapse service-catalog-search-results-container');
   serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
   newSection.append(serviceCatalogContainer);
 

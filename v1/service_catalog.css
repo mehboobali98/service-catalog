@@ -115,3 +115,9 @@
 a.request-service-btn:hover {
   color: currentColor;
 }
+
+.service-catalog-search-results-container .service-item-card {
+  width:        280px;
+  height:       120px;
+  margin-right: 40px;
+}
