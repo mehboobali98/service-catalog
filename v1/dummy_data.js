@@ -51,7 +51,7 @@ const zendeskTicketFormData = {
   },
   'request_laptops': {
     queryParams: {
-      'ticket_form_id':       '14009001995154',
+      'ticket_form_id':       '14009613233426',
       'service_category':     'request_laptops'
     },
     ticketFormData: {
