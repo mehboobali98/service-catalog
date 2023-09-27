@@ -22,10 +22,12 @@ function updateResults(fuse, query, searchResultsContainer) {
     searchResultsContainer.empty();
     const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
+    debugger;
     // Display search results
     results.forEach(({ item }) => {
-        searchItemFlex.append(buildServiceCategoryItem(item.serviceCategoryName, item));
+        searchItemsFlex.append(buildServiceCategoryItem(item.serviceCategoryName, item));
     });
+    debugger;
     searchResultsContainer.append(searchItemsFlex);
 }
 
