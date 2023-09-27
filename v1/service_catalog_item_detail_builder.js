@@ -20,7 +20,7 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
   const queryParams         = zendeskFormData['queryParams'] || {};
   const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
                                         .addClass('row')
-                                        .css({ 'display': 'none' });
+                                        .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
   const imageContainer = $('<div>').addClass('col-3');
   const image = $('<img>').attr('src', serviceCategoryItem.img_src)
