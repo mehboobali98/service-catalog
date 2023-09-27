@@ -111,9 +111,8 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   //card footer (price and arrow)
   const cardFooter = $('<div>').addClass('card-footer');
   const price = $('<span>').text(serviceCategoryItem.price);
-  const arrow = $('<span>').attr('id', 'service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase())
-                           .html('&#8594;')
-                           .addClass('footer-arrow float-end')
+  const arrow = $('<span>').html('&#8594;')
+                           .addClass('footer-arrow float-end js-service-item-detail-page-btn')
                            .data('id', serviceCategoryItem.id)
                            .data('name', serviceCategoryItem.name)
                            .data('container-id', serviceCategory + '_service_items_container');

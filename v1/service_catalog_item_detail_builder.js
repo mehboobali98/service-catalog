@@ -58,12 +58,12 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
 }
 
 function bindEventListener(serviceCategoryItem) {
-  $('body').on('click', '#service_item_detail_page_btn' + serviceCategoryItem.id + serviceCategoryItem.name.toLowerCase(), function(e) {
+  $('body').on('click', '.js-service-item-detail-page-btn', function(e) {
     e.preventDefault();
 
-    const id   = $(this).data('id');
-    const name = $(this).data('name');
-    const containerId = $(this).data('container-id');
+    const id           = $(this).data('id');
+    const name         = $(this).data('name');
+    const containerId  = $(this).data('container-id');
     const containerEle = $('#' + containerId);
     const detailPageContainerId = 'detail_page_container' + id + name;
     containerEle.hide();
