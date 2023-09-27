@@ -69,9 +69,10 @@ function bindEventListener(serviceCategoryItem) {
     const containerId  = $(this).data('container-id');
     const containerEle = $('#' + containerId);
     const detailPageContainerId = 'detail_page_container' + id + name;
+    // to-do: unable to find elemeny by id using jquery but its found using javascript??
+    const detailPageEle = $(document.findElementById(detailPageContainerId));
     containerEle.hide();
-    debugger;
-    $('#' + detailPageContainerId).removeClass('collapse').show();
+    detailPageEle.show();
   });
 }
 
