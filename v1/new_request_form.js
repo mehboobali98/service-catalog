@@ -123,7 +123,7 @@ function updateSubject(subject, searchParams, serviceCategory) {
     case 'my_it_assets':
       return subject + searchParams.get('asset_name');
     case 'request_new_software':
-      return subject + searchParams.get('software_name');
+      return subject + searchParams.get('name');
     default:
       return subject; 
   }

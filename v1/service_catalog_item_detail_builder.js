@@ -32,6 +32,7 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
   const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name))
                                   .append($('<p>').text(serviceCategoryItem.price));
 
+  queryParams['name'] = serviceCategoryItem.name;
   const url = '/hc/requests/new' + '?' + $.param(queryParams);
   const requestServiceBtn = $('<a>').attr('role', 'button')
                                     .attr('href', url)
