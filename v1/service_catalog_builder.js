@@ -153,7 +153,8 @@ function bindEventListeners(serviceCategories) {
   $('#search_input').on('keyup', function(e) {
     e.preventDefault();
 
-    const query = searchInput.val().trim();
+    debugger;
+    const query = $(this).val().trim();
     const searchResultsContainer = $('#service_catalog_item_search_results_container');
     debugger;
     $('#service_items_container').hide();
