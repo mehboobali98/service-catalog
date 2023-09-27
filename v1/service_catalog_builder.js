@@ -1,5 +1,6 @@
 import { buildServiceCategoryItems }    from './service_catalog_item_builder.js';
-import { buildServiceItemsDetailPage }  from './service_catalog_item_detail_builder.js'
+import { buildServiceItemsDetailPage }  from './service_catalog_item_detail_builder.js';
+import { initFuseSearch, updateResults } from './search.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, updateServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
@@ -99,7 +100,8 @@ function generateNavbar(serviceCategories, userExists) {
 
 function buildServiceCategoriesItems(userAuthenticated) {
   const serviceCategories = Object.keys(getServiceCategoriesItems());
-  const serviceItemsContainer = $('<div>').addClass('col-10 service-items-container');
+  const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
+                                          .addClass('col-10 service-items-container');
   const defaultVisibleCategoryIndex = getDefaultVisibleCategoryIndex(userAuthenticated);
 
   // to-do: handle if no service categories present.
@@ -123,6 +125,7 @@ function getDefaultVisibleCategoryIndex(userExists) {
 }
 
 function bindEventListeners(serviceCategories) {
+  const fuse = initFuseSearch();
   const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
 
   $(serviceCategoriesIds.join(', ')).click(function(e) {
@@ -148,7 +151,13 @@ function bindEventListeners(serviceCategories) {
   $('#search_input').on('keyup', function(e) {
     e.preventDefault();
 
-    
+    const query = searchInput.val().trim();
+    const searchResultsContainer = $('#service_catalog_item_search_results_container');
+    debugger;
+    $('#service_items_container').hide();
+    searchResultsContainer.show();
+    debugger;
+    updateResults(query, searchResultsContainer);
   });
 }
 

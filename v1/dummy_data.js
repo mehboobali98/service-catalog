@@ -259,7 +259,7 @@ function prepareDisplayFieldsData(type, record) {
   return displayFields;
 }
 
-function extractServiceItemsWithCategory(serviceCategoriesItems) {
+function extractServiceItemsWithCategory() {
   const extractedServiceItems = [];
 
   for (const categoryName in serviceCategoriesItems) {
@@ -279,4 +279,4 @@ function extractServiceItemsWithCategory(serviceCategoriesItems) {
   return extractedServiceItems;
 }
 
-export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems };
+export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };
