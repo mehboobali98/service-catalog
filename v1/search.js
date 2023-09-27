@@ -15,7 +15,7 @@ function initFuseSearch() {
 }
 
 // Function to update search results
-function updateResults(query, searchResultsContainer) {
+function updateResults(fuse, query, searchResultsContainer) {
     const results = fuse.search(query);
 
     // Clear previous results

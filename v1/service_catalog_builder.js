@@ -160,7 +160,7 @@ function bindEventListeners(serviceCategories) {
     $('#service_items_container').hide();
     searchResultsContainer.show();
     debugger;
-    updateResults(query, searchResultsContainer);
+    updateResults(fuse, query, searchResultsContainer);
   });
 }
 
