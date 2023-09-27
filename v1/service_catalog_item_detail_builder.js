@@ -10,7 +10,7 @@ function buildServiceItemsDetailPage(serviceCategoriesItems) {
       $.each(data.serviceItems, function(index, serviceCategoryItem) {
         let zendeskFormData = getZendeskTicketFormData(serviceCategory);
         container.after(buildDetailPage(serviceCategoryItem, zendeskFormData));
-        bindEventListener(serviceCategoryItem);
+        bindItemDetailEventListener(serviceCategoryItem);
       });
     }
   });
@@ -60,7 +60,7 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
   return detailPageContainer;
 }
 
-function bindEventListener(serviceCategoryItem) {
+function bindItemDetailEventListener(serviceCategoryItem) {
   $('body').on('click', '.js-service-item-detail-page-btn', function(e) {
     e.preventDefault();
 
@@ -69,8 +69,10 @@ function bindEventListener(serviceCategoryItem) {
     const containerId  = $(this).data('container-id');
     const containerEle = $('#' + containerId);
     const detailPageContainerId = 'detail_page_container' + id + name;
+    debugger;
     // to-do: unable to find elemeny by id using jquery but its found using javascript??
     const detailPageEle = $(document.getElementById(detailPageContainerId));
+    debugger;
     containerEle.hide();
     detailPageEle.show();
   });
