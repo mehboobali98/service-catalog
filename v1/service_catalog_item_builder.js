@@ -25,13 +25,12 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisi
 }
 
 function buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
-  const serviceItemType = serviceCategoryItem.type;
   const zendeskFormData = getZendeskTicketFormData(serviceCategory);
-  switch (serviceItemType) {
-    case 'assigned_it_asset':
-    case 'assigned_software_entitlement':
+  switch (serviceCategory) {
+    case 'my_it_assets':
       return buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
-    case 'software_request':
+    case 'request_new_software':
+    case 'request_laptops':
       return buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory);
     default:
       // Handle unknown service type
