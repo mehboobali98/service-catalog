@@ -128,6 +128,7 @@ function bindEventListeners(serviceCategories) {
   debugger;
   const fuse = initFuseSearch();
   const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
+  debugger;
 
   $(serviceCategoriesIds.join(', ')).click(function(e) {
     e.preventDefault();
