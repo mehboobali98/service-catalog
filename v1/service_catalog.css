@@ -121,3 +121,57 @@ a.request-service-btn:hover {
   height:       120px;
   margin-right: 40px;
 }
+
+.service-catalog-search-results-container .service-item-card .card-body .card-title {
+  font-size:     12px;
+  padding-top:   10px;
+  padding-right: 10px;
+}
+
+.service-catalog-search-results-container .service-item-card .card-body .card-content-container {
+  padding-top: 10px;
+}
+
+.service-catalog-search-results-container .service-item-card .card-body .card-content-table {
+  width:        100%;
+  font-size:    11px;
+  word-wrap:    break-word; 
+  font-weight:  400;
+  line-height:  14px;
+  padding-top:  10px;
+}
+
+.service-catalog-search-results-container .service-item-card .description {
+  color:        #595959;
+  word-wrap:    break-word;
+  font-size:    11px;
+  font-weight:  400;
+  line-height:  14px;
+  padding-top:  10px;
+  display:      -webkit-box;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.service-catalog-search-results-container .service-item-card .card-footer {
+  right:        0;
+  color:        var(--brown);
+  bottom:       0;
+  position:     absolute;
+  font-size:    11px;
+  padding-top:  10px;
+  font-weight:  700;
+  padding-top:  10px;
+}
+
+.service-catalog-search-results-container .service-item-card .card-footer .footer-arrow {
+  font-size:    15px;
+  font-weight:  700; 
+  margin-right: 5px;
+}
+
+.service-catalog-search-results-container .service-item-card a {
+  text-decoration: none;
+}
