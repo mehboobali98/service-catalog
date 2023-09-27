@@ -92,7 +92,8 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   // Create the card image element
   const cardImageContainer = $('<div>').addClass('col-4');
   const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
-                              .attr('alt', 'Software');
+                              .attr('alt', 'Software')
+                              .addClass('w-100');
   cardImageContainer.append(cardImage);
 
   // Create the card body
