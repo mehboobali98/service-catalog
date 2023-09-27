@@ -23,7 +23,8 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
 
   const imageContainer = $('<div>').addClass('col-3');
   const image = $('<img>').attr('src', serviceCategoryItem.img_src)
-                          .attr('alt', 'Software');
+                          .attr('alt', 'Software')
+                          .addClass('w-100');
   imageContainer.append(image);
 
   const detailPageContent = $('<div>').addClass('col-9');

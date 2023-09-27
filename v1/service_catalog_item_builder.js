@@ -12,7 +12,7 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisi
   serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
   const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
-  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex gap-3');
+  const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
   $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
     serviceCategoryItemsFlex.append(buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
@@ -45,7 +45,8 @@ function buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
   // Card image
   const cardImageContainer = $('<div>').addClass('col-4');
   const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
-                              .attr('alt', 'IT Asset');
+                              .attr('alt', 'IT Asset')
+                              .addClass('w-100');
   cardImageContainer.append(cardImage);
 
   // Card body
