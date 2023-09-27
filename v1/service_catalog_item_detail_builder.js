@@ -68,6 +68,7 @@ function bindEventListener(serviceCategoryItem) {
     const containerEle = $('#' + containerId);
     const detailPageContainerId = 'detail_page_container' + id + name;
     containerEle.hide();
+    debugger;
     $('#' + detailPageContainerId).removeClass('collapse').show();
   });
 }
