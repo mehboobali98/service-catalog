@@ -1,4 +1,4 @@
-import { buildServiceCategoryItem }         from './service_catalog_item_builder';
+import { buildServiceCategoryItem }         from './service_catalog_item_builder.js';
 import { extractServiceItemsWithCategory }  from './dummy_data.js';
 
 function initFuseSearch() {
