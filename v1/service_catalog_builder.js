@@ -125,10 +125,8 @@ function getDefaultVisibleCategoryIndex(userExists) {
 }
 
 function bindEventListeners(serviceCategories) {
-  debugger;
   const fuse = initFuseSearch();
   const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
-  debugger;
 
   $(serviceCategoriesIds.join(', ')).click(function(e) {
     e.preventDefault();
@@ -153,13 +151,10 @@ function bindEventListeners(serviceCategories) {
   $('#search_input').on('keyup', function(e) {
     e.preventDefault();
 
-    debugger;
     const query = $(this).val().trim();
     const searchResultsContainer = $('#service_catalog_item_search_results_container');
-    debugger;
     $('#service_items_container').hide();
     searchResultsContainer.show();
-    debugger;
     updateResults(fuse, query, searchResultsContainer);
   });
 }

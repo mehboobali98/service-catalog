@@ -3,13 +3,11 @@ import { extractServiceItemsWithCategory }  from './dummy_data.js';
 
 function initFuseSearch() {
     const data = extractServiceItemsWithCategory();
-    debugger;
     // Create a Fuse instance with the data and desired options
     const options = {
         keys: ['name'],      // Specify the property to search in
         includeScore: true  // Include search score in the results
     };
-    debugger;
     const fuse = new Fuse(data, options);
     return fuse;
 }
@@ -22,12 +20,10 @@ function updateResults(fuse, query, searchResultsContainer) {
     searchResultsContainer.empty();
     const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-    debugger;
     // Display search results
     results.forEach(({ item }) => {
         searchItemsFlex.append(buildServiceCategoryItem(item.serviceCategoryName, item));
     });
-    debugger;
     searchResultsContainer.append(searchItemsFlex);
 }
 

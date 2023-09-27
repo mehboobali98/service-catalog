@@ -25,7 +25,6 @@ function buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisi
 }
 
 function buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
-  debugger;
   const zendeskFormData = getZendeskTicketFormData(serviceCategory);
   switch (serviceCategory) {
     case 'my_it_assets':
