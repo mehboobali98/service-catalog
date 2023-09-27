@@ -81,8 +81,9 @@
 }
 
 .service-items-container .service-item-card .card-footer .footer-arrow {
-  font-size: 15px;
-  font-weight: 700; 
+  font-size:    15px;
+  font-weight:  700; 
+  margin-right: 5px;
 }
 
 .service-items-container .service-item-card a {
