@@ -130,4 +130,4 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   return card;
 }
 
-export { buildServiceCategoryItems };
+export { buildServiceCategoryItems, buildServiceCategoryItem };
