@@ -19,9 +19,12 @@
 }
 
 .service-categories-list {
-  height:     450px;
-  list-style: none;
-  overflow-y: scroll;
+  height:       450px;
+  font-size:    14px;
+  list-style:   none;
+  overflow-y:   scroll;
+  font-weight:  400;
+  line-height:  17px; 
 }
 
 .service-categories-list ul li {
