@@ -176,6 +176,7 @@ const serviceCategoriesItems = {
       {
         id:      '1',
         name:    'Standard Laptop',
+        price:   '650',
         img_src: 'https://via.placeholder.com/100x100',
         description: "Request a standard laptop for your daily work tasks and productivity needs",
         detail_page_fields: [
