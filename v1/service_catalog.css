@@ -91,3 +91,18 @@
 .service-items-container .service-item-card a {
   text-decoration: none;
 }
+
+.request-service-btn {
+  color:            #FFF;
+  width:            140px;
+  height:           42px;
+  border:           2px solid #B29962;
+  font-size:        14px;
+  text-align:       center;
+  font-style:       normal;
+  background:       #B29962;
+  font-weight:      700;
+  line-height:      17px;
+  border-radius:    10px;
+  text-decoration:  none;
+}

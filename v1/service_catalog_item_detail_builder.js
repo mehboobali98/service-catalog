@@ -39,7 +39,7 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
   const requestServiceBtn = $('<a>').attr('role', 'button')
                                     .attr('href', url)
                                     .text('Request Service')
-                                    .addClass('btn');
+                                    .addClass('btn request-service-btn');
   detailPageHeader.append(headerContent, requestServiceBtn);
 
   const detailPageBody = $('<div>');
