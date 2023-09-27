@@ -108,3 +108,7 @@
   border-radius:    10px;
   text-decoration:  none !important;
 }
+
+a.request-service-btn:hover {
+  color: currentColor;
+}
