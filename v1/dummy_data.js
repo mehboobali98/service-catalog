@@ -40,11 +40,11 @@ const zendeskTicketFormData = {
   },
   'request_new_software': {
     queryParams: {
-      'ticket_form_id':       '360001071720',
+      'ticket_form_id':       '14009001995154',
       'service_category':     'request_new_software'
     },
     ticketFormData: {
-      'custom_field_id':      '14009001995154',
+      'custom_field_id':      '14008974403346',
       'custom_field_value':   'Request New Software',
       'ticket_form_subject':  'Request New Software - '
     }
