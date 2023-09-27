@@ -1,4 +1,5 @@
 import { buildServiceCategoryItem }         from './service_catalog_item_builder.js';
+import { bindItemDetailEventListener }      from './service_catalog_item_detail_builder';
 import { extractServiceItemsWithCategory }  from './dummy_data.js';
 
 function initFuseSearch() {
@@ -22,7 +23,9 @@ function updateResults(fuse, query, searchResultsContainer) {
 
     // Display search results
     results.forEach(({ item }) => {
-        searchItemsFlex.append(buildServiceCategoryItem(item.serviceCategoryName, item));
+        let serviceCategoryItem = buildServiceCategoryItem(item.serviceCategoryName, item);
+        bindItemDetailEventListener(serviceCategoryItem);
+        searchItemsFlex.append(serviceCategoryItem);
     });
     searchResultsContainer.append(searchItemsFlex);
 }

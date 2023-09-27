@@ -73,9 +73,10 @@ function bindItemDetailEventListener(serviceCategoryItem) {
     // to-do: unable to find elemeny by id using jquery but its found using javascript??
     const detailPageEle = $(document.getElementById(detailPageContainerId));
     debugger;
+    $('#service_catalog_item_search_results_container').hide();
     containerEle.hide();
     detailPageEle.show();
   });
 }
 
-export { buildServiceItemsDetailPage };
+export { buildServiceItemsDetailPage, bindItemDetailEventListener };
