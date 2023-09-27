@@ -23,7 +23,7 @@ function buildUI() {
   const searchAndNavContainer = $('<div>').addClass('col-2');
   const searchAndNavContainerText = $('<h1>').text('Categories');
 
-  const searchField = $('<input>').attr('id', 'search-input')
+  const searchField = $('<input>').attr('id', 'search_input')
                                   .attr('type', 'text')
                                   .attr('placeholder', 'search...');
   const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
@@ -69,7 +69,9 @@ function createServiceCategoriesView(containers, userExists) {
 
   searchAndNavContainer.append(navbarContainer);
   const serviceItemsContainer = buildServiceCategoriesItems(userExists);
-  serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer);
+  const searchResultsContainer = $('<div>').attr('id', 'service_catalog_item_search_results_container')
+                                           .addClass('col-10 collapse');
+  serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
   newSection.append(serviceCatalogContainer);
 
   $('main').append(newSection);
@@ -141,6 +143,12 @@ function bindEventListeners(serviceCategories) {
     $("[id*='detail_page_container']").hide();
     $('#' + containerId).show();
     $('#' + containerId.replace('_container', '_service_items_container')).show();
+  });
+
+  $('#search_input').on('keyup', function(e) {
+    e.preventDefault();
+
+    
   });
 }
 
