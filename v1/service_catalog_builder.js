@@ -152,10 +152,12 @@ function bindEventListeners(serviceCategories) {
     e.preventDefault();
 
     const query = $(this).val().trim();
-    const searchResultsContainer = $('#service_catalog_item_search_results_container');
-    $('#service_items_container').hide();
-    searchResultsContainer.show();
-    updateResults(fuse, query, searchResultsContainer);
+    if (query.length > 0) {
+      const searchResultsContainer = $('#service_catalog_item_search_results_container');
+      $('#service_items_container').hide();
+      searchResultsContainer.show();
+      updateResults(fuse, query, searchResultsContainer);
+    }
   });
 }
 
