@@ -3,6 +3,7 @@ import { addMenuItem, buildServiceCatalog } from './service_catalog_builder.js';
 import { isServiceCatalogPage, isNewRequestPage } from './utility.js'
 
 $(document).ready(function(){
+  debugger;
   addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
   initServiceCatalog();
 });
