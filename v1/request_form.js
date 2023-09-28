@@ -1,8 +1,6 @@
 function updateRequestFrom() {
-  debugger;
-  const requestId = extractRequestId();
-  const requestUrl = '/api/v2/requests/' + requestId;
-  debugger;
+  const requestId   = extractRequestId();
+  const requestUrl  = '/api/v2/requests/' + requestId;
 
   hideAssetsCustomField();
   $.getJSON(requestUrl).done(function (data) {
@@ -12,25 +10,19 @@ function updateRequestFrom() {
 
     const options = { method: 'GET', headers: { } };
     return withToken(token => {
-      debugger;
       if (token) {
         options.headers['Authorization'] = 'Bearer ' + token;
-        debugger;
      
         const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-        debugger;
         const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
         const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
-        debugger;
 
         if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
 
-        debugger;
         if (parsedEzoFieldValue.linked != 'true') {
           linkAssets(requestId, assetSequenceNums);
         }
 
-        debugger;
         if (assetNames) {
           addEZOContainer();
           assetNames.map(name => {
@@ -51,8 +43,8 @@ function hideAssetsCustomField() {
   const ddElement   = $("dd:contains('" + valueToFind + "')"); // find dd element by
 
   if (ddElement['0']) {
-    ddElement['0'].style.display = 'none';
-    ddElement['0'].previousElementSibling.style.display = 'none';
+    ddElement['0'].css({ 'display': 'none' });
+    ddElement['0'].previousElementSibling.css({ 'display': 'none' });
   }
 }
 
@@ -100,11 +92,8 @@ function getAssetUrl(assetName) {
 }
 
 function getAssetPath(id, type) {
-  if (type === 'Asset') {
-    return '/assets/' + id;
-  } else {
-    return '/stock_assets/' + id;
-  }
+  const path = type === 'Asset' ? '/assets/' : '/stock_assets/';
+  return path + id;
 }
 
 export { updateRequestFrom };
