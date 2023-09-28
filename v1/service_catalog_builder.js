@@ -1,5 +1,6 @@
 import { buildServiceCategoryItems }    from './service_catalog_item_builder.js';
-import { buildServiceItemsDetailPage }  from './service_catalog_item_detail_builder.js'
+import { buildServiceItemsDetailPage }  from './service_catalog_item_detail_builder.js';
+import { initFuseSearch, updateResults } from './search.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, updateServiceCategoryItems } from './dummy_data.js';
 
 function addMenuItem(name, url, parent_ele) {
@@ -23,7 +24,7 @@ function buildUI() {
   const searchAndNavContainer = $('<div>').addClass('col-2');
   const searchAndNavContainerText = $('<h1>').text('Categories');
 
-  const searchField = $('<input>').attr('id', 'search-input')
+  const searchField = $('<input>').attr('id', 'search_input')
                                   .attr('type', 'text')
                                   .attr('placeholder', 'search...');
   const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
@@ -69,7 +70,9 @@ function createServiceCategoriesView(containers, userExists) {
 
   searchAndNavContainer.append(navbarContainer);
   const serviceItemsContainer = buildServiceCategoriesItems(userExists);
-  serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer);
+  const searchResultsContainer = $('<div>').attr('id', 'service_catalog_item_search_results_container')
+                                           .addClass('col-10 collapse service-catalog-search-results-container');
+  serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
   newSection.append(serviceCatalogContainer);
 
   $('main').append(newSection);
@@ -97,7 +100,8 @@ function generateNavbar(serviceCategories, userExists) {
 
 function buildServiceCategoriesItems(userAuthenticated) {
   const serviceCategories = Object.keys(getServiceCategoriesItems());
-  const serviceItemsContainer = $('<div>').addClass('col-10 service-items-container');
+  const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
+                                          .addClass('col-10 service-items-container');
   const defaultVisibleCategoryIndex = getDefaultVisibleCategoryIndex(userAuthenticated);
 
   // to-do: handle if no service categories present.
@@ -121,6 +125,7 @@ function getDefaultVisibleCategoryIndex(userExists) {
 }
 
 function bindEventListeners(serviceCategories) {
+  const fuse = initFuseSearch();
   const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
 
   $(serviceCategoriesIds.join(', ')).click(function(e) {
@@ -141,6 +146,22 @@ function bindEventListeners(serviceCategories) {
     $("[id*='detail_page_container']").hide();
     $('#' + containerId).show();
     $('#' + containerId.replace('_container', '_service_items_container')).show();
+  });
+
+  $('#search_input').on('keyup', function(e) {
+    e.preventDefault();
+
+    const query = $(this).val().trim();
+    const serviceItemsContainer  = $('#service_items_container');
+    const searchResultsContainer = $('#service_catalog_item_search_results_container');
+    if (query.length === 0) {
+      searchResultsContainer.hide();
+      serviceItemsContainer.show();
+    } else {
+      serviceItemsContainer.hide();
+      searchResultsContainer.show();
+      updateResults(fuse, query, searchResultsContainer);
+    }
   });
 }
 

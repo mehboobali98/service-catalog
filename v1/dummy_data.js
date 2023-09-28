@@ -259,4 +259,24 @@ function prepareDisplayFieldsData(type, record) {
   return displayFields;
 }
 
-export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems };
+function extractServiceItemsWithCategory() {
+  const extractedServiceItems = [];
+
+  for (const categoryName in serviceCategoriesItems) {
+    if (serviceCategoriesItems.hasOwnProperty(categoryName)) {
+      const category = serviceCategoriesItems[categoryName];
+      const categoryLabel = category.label;
+      const serviceItems = category.serviceItems;
+
+      for (const serviceItem of serviceItems) {
+        // Add the service category name to the service item
+        serviceItem.serviceCategoryName = categoryName;
+        extractedServiceItems.push(serviceItem);
+      }
+    }
+  }
+
+  return extractedServiceItems;
+}
+
+export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };

@@ -76,7 +76,7 @@ function buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
   const url = '/hc/requests/new' + '?' + $.param(queryParams);
   const submitRequestBtn = $('<a>').attr('href', url)
                                    .text('Report Issue')
-                                   .addClass('card-footer');
+                                   .addClass('it-asset-card-footer');
   submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
 
   cardBody.append(submitRequestBtn);
@@ -129,4 +129,4 @@ function buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, s
   return card;
 }
 
-export { buildServiceCategoryItems };
+export { buildServiceCategoryItems, buildServiceCategoryItem };
