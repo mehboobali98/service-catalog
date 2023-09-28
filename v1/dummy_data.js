@@ -176,8 +176,8 @@ const serviceCategoriesItems = {
       {
         id:      '1',
         name:    'Standard Laptop',
-        price:   '650',
-        img_src: 'https://imgtr.ee/images/2023/09/28/6e2941484fa113d5a7d3351ab41c8ef0.th.png',
+        price:   '$ 650',
+        img_src: 'https://imgtr.ee/images/2023/09/28/9cb7ceb9d672299ad44fc7f562c719be.th.png',
         description: "Request a standard laptop for your daily work tasks and productivity needs",
         detail_page_fields: [
           { label: 'Details',         value: "Request a standard laptop for your daily work tasks and productivity needs" },
@@ -185,7 +185,60 @@ const serviceCategoriesItems = {
           { label: '',                value: "To request a Standard laptop, simply click the 'Request Service' button" },
           { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
         ]
-      }
+      },
+      {
+        id:      '2',
+        name:    'Power Laptop',
+        price:   '$ 1400',
+        img_src: 'https://imgtr.ee/images/2023/09/28/3715af46c9c4368123ea28bfc436b7d0.th.png',
+        description: "Request a high performance laptop with advanced Specifications",
+        detail_page_fields: [
+          { label: 'Details',         value: "Request a high performance laptop with advanced Specifications" },
+          { label: 'Specifications',  value: "Processor: Intel Core i5, RAM: 8GB, Storage: 256GB SSD, Display: '14-inch FULL HD" },
+          { label: '',                value: "To request a Power laptop, simply click the 'Request Service' button" },
+          { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
+        ]
+      },
+      {
+        id:      '3',
+        name:    'Macbook Pro',
+        price:   '$ 1050',
+        img_src: 'https://imgtr.ee/images/2023/09/28/7b81d46380869760beeebce74def90cd.th.png',
+        description: "Request a Macbook Pro for seemless integration into the mac",
+        detail_page_fields: [
+          { label: 'Details',         value: "The MacBook Pro is a high-end laptop known for its power, sleek design, and Retina display. It offers Intel or Apple M1 processors, up to 64GB RAM, and SSD storage options. Graphics range from integrated to dedicated GPUs. It features Thunderbolt 3 ports, a comfortable keyboard, long battery life, and runs macOS with built-in security." },
+          { label: 'Specifications',  value: "Processor: The MacBook Pro is equipped with powerful Intel or Apple-designed M1 processors, depending on the model. The M1 processors offer exceptional performance and energy efficiency. Memory (RAM): The RAM capacity varies by model but typically ranges from 8GB to 64GB, allowing for smooth multitasking and running demanding applications. Storage: It offers fast SSD storage with capacities ranging from 256GB to 8TB, ensuring quick data access and ample space for files. Graphics: The MacBook Pro features integrated Intel Iris Xe or Apple GPU, or in some cases, dedicated AMD Radeon graphics cards for enhanced graphics performance, especially in the 16-inch model. Display: The Retina display offers high resolution and color accuracy. The 13-inch model usually has a resolution of 2560 x 1600 pixels, while the 16-inch model boasts a 3072 x 1920 pixel resolution. Ports: Depending on the model, it may include Thunderbolt 3 (USB-C) ports for charging, data transfer, and connecting peripherals. The 16-inch model also includes additional ports like HDMI and an SD Card slot. Keyboard: Apple introduced the Magic Keyboard to replace the previous controversial Butterfly keyboard, offering a more comfortable typing experience. Battery Life: Battery life varies depending on usage, but MacBook Pros are known for their long-lasting batteries, often providing a full day of use on a single charge. Operating System: As of 2021, MacBook Pros run macOS, Apple's desktop operating system, which offers a user-friendly interface and access to a vast ecosystem of software and apps. Security: MacBook Pros feature Apple's T2 security chip or M1 security, which provides hardware-based security features like secure boot and data encryption. Audio: They typically come with high-quality speakers and a 3.5mm headphone jack, providing excellent audio quality for media consumption and video conferencing. Webcam: Equipped with a FaceTime HD camera for video calls and conferencing." },
+          { label: '',                value: "To request a Macbook Pro, simply click the 'Request Service' button" },
+          { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
+        ]
+      },
+      {
+        id:      '4',
+        name:    'Light and Portable',
+        price:   '$ 550',
+        img_src: 'https://imgtr.ee/images/2023/09/28/25eb22f0dc205a40fe47e39bfc4282d8.th.png',
+        description: "Request a lightweight and portable laptop for enhanced mobility",
+        detail_page_fields: [
+          { label: 'Details',         value: "Request a lightweight and portable laptop for enhanced mobility" },
+          { label: 'Specifications',  value: "Processor: Intel Core i5, RAM: 8GB, Storage: 256GB SSD, Display: '14-inch FULL HD" },
+          { label: '',                value: "To request a Light and Portable laptop, simply click the 'Request Service' button" },
+          { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
+        ]
+      },
+      {
+        id:      '5',
+        name:    'Custom Configuration',
+        price:   '',
+        img_src: 'https://imgtr.ee/images/2023/09/28/51095d44acc2122905f7bef86fb75dbb.th.png',
+        description: "Request a laptop with custom configuration options tailored to your needs.",
+        detail_page_fields: [
+          { label: 'Details',         value: "Request a laptop with custom configuration options tailored to your needs" },
+          { label: 'Specifications',  value: "Processor: Intel Core i5, RAM: 8GB, Storage: 256GB SSD, Display: '14-inch FULL HD" },
+          { label: '',                value: "To request a Custom Configuration laptop, simply click the 'Request Service' button" },
+          { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
+        ]
+      },
+
     ]
   }
 };
