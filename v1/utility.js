@@ -2,6 +2,11 @@ function generateId(str) {
   return str.toLowerCase().replace(/\s+/g, "_");
 }
 
+function isRequestPage() {
+  const regex = /\/hc(\/en-us)?\/requests\/(\d+)/;
+  return isCorrectPage(regex);
+}
+
 function isNewRequestPage() {
   const regex = /\/hc(\/en-us)?\/requests\/new/;
   return isCorrectPage(regex);
