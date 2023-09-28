@@ -1,6 +1,8 @@
 function updateRequestFrom() {
+  debugger;
   const requestId = extractRequestId();
   const requestUrl = '/api/v2/requests/' + requestId;
+  debugger;
 
   hideAssetsCustomField();
   $.getJSON(requestUrl).done(function (data) {
@@ -35,7 +37,7 @@ function updateRequestFrom() {
           });
         }
       }
-    })
+    });
   });
 }
 
