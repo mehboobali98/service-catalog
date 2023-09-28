@@ -73,6 +73,7 @@ function bindItemDetailEventListener(serviceCategoryItem) {
     const detailPageEle = $(document.getElementById(detailPageContainerId));
     $('#service_catalog_item_search_results_container').hide();
     containerEle.hide();
+    $("[id*='_service_items_container']").hide();
     $('#service_items_container').show();
     detailPageEle.show();
   });
