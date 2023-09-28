@@ -23,6 +23,8 @@ function extractQueryParams(url) {
 
 function extractTicketFormData(serviceCategory, searchParams) {
   const zendeskFormData = getZendeskTicketFormData(serviceCategory);
+  if (!zendeskFormData) { return; }
+
   if (serviceCategory === 'my_it_assets') {
     const type = searchParams.get('type');
     return zendeskFormData[type]['ticketFormData'];

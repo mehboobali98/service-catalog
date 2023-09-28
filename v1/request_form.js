@@ -10,6 +10,7 @@ function updateRequestFrom() {
 
     const options = { method: 'GET', headers: { } };
     return withToken(token => {
+      debugger;
       if (token) {
         options.headers['Authorization'] = 'Bearer ' + token;
      
