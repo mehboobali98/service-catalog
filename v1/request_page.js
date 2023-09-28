@@ -26,6 +26,7 @@ function updateRequestFrom() {
           linkAssets(requestId, assetSequenceNums);
         }
 
+        debugger;
         if (assetNames) {
           addEZOContainer();
           assetNames.map(name => {
