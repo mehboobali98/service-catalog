@@ -43,8 +43,8 @@ function hideAssetsCustomField() {
   const ddElement   = $("dd:contains('" + valueToFind + "')"); // find dd element by
 
   if (ddElement['0']) {
-    ddElement['0'].css({ 'display': 'none' });
-    ddElement['0'].previousElementSibling.css({ 'display': 'none' });
+    ddElement['0'].style.display = 'none';
+    ddElement['0'].previousElementSibling.style.display = 'none';
   }
 }
 
