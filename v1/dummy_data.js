@@ -115,7 +115,7 @@ const serviceCategoriesItems = {
       {
         id:      '2',
         name:    'Slack',
-        price:   '10.99',
+        price:   '$ 10.99',
         img_src: 'https://imgtr.ee/images/2023/09/28/28b8dba7d90f9b29f45c43203386a578.th.png',
         description: "SlackConnect Plus is the ultimate productivity-enhancing app for Slack, designed to supercharge your team's collaboration and communication experience. Elevate your Slack workspace to a whole new level with a range of powerful features that streamline workflows, boost efficiency, and facilitate seamless collaboration like never before.",
         detail_page_fields: [
@@ -126,7 +126,7 @@ const serviceCategoriesItems = {
       {
         id:       '3',
         name:     'Zoom',
-        price:    '10.99',
+        price:    '$ 10.99',
         img_src:  'https://imgtr.ee/images/2023/09/28/8ab5fdb0044dc698f5488ef80d62a1bd.th.png',
         description: 'Zoom is a video conferencing tool allowing you to meet online with other',
         detail_page_fields: [
@@ -137,7 +137,7 @@ const serviceCategoriesItems = {
       {
         id:       '4',
         name:     'Jira Software',
-        price:    '10.99',
+        price:    '$ 10.99',
         img_src:  'https://imgtr.ee/images/2023/09/28/b49d1afb3e877dcdbf33b5d6aa326fc2.th.png',
         description: 'Jira is a project management tool used by our Engineering teams',
         detail_page_fields: [
@@ -148,7 +148,7 @@ const serviceCategoriesItems = {
       {
         id:       '5',
         name:     'SAP',
-        price:    '10.99',
+        price:    '$ 10.99',
         img_src:  'https://imgtr.ee/images/2023/09/28/f521919daf1c2c3f32080159283f53e1.th.png',
         description: 'SAP is an ERP tool currently being used to manage financial and accounting',
         detail_page_fields: [
@@ -159,7 +159,7 @@ const serviceCategoriesItems = {
       {
         id:       '6',
         name:     'Google Workspace',
-        price:    '10.99',
+        price:    '$ 10.99',
         img_src:  'https://imgtr.ee/images/2023/09/28/d4e71c1e782a3392489afd803111550d.th.png',
         description: 'Google Workspace allows you access to gmail, google calendar, docs, sheets, slides',
         detail_page_fields: [
@@ -228,7 +228,6 @@ const serviceCategoriesItems = {
       {
         id:      '5',
         name:    'Custom Configuration',
-        price:   '',
         img_src: 'https://imgtr.ee/images/2023/09/28/51095d44acc2122905f7bef86fb75dbb.th.png',
         description: "Request a laptop with custom configuration options tailored to your needs.",
         detail_page_fields: [
