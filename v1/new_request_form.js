@@ -14,6 +14,7 @@ function updateNewRequestForm() {
     $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
     $('#request_custom_fields_' + customFieldId).val(customFieldValue);
   }
+  debugger;
   getTokenAndFetchAssignedAssets();
 }
 
@@ -58,6 +59,7 @@ function populateAssignedAssets(url, options) {
   fetch(url, options).then(response => response.json())
                      .then(data => {
 
+    debugger;
     const assetsData = { data: [] };
     const ezoCustomFieldEle = $('#request_custom_fields_' + ezoFieldId);
 

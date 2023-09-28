@@ -15,6 +15,7 @@ function updateRequestFrom() {
       debugger;
       if (token) {
         options.headers['Authorization'] = 'Bearer ' + token;
+        debugger;
      
         const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
         debugger;
