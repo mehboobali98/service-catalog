@@ -19,5 +19,3 @@ function initServiceCatalog() {
 
   }
 }
-
-export { initServiceCatalog, addMenuItem };
