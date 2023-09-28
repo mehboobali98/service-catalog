@@ -232,7 +232,7 @@ const serviceCategoriesItems = {
         description: "Request a laptop with custom configuration options tailored to your needs.",
         detail_page_fields: [
           { label: 'Details',         value: "Request a laptop with custom configuration options tailored to your needs" },
-          { label: 'Specifications',  value: "Processor: Intel Core i5, RAM: 8GB, Storage: 256GB SSD, Display: '14-inch FULL HD" },
+          { label: 'Specifications',  value: "Processor: Intel Core i5, RAM: 8GB, Storage: 256GB SSD, Display: '14-inch FULL HD", format: 'list' },
           { label: '',                value: "To request a Custom Configuration laptop, simply click the 'Request Service' button" },
           { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
         ]

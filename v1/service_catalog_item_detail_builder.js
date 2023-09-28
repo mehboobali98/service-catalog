@@ -61,20 +61,21 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
 }
 
 function prepareSectionContent(fieldData) {
-  const fieldLabel = fieldData['label'];
-  const fieldValue = fieldData['value'];
+  const fieldValue  = fieldData['value'];
+  const fieldFormat = fieldData['format'];
 
-  if (label.toLowerCase() === 'specifications') {
+  if (!fieldFormat) { return $('<p>').text(fieldValue); }
+
+  if (fieldFormat === 'list') {
     const listEle     = $('<ul>');
     const listValues  = fieldValue.split(',');
 
-    $.each(values, function(index, value) {
+    $.each(listValues, function(index, value) {
       let listItem = $("<li>").text(value);
-      list.append(listItem);
-      return list;
+      listEle.append(listItem);
     });
-  } else {
-    return $('<p>').text(fieldValue);
+
+    return listEle;
   }
 }
 
