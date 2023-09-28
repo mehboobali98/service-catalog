@@ -48,7 +48,7 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
     $.each(detailPageFields, function(index, fieldData) {
       let section         = $('<section>');
       let sectionHeader   = $('<h4>').text(fieldData['label']);
-      let sectionContent  = $('<p>').text(fieldData['value']);
+      let sectionContent  = prepareSectionContent(fieldData);
       section.append(sectionHeader, sectionContent);
       detailPageBody.append(section);
     });
@@ -58,6 +58,24 @@ function buildDetailPage(serviceCategoryItem, zendeskFormData) {
   detailPageContainer.append(imageContainer, detailPageContent);
 
   return detailPageContainer;
+}
+
+function prepareSectionContent(fieldData) {
+  const fieldLabel = fieldData['label'];
+  const fieldValue = fieldData['value'];
+
+  if (label.toLowerCase() === 'specifications') {
+    const listEle     = $('<ul>');
+    const listValues  = fieldValue.split(',');
+
+    $.each(values, function(index, value) {
+      let listItem = $("<li>").text(value);
+      list.append(listItem);
+      return list;
+    });
+  } else {
+    return $('<p>').text(fieldValue);
+  }
 }
 
 function bindItemDetailEventListener(serviceCategoryItem) {
