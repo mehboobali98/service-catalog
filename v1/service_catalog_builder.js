@@ -89,10 +89,11 @@ class ServiceCatalogBuilder {
 
   // Create a function to generate the vertical navbar
   generateNavbar(serviceCategories, userExists) {
-    const navbar = $('<ul></ul>');
+    const navbar = $('<ul>');
 
     $.each(serviceCategories, function(index, serviceCategory) {
-      var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
+      let link     = serviceCategory.id === 'view_raised_requests' ? '/hc/requests' : serviceCategory.link;
+      let listItem = $('<li>').append($('<a>').attr('href', link).text(serviceCategory.name));
       if (serviceCategory.name === 'My IT Assets' && !userExists) {
         listItem.addClass('collapse');
       } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
