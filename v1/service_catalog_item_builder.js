@@ -47,7 +47,7 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
     debugger;
-    $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
+    serviceCategoryItems.serviceItems.forEach((serviceCategoryItem, index) => {
       debugger;
       serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
     });
