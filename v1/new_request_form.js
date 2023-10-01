@@ -8,18 +8,18 @@ class NewRequestForm {
   updateNewRequestForm() {
     if ($('.nesty-input')[0].text === "-") { return; }
 
-    const searchParams     = extractQueryParams(window.location);
+    const searchParams     = this.extractQueryParams(window.location);
     const serviceCategory  = searchParams.get('service_category');
-    const ticketFormData   = extractTicketFormData(serviceCategory, searchParams);
+    const ticketFormData   = this.extractTicketFormData(serviceCategory, searchParams);
     if (ticketFormData) {
       const customFieldId     = ticketFormData.custom_field_id;
       const customFieldValue  = ticketFormData.custom_field_value;
       const ticketFormSubject = ticketFormData.ticket_form_subject;
 
-      $('#request_subject').val(updateSubject(ticketFormSubject, searchParams, serviceCategory));
+      $('#request_subject').val(this.updateSubject(ticketFormSubject, searchParams, serviceCategory));
       $('#request_custom_fields_' + customFieldId).val(customFieldValue);
     }
-    getTokenAndFetchAssignedAssets();
+    this.getTokenAndFetchAssignedAssets();
   }
 
   extractQueryParams(url) {
@@ -38,7 +38,7 @@ class NewRequestForm {
   }
 
   getTokenAndFetchAssignedAssets() {
-    return withToken().then(token => {
+    return this.withToken().then(token => {
       if (token) {
         const options = {
           method: 'GET',
@@ -49,7 +49,7 @@ class NewRequestForm {
         };
 
         const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
-        return populateAssignedAssets(url, options);
+        return this.populateAssignedAssets(url, options);
       }
     });
   }
@@ -73,8 +73,8 @@ class NewRequestForm {
       ezoCustomFieldEle.hide();
       ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
-      renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
-      preselectAssetsCustomField(extractQueryParams(window.location));
+      this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
+      this.preselectAssetsCustomField(extractQueryParams(window.location));
 
       $('form.request-form').on('submit', function () {
         var selectedIds = $('#ezo-asset-select').val();
@@ -138,7 +138,7 @@ class NewRequestForm {
 
   preselectAssetsCustomField(searchParams) {
     let ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
-    if (!assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
+    if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
     let assetId    = searchParams.get('asset_id');
     let assetName  = searchParams.get('asset_name');
@@ -146,7 +146,7 @@ class NewRequestForm {
     if (!assetName || !assetId) { return; }
 
     let ezoSelectEle = $('#ezo-asset-select');
-    if (ezoSelectEle.length === 0) { renderEzoSelect2Field(ezoCustomFieldEle); }
+    if (ezoSelectEle.length === 0) { this.renderEzoSelect2Field(ezoCustomFieldEle); }
 
     // Set the value, creating a new option if necessary
     if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
