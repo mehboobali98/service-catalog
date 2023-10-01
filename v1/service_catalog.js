@@ -9,10 +9,8 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    $(document).ready(() => {
-      this.addServiceCatalogMenuItem();
-      this.initServiceCatalog();
-    });
+    this.addServiceCatalogMenuItem();
+    this.initServiceCatalog();
   }
 
   addServiceCatalogMenuItem() {
