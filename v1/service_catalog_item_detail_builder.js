@@ -5,13 +5,13 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   build() {
-    $.each(this.serviceCategoriesItems, function(serviceCategory, data) {
+    $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
       let container   = $('#' + containerId);
       if (serviceCategory === 'my_it_assets' || serviceCategory === 'view_raised_requests') {
         // do-nothing
       } else {
-        $.each(data.serviceItems, function(index, serviceCategoryItem) {
+         $.each(data.serviceItems, (index, serviceCategoryItem) => {
           let zendeskFormData = this.zendeskFormData[serviceCategory];
           container.after(this.buildDetailPage(serviceCategoryItem, zendeskFormData));
           this.bindItemDetailEventListener(serviceCategoryItem);
@@ -49,7 +49,7 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageBody = $('<div>');
     const detailPageFields = serviceCategoryItem.detail_page_fields;
     if (detailPageFields) {
-      $.each(detailPageFields, function(index, fieldData) {
+      $.each(detailPageFields, (index, fieldData) => {
         let section         = $('<section>');
         let sectionHeader   = $('<h4>').text(fieldData['label']);
         let sectionContent  = this.prepareSectionContent(fieldData);
