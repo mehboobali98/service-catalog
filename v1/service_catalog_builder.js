@@ -8,6 +8,8 @@ class ServiceCatalogBuilder {
     this.demoData         = demoData;
     this.ezoSubdomain     = ezoSubdomain;
     this.zendeskFormData  = zendeskFormData;
+
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(zendeskFormData, demoData);
   }
 
   addMenuItem(name, url, parent_ele) {
@@ -81,7 +83,7 @@ class ServiceCatalogBuilder {
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
-    buildServiceItemsDetailPage(getServiceCategoriesItems());
+    this.serviceCatalogItemDetailBuilder.build();
     this.bindEventListeners(getServiceCategories());
   }
 
