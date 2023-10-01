@@ -1,99 +1,106 @@
-function updateRequestFrom() {
-  const requestId   = extractRequestId();
-  const requestUrl  = '/api/v2/requests/' + requestId;
+class RequestForm {
+  constructor(ezoFieldId, ezoSubdomain) {
+    this.ezoFieldId   = ezoFieldId;
+    this.ezoSubdomain = ezoSubdomain;
+  }
 
-  hideAssetsCustomField();
-  $.getJSON(requestUrl).done(function (data) {
-    const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == ezoFieldId });
+  updateRequestForm() {
+    const requestId   = this.extractRequestId();
+    const requestUrl  = '/api/v2/requests/' + requestId;
 
-    if (!ezoFieldData || !ezoFieldData.value) { return true; }
+    this.hideAssetsCustomField();
+    $.getJSON(requestUrl).done(function (data) {
+      const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == this.ezoFieldId });
 
-    const options = { method: 'GET', headers: { } };
-    return withToken(token => {
-      if (token) {
-        options.headers['Authorization'] = 'Bearer ' + token;
-     
-        const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-        const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
-        const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
+      if (!ezoFieldData || !ezoFieldData.value) { return true; }
 
-        if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
+      const options = { method: 'GET', headers: { } };
+      return this.withToken(token => {
+        if (token) {
+          options.headers['Authorization'] = 'Bearer ' + token;
+       
+          const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
+          const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
+          const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
-        if (parsedEzoFieldValue.linked != 'true') {
-          linkAssets(requestId, assetSequenceNums);
+          if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
+
+          if (parsedEzoFieldValue.linked != 'true') {
+            this.linkAssets(requestId, assetSequenceNums);
+          }
+
+          if (assetNames) {
+            this.addEZOContainer();
+            assetNames.map(name => {
+              this.showLinkedAsset(name);
+            });
+          }
         }
-
-        if (assetNames) {
-          addEZOContainer();
-          assetNames.map(name => {
-            showLinkedAsset(name);
-          });
-        }
-      }
+      });
     });
-  });
-}
+  }
 
-function extractRequestId() {
-  return window.location.pathname.split('/').pop();
-}
+  extractRequestId() {
+    return window.location.pathname.split('/').pop();
+  }
 
-function hideAssetsCustomField() {
-  const valueToFind = '{'+'"assets":' + '[{'; // value to find dd element
-  const ddElement   = $("dd:contains('" + valueToFind + "')"); // find dd element by
+  hideAssetsCustomField() {
+    const valueToFind = '{'+'"assets":' + '[{'; // value to find dd element
+    const ddElement   = $("dd:contains('" + valueToFind + "')"); // find dd element by
 
-  if (ddElement['0']) {
-    ddElement['0'].style.display = 'none';
-    ddElement['0'].previousElementSibling.style.display = 'none';
+    if (ddElement['0']) {
+      ddElement['0'].style.display = 'none';
+      ddElement['0'].previousElementSibling.style.display = 'none';
+    }
+  }
+
+  withToken(callback) {
+    return $.getJSON('/hc/api/v2/integration/token').then(data => {
+      return callback(data.token);
+    })
+  }
+
+  linkAssets(requestId, assetSequenceNums) {
+    $.ajax({
+      url: 'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_tickets_to_assets_relation.json',
+      type: 'POST',
+      data: { "ticket": { "ticket_id": requestId, "assets_field_id": this.ezoFieldId } }
+    });
+  }
+
+  addEZOContainer() {
+    $('dl.request-details')
+      .last()
+      .after('<dl class="request-details" id="ezo-assets-container"><dt>AssetSonar Assets</dt><dd><ul></ul></dd></dl>');
+  }
+
+  showLinkedAsset(assetName) {
+    const assetUrl         = this.getAssetUrl(assetName);
+    const ezoContainerBody = $('#ezo-assets-container dd ul');
+    if (assetUrl) {
+      ezoContainerBody.append("<li><a target='_blank' href='" + assetUrl + "'>" + assetName + "</a></li>");
+    } else {
+      ezoContainerBody.append("<li>" + assetName + "</li>");
+    }
+  }
+
+  getAssetUrl(assetName) {
+    if (!assetName) { return null; }
+
+    assetName       = assetName.trim();
+    const matchData = assetName.match(/^(Asset|Asset Stock) # (\d+) /);
+    if (matchData) {
+      const id   = matchData[2];
+      const type = matchData[1];
+      return 'https://' + this.ezoSubdomain + this.getAssetPath(id, type);
+    }
+    return null;
+  }
+
+  getAssetPath(id, type) {
+    const path = type === 'Asset' ? '/assets/' : '/stock_assets/';
+    return path + id;
   }
 }
 
-function withToken(callback) {
-  return $.getJSON('/hc/api/v2/integration/token').then(data => {
-    return callback(data.token);
-  })
-}
-
-function linkAssets(requestId, assetSequenceNums) {
-  $.ajax({
-    url: 'https://' + ezoSubdomain + '/webhooks/zendesk/sync_tickets_to_assets_relation.json',
-    type: 'POST',
-    data: { "ticket": { "ticket_id": requestId, "assets_field_id": ezoFieldId } }
-  });
-}
-
-function addEZOContainer() {
-  $('dl.request-details')
-    .last()
-    .after('<dl class="request-details" id="ezo-assets-container"><dt>AssetSonar Assets</dt><dd><ul></ul></dd></dl>');
-}
-
-function showLinkedAsset(assetName) {
-  const assetUrl         = getAssetUrl(assetName);
-  const ezoContainerBody = $('#ezo-assets-container dd ul');
-  if (assetUrl) {
-    ezoContainerBody.append("<li><a target='_blank' href='" + assetUrl + "'>" + assetName + "</a></li>");
-  } else {
-    ezoContainerBody.append("<li>" + assetName + "</li>");
-  }
-}
-
-function getAssetUrl(assetName) {
-  if (!assetName) { return null; }
-
-  assetName       = assetName.trim();
-  const matchData = assetName.match(/^(Asset|Asset Stock) # (\d+) /);
-  if (matchData) {
-    const id   = matchData[2];
-    const type = matchData[1];
-    return 'https://' + ezoSubdomain + getAssetPath(id, type);
-  }
-  return null;
-}
-
-function getAssetPath(id, type) {
-  const path = type === 'Asset' ? '/assets/' : '/stock_assets/';
-  return path + id;
-}
-
-export { updateRequestFrom };
+export { RequestForm };

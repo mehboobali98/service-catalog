@@ -254,8 +254,8 @@ function getServiceCategoriesItems() {
   return serviceCategoriesItems;
 }
 
-function getZendeskTicketFormData(serviceCategory) {
-  return zendeskTicketFormData[serviceCategory];
+function getZendeskTicketFormData() {
+  return zendeskTicketFormData;
 }
 
 function findServiceCategoryItem(searchParams, serviceCategoryItems) {
@@ -272,28 +272,28 @@ function findServiceCategoryItem(searchParams, serviceCategoryItems) {
   return null; // Return null if no matching object is found
 }
 
-function updateServiceCategoryItems(serviceCategory, userAssignedAssetsAndSoftwareLicenses) {
+function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAssetsAndSoftwareLicenses) {
   const newServiceItems = [];
   $.each(userAssignedAssetsAndSoftwareLicenses, function(key, records) {
     records = JSON.parse(records);
     if (key === 'assets' || key === 'software_entitlements') {
       $.each(records, function(index, record){
+        let type = key === 'assets' ? 'assigned_it_asset' : 'assigned_software_entitlement';
         let serviceItemData = {
           id:             record['id'],
           name:           record['name'],
-          type:           key === 'assets' ? 'assigned_it_asset' : 'assigned_software_entitlement',
+          type:           type,
           img_src:        record['img_src'],
-          display_fields: [ { label: 'Serial #',    value: record['bios_serial_number'] },
-                            { label: 'Assigned On', value: record['assigned_on'] }
-                          ]
+          display_fields: prepareDisplayFieldsData(type, record)
         };
         newServiceItems.push(serviceItemData);
       });
     }
   });
   if (newServiceItems.length > 0) {
-    serviceCategoriesItems[serviceCategory]['serviceItems'] = newServiceItems;
+    demoData[serviceCategory]['serviceItems'] = newServiceItems;
   }
+  return demoData;
 }
 
 function prepareDisplayFieldsData(type, record) {
