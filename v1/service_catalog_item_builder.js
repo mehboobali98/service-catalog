@@ -12,6 +12,7 @@ class ServiceCatalogItemBuilder {
     const defaultVisibleCategoryIndex = this.getDefaultVisibleCategoryIndex();
 
     // to-do: handle if no service categories present.
+    debugger;
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
       const isVisible = index === defaultVisibleCategoryIndex;
@@ -45,7 +46,9 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
+    debugger;
     $.each(serviceCategoryItems.serviceItems, function(index, serviceCategoryItem) {
+      debugger;
       serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
     });
 
