@@ -1,10 +1,15 @@
-import { updateRequestFrom } from './request_form.js';
-import { updateNewRequestForm } from './new_request_form.js';
-import { addMenuItem, buildServiceCatalog } from './service_catalog_builder.js';
+import { updateRequestFrom }      from './request_form.js';
+import { updateNewRequestForm }   from './new_request_form.js';
+import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
 import { isServiceCatalogPage, isNewRequestPage, isRequestPage } from './utility.js';
 
 class ServiceCatalogManager {
-  constructor() {
+  constructor(demoData, zendeskFormData, ezoFieldId, ezoSubdomain) {
+    this.demoData         = demoData;
+    this.ezoFieldId       = ezoFieldId;
+    this.ezoSubdomain     = ezoSubdomain;
+    this.zendeskFormData  = zendeskFormData;
+
     this.initialize();
   }
 
@@ -19,7 +24,7 @@ class ServiceCatalogManager {
 
   initServiceCatalog() {
     if (isServiceCatalogPage()) {
-      buildServiceCatalog();
+      new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain).buildServiceCatalog();
     } else if (isNewRequestPage()) {
       this.updateNewRequestForm();
     } else if (isRequestPage()) {
