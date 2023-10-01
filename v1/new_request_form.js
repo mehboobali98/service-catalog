@@ -8,6 +8,7 @@ class NewRequestForm {
   updateNewRequestForm() {
     if ($('.nesty-input')[0].text === "-") { return; }
 
+    debugger;
     const searchParams     = this.extractQueryParams(window.location);
     const serviceCategory  = searchParams.get('service_category');
     const ticketFormData   = this.extractTicketFormData(serviceCategory, searchParams);
@@ -32,9 +33,9 @@ class NewRequestForm {
 
     if (serviceCategory === 'my_it_assets') {
       const type = searchParams.get('type');
-      return this.zendeskFormData[type]['ticketFormData'];
+      return this.zendeskFormData[serviceCategory][type]['ticketFormData'];
     } else {
-      return this.zendeskFormData['ticketFormData'];
+      return this.zendeskFormData[serviceCategory]['ticketFormData'];
     }
   }
 
