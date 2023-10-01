@@ -1,23 +1,43 @@
-import { updateRequestFrom }                                      from './request_form.js';
-import { updateNewRequestForm }                                   from './new_request_form.js';
-import { addMenuItem, buildServiceCatalog }                       from './service_catalog_builder.js';
-import { isServiceCatalogPage, isNewRequestPage, isRequestPage }  from './utility.js'
+import { updateRequestFrom } from './request_form.js';
+import { updateNewRequestForm } from './new_request_form.js';
+import { addMenuItem, buildServiceCatalog } from './service_catalog_builder.js';
+import { isServiceCatalogPage, isNewRequestPage, isRequestPage } from './utility.js';
 
-// $(document).ready(function(){
-//   addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
-//   initServiceCatalog();
-// });
+class ServiceCatalogManager {
+  constructor() {
+    this.initialize();
+  }
 
-function initServiceCatalog() {
-  if (isServiceCatalogPage()) {
-    buildServiceCatalog();
-  } else if(isNewRequestPage()) {
+  initialize() {
+    $(document).ready(() => {
+      this.addServiceCatalogMenuItem();
+      this.initServiceCatalog();
+    });
+  }
+
+  addServiceCatalogMenuItem() {
+    addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
+  }
+
+  initServiceCatalog() {
+    if (isServiceCatalogPage()) {
+      buildServiceCatalog();
+    } else if (isNewRequestPage()) {
+      this.updateNewRequestForm();
+    } else if (isRequestPage()) {
+      this.updateRequestForm();
+    } else {
+      // Handle other cases if needed
+    }
+  }
+
+  updateNewRequestForm() {
     updateNewRequestForm();
-  } else if(isRequestPage()) {
-    updateRequestFrom();
-  } else {
+  }
 
+  updateRequestForm() {
+    updateRequestFrom();
   }
 }
 
-export { initServiceCatalog };
+export { ServiceCatalogManager };
