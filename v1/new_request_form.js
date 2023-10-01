@@ -74,7 +74,7 @@ class NewRequestForm {
       ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
       this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
-      this.preselectAssetsCustomField(extractQueryParams(window.location));
+      this.preselectAssetsCustomField(this.extractQueryParams(window.location));
 
       $('form.request-form').on('submit', function () {
         var selectedIds = $('#ezo-asset-select').val();
