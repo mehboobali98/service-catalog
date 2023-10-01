@@ -254,8 +254,8 @@ function getServiceCategoriesItems() {
   return serviceCategoriesItems;
 }
 
-function getZendeskTicketFormData(serviceCategory) {
-  return zendeskTicketFormData[serviceCategory];
+function getZendeskTicketFormData() {
+  return zendeskTicketFormData;
 }
 
 function findServiceCategoryItem(searchParams, serviceCategoryItems) {

@@ -1,14 +1,15 @@
 import { RequestForm }            from './request_form.js';
 import { NewRequestForm }         from './new_request_form.js';
 import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
+import { getServiceCategoriesItems, getZendeskTicketFormData }     from './dummy_data.js'
 import { isServiceCatalogPage, isNewRequestPage, isRequestPage } from './utility.js';
 
 class ServiceCatalogManager {
   constructor(demoData, zendeskFormData, ezoFieldId, ezoSubdomain) {
-    this.demoData         = demoData;
+    this.demoData         = getServiceCategoriesItems();
     this.ezoFieldId       = ezoFieldId;
     this.ezoSubdomain     = ezoSubdomain;
-    this.zendeskFormData  = zendeskFormData;
+    this.zendeskFormData  = getZendeskTicketFormData();
 
     this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain);
     this.initialize();

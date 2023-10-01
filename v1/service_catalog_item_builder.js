@@ -56,7 +56,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
-    const zendeskFormData = getZendeskTicketFormData(serviceCategory);
+    const zendeskFormData = this.zendeskFormData[serviceCategory];
     switch (serviceCategory) {
       case 'my_it_assets':
         return this.buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
