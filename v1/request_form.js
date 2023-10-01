@@ -4,7 +4,7 @@ class RequestForm {
     this.ezoSubdomain = ezoSubdomain;
   }
 
-  updateRequestFrom() {
+  updateRequestForm() {
     const requestId   = this.extractRequestId();
     const requestUrl  = '/api/v2/requests/' + requestId;
 
