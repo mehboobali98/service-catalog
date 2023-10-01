@@ -109,9 +109,8 @@ class ServiceCatalogBuilder {
   bindEventListeners() {
     const fuse = initFuseSearch();
     const serviceCategories    = Object.keys(this.demoData);
-    const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
+    const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
-    debugger;
     $(serviceCategoriesIds.join(', ')).click(function(e) {
       e.preventDefault();
 
