@@ -11,6 +11,7 @@ class NewRequestForm {
     const searchParams     = this.extractQueryParams(window.location);
     const serviceCategory  = searchParams.get('service_category');
     const ticketFormData   = this.extractTicketFormData(serviceCategory, searchParams);
+    debugger;
     if (ticketFormData) {
       const customFieldId     = ticketFormData.custom_field_id;
       const customFieldValue  = ticketFormData.custom_field_value;
