@@ -1,4 +1,10 @@
-import { generateId } from './utility.js';
+function getServiceCategoriesItems() {
+  return serviceCategoriesItems;
+}
+
+function getZendeskTicketFormData() {
+  return zendeskTicketFormData;
+}
 
 const zendeskTicketFormData = {
   'my_it_assets': {
@@ -245,18 +251,6 @@ const serviceCategoriesItems = {
   }
 };
 
-function getServiceCategoryItems(serviceCategory) {
-  return serviceCategoriesItems[serviceCategory];
-}
-
-function getServiceCategoriesItems() {
-  return serviceCategoriesItems;
-}
-
-function getZendeskTicketFormData() {
-  return zendeskTicketFormData;
-}
-
 function findServiceCategoryItem(searchParams, serviceCategoryItems) {
   const id   = searchParams.get('asset_id');
   const name = searchParams.get('asset_name');
@@ -332,4 +326,4 @@ function extractServiceItemsWithCategory() {
   return extractedServiceItems;
 }
 
-export { getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };
+export { getServiceCategoriesItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };
