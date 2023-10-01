@@ -10,6 +10,7 @@ class ServiceCatalogManager {
     this.ezoSubdomain     = ezoSubdomain;
     this.zendeskFormData  = zendeskFormData;
 
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain);
     this.initialize();
   }
 
@@ -19,12 +20,12 @@ class ServiceCatalogManager {
   }
 
   addServiceCatalogMenuItem() {
-    addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
+    this.serviceCatalogBuilder.addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
   }
 
   initServiceCatalog() {
     if (isServiceCatalogPage()) {
-      new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain).buildServiceCatalog();
+      this.serviceCatalogBuilder.buildServiceCatalog();
     } else if (isNewRequestPage()) {
       this.updateNewRequestForm();
     } else if (isRequestPage()) {
