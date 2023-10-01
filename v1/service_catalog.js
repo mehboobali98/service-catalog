@@ -1,5 +1,5 @@
 import { updateRequestFrom }      from './request_form.js';
-import { updateNewRequestForm }   from './new_request_form.js';
+import { NewRequestForm }         from './new_request_form.js';
 import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
 import { isServiceCatalogPage, isNewRequestPage, isRequestPage } from './utility.js';
 
@@ -27,7 +27,7 @@ class ServiceCatalogManager {
     if (isServiceCatalogPage()) {
       this.serviceCatalogBuilder.buildServiceCatalog();
     } else if (isNewRequestPage()) {
-      this.updateNewRequestForm();
+      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.zendeskFormData).updateNewRequestForm();
     } else if (isRequestPage()) {
       this.updateRequestForm();
     } else {
