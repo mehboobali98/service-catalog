@@ -1,5 +1,5 @@
 class ServiceCatalogItemDetailBuilder {
-  constructor(zendeskFormData, serviceCategoriesItems) {
+  constructor(serviceCategoriesItems, zendeskFormData) {
     this.zendeskFormData        = zendeskFormData;
     this.serviceCategoriesItems = serviceCategoriesItems;
   }

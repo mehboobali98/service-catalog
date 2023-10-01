@@ -1,7 +1,7 @@
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 import { initFuseSearch, updateResults }    from './search.js';
-import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, updateServiceCategoryItems } from './dummy_data.js';
+import { getServiceCategories, updateServiceCategoryItems } from './dummy_data.js';
 
 class ServiceCatalogBuilder {
   constructor(demoData, zendeskFormData, ezoSubdomain) {
@@ -9,7 +9,7 @@ class ServiceCatalogBuilder {
     this.ezoSubdomain     = ezoSubdomain;
     this.zendeskFormData  = zendeskFormData;
 
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(zendeskFormData, demoData);
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
   }
 
   addMenuItem(name, url, parent_ele) {
