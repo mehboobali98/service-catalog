@@ -319,10 +319,12 @@ function extractServiceItemsWithCategory() {
       const categoryLabel = category.label;
       const serviceItems = category.serviceItems;
 
-      for (const serviceItem of serviceItems) {
-        // Add the service category name to the service item
-        serviceItem.serviceCategoryName = categoryName;
-        extractedServiceItems.push(serviceItem);
+      if (serviceItems) {
+        for (const serviceItem of serviceItems) {
+          // Add the service category name to the service item
+          serviceItem.serviceCategoryName = categoryName;
+          extractedServiceItems.push(serviceItem);
+        }
       }
     }
   }
