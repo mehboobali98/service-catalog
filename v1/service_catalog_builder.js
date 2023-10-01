@@ -16,8 +16,8 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog(demoData, zendeskFormData) {
-    const containers = buildUI();
-    fetchUserAssetsAndSoftwareEntitlements(containers);
+    const containers = this.buildUI();
+    this.fetchUserAssetsAndSoftwareEntitlements(containers);
   }
 
   buildUI() {
@@ -33,7 +33,7 @@ class ServiceCatalogBuilder {
                                     .attr('type', 'text')
                                     .attr('placeholder', 'search...');
     const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
-    searchAndNavContainer.append(searchAndNavContainerText, searchField);
+    this.searchAndNavContainer.append(searchAndNavContainerText, searchField);
 
     const containers = {
       newSection: newSection,
@@ -55,18 +55,18 @@ class ServiceCatalogBuilder {
           fetch(url, options)
             .then(response => response.json())
             .then(data => {
-              updateServiceCategoryItems('my_it_assets', data);
-              createServiceCategoriesView(containers, true);
+              this.updateServiceCategoryItems('my_it_assets', data);
+              this.createServiceCategoriesView(containers, true);
             });
         } else {
-          createServiceCategoriesView(containers, false);
+          this.createServiceCategoriesView(containers, false);
         }
       });
   }
 
   createServiceCategoriesView(containers, userExists) {
     const navbarContainer = $('<div>').addClass('service-categories-list');
-    const navbar = generateNavbar(getServiceCategories(), userExists);
+    const navbar = this.generateNavbar(getServiceCategories(), userExists);
     navbarContainer.append(navbar);
 
     const newSection              = containers['newSection'];
@@ -82,7 +82,7 @@ class ServiceCatalogBuilder {
 
     $('main').append(newSection);
     buildServiceItemsDetailPage(getServiceCategoriesItems());
-    bindEventListeners(getServiceCategories());
+    this.bindEventListeners(getServiceCategories());
   }
 
   // Create a function to generate the vertical navbar
@@ -107,7 +107,7 @@ class ServiceCatalogBuilder {
     const serviceCategories = Object.keys(getServiceCategoriesItems());
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
-    const defaultVisibleCategoryIndex = getDefaultVisibleCategoryIndex(userAuthenticated);
+    const defaultVisibleCategoryIndex = this.getDefaultVisibleCategoryIndex(userAuthenticated);
 
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
