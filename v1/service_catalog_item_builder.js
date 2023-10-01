@@ -13,7 +13,7 @@ class ServiceCatalogItemBuilder {
 
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
-      const serviceCategoryItems = serviceCategoriesItems[serviceCategory];
+      const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
       const isVisible = index === defaultVisibleCategoryIndex;
       serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
     });
