@@ -1,6 +1,6 @@
-import { buildServiceCategoryItems }    from './service_catalog_item_builder.js';
-import { buildServiceItemsDetailPage }  from './service_catalog_item_detail_builder.js';
-import { initFuseSearch, updateResults } from './search.js';
+import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
+import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
+import { initFuseSearch, updateResults }    from './search.js';
 import { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, updateServiceCategoryItems } from './dummy_data.js';
 
 class ServiceCatalogBuilder {
@@ -76,7 +76,7 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
     searchAndNavContainer.append(navbarContainer);
-    const serviceItemsContainer = buildServiceCategoriesItems(userExists);
+    const serviceItemsContainer = new ServiceCatalogItemBuilder(userExists, this.demoData, this.zendeskFormData).build();
     const searchResultsContainer = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                              .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
@@ -103,32 +103,6 @@ class ServiceCatalogBuilder {
     });
 
     return navbar;
-  }
-
-  buildServiceCategoriesItems(userAuthenticated) {
-    const serviceCategories = Object.keys(getServiceCategoriesItems());
-    const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
-                                            .addClass('col-10 service-items-container');
-    const defaultVisibleCategoryIndex = this.getDefaultVisibleCategoryIndex(userAuthenticated);
-
-    // to-do: handle if no service categories present.
-    serviceCategories.forEach((serviceCategory, index) => {
-      const serviceCategoryItems = getServiceCategoryItems(serviceCategory);
-      const isVisible = index === defaultVisibleCategoryIndex;
-      serviceItemsContainer.append(buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
-    });
-
-    return serviceItemsContainer;
-  }
-
-  getDefaultVisibleCategoryIndex(userExists) {
-    if (userExists) {
-      return 0;
-    } else if (window.HelpCenter.user.role === 'anonymous') {
-      return 2;
-    } else {
-      return 1;
-    }
   }
 
   bindEventListeners(serviceCategories) {
