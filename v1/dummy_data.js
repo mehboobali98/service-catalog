@@ -99,6 +99,15 @@ const serviceCategoriesItems = {
       }
     ]
   },
+  'view_raised_requests': {
+    label: 'View Raised Requests'
+  },
+  'general_it_help': {
+    label: 'General IT Help'
+  },
+  'hr_services': {
+    label: 'HR Services'
+  },
   'request_new_software': {
     label:       'Request New Software',
     description: 'Browse and request available software for your needs or request a new one!',
@@ -236,15 +245,16 @@ const serviceCategoriesItems = {
           { label: '',                value: "To request a Custom Configuration laptop, simply click the 'Request Service' button" },
           { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
         ]
-      },
-
+      }
     ]
+  },
+  'request_mobile_devices': {
+    label: 'Request Mobile Devices'
+  },
+  'software_access': {
+    label: 'Software Access'
   }
 };
-
-function getServiceCategories() {
-  return serviceCategories.map(serviceCategory => ({ id: generateId(serviceCategory), name: serviceCategory, link: '#' }));
-}
 
 function getServiceCategoryItems(serviceCategory) {
   return serviceCategoriesItems[serviceCategory];
@@ -331,4 +341,4 @@ function extractServiceItemsWithCategory() {
   return extractedServiceItems;
 }
 
-export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };
+export { getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };

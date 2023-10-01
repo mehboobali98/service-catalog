@@ -1,7 +1,7 @@
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 import { initFuseSearch, updateResults }    from './search.js';
-import { getServiceCategories, updateServiceCategoryItems } from './dummy_data.js';
+import { updateServiceCategoryItems } from './dummy_data.js';
 
 class ServiceCatalogBuilder {
   constructor(demoData, zendeskFormData, ezoSubdomain) {
@@ -68,7 +68,7 @@ class ServiceCatalogBuilder {
 
   createServiceCategoriesView(containers, userExists) {
     const navbarContainer = $('<div>').addClass('service-categories-list');
-    const navbar = this.generateNavbar(getServiceCategories(), userExists);
+    const navbar = this.generateNavbar(userExists);
     navbarContainer.append(navbar);
 
     const newSection              = containers['newSection'];
@@ -84,19 +84,19 @@ class ServiceCatalogBuilder {
 
     $('main').append(newSection);
     this.serviceCatalogItemDetailBuilder.build();
-    this.bindEventListeners(getServiceCategories());
+    this.bindEventListeners();
   }
 
   // Create a function to generate the vertical navbar
-  generateNavbar(serviceCategories, userExists) {
+  generateNavbar(userExists) {
     const navbar = $('<ul>');
 
-    $.each(serviceCategories, function(index, serviceCategory) {
-      let link     = serviceCategory.id === 'view_raised_requests' ? '/hc/requests' : serviceCategory.link;
-      let listItem = $('<li>').append($('<a>').attr({ 'href': link, 'target': '_blank' }).text(serviceCategory.name));
-      if (serviceCategory.name === 'My IT Assets' && !userExists) {
+    $.each(demoData, function(serviceCategory, serviceCategoryData) {
+      let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#_';
+      let listItem = $('<li>').append($('<a>').attr({ 'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
+      if (serviceCategory === 'my_it_assets' && !userExists) {
         listItem.addClass('collapse');
-      } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
+      } else if (serviceCategory === 'view_raised_requests' && window.HelpCenter.user.role === 'anonymous') {
         listItem.addClass('collapse');
       }
 
@@ -106,8 +106,9 @@ class ServiceCatalogBuilder {
     return navbar;
   }
 
-  bindEventListeners(serviceCategories) {
+  bindEventListeners() {
     const fuse = initFuseSearch();
+    const serviceCategories    = Object.keys(demoData);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
