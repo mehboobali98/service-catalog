@@ -34,14 +34,6 @@ class ServiceCatalogManager {
       // Handle other cases if needed
     }
   }
-
-  updateNewRequestForm() {
-    updateNewRequestForm();
-  }
-
-  updateRequestForm() {
-    updateRequestFrom();
-  }
 }
 
 export { ServiceCatalogManager };
