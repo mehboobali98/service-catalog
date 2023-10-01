@@ -1,16 +1,5 @@
 import { generateId } from './utility.js';
 
-const serviceCategories = [
-  'My IT Assets',
-  'View Raised Requests',
-  'General IT Help',
-  'HR Services',
-  'Request New Software',
-  'Request Laptops',
-  'Request Mobile Devices',
-  'Software Access'
-];
-
 const zendeskTicketFormData = {
   'my_it_assets': {
     'assigned_it_asset': {

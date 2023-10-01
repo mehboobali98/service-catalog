@@ -91,7 +91,7 @@ class ServiceCatalogBuilder {
   generateNavbar(userExists) {
     const navbar = $('<ul>');
 
-    $.each(demoData, function(serviceCategory, serviceCategoryData) {
+    $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
       let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#_';
       let listItem = $('<li>').append($('<a>').attr({ 'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
       if (serviceCategory === 'my_it_assets' && !userExists) {
@@ -108,7 +108,7 @@ class ServiceCatalogBuilder {
 
   bindEventListeners() {
     const fuse = initFuseSearch();
-    const serviceCategories    = Object.keys(demoData);
+    const serviceCategories    = Object.keys(this.demoData);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
