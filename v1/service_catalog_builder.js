@@ -92,7 +92,7 @@ class ServiceCatalogBuilder {
     const navbar = $('<ul>');
 
     $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
-      let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#_';
+      let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#';
       let listItem = $('<li>').append($('<a>').attr({ 'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
       if (serviceCategory === 'my_it_assets' && !userExists) {
         listItem.addClass('collapse');
@@ -111,6 +111,7 @@ class ServiceCatalogBuilder {
     const serviceCategories    = Object.keys(this.demoData);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
 
+    debugger;
     $(serviceCategoriesIds.join(', ')).click(function(e) {
       e.preventDefault();
 
