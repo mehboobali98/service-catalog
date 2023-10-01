@@ -57,7 +57,7 @@ class ServiceCatalogBuilder {
           fetch(url, options)
             .then(response => response.json())
             .then(data => {
-              this.updateServiceCategoryItems('my_it_assets', data);
+              this.demoData = this.updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
               this.createServiceCategoriesView(containers, true);
             });
         } else {
