@@ -304,14 +304,14 @@ function prepareDisplayFieldsData(type, record) {
   return displayFields;
 }
 
-function extractServiceItemsWithCategory() {
+function extractServiceItemsWithCategory(demoData) {
   const extractedServiceItems = [];
 
-  for (const categoryName in serviceCategoriesItems) {
-    if (serviceCategoriesItems.hasOwnProperty(categoryName)) {
-      const category = serviceCategoriesItems[categoryName];
+  for (const categoryName in demoData) {
+    if (demoData.hasOwnProperty(categoryName)) {
+      const category      = demoData[categoryName];
       const categoryLabel = category.label;
-      const serviceItems = category.serviceItems;
+      const serviceItems  = category.serviceItems;
 
       if (serviceItems) {
         for (const serviceItem of serviceItems) {

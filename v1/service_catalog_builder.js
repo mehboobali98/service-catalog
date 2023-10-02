@@ -1,7 +1,7 @@
+import { Search }                           from './search.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
-import { initFuseSearch, updateResults }    from './search.js';
-import { updateServiceCategoryItems } from './dummy_data.js';
+import { updateServiceCategoryItems }       from './dummy_data.js';
 
 class ServiceCatalogBuilder {
   constructor(demoData, zendeskFormData, ezoSubdomain) {
@@ -9,7 +9,9 @@ class ServiceCatalogBuilder {
     this.ezoSubdomain     = ezoSubdomain;
     this.zendeskFormData  = zendeskFormData;
 
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
+    this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
 
   addMenuItem(name, url, parent_ele) {
@@ -76,8 +78,8 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
     searchAndNavContainer.append(navbarContainer);
-    const serviceItemsContainer = new ServiceCatalogItemBuilder(userExists, this.demoData, this.zendeskFormData).build();
-    const searchResultsContainer = $('<div>').attr('id', 'service_catalog_item_search_results_container')
+    const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(userExists);
+    const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                              .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
@@ -107,7 +109,7 @@ class ServiceCatalogBuilder {
   }
 
   bindEventListeners() {
-    const fuse = initFuseSearch();
+    const self = this;
     const serviceCategories    = Object.keys(this.demoData);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
@@ -145,7 +147,7 @@ class ServiceCatalogBuilder {
       } else {
         serviceItemsContainer.hide();
         searchResultsContainer.show();
-        updateResults(fuse, query, searchResultsContainer);
+        self.fuzzySearch.updateResults(query, searchResultsContainer);
       }
     });
   }

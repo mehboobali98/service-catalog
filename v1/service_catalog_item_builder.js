@@ -1,11 +1,12 @@
 class ServiceCatalogItemBuilder {
-  constructor(userExists, serviceCategoriesItems, zendeskFormData) {
-    this.userExists             = userExists;
+  constructor(serviceCategoriesItems, zendeskFormData) {
+    this.userExists             = false;
     this.zendeskFormData        = zendeskFormData;
     this.serviceCategoriesItems = serviceCategoriesItems;
   }
 
-  build() {
+  build(userExists) {
+    this.userExists = userExists;
     const serviceCategories = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
