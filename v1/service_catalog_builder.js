@@ -151,8 +151,10 @@ class ServiceCatalogBuilder {
       // hide service items of remaining categories
       $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
         if ('#' + categoryLinkId === serviceCategoryId) {
+          $(serviceCategoryId).addClass('active');
           // do nothing
         } else {
+          $(serviceCategoryId).removeClass('active');
           $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
         }
       });
