@@ -178,10 +178,13 @@ class ServiceCatalogBuilder {
   loadingIcon() {
     const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
                                               .addClass('col-10');
+    const loadingIconFlex         = $('<div>').add('d-flex flex-column align-content-center');
     const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',
                                                       'alt': 'Loading...'
                                                     });
-    loadingIconContainer.append(loadingIcon);
+    loadingIconFlex.append(loadingIcon);
+    loadingIconContainer.append(loadingIconFlex);
+
     return loadingIconContainer;
   }
 }
