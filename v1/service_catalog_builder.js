@@ -1,7 +1,7 @@
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 import { initFuseSearch, updateResults }    from './search.js';
-import { getServiceCategories, updateServiceCategoryItems } from './dummy_data.js';
+import { updateServiceCategoryItems } from './dummy_data.js';
 
 class ServiceCatalogBuilder {
   constructor(demoData, zendeskFormData, ezoSubdomain) {
@@ -68,7 +68,7 @@ class ServiceCatalogBuilder {
 
   createServiceCategoriesView(containers, userExists) {
     const navbarContainer = $('<div>').addClass('service-categories-list');
-    const navbar = this.generateNavbar(getServiceCategories(), userExists);
+    const navbar = this.generateNavbar(userExists);
     navbarContainer.append(navbar);
 
     const newSection              = containers['newSection'];
@@ -84,18 +84,19 @@ class ServiceCatalogBuilder {
 
     $('main').append(newSection);
     this.serviceCatalogItemDetailBuilder.build();
-    this.bindEventListeners(getServiceCategories());
+    this.bindEventListeners();
   }
 
   // Create a function to generate the vertical navbar
-  generateNavbar(serviceCategories, userExists) {
-    const navbar = $('<ul></ul>');
+  generateNavbar(userExists) {
+    const navbar = $('<ul>');
 
-    $.each(serviceCategories, function(index, serviceCategory) {
-      var listItem = $('<li><a id="' + serviceCategory.id + '_link" href="' + serviceCategory.link + '">' + serviceCategory.name + '</a></li>');
-      if (serviceCategory.name === 'My IT Assets' && !userExists) {
+    $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
+      let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#_';
+      let listItem = $('<li>').append($('<a>').attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
+      if (serviceCategory === 'my_it_assets' && !userExists) {
         listItem.addClass('collapse');
-      } else if (serviceCategory.name === 'View Raised Requests' && window.HelpCenter.user.role === 'anonymous') {
+      } else if (serviceCategory === 'view_raised_requests' && window.HelpCenter.user.role === 'anonymous') {
         listItem.addClass('collapse');
       }
 
@@ -105,11 +106,14 @@ class ServiceCatalogBuilder {
     return navbar;
   }
 
-  bindEventListeners(serviceCategories) {
+  bindEventListeners() {
     const fuse = initFuseSearch();
-    const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory.id + '_link');
+    const serviceCategories    = Object.keys(this.demoData);
+    const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
+      if ($(this).attr('href') !== '#_') { return true; }
+
       e.preventDefault();
 
       var categoryLinkId = $(this).attr('id');

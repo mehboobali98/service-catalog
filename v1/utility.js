@@ -1,7 +1,3 @@
-function generateId(str) {
-  return str.toLowerCase().replace(/\s+/g, "_");
-}
-
 function isRequestPage() {
   const regex = /\/hc(\/en-us)?\/requests\/(\d+)/;
   return isCorrectPage(regex);
@@ -21,4 +17,4 @@ function isCorrectPage(regex) {
   return regex.test(window.location.pathname);
 }
 
-export { generateId, isCorrectPage, isRequestPage, isNewRequestPage, isServiceCatalogPage };
+export { isCorrectPage, isRequestPage, isNewRequestPage, isServiceCatalogPage };

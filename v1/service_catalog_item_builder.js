@@ -15,7 +15,9 @@ class ServiceCatalogItemBuilder {
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
       const isVisible = index === defaultVisibleCategoryIndex;
-      serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
+      if (serviceCategoryItems.serviceItems) {
+        serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
+      }
     });
 
     return serviceItemsContainer;

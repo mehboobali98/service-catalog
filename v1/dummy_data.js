@@ -1,15 +1,10 @@
-import { generateId } from './utility.js';
+function getServiceCategoriesItems() {
+  return serviceCategoriesItems;
+}
 
-const serviceCategories = [
-  'My IT Assets',
-  'View Raised Requests',
-  'General IT Help',
-  'HR Services',
-  'Request New Software',
-  'Request Laptops',
-  'Request Mobile Devices',
-  'Software Access'
-];
+function getZendeskTicketFormData() {
+  return zendeskTicketFormData;
+}
 
 const zendeskTicketFormData = {
   'my_it_assets': {
@@ -98,6 +93,15 @@ const serviceCategoriesItems = {
         ]
       }
     ]
+  },
+  'view_raised_requests': {
+    label: 'View Raised Requests'
+  },
+  'general_it_help': {
+    label: 'General IT Help'
+  },
+  'hr_services': {
+    label: 'HR Services'
   },
   'request_new_software': {
     label:       'Request New Software',
@@ -236,27 +240,16 @@ const serviceCategoriesItems = {
           { label: '',                value: "To request a Custom Configuration laptop, simply click the 'Request Service' button" },
           { label: '',                value: "Please note that access to laptops may be subject to approval based on your role and team requirements" }
         ]
-      },
-
+      }
     ]
+  },
+  'request_mobile_devices': {
+    label: 'Request Mobile Devices'
+  },
+  'software_access': {
+    label: 'Software Access'
   }
 };
-
-function getServiceCategories() {
-  return serviceCategories.map(serviceCategory => ({ id: generateId(serviceCategory), name: serviceCategory, link: '#' }));
-}
-
-function getServiceCategoryItems(serviceCategory) {
-  return serviceCategoriesItems[serviceCategory];
-}
-
-function getServiceCategoriesItems() {
-  return serviceCategoriesItems;
-}
-
-function getZendeskTicketFormData() {
-  return zendeskTicketFormData;
-}
 
 function findServiceCategoryItem(searchParams, serviceCategoryItems) {
   const id   = searchParams.get('asset_id');
@@ -320,10 +313,12 @@ function extractServiceItemsWithCategory() {
       const categoryLabel = category.label;
       const serviceItems = category.serviceItems;
 
-      for (const serviceItem of serviceItems) {
-        // Add the service category name to the service item
-        serviceItem.serviceCategoryName = categoryName;
-        extractedServiceItems.push(serviceItem);
+      if (serviceItems) {
+        for (const serviceItem of serviceItems) {
+          // Add the service category name to the service item
+          serviceItem.serviceCategoryName = categoryName;
+          extractedServiceItems.push(serviceItem);
+        }
       }
     }
   }
@@ -331,4 +326,4 @@ function extractServiceItemsWithCategory() {
   return extractedServiceItems;
 }
 
-export { getServiceCategories, getServiceCategoriesItems, getServiceCategoryItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };
+export { getServiceCategoriesItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };
