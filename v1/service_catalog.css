@@ -131,13 +131,13 @@
 }
 
 .service-item-card .card-footer {
+  color:        #595959;
   right:        0;
-  color:        var(--brown);
   bottom:       0;
   position:     absolute;
   font-size:    11px;
   padding-top:  10px;
-  font-weight:  700;
+  font-weight:  400;
   padding-top:  10px;
 }
 
@@ -153,6 +153,7 @@
 }
 
 .service-item-card .card-footer .footer-arrow {
+  color:        var(--brown);
   font-size:    15px;
   font-weight:  700; 
   margin-right: 5px;
