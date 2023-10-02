@@ -8,8 +8,8 @@ class NewRequestForm {
   }
 
   updateRequestForm() {
-    const filesToLoad = filesToLoad();
-    loadExternalFiles((filesToLoad) => {
+    const files = filesToLoad();
+    loadExternalFiles((files) => {
       this.updateForm();
     })
   }
