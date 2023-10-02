@@ -13,9 +13,10 @@ class ServiceCatalogManager {
     // to-do: use actual zendeskFormData being passed
     this.zendeskFormData  = getZendeskTicketFormData();
 
-    loadExternalFiles(function() {
+    loadExternalFiles(() => {
+      debugger;
       this.initialize();
-    }).bind(this);
+    });
   }
 
   initialize() {
