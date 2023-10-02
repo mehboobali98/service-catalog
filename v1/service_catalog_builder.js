@@ -49,8 +49,10 @@ class ServiceCatalogBuilder {
   }
 
   fetchUserAssetsAndSoftwareEntitlements() {
-    const loadingIconContainer = $('#loading_icon_container');
-    loadingIconContainer.show();
+    const myItAssetsContainer   = $('#my_it_assets_container');
+    const loadingIconContainer  = loadingIcon();
+    myItAssetsContainer.prepend(loadingIconContainer);
+
     $.getJSON('/hc/api/v2/integration/token')
       .then(data => data.token)
       .then(token => {
@@ -70,7 +72,6 @@ class ServiceCatalogBuilder {
           loadingIconContainer.hide();
 
           // user does not exist in AssetSonar, so hide my_it_assets
-          const myItAssetsContainer = $('#my_it_assets_container');
           const myItAssetsLink = $('#my_it_assets_link');
           myItAssetsLink.parent().hide();
           myItAssetsContainer.hide();
@@ -103,13 +104,7 @@ class ServiceCatalogBuilder {
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(userExists);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
-    const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
-                                              .addClass('col-10 collapse');
-    const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',
-                                                      'alt': 'Loading...'
-                                                    });
-    loadingIconContainer.append(loadingIcon);
-    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer, loadingIconContainer);
+    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
@@ -178,6 +173,16 @@ class ServiceCatalogBuilder {
         self.fuzzySearch.updateResults(query, searchResultsContainer);
       }
     });
+  }
+
+  loadingIcon() {
+    const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
+                                              .addClass('col-10');
+    const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',
+                                                      'alt': 'Loading...'
+                                                    });
+    loadingIconContainer.append(loadingIcon);
+    return loadingIconContainer;
   }
 }
 
