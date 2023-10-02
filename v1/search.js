@@ -30,7 +30,7 @@ class Search {
         // Display search results
         results.forEach(({ item }) => {
             let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(item.serviceCategoryName, item);
-            itemDetailBuilder = this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+            this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
             searchItemsFlex.append(serviceCategoryItem);
         });
         searchResultsContainer.append(searchItemsFlex);
