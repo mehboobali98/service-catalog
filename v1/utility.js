@@ -18,6 +18,7 @@ function isCorrectPage(regex) {
 }
 
 function loadExternalFiles(callback) {
+  debugger;
   const filesToLoad = [
     { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
     { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/v1/service_catalog.css' },
