@@ -139,7 +139,6 @@ class ServiceCatalogBuilder {
     const self = this;
     const serviceCategories    = Object.keys(this.demoData);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
-    debugger;
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
       if ($(this).attr('href') !== '#_') { return true; }
@@ -149,19 +148,17 @@ class ServiceCatalogBuilder {
       var categoryLinkId = $(this).attr('id');
       var containerId = categoryLinkId.replace('_link', '_container');
 
-      debugger;
       // hide service items of remaining categories
       $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
         if ('#' + categoryLinkId === serviceCategoryId) {
-          $(serviceCategoryId).removeClass('active');
           // do nothing
         } else {
+          $(serviceCategoryId).parent().removeClass('active');
           $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
         }
       });
 
-      debugger;
-      $('#' + e.target.id).addClass('active');
+      $('#' + e.target.id).parent().addClass('active');
       $("[id*='detail_page_container']").hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
