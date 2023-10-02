@@ -35,8 +35,8 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name))
-                                    .append($('<p>').text(serviceCategoryItem.price));
+    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name).css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
+                                    .append($('<p>').text(serviceCategoryItem.price).css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
 
     queryParams['name'] = serviceCategoryItem.name;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
@@ -51,7 +51,7 @@ class ServiceCatalogItemDetailBuilder {
     if (detailPageFields) {
       $.each(detailPageFields, (index, fieldData) => {
         let section         = $('<section>');
-        let sectionHeader   = $('<h4>').text(fieldData['label']);
+        let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
         let sectionContent  = this.prepareSectionContent(fieldData);
         section.append(sectionHeader, sectionContent);
         detailPageBody.append(section);
@@ -68,7 +68,7 @@ class ServiceCatalogItemDetailBuilder {
     const fieldValue  = fieldData['value'];
     const fieldFormat = fieldData['format'];
 
-    if (!fieldFormat) { return $('<p>').text(fieldValue); }
+    if (!fieldFormat) { return $('<p>').text(fieldValue).css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }); }
 
     if (fieldFormat === 'list') {
       const listEle     = $('<ul>').addClass('service-item-detail-description-list');

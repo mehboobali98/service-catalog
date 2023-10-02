@@ -38,8 +38,8 @@ class ServiceCatalogItemBuilder {
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-    const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label);
-    const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description);
+    const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label).addClass('service-category-label');
+    const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
@@ -85,7 +85,7 @@ class ServiceCatalogItemBuilder {
 
   buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
     const queryParams = zendeskFormData[serviceCategoryItem.type]['queryParams'] || {};
-    const card = $('<div>').addClass('row service-item-card border border-light');
+    const card = $('<div>').addClass('row service-item-card');
 
     // Card image
     const cardImageContainer = $('<div>').addClass('col-4');
@@ -136,10 +136,12 @@ class ServiceCatalogItemBuilder {
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
+    const cardImageFlex = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
     const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
                                 .attr('alt', 'Software')
                                 .addClass('w-100');
-    cardImageContainer.append(cardImage);
+    cardImageFlex.append(cardImage);
+    cardImageContainer.append(cardImageFlex);
 
     // Create the card body
     const cardBody = $('<div>').addClass('col-8 card-body');
@@ -162,11 +164,13 @@ class ServiceCatalogItemBuilder {
                              .data('id', serviceCategoryItem.id)
                              .data('name', serviceCategoryItem.name)
                              .data('container-id', serviceCategory + '_service_items_container');
+    const arrowContainer = $('<a>').attr('href', '#_');
+    arrowContainer.append(arrow);
 
     if (serviceCategoryItem.price) {
       cardFooter.append(price);
     }
-    cardFooter.append(arrow);
+    cardFooter.append(arrowContainer);
     cardBody.append(cardFooter);
 
     card.append(cardImageContainer, cardBody);

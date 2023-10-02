@@ -8,14 +8,20 @@
 }
 
 .service-catalog-search {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 15px;
+  width:         100%;
+  box-sizing:    border-box;
 }
 
 .service-catalog-search input {
-  border-radius: 5px;
+  color:          #808080;
+  height:         30px;
+  border:         1px #808080 solid;
+  font-size:      12px;
+  font-weight:    400;
+  line-height:    17px;
+  border-radius:  10px;
+  padding-left:   25px;
+  background:     transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 5px center;
 }
 
 .service-categories-list {
@@ -24,11 +30,21 @@
   list-style:   none;
   overflow-y:   scroll;
   font-weight:  400;
-  line-height:  17px; 
+  line-height:  17px;
+  padding-top:  10px;
+}
+
+.service-categories-list ul {
+  padding-left: 0px !important;
 }
 
 .service-categories-list ul li {
   padding: 10px;
+}
+
+.service-categories-list ul li.active {
+  color: var(--brown);
+  font-weight: 700;
 }
 
 .service-categories-list ul li a {
@@ -36,9 +52,34 @@
   text-decoration: none;
 }
 
+.service-categories-list ul li a:hover {
+  color: var(--brown);
+}
+
+.service-categories-list ul li a:active {
+  color: var(--brown);
+}
+
+.service-category-label {
+  color:        black;
+  word-wrap:    break-word;
+  font-size:    18px;
+  font-weight:  400;
+}
+
+.service-category-description {
+  color:        black;
+  font-size:    14px;
+  word-wrap:    break-word;
+  font-weight:  400;
+}
+
 .service-item-card {
   width:        280px;
   height:       120px;
+  border:       1px #D9D9D9 solid !important;
+  background:   white;
+  margin-left:  inherit;
   margin-right: 40px;
 }
 
@@ -69,6 +110,14 @@
   padding-top:  10px;
 }
 
+.service-item-card .card-body .card-content-table tr th {
+  color: #595959;
+}
+
+.service-item-card .card-body .card-content-table tr td {
+  color: black;
+}
+
 .service-item-card .description {
   color:        #595959;
   word-wrap:    break-word;
@@ -84,12 +133,13 @@
 }
 
 .service-item-card .card-footer {
+  color:        #595959;
   right:        0;
-  color:        var(--brown);
   bottom:       0;
+  position:     absolute;
   font-size:    11px;
   padding-top:  10px;
-  font-weight:  700;
+  font-weight:  400;
   padding-top:  10px;
 }
 
@@ -105,6 +155,7 @@
 }
 
 .service-item-card .card-footer .footer-arrow {
+  color:        var(--brown);
   font-size:    15px;
   font-weight:  700; 
   margin-right: 5px;
@@ -129,9 +180,14 @@
 }
 
 .service-item-detail-description-list {
-  list-style: disc !important;
+  color:        black;
+  font-size:    14px;
+  list-style:   disc !important;
+  font-weight:  400;
+  line-height:  17px;
 }
 
 a.request-service-btn:hover {
-  color: currentColor;
+  color:            white !important;
+  background-color: var(--brown) !important;
 }
