@@ -49,6 +49,8 @@ class ServiceCatalogBuilder {
   }
 
   fetchUserAssetsAndSoftwareEntitlements() {
+    const loadingIconContainer = $('#loading_icon_container');
+    loadingIconContainer.show();
     $.getJSON('/hc/api/v2/integration/token')
       .then(data => data.token)
       .then(token => {
@@ -59,10 +61,14 @@ class ServiceCatalogBuilder {
           fetch(url, options)
             .then(response => response.json())
             .then(data => {
+              loadingIconContainer.hide();
+
               this.demoData = updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
               this.serviceCatalogItemBuilder.renderMyItAssets(this.demoData['my_it_assets']);
             });
         } else {
+          loadingIconContainer.hide();
+
           // user does not exist in AssetSonar, so hide my_it_assets
           const myItAssetsContainer = $('#my_it_assets_container');
           const myItAssetsLink = $('#my_it_assets_link');
@@ -97,7 +103,13 @@ class ServiceCatalogBuilder {
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(userExists);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
-    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
+    const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
+                                              .addClass('col-10 collapse');
+    const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',
+                                                      'alt': 'Loading...'
+                                                    });
+    loadingIconContainer.append(loadingIcon);
+    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer, loadingIconContainer);
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
