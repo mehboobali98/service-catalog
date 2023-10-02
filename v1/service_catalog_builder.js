@@ -150,16 +150,15 @@ class ServiceCatalogBuilder {
 
       // hide service items of remaining categories
       $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
-        debugger;
         if ('#' + categoryLinkId === serviceCategoryId) {
-          $(serviceCategoryId).addClass('active');
+          $(serviceCategoryId).removeClass('active');
           // do nothing
         } else {
-          $(serviceCategoryId).removeClass('active');
           $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
         }
       });
 
+      $('#' + e.target.id).addClass('active');
       $("[id*='detail_page_container']").hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
