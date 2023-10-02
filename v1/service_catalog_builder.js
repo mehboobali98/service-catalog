@@ -50,7 +50,7 @@ class ServiceCatalogBuilder {
 
   fetchUserAssetsAndSoftwareEntitlements() {
     const myItAssetsContainer   = $('#my_it_assets_container');
-    const loadingIconContainer  = loadingIcon();
+    const loadingIconContainer  = this.loadingIcon();
     myItAssetsContainer.prepend(loadingIconContainer);
 
     $.getJSON('/hc/api/v2/integration/token')
