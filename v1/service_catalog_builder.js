@@ -93,7 +93,7 @@ class ServiceCatalogBuilder {
 
     $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
       let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#';
-      let listItem = $('<li>').append($('<a>').attr({ 'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
+      let listItem = $('<li>').append($('<a>').attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
       if (serviceCategory === 'my_it_assets' && !userExists) {
         listItem.addClass('collapse');
       } else if (serviceCategory === 'view_raised_requests' && window.HelpCenter.user.role === 'anonymous') {
