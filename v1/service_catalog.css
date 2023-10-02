@@ -36,6 +36,18 @@
   text-decoration: none;
 }
 
+.service-categories-list ul li a:hover {
+  color: var(--brown);
+}
+
+.service-categories-list ul li a:active {
+  color: var(--brown);
+}
+
+.service-categories-list ul li a:visited {
+  color: var(--brown);
+}
+
 .service-item-card {
   width:        280px;
   height:       120px;
