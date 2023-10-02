@@ -35,7 +35,7 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name).css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }));
+    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name).css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
                                     .append($('<p>').text(serviceCategoryItem.price).css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
 
     queryParams['name'] = serviceCategoryItem.name;
