@@ -92,7 +92,7 @@ class ServiceCatalogBuilder {
   }
 
   createServiceCategoriesView(containers, userExists) {
-    const navbarContainer = $('<div>').addClass('service-categories-list');
+    const navbarContainer = $('<div>').attr('id', 'service_categories_list').addClass('service-categories-list');
     const navbar = this.generateNavbar(userExists);
     navbarContainer.append(navbar);
 
@@ -170,6 +170,9 @@ class ServiceCatalogBuilder {
       const query = $(this).val().trim();
       const serviceItemsContainer  = $('#service_items_container');
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
+
+      $('#service_categories_list ul li.active').removeClass('active');
+
       if (query.length === 0) {
         searchResultsContainer.hide();
         serviceItemsContainer.show();
