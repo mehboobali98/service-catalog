@@ -53,10 +53,6 @@
   color: var(--brown);
 }
 
-.service-categories-list ul li a:visited {
-  color: var(--brown);
-}
-
 .service-item-card {
   width:        280px;
   height:       120px;
