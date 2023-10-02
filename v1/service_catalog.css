@@ -8,10 +8,8 @@
 }
 
 .service-catalog-search {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 15px;
+  width:         100%;
+  box-sizing:    border-box;
 }
 
 .service-catalog-search input {
