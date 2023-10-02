@@ -114,6 +114,7 @@ class ServiceCatalogBuilder {
 
   // Create a function to generate the vertical navbar
   generateNavbar(userExists) {
+    const activeClassAdded = false;
     const navbar = $('<ul>');
 
     $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
@@ -123,6 +124,9 @@ class ServiceCatalogBuilder {
         listItem.addClass('collapse');
       } else if (serviceCategory === 'view_raised_requests' && window.HelpCenter.user.role === 'anonymous') {
         listItem.addClass('collapse');
+      } else if (!activeClassAdded) {
+        listItem.addClass('active');
+        activeClassAdded = true;
       }
 
       navbar.append(listItem);

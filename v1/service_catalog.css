@@ -31,6 +31,11 @@
   padding: 10px;
 }
 
+.service-categories-list ul li.active {
+  color: var(--brown);
+  font-weight: 700;
+}
+
 .service-categories-list ul li a {
   color:           inherit;
   text-decoration: none;
