@@ -29,6 +29,7 @@ function loadExternalFiles(callback) {
   let loadedFiles = 0;
 
   function onFileLoaded() {
+    debugger;
     loadedFiles++;
 
     if (loadedFiles === filesToLoad.length) {
@@ -38,6 +39,7 @@ function loadExternalFiles(callback) {
   }
 
   filesToLoad.forEach((file) => {
+    debugger;
     loadFile(file.url, file.type, onFileLoaded);
   });
 }
