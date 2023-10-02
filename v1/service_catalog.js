@@ -20,6 +20,7 @@ class ServiceCatalogManager {
 
   initialize() {
     this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain);
+    debugger;
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }

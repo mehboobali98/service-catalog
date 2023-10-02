@@ -32,7 +32,7 @@ function loadExternalFiles(callback) {
     loadedFiles++;
 
     debugger;
-    if (loadedFiles === filesToLoad.length) {
+    if (loadedFiles === filesToLoad.filter(file => file.type === 'script').length) {
       // All files are loaded; execute the callback
       debugger;
       callback();
