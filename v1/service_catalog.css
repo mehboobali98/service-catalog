@@ -173,5 +173,6 @@
 }
 
 a.request-service-btn:hover {
-  color: currentColor;
+  color:            white !important;
+  background-color: var(--brown) !important;
 }
