@@ -14,6 +14,7 @@
 
 .service-catalog-search input {
   color:          #808080;
+  height:         30px;
   border:         1px #808080 solid;
   font-size:      12px;
   font-weight:    400;
