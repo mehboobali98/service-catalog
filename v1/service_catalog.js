@@ -15,7 +15,7 @@ class ServiceCatalogManager {
 
     loadExternalFiles(function() {
       this.initialize();
-    })
+    }).bind(this);
   }
 
   initialize() {
