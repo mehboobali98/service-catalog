@@ -1,19 +1,28 @@
+import { loadExternalFiles } from './utility.js';
+
 class NewRequestForm {
   constructor(ezoFieldId, ezoSubdomain, zendeskFormData) {
-    this.ezoFieldId       = ezoFieldId;
-    this.ezoSubdomain     = ezoSubdomain;
-    this.zendeskFormData  = zendeskFormData;
+    this.ezoFieldId = ezoFieldId;
+    this.ezoSubdomain = ezoSubdomain;
+    this.zendeskFormData = zendeskFormData;
   }
 
-  updateNewRequestForm() {
+  updateRequestForm() {
+    const files = this.filesToLoad();
+    loadExternalFiles(files, () => {
+      this.updateForm();
+    })
+  }
+
+  updateForm() {
     if ($('.nesty-input')[0].text === "-") { return; }
 
-    const searchParams     = this.extractQueryParams(window.location);
-    const serviceCategory  = searchParams.get('service_category');
-    const ticketFormData   = this.extractTicketFormData(serviceCategory, searchParams);
+    const searchParams = this.extractQueryParams(window.location);
+    const serviceCategory = searchParams.get('service_category');
+    const ticketFormData = this.extractTicketFormData(serviceCategory, searchParams);
     if (ticketFormData) {
-      const customFieldId     = ticketFormData.custom_field_id;
-      const customFieldValue  = ticketFormData.custom_field_value;
+      const customFieldId = ticketFormData.custom_field_id;
+      const customFieldValue = ticketFormData.custom_field_value;
       const ticketFormSubject = ticketFormData.ticket_form_subject;
 
       $('#request_subject').val(this.updateSubject(ticketFormSubject, searchParams, serviceCategory));
@@ -60,35 +69,35 @@ class NewRequestForm {
 
   populateAssignedAssets(url, options) {
     fetch(url, options).then(response => response.json())
-                       .then(data => {
+      .then(data => {
 
-      const assetsData = { data: [] };
-      const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
+        const assetsData = { data: [] };
+        const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
-      if (data.assets) {
-        $.each(data.assets, function (index, asset) {
-          assetsData.data[index] = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` }
-        });
-      }
-      ezoCustomFieldEle.hide();
-      ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
-
-      this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
-      this.preselectAssetsCustomField(this.extractQueryParams(window.location));
-
-      $('form.request-form').on('submit', function () {
-        var selectedIds = $('#ezo-asset-select').val();
-        if (selectedIds.length > 0) {
-          let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
-          data = data.map((asset) => {
-            let assetObj = { [asset.id]: asset.text };
-              return assetObj;
-            } 
-          );
-          ezoCustomFieldEle.val(JSON.stringify({ assets: data }));
+        if (data.assets) {
+          $.each(data.assets, function(index, asset) {
+            assetsData.data[index] = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` }
+          });
         }
+        ezoCustomFieldEle.hide();
+        ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
+
+        this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
+        this.preselectAssetsCustomField(this.extractQueryParams(window.location));
+
+        $('form.request-form').on('submit', function() {
+          var selectedIds = $('#ezo-asset-select').val();
+          if (selectedIds.length > 0) {
+            let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
+            data = data.map((asset) => {
+              let assetObj = {
+                [asset.id]: asset.text };
+              return assetObj;
+            });
+            ezoCustomFieldEle.val(JSON.stringify({ assets: data }));
+          }
+        });
       });
-    });
   }
 
   renderSelect2PaginationForUsers(element, url, options) {
@@ -96,14 +105,14 @@ class NewRequestForm {
     element.select2({
       dropdownParent: element.parents(parentElementSelector),
       ajax: {
-        url:      url,
-        delay:    250,
+        url: url,
+        delay: 250,
         dataType: 'json',
         headers: options.headers,
-        data: function (params) {
+        data: function(params) {
           var query = {
-            page:          params.page || 1,
-            search:        params.term,
+            page: params.page || 1,
+            search: params.term,
             include_blank: $(element).data('include-blank')
           }
           return query;
@@ -116,7 +125,7 @@ class NewRequestForm {
           });
 
           return {
-            results:      results,
+            results: results,
             pagination: { more: data.page < data.total_pages }
           };
         }
@@ -132,7 +141,7 @@ class NewRequestForm {
       case 'request_laptops':
         return subject + searchParams.get('name');
       default:
-        return subject; 
+        return subject;
     }
   }
 
@@ -140,8 +149,8 @@ class NewRequestForm {
     let ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
     if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
-    let assetId    = searchParams.get('asset_id');
-    let assetName  = searchParams.get('asset_name');
+    let assetId = searchParams.get('asset_id');
+    let assetName = searchParams.get('asset_name');
 
     if (!assetName || !assetId) { return; }
 
@@ -150,8 +159,8 @@ class NewRequestForm {
 
     // Set the value, creating a new option if necessary
     if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
-        ezoSelectEle.val(assetId).trigger('change');
-    } else { 
+      ezoSelectEle.val(assetId).trigger('change');
+    } else {
       var newOption = new Option(assetName, assetId, true, true);
       ezoSelectEle.append(newOption).trigger('change');
     }
@@ -164,6 +173,13 @@ class NewRequestForm {
   renderEzoSelect2Field(ezoCustomFieldEle) {
     ezoCustomFieldEle.hide();
     ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
+  }
+
+  filesToLoad() {
+    return  [
+              { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css'},
+              { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js'  }
+            ];
   }
 }
 

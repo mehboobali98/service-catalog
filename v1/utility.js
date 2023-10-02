@@ -17,4 +17,38 @@ function isCorrectPage(regex) {
   return regex.test(window.location.pathname);
 }
 
-export { isCorrectPage, isRequestPage, isNewRequestPage, isServiceCatalogPage };
+function loadExternalFiles(filesToLoad, callback) {
+  debugger;
+  let loadedFiles = 0;
+
+  function onFileLoaded() {
+    loadedFiles++;
+
+    if (loadedFiles === filesToLoad.filter(file => file.type === 'script').length) {
+      // All files are loaded; execute the callback
+      callback();
+    }
+  }
+
+  filesToLoad.forEach((file) => {
+    loadFile(file.url, file.type, onFileLoaded);
+  });
+}
+
+function loadFile(url, fileType, callback) {
+  const element = document.createElement(fileType);
+
+  if (fileType === 'link') {
+    element.rel   = 'stylesheet';
+    element.type  = 'text/css';
+    element.href  = url;
+  } else if (fileType === 'script') {
+    element.type    = 'text/javascript';
+    element.src     = url;
+    element.onload  = callback; // Execute the callback when the script is loaded
+  }
+
+  document.head.appendChild(element);
+}
+
+export { isCorrectPage, isRequestPage, isNewRequestPage, isServiceCatalogPage, loadExternalFiles };
