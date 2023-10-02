@@ -110,6 +110,7 @@ class ServiceCatalogBuilder {
   }
 
   bindEventListeners() {
+    const self = this;
     const serviceCategories    = Object.keys(this.demoData);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
@@ -148,7 +149,7 @@ class ServiceCatalogBuilder {
       } else {
         serviceItemsContainer.hide();
         searchResultsContainer.show();
-        this.fuzzySearch.updateResults(query, searchResultsContainer);
+        self.fuzzySearch.updateResults(query, searchResultsContainer);
       }
     });
   }
