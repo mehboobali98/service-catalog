@@ -21,7 +21,7 @@ class ServiceCatalogBuilder {
 
   buildServiceCatalog(demoData, zendeskFormData) {
     this.buildUI();
-    this.fetchUserAssetsAndSoftwareEntitlements(containers);
+    this.fetchUserAssetsAndSoftwareEntitlements();
   }
 
   buildUI() {
@@ -47,7 +47,7 @@ class ServiceCatalogBuilder {
     this.createServiceCategoriesView(containers, false);
   }
 
-  fetchUserAssetsAndSoftwareEntitlements(containers) {
+  fetchUserAssetsAndSoftwareEntitlements() {
     $.getJSON('/hc/api/v2/integration/token')
       .then(data => data.token)
       .then(token => {

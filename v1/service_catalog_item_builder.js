@@ -59,6 +59,7 @@ class ServiceCatalogItemBuilder {
   }
 
   renderMyItAssets(serviceCategoryData) {
+    const myItAssetsContainer     = $('#my_it_assets_container');
     const myItAssetsFlexContainer = $('#my_it_assets_service_items_container');
     const myItAssetsFlex          = myItAssetsFlexContainer.children(':first');
     debugger;
@@ -67,7 +68,10 @@ class ServiceCatalogItemBuilder {
         myItAssetsFlex.append(this.buildServiceCategoryItem('my_it_assets', serviceCategoryItem));
       });
     }
-    myItAssetsFlexContainer.removeClass('collapse');
+    $('#service_items_container').children(':visible').hide():
+    debugger;
+    $('#my_it_assets_link').parent().show();
+    myItAssetsContainer.show();
   }
 
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
