@@ -9,7 +9,7 @@ class NewRequestForm {
 
   updateRequestForm() {
     const files = this.filesToLoad();
-    loadExternalFiles((files) => {
+    loadExternalFiles(files, () => {
       this.updateForm();
     })
   }

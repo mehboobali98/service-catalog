@@ -14,7 +14,7 @@ class ServiceCatalogManager {
     this.zendeskFormData  = getZendeskTicketFormData();
 
     const files = this.filesToLoad();
-    loadExternalFiles((files) => {
+    loadExternalFiles(files, () => {
       this.initialize();
     });
   }
