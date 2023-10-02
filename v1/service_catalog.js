@@ -14,14 +14,12 @@ class ServiceCatalogManager {
     this.zendeskFormData  = getZendeskTicketFormData();
 
     loadExternalFiles(() => {
-      debugger;
       this.initialize();
     });
   }
 
   initialize() {
     this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain);
-    debugger;
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }

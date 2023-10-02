@@ -31,10 +31,8 @@ function loadExternalFiles(callback) {
   function onFileLoaded() {
     loadedFiles++;
 
-    debugger;
     if (loadedFiles === filesToLoad.filter(file => file.type === 'script').length) {
       // All files are loaded; execute the callback
-      debugger;
       callback();
     }
   }
