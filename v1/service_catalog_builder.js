@@ -178,7 +178,7 @@ class ServiceCatalogBuilder {
   loadingIcon() {
     const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
                                               .addClass('col-10');
-    const loadingIconFlex         = $('<div>').addClass('d-flex flex-column align-content-center');
+    const loadingIconFlex         = $('<div>').addClass('d-flex flex-column align-items-center');
     const loadingIcon             = $('<img>').attr({ 'src': 'svg/loading_icon.svg',
                                                       'alt': 'Loading...'
                                                     });
