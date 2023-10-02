@@ -20,7 +20,7 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog(demoData, zendeskFormData) {
-    const containers = this.buildUI();
+    this.buildUI();
     this.fetchUserAssetsAndSoftwareEntitlements(containers);
   }
 
@@ -44,8 +44,7 @@ class ServiceCatalogBuilder {
       searchAndNavContainer: searchAndNavContainer,
       serviceCatalogContainer: serviceCatalogContainer
     };
-
-    return containers;
+    this.createServiceCategoriesView(containers, false);
   }
 
   fetchUserAssetsAndSoftwareEntitlements(containers) {
@@ -60,10 +59,8 @@ class ServiceCatalogBuilder {
             .then(response => response.json())
             .then(data => {
               this.demoData = updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
-              this.createServiceCategoriesView(containers, true);
+              this.serviceCatalogItemBuilder.renderMyItAssets(this.demoData['my_it_assets']);
             });
-        } else {
-          this.createServiceCategoriesView(containers, false);
         }
       });
   }
@@ -80,7 +77,7 @@ class ServiceCatalogBuilder {
     searchAndNavContainer.append(navbarContainer);
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(userExists);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
-                                             .addClass('col-10 collapse service-catalog-search-results-container');
+                                              .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
