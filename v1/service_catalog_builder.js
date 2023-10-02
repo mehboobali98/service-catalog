@@ -141,6 +141,9 @@ class ServiceCatalogBuilder {
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
+      $('#service_categories_list ul li.active').removeClass('active');
+      $('#' + e.target.id).parent().addClass('active');
+
       if ($(this).attr('href') !== '#_') { return true; }
 
       e.preventDefault();
@@ -153,12 +156,10 @@ class ServiceCatalogBuilder {
         if ('#' + categoryLinkId === serviceCategoryId) {
           // do nothing
         } else {
-          $(serviceCategoryId).parent().removeClass('active');
           $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
         }
       });
 
-      $('#' + e.target.id).parent().addClass('active');
       $("[id*='detail_page_container']").hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
