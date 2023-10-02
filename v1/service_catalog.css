@@ -126,6 +126,7 @@
   right:        0;
   color:        var(--brown);
   bottom:       0;
+  position:     absolute;
   font-size:    11px;
   padding-top:  10px;
   font-weight:  700;
