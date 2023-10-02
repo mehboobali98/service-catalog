@@ -5,9 +5,10 @@ import { updateServiceCategoryItems }       from './dummy_data.js';
 
 class ServiceCatalogBuilder {
   constructor(demoData, zendeskFormData, ezoSubdomain) {
-    this.demoData         = demoData;
-    this.ezoSubdomain     = ezoSubdomain;
-    this.zendeskFormData  = zendeskFormData;
+    this.demoData           = demoData;
+    this.ezoSubdomain       = ezoSubdomain;
+    this.zendeskFormData    = zendeskFormData;
+    this.userAuthenticated  = window.HelpCenter.user.role !== 'anonymous';
 
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
@@ -44,7 +45,7 @@ class ServiceCatalogBuilder {
       searchAndNavContainer: searchAndNavContainer,
       serviceCatalogContainer: serviceCatalogContainer
     };
-    this.createServiceCategoriesView(containers, false);
+    this.createServiceCategoriesView(containers, true);
   }
 
   fetchUserAssetsAndSoftwareEntitlements() {
@@ -61,6 +62,24 @@ class ServiceCatalogBuilder {
               this.demoData = updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
               this.serviceCatalogItemBuilder.renderMyItAssets(this.demoData['my_it_assets']);
             });
+        } else {
+          // user does not exist in AssetSonar, so hide my_it_assets
+          const myItAssetsContainer = $('#my_it_assets_container');
+          const myItAssetsLink = $('#my_it_assets_link');
+          myItAssetsLink.parent().hide();
+          myItAssetsContainer.hide();
+
+          // Determine service category and its item which should be shown.
+          const nextElement   = myItAssetsLink.parent().next();
+          const nextElementId = nextElement.children().attr('id');
+          
+          if (nextElementId === 'view_raised_requests_link' && window.HelpCenter.user.role === 'anonymous') {
+            nextElement.next().show();
+            myItAssetsContainer.parent().next().next().show();
+          } else {
+            nextElement.show();
+            myItAssetsContainer.parent().next().show();
+          }
         }
       });
   }

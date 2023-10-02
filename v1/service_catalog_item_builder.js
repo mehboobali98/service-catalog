@@ -67,9 +67,6 @@ class ServiceCatalogItemBuilder {
         myItAssetsFlex.append(this.buildServiceCategoryItem('my_it_assets', serviceCategoryItem));
       });
     }
-    $('#service_items_container').children(':visible').hide();
-    $('#my_it_assets_link').parent().show();
-    myItAssetsContainer.show();
   }
 
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
