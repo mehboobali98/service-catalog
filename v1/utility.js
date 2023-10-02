@@ -18,6 +18,7 @@ function isCorrectPage(regex) {
 }
 
 function loadExternalFiles(filesToLoad, callback) {
+  debugger;
   let loadedFiles = 0;
 
   function onFileLoaded() {
