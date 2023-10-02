@@ -10,7 +10,6 @@ class Search {
     }
 
     initFuseSearch() {
-        debugger;
         const data = extractServiceItemsWithCategory(this.demoData);
         // Create a Fuse instance with the data and desired options
         const options = {
