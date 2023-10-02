@@ -6,6 +6,7 @@ class Search {
         this.demoData           = demoData;
         this.itemBuilder        = itemBuilder;
         this.itemDetailBuilder  = itemDetailBuilder;
+        debugger;
         this.initFuseSearch();
     }
 
@@ -21,6 +22,7 @@ class Search {
 
     // Function to update search results
     updateResults(query, searchResultsContainer) {
+        de;
         const results = this.fuse.search(query);
 
         // Clear previous results
@@ -33,9 +35,9 @@ class Search {
             itemDetailBuilder = bindItemDetailEventListener(serviceCategoryItem);
             searchItemsFlex.append(serviceCategoryItem);
         });
+        debugger;
         searchResultsContainer.append(searchItemsFlex);
     }
-
 }
 
 export { Search };

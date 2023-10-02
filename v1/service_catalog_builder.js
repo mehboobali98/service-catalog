@@ -11,7 +11,8 @@ class ServiceCatalogBuilder {
 
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
-    this.fuzzySearch = new Search(this.demoData, this.serviceCategoryItemBuilder, this.serviceCatalogItemDetailBuilder);
+    debugger;
+    this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
 
   addMenuItem(name, url, parent_ele) {
