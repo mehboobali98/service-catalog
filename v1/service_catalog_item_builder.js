@@ -136,10 +136,12 @@ class ServiceCatalogItemBuilder {
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
+    const cardImageFlex = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
     const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
                                 .attr('alt', 'Software')
                                 .addClass('w-100');
-    cardImageContainer.append(cardImage);
+    cardImageFlex.append(cardImage);
+    cardImageContainer.append(cardImageFlex);
 
     // Create the card body
     const cardBody = $('<div>').addClass('col-8 card-body');
