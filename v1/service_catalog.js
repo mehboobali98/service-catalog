@@ -13,7 +13,7 @@ class ServiceCatalogManager {
     // to-do: use actual zendeskFormData being passed
     this.zendeskFormData  = getZendeskTicketFormData();
 
-    loadExternalFiles(() => {
+    loadExternalFiles((filesToLoad) => {
       this.initialize();
     });
   }
@@ -38,6 +38,15 @@ class ServiceCatalogManager {
     } else {
       // Handle other cases if needed
     }
+  }
+
+  filesToLoad() {
+   return [
+            { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
+            { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/v1/service_catalog.css' },
+            { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' },
+            { type: 'script', url: 'https://cdn.jsdelivr.net/npm/fuse.js@6.6.2' }
+          ];
   }
 }
 
