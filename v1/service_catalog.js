@@ -32,7 +32,7 @@ class ServiceCatalogManager {
     if (isServiceCatalogPage()) {
       this.serviceCatalogBuilder.buildServiceCatalog();
     } else if (isNewRequestPage()) {
-      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.zendeskFormData).updateNewRequestForm();
+      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.zendeskFormData).updateRequestForm();
     } else if (isRequestPage()) {
       new RequestForm(this.ezoFieldId, this.ezoSubdomain).updateRequestForm();
     } else {
