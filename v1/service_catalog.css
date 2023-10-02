@@ -24,7 +24,11 @@
   list-style:   none;
   overflow-y:   scroll;
   font-weight:  400;
-  line-height:  17px; 
+  line-height:  17px;
+}
+
+.service-categories-list ul {
+  padding-left: 0px !important;
 }
 
 .service-categories-list ul li {

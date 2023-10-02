@@ -32,7 +32,7 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = $('<div>').addClass('row');
 
     const searchAndNavContainer = $('<div>').addClass('col-2');
-    const searchAndNavContainerText = $('<h1>').text('Categories');
+    const searchAndNavContainerText = $('<h4>').text('Categories');
 
     const searchField = $('<input>').attr('id', 'search_input')
                                     .attr('type', 'text')
