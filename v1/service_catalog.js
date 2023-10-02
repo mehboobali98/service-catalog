@@ -14,6 +14,7 @@ class ServiceCatalogManager {
     this.zendeskFormData  = getZendeskTicketFormData();
 
     this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain);
+    debugger;
     loadExternalFiles(function() {
       this.initialize();
     })
