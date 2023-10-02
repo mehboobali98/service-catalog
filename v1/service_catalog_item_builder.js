@@ -85,7 +85,7 @@ class ServiceCatalogItemBuilder {
 
   buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
     const queryParams = zendeskFormData[serviceCategoryItem.type]['queryParams'] || {};
-    const card = $('<div>').addClass('row service-item-card border border-light');
+    const card = $('<div>').addClass('row service-item-card');
 
     // Card image
     const cardImageContainer = $('<div>').addClass('col-4');
