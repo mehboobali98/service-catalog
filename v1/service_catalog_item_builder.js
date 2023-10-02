@@ -164,11 +164,13 @@ class ServiceCatalogItemBuilder {
                              .data('id', serviceCategoryItem.id)
                              .data('name', serviceCategoryItem.name)
                              .data('container-id', serviceCategory + '_service_items_container');
+    const arrowContainer = $('<a>').attr('href', '#_');
+    arrowContainer.append(arrow);
 
     if (serviceCategoryItem.price) {
       cardFooter.append(price);
     }
-    cardFooter.append(arrow);
+    cardFooter.append(arrowContainer);
     cardBody.append(cardFooter);
 
     card.append(cardImageContainer, cardBody);
