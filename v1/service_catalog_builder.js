@@ -111,10 +111,9 @@ class ServiceCatalogBuilder {
     const serviceCategories    = Object.keys(this.demoData);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
-    debugger;
     $(serviceCategoriesIds.join(', ')).click(function(e) {
-      debugger;
       if ($(this).attr('href') !== '#_') { return true; }
+
       e.preventDefault();
 
       var categoryLinkId = $(this).attr('id');
