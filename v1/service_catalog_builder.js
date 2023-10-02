@@ -150,6 +150,7 @@ class ServiceCatalogBuilder {
 
       // hide service items of remaining categories
       $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
+        debugger;
         if ('#' + categoryLinkId === serviceCategoryId) {
           $(serviceCategoryId).addClass('active');
           // do nothing
