@@ -62,14 +62,12 @@ class ServiceCatalogItemBuilder {
     const myItAssetsContainer     = $('#my_it_assets_container');
     const myItAssetsFlexContainer = $('#my_it_assets_service_items_container');
     const myItAssetsFlex          = myItAssetsFlexContainer.children(':first');
-    debugger;
     if (serviceCategoryData.serviceItems) {
       serviceCategoryData.serviceItems.forEach((serviceCategoryItem, index) => {
         myItAssetsFlex.append(this.buildServiceCategoryItem('my_it_assets', serviceCategoryItem));
       });
     }
     $('#service_items_container').children(':visible').hide();
-    debugger;
     $('#my_it_assets_link').parent().show();
     myItAssetsContainer.show();
   }
