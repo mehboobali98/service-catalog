@@ -179,7 +179,11 @@
 }
 
 .service-item-detail-description-list {
-  list-style: disc !important;
+  color:        black;
+  font-size:    14px;
+  list-style:   disc !important;
+  font-weight:  400;
+  line-height:  17px;
 }
 
 a.request-service-btn:hover {
