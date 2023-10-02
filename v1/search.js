@@ -22,7 +22,7 @@ class Search {
 
     // Function to update search results
     updateResults(query, searchResultsContainer) {
-        de;
+        debugger;
         const results = this.fuse.search(query);
 
         // Clear previous results

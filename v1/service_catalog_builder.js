@@ -11,7 +11,6 @@ class ServiceCatalogBuilder {
 
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
-    debugger;
     this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
 
@@ -139,7 +138,6 @@ class ServiceCatalogBuilder {
     $('#search_input').on('keyup', function(e) {
       e.preventDefault();
 
-      debugger;
       const query = $(this).val().trim();
       const serviceItemsContainer  = $('#service_items_container');
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
