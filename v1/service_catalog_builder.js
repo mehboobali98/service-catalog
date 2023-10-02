@@ -5,9 +5,10 @@ import { updateServiceCategoryItems }       from './dummy_data.js';
 
 class ServiceCatalogBuilder {
   constructor(demoData, zendeskFormData, ezoSubdomain) {
-    this.demoData         = demoData;
-    this.ezoSubdomain     = ezoSubdomain;
-    this.zendeskFormData  = zendeskFormData;
+    this.demoData           = demoData;
+    this.ezoSubdomain       = ezoSubdomain;
+    this.zendeskFormData    = zendeskFormData;
+    this.userAuthenticated  = window.HelpCenter.user.role !== 'anonymous';
 
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
@@ -20,8 +21,8 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog(demoData, zendeskFormData) {
-    const containers = this.buildUI();
-    this.fetchUserAssetsAndSoftwareEntitlements(containers);
+    this.buildUI();
+    this.fetchUserAssetsAndSoftwareEntitlements();
   }
 
   buildUI() {
@@ -44,11 +45,14 @@ class ServiceCatalogBuilder {
       searchAndNavContainer: searchAndNavContainer,
       serviceCatalogContainer: serviceCatalogContainer
     };
-
-    return containers;
+    this.createServiceCategoriesView(containers, true);
   }
 
-  fetchUserAssetsAndSoftwareEntitlements(containers) {
+  fetchUserAssetsAndSoftwareEntitlements() {
+    const myItAssetsContainer   = $('#my_it_assets_container');
+    const loadingIconContainer  = this.loadingIcon();
+    myItAssetsContainer.append(loadingIconContainer);
+
     $.getJSON('/hc/api/v2/integration/token')
       .then(data => data.token)
       .then(token => {
@@ -59,11 +63,30 @@ class ServiceCatalogBuilder {
           fetch(url, options)
             .then(response => response.json())
             .then(data => {
+              loadingIconContainer.hide();
+
               this.demoData = updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
-              this.createServiceCategoriesView(containers, true);
+              this.serviceCatalogItemBuilder.renderMyItAssets(this.demoData['my_it_assets']);
             });
         } else {
-          this.createServiceCategoriesView(containers, false);
+          loadingIconContainer.hide();
+
+          // user does not exist in AssetSonar, so hide my_it_assets
+          const myItAssetsLink = $('#my_it_assets_link');
+          myItAssetsLink.parent().hide();
+          myItAssetsContainer.hide();
+
+          // Determine service category and its item which should be shown.
+          const nextElement   = myItAssetsLink.parent().next();
+          const nextElementId = nextElement.children().attr('id');
+          
+          if (nextElementId === 'view_raised_requests_link' && window.HelpCenter.user.role === 'anonymous') {
+            nextElement.next().show();
+            myItAssetsContainer.parent().next().next().show();
+          } else {
+            nextElement.show();
+            myItAssetsContainer.parent().next().show();
+          }
         }
       });
   }
@@ -80,7 +103,7 @@ class ServiceCatalogBuilder {
     searchAndNavContainer.append(navbarContainer);
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(userExists);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
-                                             .addClass('col-10 collapse service-catalog-search-results-container');
+                                              .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
@@ -150,6 +173,20 @@ class ServiceCatalogBuilder {
         self.fuzzySearch.updateResults(query, searchResultsContainer);
       }
     });
+  }
+
+  loadingIcon() {
+    const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
+                                              .addClass('col-10');
+    const loadingIconFlex         = $('<div>').addClass('d-flex flex-column align-items-center');
+    // to-do: store this on cdn and use.
+    const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',
+                                                      'alt': 'Loading...'
+                                                    });
+    loadingIconFlex.append(loadingIcon);
+    loadingIconContainer.append(loadingIconFlex);
+
+    return loadingIconContainer;
   }
 }
 

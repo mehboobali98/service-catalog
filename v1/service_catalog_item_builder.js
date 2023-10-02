@@ -16,9 +16,7 @@ class ServiceCatalogItemBuilder {
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
       const isVisible = index === defaultVisibleCategoryIndex;
-      if (serviceCategoryItems.serviceItems) {
-        serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
-      }
+      serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
     });
 
     return serviceItemsContainer;
@@ -48,14 +46,27 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-    serviceCategoryItems.serviceItems.forEach((serviceCategoryItem, index) => {
-      serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
-    });
+    if (serviceCategoryItems.serviceItems) {
+      serviceCategoryItems.serviceItems.forEach((serviceCategoryItem, index) => {
+        serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
+      });
+    }
 
     serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
     serviceCategoryItemsContainer.append(serviceCategoryItemsFlexContainer);
 
     return serviceCategoryItemsContainer;
+  }
+
+  renderMyItAssets(serviceCategoryData) {
+    const myItAssetsContainer     = $('#my_it_assets_container');
+    const myItAssetsFlexContainer = $('#my_it_assets_service_items_container');
+    const myItAssetsFlex          = myItAssetsFlexContainer.children(':first');
+    if (serviceCategoryData.serviceItems) {
+      serviceCategoryData.serviceItems.forEach((serviceCategoryItem, index) => {
+        myItAssetsFlex.append(this.buildServiceCategoryItem('my_it_assets', serviceCategoryItem));
+      });
+    }
   }
 
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {

@@ -60,39 +60,7 @@ const zendeskTicketFormData = {
 const serviceCategoriesItems = {
   'my_it_assets': {
     label:       'My IT Assets',
-    description: 'List of everything within your custody. Easily report issues with your assigned devices or software.',
-    serviceItems: [
-      { 
-        id:       '134',
-        name:     'Dell Inspiron 15 311',
-        type:     'assigned_it_asset',  
-        img_src:  'https://via.placeholder.com/100x100',
-        display_fields: [ 
-          { label: 'Serial #',    value: 'DSW42F4F' },
-          { label: 'Assigned On', value: '7 June 2021' }
-        ]
-      },
-      {
-        id:       '135',
-        name:     'Jabra Evolve Headset',
-        type:     'assigned_it_asset',   
-        img_src:  'https://via.placeholder.com/100x100',
-        display_fields: [
-          { label: 'Serial #',    value: 'DSW42F4F' },
-          { label: 'Assigned On', value: '7 June 2021' }
-        ]
-      },
-      {
-        id:      '136',
-        name:    'Zoom',
-        type:    'assigned_software_entitlement',
-        img_src: 'https://via.placeholder.com/100x100',
-        display_fields: [
-          { label: 'Seats Given', value: '1' },
-          { label: 'Assigned On', value: '7 June 2021' }
-        ]
-      }
-    ]
+    description: 'List of everything within your custody. Easily report issues with your assigned devices or software.'
   },
   'view_raised_requests': {
     label: 'View Raised Requests'
