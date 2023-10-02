@@ -108,6 +108,14 @@
   padding-top:  10px;
 }
 
+.service-item-card .card-body .card-content-table tr th {
+  color: #595959;
+}
+
+.service-item-card .card-body .card-content-table tr td {
+  color: black;
+}
+
 .service-item-card .description {
   color:        #595959;
   word-wrap:    break-word;
