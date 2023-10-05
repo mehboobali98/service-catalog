@@ -242,7 +242,7 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
         let serviceItemData = {
           id:             record['id'],
           name:           record['name'],
-          type:           type,
+          type:           key,
           img_src:        record['img_src'],
           display_fields: prepareDisplayFieldsData(type, record)
         };
