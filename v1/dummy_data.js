@@ -239,7 +239,6 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
     records = JSON.parse(records);
     if (key === 'assets' || key === 'software_entitlements') {
       $.each(records, function(index, record){
-        let type = key === 'assets' ? 'assigned_it_asset' : 'assigned_software_entitlement';
         let serviceItemData = {
           id:             record['id'],
           name:           record['name'],
