@@ -244,7 +244,7 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
           name:           record['name'],
           type:           key,
           img_src:        record['img_src'],
-          display_fields: prepareDisplayFieldsData(type, record)
+          display_fields: prepareDisplayFieldsData(key, record)
         };
         newServiceItems.push(serviceItemData);
       });
