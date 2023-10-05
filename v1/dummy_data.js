@@ -241,7 +241,7 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
       $.each(records, function(index, record){
         let type = key === 'assets' ? 'assigned_it_asset' : 'assigned_software_entitlement';
         let serviceItemData = {
-          id:             record['id'],
+          id:             record['sequence_num'],
           name:           record['name'],
           type:           type,
           img_src:        record['img_src'],
