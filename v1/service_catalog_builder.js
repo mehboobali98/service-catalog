@@ -32,13 +32,13 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = $('<div>').addClass('row');
 
     const searchAndNavContainer = $('<div>').addClass('col-2');
-    const searchAndNavContainerText = $('<h1>').text('Categories');
+    const searchAndNavContainerText = $('<h4>').text('Categories');
 
     const searchField = $('<input>').attr('id', 'search_input')
                                     .attr('type', 'text')
                                     .attr('placeholder', 'search...');
     const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
-    searchAndNavContainer.append(searchAndNavContainerText, searchField);
+    searchAndNavContainer.append(searchAndNavContainerText, searchBar);
 
     const containers = {
       newSection: newSection,
@@ -92,7 +92,7 @@ class ServiceCatalogBuilder {
   }
 
   createServiceCategoriesView(containers, userExists) {
-    const navbarContainer = $('<div>').addClass('service-categories-list');
+    const navbarContainer = $('<div>').attr('id', 'service_categories_list').addClass('service-categories-list');
     const navbar = this.generateNavbar(userExists);
     navbarContainer.append(navbar);
 
@@ -114,6 +114,7 @@ class ServiceCatalogBuilder {
 
   // Create a function to generate the vertical navbar
   generateNavbar(userExists) {
+    let activeClassAdded = false;
     const navbar = $('<ul>');
 
     $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
@@ -123,6 +124,9 @@ class ServiceCatalogBuilder {
         listItem.addClass('collapse');
       } else if (serviceCategory === 'view_raised_requests' && window.HelpCenter.user.role === 'anonymous') {
         listItem.addClass('collapse');
+      } else if (!activeClassAdded) {
+        listItem.addClass('active');
+        activeClassAdded = true;
       }
 
       navbar.append(listItem);
@@ -137,6 +141,9 @@ class ServiceCatalogBuilder {
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
+      $('#service_categories_list ul li.active').removeClass('active');
+      $('#' + e.target.id).parent().addClass('active');
+
       if ($(this).attr('href') !== '#_') { return true; }
 
       e.preventDefault();
@@ -164,6 +171,9 @@ class ServiceCatalogBuilder {
       const query = $(this).val().trim();
       const serviceItemsContainer  = $('#service_items_container');
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
+
+      $('#service_categories_list ul li.active').removeClass('active');
+
       if (query.length === 0) {
         searchResultsContainer.hide();
         serviceItemsContainer.show();
