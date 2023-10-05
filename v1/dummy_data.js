@@ -259,7 +259,6 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
 
 function prepareDisplayFieldsData(type, record) {
   const displayFields = [];
-  debugger;
   if (type === 'assigned_it_asset') {
     displayFields.push({
       label: 'Serial #', value: record['serial_num']

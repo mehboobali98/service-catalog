@@ -36,7 +36,7 @@ class NewRequestForm {
   }
 
   extractTicketFormData(serviceCategory, searchParams) {
-    if (!this.zendeskFormData) { return; }
+    if (!this.zendeskFormData || !serviceCategory) { return; }
 
     if (serviceCategory === 'my_it_assets') {
       const type = searchParams.get('type');
