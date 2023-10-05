@@ -239,12 +239,13 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
     records = JSON.parse(records);
     if (key === 'assets' || key === 'software_entitlements') {
       $.each(records, function(index, record){
+        let type = key === 'assets' ? 'assigned_it_asset' : 'assigned_software_entitlement';
         let serviceItemData = {
           id:             record['id'],
           name:           record['name'],
-          type:           key,
+          type:           type,
           img_src:        record['img_src'],
-          display_fields: prepareDisplayFieldsData(key, record)
+          display_fields: prepareDisplayFieldsData(type, record)
         };
         newServiceItems.push(serviceItemData);
       });
@@ -259,16 +260,15 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
 function prepareDisplayFieldsData(type, record) {
   const displayFields = [];
   debugger;
-  if (type === 'assets') {
+  if (type === 'assigned_it_asset') {
     displayFields.push({
       label: 'Serial #', value: record['serial_num']
     });
-  } else if (type === 'software_entitlements') {
+  } else if (type === 'assigned_software_entitlement') {
     displayFields.push({
       label: 'Seats Given', value: record['seats_given']
     })
   }
-  debugger;
   displayFields.push({ label: 'Assigned On', value: record['assigned_on'] });
   return displayFields;
 }
