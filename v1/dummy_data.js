@@ -259,15 +259,17 @@ function updateServiceCategoryItems(demoData, serviceCategory, userAssignedAsset
 
 function prepareDisplayFieldsData(type, record) {
   const displayFields = [];
+  debugger;
   if (type === 'assets') {
     displayFields.push({
-      label: 'Serial #', value: record['bios_serial_number']
+      label: 'Serial #', value: record['serial_num']
     });
   } else if (type === 'software_entitlements') {
     displayFields.push({
       label: 'Seats Given', value: record['seats_given']
     })
   }
+  debugger;
   displayFields.push({ label: 'Assigned On', value: record['assigned_on'] });
   return displayFields;
 }
