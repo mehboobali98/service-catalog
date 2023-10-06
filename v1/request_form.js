@@ -5,17 +5,18 @@ class RequestForm {
   }
 
   updateRequestForm() {
+    const self        = this;
     const requestId   = this.extractRequestId();
     const requestUrl  = '/api/v2/requests/' + requestId;
 
     this.hideAssetsCustomField();
     $.getJSON(requestUrl).done((data) => {
-      const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == this.ezoFieldId });
+      const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
 
       if (!ezoFieldData || !ezoFieldData.value) { return true; }
 
       const options = { method: 'GET', headers: { } };
-      return this.withToken(token => {
+      return self.withToken(token => {
         if (token) {
           options.headers['Authorization'] = 'Bearer ' + token;
        
@@ -26,13 +27,13 @@ class RequestForm {
           if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
 
           if (parsedEzoFieldValue.linked != 'true') {
-            this.linkAssets(requestId, assetSequenceNums);
+            self.linkAssets(requestId, assetSequenceNums);
           }
 
           if (assetNames) {
-            this.addEZOContainer();
+            self.addEZOContainer();
             assetNames.map(name => {
-              this.showLinkedAsset(name);
+              self.showLinkedAsset(name);
             });
           }
         }
