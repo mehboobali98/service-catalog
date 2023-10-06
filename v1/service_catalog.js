@@ -6,12 +6,10 @@ import { isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFile
 
 class ServiceCatalogManager {
   constructor(demoData, zendeskFormData, ezoFieldId, ezoSubdomain) {
-    // to-do: use actual demoData being passed
-    this.demoData         = getServiceCategoriesItems();
+    this.demoData         = demoData || getServiceCategoriesItems();
     this.ezoFieldId       = ezoFieldId;
     this.ezoSubdomain     = ezoSubdomain;
-    // to-do: use actual zendeskFormData being passed
-    this.zendeskFormData  = getZendeskTicketFormData();
+    this.zendeskFormData  = zendeskFormData || getZendeskTicketFormData();
 
     const files = this.filesToLoad();
     loadExternalFiles(files, () => {
