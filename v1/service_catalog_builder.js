@@ -60,15 +60,33 @@ class ServiceCatalogBuilder {
           const options = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
           const endPoint = 'user_assigned_assets_and_software_entitlements';
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
+
           fetch(url, options)
-            .then(response => response.json())
+            .then(response => {
+
+              if (response.status === 400) {
+                throw new Error('Bad Request: There was an issue with the request.');
+              } else if (response.status === 404) {
+                throw new Error('Not Found: User account was not found.');
+              }
+
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+
+              return response.json();
+            })
             .then(data => {
               loadingIconContainer.hide();
-
               this.demoData = updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
               this.serviceCatalogItemBuilder.renderMyItAssets(this.demoData['my_it_assets']);
+            })
+            .catch(error => {
+              alert('An error occurred while fetching data: ' + error.message);
             });
+
         } else {
+
           loadingIconContainer.hide();
 
           // user does not exist in AssetSonar, so hide my_it_assets
@@ -107,7 +125,8 @@ class ServiceCatalogBuilder {
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
-    $('main').append(newSection);
+    const imageSection = $('<section>').addClass('section hero');
+    $('main').append(imageSection, newSection);
     this.serviceCatalogItemDetailBuilder.build();
     this.bindEventListeners();
   }
