@@ -9,7 +9,7 @@ class RequestForm {
     const requestUrl  = '/api/v2/requests/' + requestId;
 
     this.hideAssetsCustomField();
-    $.getJSON(requestUrl).done(function (data) {
+    $.getJSON(requestUrl).done((data) => {
       const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == this.ezoFieldId });
 
       if (!ezoFieldData || !ezoFieldData.value) { return true; }
