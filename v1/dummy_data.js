@@ -63,13 +63,16 @@ const serviceCategoriesItems = {
     description: 'List of everything within your custody. Easily report issues with your assigned devices or software.'
   },
   'view_raised_requests': {
-    label: 'View Raised Requests'
+    label: 'View Raised Requests',
+    description: "'View Raised Requests' is a service category within an organization's system that allows users to access, monitor, and manage service requests. It provides features like request visibility, tracking, historical records, search options, and status updates. Users can also self-service some requests and generate reports for performance analysis. This category enhances transparency, efficiency, and communication in request management, improving customer satisfaction and operational effectiveness."
   },
   'general_it_help': {
-    label: 'General IT Help'
+    label: 'General IT Help',
+    description: "'General IT Help' is a service category within an organization's IT support framework that is dedicated to providing assistance, guidance, and solutions to end-users or employees facing various information technology-related issues and challenges. This service category is fundamental for ensuring the smooth functioning of digital infrastructure and user productivity"
   },
   'hr_services': {
-    label: 'HR Services'
+    label: 'HR Services',
+    description: "'HR Services' encompasses a range of support functions provided by the Human Resources department to manage and enhance an organization's workforce. These services include recruitment, onboarding, employee benefits administration, payroll management, performance reviews, and employee relations. The goal of HR Services is to attract, retain, and support employees while ensuring compliance with labor laws and company policies. It plays a pivotal role in nurturing a productive and satisfied workforce, contributing to the overall success of the organization."
   },
   'request_new_software': {
     label:       'Request New Software',
@@ -212,10 +215,12 @@ const serviceCategoriesItems = {
     ]
   },
   'request_mobile_devices': {
-    label: 'Request Mobile Devices'
+    label: 'Request Mobile Devices',
+    description: "'Request Mobile Devices' is a service category that enables users to request and obtain mobile devices, such as smartphones or tablets, within an organization. This service streamlines the process of acquiring and managing mobile technology to support employee mobility and productivity. It typically includes options for requesting, provisioning, and managing mobile devices, ensuring that users have the tools they need for efficient work on the go."
   },
   'software_access': {
-    label: 'Software Access'
+    label: 'Software Access',
+    description: "'Software Access' is a service category focused on providing users with access to necessary software applications and tools within an organization. It ensures that employees can easily request and obtain the software they require for their specific roles, promoting efficiency and productivity. This category simplifies software provisioning, licensing, and user access management, ensuring that individuals have the right software resources to fulfill their job responsibilities effectively."
   }
 };
 
