@@ -89,10 +89,12 @@ class ServiceCatalogItemBuilder {
 
     // Card image
     const cardImageContainer = $('<div>').addClass('col-4');
-    const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
-                                .attr('alt', 'IT Asset')
-                                .addClass('w-100');
-    cardImageContainer.append(cardImage);
+    const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const cardImage          = $('<img>').attr('src', serviceCategoryItem.img_src)
+                                         .attr('alt', 'IT Asset')
+                                         .addClass('w-100');
+    cardImageFlex.append(cardImage);
+    cardImageContainer.append(cardImageFlex);
 
     // Card body
     const cardBody = $('<div>').addClass('col-8 card-body');

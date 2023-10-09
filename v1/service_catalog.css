@@ -4,12 +4,16 @@
 }
 
 .service-catalog-section {
-  margin-left: 50px;
+  margin-left: 120px;
 }
 
 .service-catalog-search {
   width:         100%;
   box-sizing:    border-box;
+}
+
+.service-categories-heading {
+  font-weight: bold;
 }
 
 .service-catalog-search input {
@@ -68,7 +72,7 @@
 }
 
 .service-category-description {
-  color:        black;
+  color:        #808080;
   font-size:    14px;
   word-wrap:    break-word;
   font-weight:  400;
@@ -78,9 +82,11 @@
   width:        280px;
   height:       120px;
   border:       1px #D9D9D9 solid !important;
+  padding:      4px;
   background:   white;
+  margin-top:   12px;
   margin-left:  inherit;
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 .service-item-card a {
