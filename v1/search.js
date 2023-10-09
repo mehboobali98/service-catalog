@@ -13,8 +13,8 @@ class Search {
         const data = extractServiceItemsWithCategory(this.demoData);
         // Create a Fuse instance with the data and desired options
         const options = {
-            keys: ['name'],      // Specify the property to search in
-            includeScore: true  // Include search score in the results
+            keys:          ['name', 'description'],      // Specify the property to search in
+            includeScore:  true  // Include search score in the results
         };
         this.fuse = new Fuse(data, options);
     }
