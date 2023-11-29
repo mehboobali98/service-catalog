@@ -47,7 +47,7 @@
 }
 
 .service-categories-list ul li.active {
-  color: $brand_color;
+  color: var(--brand_color);
   font-weight: 700;
 }
 
