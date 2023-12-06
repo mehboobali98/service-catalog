@@ -8,7 +8,6 @@ class ServiceCatalogItemBuilder {
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
-    const defaultVisibleCategoryIndex = this.getDefaultVisibleCategoryIndex();
 
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
