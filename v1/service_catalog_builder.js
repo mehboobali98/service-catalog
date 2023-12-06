@@ -26,6 +26,7 @@ class ServiceCatalogBuilder {
   }
 
   buildUI = (data) => {
+    this.data = data;
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
@@ -74,7 +75,8 @@ class ServiceCatalogBuilder {
   generateNavbar() {
     const navbar = $('<ul>');
 
-    $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
+    $.each(this.data, function(serviceCategory, serviceCategoryData) {
+      debugger;
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
                               .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
