@@ -12,15 +12,17 @@ class ServiceCatalogItemBuilder {
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
-      serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems));
+      serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, 0 === index));
     });
 
     return serviceItemsContainer;
   }
 
-  buildServiceCategoryItems(serviceCategory, serviceCategoryItems) {
+  buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
     const serviceCategoryItemsContainer = $('<div>');
     serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
+
+    if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
     const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label).addClass('service-category-label');
     const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');

@@ -24,6 +24,7 @@ class ApiService {
                       throw new Error('Network response was not ok');
                     }
 
+                    debugger;
                     return response.json();
                   })
                   .catch(error => {
