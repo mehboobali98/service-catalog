@@ -11,9 +11,11 @@ class ApiService {
                 const options = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
                 const endPoint = 'visible_service_categories_and_items';
                 const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
+                debugger;
 
                 fetch(url, options)
                   .then(response => {
+                    debugger;
                     if (response.status === 400) {
                       throw new Error('Bad Request: There was an issue with the request.');
                     } else if (response.status === 404) {
