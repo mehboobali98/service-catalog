@@ -80,7 +80,7 @@ class ServiceCatalogBuilder {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
                               .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
-                              .text(serviceCategoryData['label']));
+                              .text(serviceCategoryData['title']));
       navbar.append(listItem);
     });
 
