@@ -1,4 +1,5 @@
 import { Search }                           from './search.js';
+import { ApiService }                       from './api_service.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 import { updateServiceCategoryItems }       from './dummy_data.js';
@@ -8,8 +9,6 @@ class ServiceCatalogBuilder {
     this.demoData           = demoData;
     this.ezoSubdomain       = ezoSubdomain;
     this.zendeskFormData    = zendeskFormData;
-    this.userAuthenticated  = window.HelpCenter.user.role !== 'anonymous';
-
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
     this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
@@ -21,8 +20,13 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog(demoData, zendeskFormData) {
+    if (window.HelpCenter.user.role === 'anonymous') { return; }
+
+    debugger;
+    data = new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems();
+    debugger;
     this.buildUI();
-    this.fetchUserAssetsAndSoftwareEntitlements();
+    //this.fetchUserAssetsAndSoftwareEntitlements();
   }
 
   buildUI() {
@@ -45,73 +49,12 @@ class ServiceCatalogBuilder {
       searchAndNavContainer: searchAndNavContainer,
       serviceCatalogContainer: serviceCatalogContainer
     };
-    this.createServiceCategoriesView(containers, true);
+    this.createServiceCategoriesView(containers);
   }
 
-  fetchUserAssetsAndSoftwareEntitlements() {
-    const myItAssetsContainer   = $('#my_it_assets_container');
-    const loadingIconContainer  = this.loadingIcon();
-    myItAssetsContainer.append(loadingIconContainer);
-
-    $.getJSON('/hc/api/v2/integration/token')
-      .then(data => data.token)
-      .then(token => {
-        if (token) {
-          const options = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
-          const endPoint = 'user_assigned_assets_and_software_entitlements';
-          const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
-
-          fetch(url, options)
-            .then(response => {
-
-              if (response.status === 400) {
-                throw new Error('Bad Request: There was an issue with the request.');
-              } else if (response.status === 404) {
-                throw new Error('Not Found: User account was not found.');
-              }
-
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-
-              return response.json();
-            })
-            .then(data => {
-              loadingIconContainer.hide();
-              this.demoData = updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
-              this.serviceCatalogItemBuilder.renderMyItAssets(this.demoData['my_it_assets']);
-            })
-            .catch(error => {
-              alert('An error occurred while fetching data: ' + error.message);
-            });
-
-        } else {
-
-          loadingIconContainer.hide();
-
-          // user does not exist in AssetSonar, so hide my_it_assets
-          const myItAssetsLink = $('#my_it_assets_link');
-          myItAssetsLink.parent().hide();
-          myItAssetsContainer.hide();
-
-          // Determine service category and its item which should be shown.
-          const nextElement   = myItAssetsLink.parent().next();
-          const nextElementId = nextElement.children().attr('id');
-          
-          if (nextElementId === 'view_raised_requests_link' && window.HelpCenter.user.role === 'anonymous') {
-            nextElement.next().show();
-            myItAssetsContainer.parent().next().next().show();
-          } else {
-            nextElement.show();
-            myItAssetsContainer.parent().next().show();
-          }
-        }
-      });
-  }
-
-  createServiceCategoriesView(containers, userExists) {
+  createServiceCategoriesView(containers) {
     const navbarContainer = $('<div>').attr('id', 'service_categories_list').addClass('service-categories-list');
-    const navbar = this.generateNavbar(userExists);
+    const navbar = this.generateNavbar();
     navbarContainer.append(navbar);
 
     const newSection              = containers['newSection'];
@@ -132,22 +75,14 @@ class ServiceCatalogBuilder {
   }
 
   // Create a function to generate the vertical navbar
-  generateNavbar(userExists) {
-    let activeClassAdded = false;
+  generateNavbar() {
     const navbar = $('<ul>');
 
     $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
-      let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#_';
-      let listItem = $('<li>').append($('<a>').attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
-      if (serviceCategory === 'my_it_assets' && !userExists) {
-        listItem.addClass('collapse');
-      } else if (serviceCategory === 'view_raised_requests' && window.HelpCenter.user.role === 'anonymous') {
-        listItem.addClass('collapse');
-      } else if (!activeClassAdded) {
-        listItem.addClass('active');
-        activeClassAdded = true;
-      }
-
+      let link     = '#_';
+      let listItem = $('<li>').append($('<a>')
+                              .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
+                              .text(serviceCategoryData['label']));
       navbar.append(listItem);
     });
 

@@ -1,13 +1,11 @@
 class ServiceCatalogItemBuilder {
   constructor(serviceCategoriesItems, zendeskFormData) {
-    this.userExists             = false;
     this.zendeskFormData        = zendeskFormData;
     this.serviceCategoriesItems = serviceCategoriesItems;
   }
 
-  build(userExists) {
-    this.userExists = userExists;
-    const serviceCategories = Object.keys(this.serviceCategoriesItems);
+  build() {
+    const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
     const defaultVisibleCategoryIndex = this.getDefaultVisibleCategoryIndex();
@@ -15,28 +13,15 @@ class ServiceCatalogItemBuilder {
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
-      const isVisible = index === defaultVisibleCategoryIndex;
-      serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible));
+      serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems));
     });
 
     return serviceItemsContainer;
   }
 
-  getDefaultVisibleCategoryIndex() {
-    if (this.userExists) {
-      return 0;
-    } else if (window.HelpCenter.user.role === 'anonymous') {
-      return 2;
-    } else {
-      return 1;
-    }
-  }
-
-  buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
+  buildServiceCategoryItems(serviceCategory, serviceCategoryItems) {
     const serviceCategoryItemsContainer = $('<div>');
     serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
-
-    if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
     const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label).addClass('service-category-label');
     const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');

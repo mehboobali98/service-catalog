@@ -1,15 +1,14 @@
 import { RequestForm }            from './request_form.js';
 import { NewRequestForm }         from './new_request_form.js';
 import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
-import { getServiceCategoriesItems, getZendeskTicketFormData }   from './dummy_data.js'
 import { isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
 
 class ServiceCatalogManager {
   constructor(demoData, zendeskFormData, ezoFieldId, ezoSubdomain) {
-    this.demoData         = demoData || getServiceCategoriesItems();
+    this.demoData         = demoData;
     this.ezoFieldId       = ezoFieldId;
     this.ezoSubdomain     = ezoSubdomain;
-    this.zendeskFormData  = zendeskFormData || getZendeskTicketFormData();
+    this.zendeskFormData  = zendeskFormData;
 
     const files = this.filesToLoad();
     loadExternalFiles(files, () => {
