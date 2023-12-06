@@ -24,16 +24,10 @@ class ServiceCatalogBuilder {
 
     debugger;
     new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems()
-    .then(data => {
+                                     .then(data => {
       debugger;
-        // Process the data and call buildUI
-        this.buildUI(data);
+      this.buildUI(data);
     })
-    .catch((error) => {
-        // Handle any errors that occurred during the promise
-        console.error('Error fetching data:', error);
-    });
-    //this.fetchUserAssetsAndSoftwareEntitlements();
   }
 
   buildUI(data) {
