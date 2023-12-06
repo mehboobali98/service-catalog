@@ -11,6 +11,7 @@ class ApiService {
           const options = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
           const endPoint = 'visible_service_categories_and_items';
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
+          debugger;
 
           fetch(url, options)
             .then(response => {
@@ -28,10 +29,6 @@ class ApiService {
 
               debugger;
               return response.json();
-            })
-            .then(data => {
-              debugger;
-              return JSON.parse(data);
             })
             .catch(error => {
               debugger;
