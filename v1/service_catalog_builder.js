@@ -24,12 +24,14 @@ class ServiceCatalogBuilder {
 
     debugger;
     var data = new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems();
-    debugger;
-    this.buildUI();
+    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems((data) => {
+      this.buildUI(data);
+    });
     //this.fetchUserAssetsAndSoftwareEntitlements();
   }
 
-  buildUI() {
+  buildUI(data) {
+    debugger;
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
