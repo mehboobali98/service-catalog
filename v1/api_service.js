@@ -15,6 +15,7 @@ class ApiService {
           fetch(url, options)
             .then(response => {
 
+              debugger;
               if (response.status === 400) {
                 throw new Error('Bad Request: There was an issue with the request.');
               } else if (response.status === 404) {
