@@ -23,10 +23,10 @@ class ServiceCatalogBuilder {
     if (window.HelpCenter.user.role === 'anonymous') { return; }
 
     debugger;
-    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems((data) => {
+    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems().then(data => {
       debugger;
       this.buildUI(data);
-    });
+    })
     //this.fetchUserAssetsAndSoftwareEntitlements();
   }
 
