@@ -26,7 +26,7 @@ class ServiceCatalogBuilder {
     new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems(this.buildUI);
   }
 
-  buildUI(data) {
+  buildUI = (data) => {
     debugger;
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
