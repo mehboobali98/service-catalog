@@ -62,7 +62,7 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
     searchAndNavContainer.append(navbarContainer);
-    const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(userExists);
+    const serviceItemsContainer   = this.serviceCatalogItemBuilder.build();
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
