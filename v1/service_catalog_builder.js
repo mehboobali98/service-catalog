@@ -23,14 +23,9 @@ class ServiceCatalogBuilder {
     if (window.HelpCenter.user.role === 'anonymous') { return; }
 
     debugger;
-    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems()
-    .then(data => {
-        // Process the data and call buildUI
-        this.buildUI(data);
-    })
-    .catch(error => {
-        // Handle any errors that occurred during the data retrieval
-        console.error('Error fetching data:', error);
+    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems((data) => {
+      // Callback function to handle the fetched data
+      this.buildUI(data);
     });
   }
 
