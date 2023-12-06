@@ -24,7 +24,7 @@ class ServiceCatalogBuilder {
 
     debugger;
     new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems()
-                                     .then(data => {
+                                     .then((data) => {
       debugger;
       this.buildUI(data);
     })
