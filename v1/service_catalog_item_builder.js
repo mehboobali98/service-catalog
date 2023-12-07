@@ -41,11 +41,11 @@ class ServiceCatalogItemBuilder {
     if (isMyAssignedAssets(serviceCategory)) {
       serviceItems = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
     } else {
-      serviceItems = serviceCategoryItems.service_items;
+      serviceItems = JSON.parse(serviceCategoryItems.service_items);
     }
 
     debugger;
-    if (serviceItems) {
+    if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
       });
@@ -95,19 +95,19 @@ class ServiceCatalogItemBuilder {
     const cardBody = $('<div>').addClass('col-8 card-body');
 
     // Card title
-    const assetName = serviceCategoryItem.name;
+    const assetName = serviceCategoryItem.title;
     const cardTitle = $('<p>').text(assetName).addClass('card-title');
     cardBody.append(cardTitle);
 
     // Card content
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent = $('<table>').addClass('card-content-table');
-    $.each(serviceCategoryItem.display_fields, function(index, rowData) {
-      let newRow = $("<tr>");
-      newRow.append($('<th>').text(rowData.label));
-      newRow.append($('<td>').text(rowData.value));
-      cardContent.append(newRow);
-    });
+    // $.each(serviceCategoryItem.display_fields, function(index, rowData) {
+    //   let newRow = $("<tr>");
+    //   newRow.append($('<th>').text(rowData.label));
+    //   newRow.append($('<td>').text(rowData.value));
+    //   cardContent.append(newRow);
+    // });
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
