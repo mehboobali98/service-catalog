@@ -57,17 +57,6 @@ class ServiceCatalogItemBuilder {
     return serviceCategoryItemsContainer;
   }
 
-  renderMyItAssets(serviceCategoryData) {
-    const myItAssetsContainer     = $('#my_it_assets_container');
-    const myItAssetsFlexContainer = $('#my_it_assets_service_items_container');
-    const myItAssetsFlex          = myItAssetsFlexContainer.children(':first');
-    if (serviceCategoryData.serviceItems) {
-      serviceCategoryData.serviceItems.forEach((serviceCategoryItem, index) => {
-        myItAssetsFlex.append(this.buildServiceCategoryItem('my_it_assets', serviceCategoryItem));
-      });
-    }
-  }
-
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
     debugger;
     const zendeskFormData = {};
@@ -130,7 +119,8 @@ class ServiceCatalogItemBuilder {
 
   buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory) {
     //const queryParams = zendeskFormData['queryParams'];
-    const card = $('<div>').addClass('row service-item-card border border-light');
+    const card          = $('<div>').addClass('row service-item-card border border-light');
+    const displayFields = serviceCategoryItem.display_fields; 
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
@@ -145,22 +135,22 @@ class ServiceCatalogItemBuilder {
     const cardBody = $('<div>').addClass('col-8 card-body');
 
     // card title
-    const softwareName = serviceCategoryItem.name;
+    const softwareName = displayFields.title;
     const cardTitle  = $('<p>').text(softwareName).addClass('card-title');
     cardBody.append(cardTitle);
 
     // card description
-    const cardDescription = $('<p>').text(serviceCategoryItem.description)
+    const cardDescription = $('<p>').text(displayFields.short_description)
                                     .addClass('description');
     cardBody.append(cardDescription);
 
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
-    const price = $('<span>').text(serviceCategoryItem.price);
+    const price = $('<span>').text(displayFields.cost_price);
     const arrow = $('<span>').html('&#8594;')
                              .addClass('footer-arrow float-end js-service-item-detail-page-btn')
                              .data('id', serviceCategoryItem.id)
-                             .data('name', serviceCategoryItem.name)
+                             .data('name', displayFields.title)
                              .data('container-id', serviceCategory + '_service_items_container');
     const arrowContainer = $('<a>').attr('href', '#_');
     arrowContainer.append(arrow);
