@@ -89,7 +89,7 @@ class ServiceCatalogBuilder {
 
   bindEventListeners() {
     const self = this;
-    const serviceCategories    = Object.keys(this.demoData);
+    const serviceCategories    = Object.keys(this.data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
