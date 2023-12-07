@@ -60,16 +60,18 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
-    const zendeskFormData = this.zendeskFormData[serviceCategory];
-    switch (serviceCategory) {
-      case 'my_it_assets':
+    // Find the position of the first occurrence of the delimiter
+    let delimiterIndex            = serviceCategory.indexOf('_');
+    let serviceCategoryWithoutId  = serviceCategory.substring(delimiterIndex + 1);
+
+    debugger;
+    const zendeskFormData = {};
+    switch (serviceCategoryWithoutId) {
+      case 'my_assigned_assets':
+        debugger;
         return this.buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
-      case 'request_new_software':
-      case 'request_laptops':
-        return this.buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory);
       default:
-        // Handle unknown service type
-        break;
+        return this.buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory);
     }
   }
 
