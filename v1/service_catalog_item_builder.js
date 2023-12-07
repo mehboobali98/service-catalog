@@ -37,13 +37,14 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
     debugger;
-    const serviceItems = null;
+    let serviceItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
       serviceItems = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
     } else {
       serviceItems = serviceCategoryItems.service_items;
     }
 
+    debugger;
     if (serviceItems) {
       serviceItems.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
