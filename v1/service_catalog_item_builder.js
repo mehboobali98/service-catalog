@@ -84,7 +84,7 @@ class ServiceCatalogItemBuilder {
     // Card content
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
-    const displayFields        = prepareAssignedAssetDisplayFields(serviceCategoryItem);
+    const displayFields        = this.prepareAssignedAssetDisplayFields(serviceCategoryItem);
 
     debugger;
     $.each(displayFields, function(index, rowData) {
