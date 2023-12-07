@@ -6,13 +6,11 @@ class ServiceCatalogItemBuilder {
   }
 
   build(serviceCategoriesItems) {
-    debugger;
     this.serviceCategoriesItems = serviceCategoriesItems
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
 
-    debugger;
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
@@ -36,7 +34,6 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-    debugger;
     let serviceItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
       serviceItems = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
@@ -44,7 +41,6 @@ class ServiceCatalogItemBuilder {
       serviceItems = JSON.parse(serviceCategoryItems.service_items);
     }
 
-    debugger;
     if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
@@ -58,17 +54,14 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
-    debugger;
-    const zendeskFormData = {};
     if (isMyAssignedAssets(serviceCategory)) {
-      return this.buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
+      return this.buildItAssetServiceItem(serviceCategoryItem);
     } else {
-      return this.buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory);
+      return this.buildDefaultServiceItem(serviceCategory, serviceCategoryItem);
     }
   }
 
   buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
-    //const queryParams = zendeskFormData[serviceCategoryItem.type]['queryParams'] || {};
     const card = $('<div>').addClass('row service-item-card');
 
     // Card image
@@ -90,13 +83,16 @@ class ServiceCatalogItemBuilder {
 
     // Card content
     const cardContentContainer = $('<div>').addClass('card-content-container');
-    const cardContent = $('<table>').addClass('card-content-table');
-    // $.each(serviceCategoryItem.display_fields, function(index, rowData) {
-    //   let newRow = $("<tr>");
-    //   newRow.append($('<th>').text(rowData.label));
-    //   newRow.append($('<td>').text(rowData.value));
-    //   cardContent.append(newRow);
-    // });
+    const cardContent          = $('<table>').addClass('card-content-table');
+    const displayFields        = prepareAssignedAssetDisplayFields(serviceCategoryItem);
+
+    debugger;
+    $.each(displayFields, function(index, rowData) {
+      let newRow = $("<tr>");
+      newRow.append($('<th>').text(rowData.label));
+      newRow.append($('<td>').text(rowData.value));
+      cardContent.append(newRow);
+    });
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
@@ -117,17 +113,16 @@ class ServiceCatalogItemBuilder {
     return card;
   }
 
-  buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory) {
-    //const queryParams = zendeskFormData['queryParams'];
+  buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
     const card          = $('<div>').addClass('row service-item-card border border-light');
     const displayFields = serviceCategoryItem.display_fields; 
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
-    const cardImageFlex = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
-    const cardImage = $('<img>').attr('src', serviceCategoryItem.img_src)
-                                .attr('alt', 'Software')
-                                .addClass('w-100');
+    const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const cardImage          = $('<img>').attr('src', serviceCategoryItem.img_src)
+                                         .attr('alt', 'Software')
+                                         .addClass('w-100');
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
 
@@ -135,8 +130,8 @@ class ServiceCatalogItemBuilder {
     const cardBody = $('<div>').addClass('col-8 card-body');
 
     // card title
-    const softwareName = displayFields.title;
-    const cardTitle  = $('<p>').text(softwareName).addClass('card-title');
+    const itemName   = displayFields.title;
+    const cardTitle  = $('<p>').text(itemName).addClass('card-title');
     cardBody.append(cardTitle);
 
     // card description
@@ -146,12 +141,12 @@ class ServiceCatalogItemBuilder {
 
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
-    const price = $('<span>').text(displayFields.cost_price);
-    const arrow = $('<span>').html('&#8594;')
-                             .addClass('footer-arrow float-end js-service-item-detail-page-btn')
-                             .data('id', serviceCategoryItem.id)
-                             .data('name', displayFields.title)
-                             .data('container-id', serviceCategory + '_service_items_container');
+    const price      = $('<span>').text(displayFields.cost_price);
+    const arrow      = $('<span>').html('&#8594;')
+                                  .addClass('footer-arrow float-end js-service-item-detail-page-btn')
+                                  .data('id', serviceCategoryItem.id)
+                                  .data('name', displayFields.title)
+                                  .data('container-id', serviceCategory + '_service_items_container');
     const arrowContainer = $('<a>').attr('href', '#_');
     arrowContainer.append(arrow);
 
@@ -164,6 +159,23 @@ class ServiceCatalogItemBuilder {
     card.append(cardImageContainer, cardBody);
 
     return card;
+  }
+
+  prepareAssignedAssetDisplayFields(serviceItem) {
+    const type          = serviceItem.type;
+    const displayFields = [];
+    debugger;
+    if (type === 'assigned_it_asset') {
+      displayFields.push({
+        label: 'Serial #', value: serviceItem.serial_num
+      });
+    } else if (type === 'assigned_software_entitlement') {
+      displayFields.push({
+        label: 'Seats Given', value: serviceItem.seats_given
+      })
+    }
+    displayFields.push({ label: 'Assigned On', value: serviceItem.assigned_on });
+    return displayFields;
   }
 }
 
