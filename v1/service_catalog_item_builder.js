@@ -1,14 +1,17 @@
 class ServiceCatalogItemBuilder {
   constructor(serviceCategoriesItems, zendeskFormData) {
     this.zendeskFormData        = zendeskFormData;
-    this.serviceCategoriesItems = serviceCategoriesItems;
+    this.serviceCategoriesItems = null;
   }
 
-  build() {
+  build(serviceCategoriesItems) {
+    debugger;
+    this.serviceCategoriesItems = serviceCategoriesItems
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
 
+    debugger;
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
@@ -24,7 +27,7 @@ class ServiceCatalogItemBuilder {
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-    const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.label).addClass('service-category-label');
+    const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.title).addClass('service-category-label');
     const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
@@ -32,8 +35,9 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-    if (serviceCategoryItems.serviceItems) {
-      serviceCategoryItems.serviceItems.forEach((serviceCategoryItem, index) => {
+    debugger;
+    if (serviceCategoryItems.service_items) {
+      serviceCategoryItems.service_items.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
       });
     }
@@ -70,7 +74,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
-    const queryParams = zendeskFormData[serviceCategoryItem.type]['queryParams'] || {};
+    //const queryParams = zendeskFormData[serviceCategoryItem.type]['queryParams'] || {};
     const card = $('<div>').addClass('row service-item-card');
 
     // Card image
@@ -102,11 +106,12 @@ class ServiceCatalogItemBuilder {
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
-    queryParams['asset_id']   = serviceCategoryItem.id;
-    queryParams['asset_name'] = assetName;
+    //queryParams['asset_id']   = serviceCategoryItem.id;
+    //queryParams['asset_name'] = assetName;
 
     // Card footer
-    const url = '/hc/requests/new' + '?' + $.param(queryParams);
+    // const url = '/hc/requests/new' + '?' + $.param(queryParams);
+    const url = '/hc/requests/new';
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .text('Report Issue')
                                      .addClass('it-asset-card-footer');
@@ -119,7 +124,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory) {
-    const queryParams = zendeskFormData['queryParams'];
+    //const queryParams = zendeskFormData['queryParams'];
     const card = $('<div>').addClass('row service-item-card border border-light');
 
     // Create the card image element

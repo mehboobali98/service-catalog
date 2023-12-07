@@ -59,7 +59,7 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
     searchAndNavContainer.append(navbarContainer);
-    const serviceItemsContainer   = this.serviceCatalogItemBuilder.build();
+    const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
@@ -67,7 +67,7 @@ class ServiceCatalogBuilder {
 
     const imageSection = $('<section>').addClass('section hero');
     $('main').append(imageSection, newSection);
-    this.serviceCatalogItemDetailBuilder.build();
+    //this.serviceCatalogItemDetailBuilder.build();
     this.bindEventListeners();
   }
 
