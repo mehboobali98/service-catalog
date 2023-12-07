@@ -1,6 +1,7 @@
+import { isMyAssignedAssets } from './utility.js';
+
 class ServiceCatalogItemBuilder {
-  constructor(serviceCategoriesItems, zendeskFormData) {
-    this.zendeskFormData        = zendeskFormData;
+  constructor() {
     this.serviceCategoriesItems = null;
   }
 
@@ -36,8 +37,15 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
     debugger;
-    if (serviceCategoryItems.service_items) {
-      serviceCategoryItems.service_items.forEach((serviceCategoryItem, index) => {
+    const serviceItems = null;
+    if (isMyAssignedAssets(serviceCategory)) {
+      serviceItems = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
+    } else {
+      serviceItems = serviceCategoryItems.service_items;
+    }
+
+    if (serviceItems) {
+      serviceItems.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
       });
     }
@@ -60,18 +68,12 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
-    // Find the position of the first occurrence of the delimiter
-    let delimiterIndex            = serviceCategory.indexOf('_');
-    let serviceCategoryWithoutId  = serviceCategory.substring(delimiterIndex + 1);
-
     debugger;
     const zendeskFormData = {};
-    switch (serviceCategoryWithoutId) {
-      case 'my_assigned_assets':
-        debugger;
-        return this.buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
-      default:
-        return this.buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory);
+    if (isMyAssignedAssets(serviceCategory)) {
+      return this.buildItAssetServiceItem(serviceCategoryItem, zendeskFormData);
+    } else {
+      return this.buildSoftwareRequestServiceItem(serviceCategoryItem, zendeskFormData, serviceCategory);
     }
   }
 

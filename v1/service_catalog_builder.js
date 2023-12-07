@@ -10,7 +10,7 @@ class ServiceCatalogBuilder {
     this.ezoSubdomain       = ezoSubdomain;
     this.zendeskFormData    = zendeskFormData;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
     this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
 

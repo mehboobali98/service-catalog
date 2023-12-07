@@ -50,4 +50,9 @@ function loadFile(url, fileType, callback) {
   document.head.appendChild(element);
 }
 
-export { isCorrectPage, isRequestPage, isNewRequestPage, isServiceCatalogPage, loadExternalFiles };
+function isMyAssignedAssets(serviceCategory) {
+  const regex = /^\d*_my_assigned_assets$/;
+  return regex.test(serviceCategory);
+}
+
+export { isCorrectPage, isRequestPage, isNewRequestPage, isServiceCatalogPage, isMyAssignedAssets, loadExternalFiles };
