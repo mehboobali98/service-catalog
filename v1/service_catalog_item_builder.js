@@ -6,6 +6,7 @@ class ServiceCatalogItemBuilder {
   }
 
   build(serviceCategoriesItems) {
+    this.zendeskFormData        = serviceCategoriesItems.zendeskFormData;
     this.serviceCategoriesItems = serviceCategoriesItems
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
@@ -53,16 +54,17 @@ class ServiceCatalogItemBuilder {
     return serviceCategoryItemsContainer;
   }
 
-  buildServiceCategoryItem(serviceCategory, serviceCategoryItem) {
+  buildServiceCategoryItem(serviceCategory, serviceItem) {
     if (isMyAssignedAssets(serviceCategory)) {
-      return this.buildItAssetServiceItem(serviceCategoryItem);
+      return this.buildItAssetServiceItem(serviceItem);
     } else {
-      return this.buildDefaultServiceItem(serviceCategory, serviceCategoryItem);
+      return this.buildDefaultServiceItem(serviceCategory, serviceItem);
     }
   }
 
-  buildItAssetServiceItem(serviceCategoryItem, zendeskFormData) {
-    const card = $('<div>').addClass('row service-item-card');
+  buildItAssetServiceItem(serviceCategoryItem) {
+    const card        = $('<div>').addClass('row service-item-card');
+    const queryParams = {};
 
     // Card image
     const cardImageContainer = $('<div>').addClass('col-4');
@@ -96,12 +98,12 @@ class ServiceCatalogItemBuilder {
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
-    //queryParams['asset_id']   = serviceCategoryItem.id;
-    //queryParams['asset_name'] = assetName;
+    queryParams['asset_id']         = serviceCategoryItem.id;
+    queryParams['asset_name']       = assetName;
+    queryParams['zendesk_form_id']  = this.zendeskFormId(serviceCategoryItem);
 
     // Card footer
-    // const url = '/hc/requests/new' + '?' + $.param(queryParams);
-    const url = '/hc/requests/new';
+    const url = '/hc/requests/new' + '?' + $.param(queryParams);
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .text('Report Issue')
                                      .addClass('it-asset-card-footer');
@@ -176,6 +178,16 @@ class ServiceCatalogItemBuilder {
     }
     displayFields.push({ label: 'Assigned On', value: serviceItem.assigned_on });
     return displayFields;
+  }
+
+  zendeskFormId(serviceItem) {
+    debugger;
+    const type = serviceItem.type;
+    if (type === 'assigned_it_asset') {
+      return this.zendeskFormData.assets;
+    } else if (type === 'assigned_software_entitlement') {
+      return this.zendeskFormData.software_entitlements;
+    }
   }
 }
 
