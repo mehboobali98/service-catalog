@@ -6,7 +6,7 @@ class ServiceCatalogItemBuilder {
   }
 
   build(serviceCategoriesItems) {
-    this.zendeskFormData        = serviceCategoriesItems.zendeskFormData;
+    this.zendeskFormData        = serviceCategoriesItems.zendesk_form_data;
     this.serviceCategoriesItems = serviceCategoriesItems
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
