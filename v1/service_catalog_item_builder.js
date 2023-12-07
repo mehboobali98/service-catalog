@@ -77,7 +77,7 @@ class ServiceCatalogItemBuilder {
     const cardBody = $('<div>').addClass('col-8 card-body');
 
     // Card title
-    const assetName = serviceCategoryItem.title;
+    const assetName = serviceCategoryItem.name;
     const cardTitle = $('<p>').text(assetName).addClass('card-title');
     cardBody.append(cardTitle);
 
