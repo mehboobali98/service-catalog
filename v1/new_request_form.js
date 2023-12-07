@@ -1,10 +1,10 @@
 import { loadExternalFiles } from './utility.js';
 
 class NewRequestForm {
-  constructor(ezoFieldId, ezoSubdomain, zendeskFormData) {
-    this.ezoFieldId = ezoFieldId;
-    this.ezoSubdomain = ezoSubdomain;
-    this.zendeskFormData = zendeskFormData;
+  constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    this.ezoFieldId             = ezoFieldId;
+    this.ezoSubdomain           = ezoSubdomain;
+    this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
   }
 
   updateRequestForm() {
@@ -17,33 +17,17 @@ class NewRequestForm {
   updateForm() {
     if ($('.nesty-input')[0].text === "-") { return; }
 
-    const searchParams = this.extractQueryParams(window.location);
-    const serviceCategory = searchParams.get('service_category');
-    const ticketFormData = this.extractTicketFormData(serviceCategory, searchParams);
-    if (ticketFormData) {
-      const customFieldId = ticketFormData.custom_field_id;
-      const customFieldValue = ticketFormData.custom_field_value;
-      const ticketFormSubject = ticketFormData.ticket_form_subject;
+    const searchParams      = this.extractQueryParams(window.location);
+    const customFieldId     = this.ezoServiceItemFieldId;
+    const customFieldValue  = searchParams.get('item_name');
 
-      $('#request_subject').val(this.updateSubject(ticketFormSubject, searchParams, serviceCategory));
-      $('#request_custom_fields_' + customFieldId).val(customFieldValue);
-    }
+    $('#request_subject').val(this.prepareSubject(searchParams));
+    $('#request_custom_fields_' + customFieldId).val(customFieldValue);
     this.getTokenAndFetchAssignedAssets();
   }
 
   extractQueryParams(url) {
     return new URL(url).searchParams;
-  }
-
-  extractTicketFormData(serviceCategory, searchParams) {
-    if (!this.zendeskFormData || !serviceCategory) { return; }
-
-    if (serviceCategory === 'my_it_assets') {
-      const type = searchParams.get('type');
-      return this.zendeskFormData[serviceCategory][type]['ticketFormData'];
-    } else {
-      return this.zendeskFormData[serviceCategory]['ticketFormData'];
-    }
   }
 
   getTokenAndFetchAssignedAssets() {
@@ -133,24 +117,18 @@ class NewRequestForm {
     });
   }
 
-  updateSubject(subject, searchParams, serviceCategory) {
-    switch (serviceCategory) {
-      case 'my_it_assets':
-        return subject + searchParams.get('asset_name');
-      case 'request_new_software':
-      case 'request_laptops':
-        return subject + searchParams.get('name');
-      default:
-        return subject;
-    }
+  prepareSubject(searchParams) {
+    const itemName        = searchParams.get('item_name');
+    const serviceCategory = searchParams.get('service_category');
+    return `${itemName}-${serviceCategory}`;
   }
 
   preselectAssetsCustomField(searchParams) {
     let ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
     if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
-    let assetId = searchParams.get('asset_id');
-    let assetName = searchParams.get('asset_name');
+    let assetId   = searchParams.get('item_id');
+    let assetName = searchParams.get('item_name');
 
     if (!assetName || !assetId) { return; }
 

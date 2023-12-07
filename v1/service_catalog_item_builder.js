@@ -56,13 +56,13 @@ class ServiceCatalogItemBuilder {
 
   buildServiceCategoryItem(serviceCategory, serviceItem) {
     if (isMyAssignedAssets(serviceCategory)) {
-      return this.buildItAssetServiceItem(serviceItem);
+      return this.buildItAssetServiceItem(serviceCategory, serviceItem);
     } else {
       return this.buildDefaultServiceItem(serviceCategory, serviceItem);
     }
   }
 
-  buildItAssetServiceItem(serviceCategoryItem) {
+  buildItAssetServiceItem(serviceCategory, serviceCategoryItem) {
     const card        = $('<div>').addClass('row service-item-card');
     const queryParams = {};
 
@@ -98,9 +98,10 @@ class ServiceCatalogItemBuilder {
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
-    queryParams['asset_id']         = serviceCategoryItem.id;
-    queryParams['asset_name']       = assetName;
+    queryParams['item_id']         = serviceCategoryItem.id;
+    queryParams['item_name']       = assetName;
     queryParams['zendesk_form_id']  = this.zendeskFormId(serviceCategoryItem);
+    queryParams['service_category'] = serviceCategory;
 
     // Card footer
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
