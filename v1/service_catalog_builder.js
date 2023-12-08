@@ -16,8 +16,6 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog() {
-    if (window.HelpCenter.user.role === 'anonymous') { return; }
-
     new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems(this.buildUI);
   }
 
