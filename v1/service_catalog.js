@@ -27,7 +27,7 @@ class ServiceCatalogManager {
 
   initServiceCatalog() {
     if (isServiceCatalogPage()) {
-      handleServiceCatalogRequest();
+      this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
       new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else if (isRequestPage()) {
