@@ -133,22 +133,22 @@ class ServiceCatalogItemBuilder {
     const cardBody = $('<div>').addClass('col-8 card-body');
 
     // card title
-    const itemName   = displayFields.title;
+    const itemName   = displayFields.title['value'];
     const cardTitle  = $('<p>').text(itemName).addClass('card-title');
     cardBody.append(cardTitle);
 
     // card description
-    const cardDescription = $('<p>').text(displayFields.short_description)
+    const cardDescription = $('<p>').text(displayFields.short_description['value'])
                                     .addClass('description');
     cardBody.append(cardDescription);
 
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
-    const price      = $('<span>').text(displayFields.cost_price);
+    const price      = $('<span>').text(displayFields.cost_price['value']);
     const arrow      = $('<span>').html('&#8594;')
                                   .addClass('footer-arrow float-end js-service-item-detail-page-btn')
                                   .data('id', serviceCategoryItem.id)
-                                  .data('name', displayFields.title)
+                                  .data('name', displayFields.title['value'])
                                   .data('container-id', serviceCategory + '_service_items_container');
     const arrowContainer = $('<a>').attr('href', '#_');
     arrowContainer.append(arrow);
