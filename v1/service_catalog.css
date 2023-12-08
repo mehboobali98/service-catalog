@@ -213,18 +213,25 @@ a.request-service-btn:hover {
 }
 
 .go-back-btn {
-  color:          var(--blue) !important;
-  border:         2px var(--blue) solid !important;
-  border-radius:  10px !important;
+  color:            var(--blue) !important;
+  border:           2px var(--blue) solid !important;
+  border-radius:    10px !important;
+  text-decoration:  none;
 }
 
 .contact-administrator-btn {
-  color:          var(--blue);
-  border:         2px var(--blue) solid;
-  border-radius:  10px;
+  color:            var(--blue) !important;
+  border:           2px var(--blue) solid !important;
+  border-radius:    10px;
+  text-decoration:  none;
 }
 
 a.go-back-btn:hover {
+  color:            white !important;
+  background-color: var(--blue) !important;
+}
+
+a.contact-administrator-btn {
   color:            white !important;
   background-color: var(--blue) !important;
 }

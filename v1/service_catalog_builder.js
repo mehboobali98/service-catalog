@@ -158,7 +158,7 @@ class ServiceCatalogBuilder {
                                           .click(function() { window.history.back(); });
     const contactAdminButton    = $('<a>').attr('href', '#_')
                                           .text('Contact Administrator')
-                                          .addClass('contact-administrator-btn');
+                                          .addClass('btn btn-outline-primary contact-administrator-btn');
     buttonsContainer.append(goBackButton, contactAdminButton);
 
 
