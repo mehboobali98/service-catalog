@@ -18,7 +18,6 @@ class ServiceCatalogBuilder {
   buildServiceCatalog() {
     const imageSection = $('<section>').addClass('section hero');
     $('main').append(imageSection);
-    debugger;
     new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
   }
 
