@@ -1,3 +1,5 @@
+import { isMyAssignedAssets } from './utility.js';
+
 class ServiceCatalogItemDetailBuilder {
   constructor() {
     this.serviceCategoriesItems = null;
@@ -9,9 +11,7 @@ class ServiceCatalogItemDetailBuilder {
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
       let container   = $('#' + containerId);
-      if (serviceCategory === 'my_it_assets' || serviceCategory === 'view_raised_requests') {
-        // do-nothing
-      } else {
+      if (!isMyAssignedAssets(serviceCategory)) {
          $.each(data.serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategoryItem));
           this.bindItemDetailEventListener(serviceCategoryItem);
