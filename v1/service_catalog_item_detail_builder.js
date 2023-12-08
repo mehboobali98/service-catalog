@@ -7,13 +7,10 @@ class ServiceCatalogItemDetailBuilder {
 
   build(serviceCategoriesItems) {
     this.serviceCategoriesItems = serviceCategoriesItems;
-    debugger;
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
       let container   = $('#' + containerId);
-      debugger;
       if (!isMyAssignedAssets(serviceCategory)) {
-        debugger;
         let serviceItems = JSON.parse(data.service_items);
         $.each(serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategoryItem));
@@ -25,8 +22,9 @@ class ServiceCatalogItemDetailBuilder {
 
   buildDetailPage(serviceCategoryItem) {
     const queryParams         = {};
+    debugger;
     const displayFields       = serviceCategoryItem.display_fields;
-    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + display_fields.title)
+    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + displayFields.title)
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
@@ -39,12 +37,12 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(display_fields.title)
+    const headerContent = $('<div>').append($('<p>').text(displayFields.title)
                                                     .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
-                                    .append($('<p>').text(display_fields.cost_price)
+                                    .append($('<p>').text(displayFields.cost_price)
                                                     .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
 
-    queryParams['item_name']      = display_fields.title;
+    queryParams['item_name']      = displayFields.title;
     queryParams['ticket_form_id'] = serviceCategoryItem.zendesk_form_id;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
