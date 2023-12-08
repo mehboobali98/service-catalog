@@ -280,12 +280,15 @@ function prepareDisplayFieldsData(type, record) {
 function extractServiceItemsWithCategory(demoData) {
   const extractedServiceItems = [];
 
+
+  debugger;
   for (const categoryName in demoData) {
     if (demoData.hasOwnProperty(categoryName)) {
       const category      = demoData[categoryName];
       const categoryLabel = category.label;
       const serviceItems  = category.serviceItems;
 
+      debugger;
       if (serviceItems) {
         for (const serviceItem of serviceItems) {
           // Add the service category name to the service item
@@ -295,6 +298,8 @@ function extractServiceItemsWithCategory(demoData) {
       }
     }
   }
+
+  debugger;
 
   return extractedServiceItems;
 }

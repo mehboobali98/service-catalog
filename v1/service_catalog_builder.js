@@ -9,7 +9,6 @@ class ServiceCatalogBuilder {
     this.ezoSubdomain                    = ezoSubdomain;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
-    //this.fuzzySearch = new Search(this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
 
   addMenuItem(name, url, parent_ele) {
@@ -25,6 +24,7 @@ class ServiceCatalogBuilder {
 
   buildUI = (data) => {
     this.data = data;
+    this.fuzzySearch = new Search(this.data, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
