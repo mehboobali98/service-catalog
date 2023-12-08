@@ -30,7 +30,7 @@ class ApiService {
               callback(data);
             })
             .catch(error => {
-              console.log('An error occurred while fetching service categories and items: ' + error.message);
+              console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
     });
