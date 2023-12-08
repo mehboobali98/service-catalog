@@ -9,7 +9,7 @@ class ServiceCatalogBuilder {
     this.demoData           = demoData;
     this.ezoSubdomain       = ezoSubdomain;
     this.zendeskFormData    = zendeskFormData;
-    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
     this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
@@ -19,7 +19,7 @@ class ServiceCatalogBuilder {
     $("#" + parent_ele).prepend(serviceCatalog);
   }
 
-  buildServiceCatalog(demoData, zendeskFormData) {
+  buildServiceCatalog() {
     if (window.HelpCenter.user.role === 'anonymous') { return; }
 
     new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems(this.buildUI);
@@ -67,7 +67,7 @@ class ServiceCatalogBuilder {
 
     const imageSection = $('<section>').addClass('section hero');
     $('main').append(imageSection, newSection);
-    //this.serviceCatalogItemDetailBuilder.build();
+    this.serviceCatalogItemDetailBuilder.build(this.data);
     this.bindEventListeners();
   }
 

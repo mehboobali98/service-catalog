@@ -1,10 +1,11 @@
 class ServiceCatalogItemDetailBuilder {
-  constructor(serviceCategoriesItems, zendeskFormData) {
-    this.zendeskFormData        = zendeskFormData;
-    this.serviceCategoriesItems = serviceCategoriesItems;
+  constructor() {
+    this.serviceCategoriesItems = null;
   }
 
-  build() {
+  build(serviceCategoriesItems) {
+    this.serviceCategoriesItems = serviceCategoriesItems;
+    debugger;
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
       let container   = $('#' + containerId);
@@ -12,17 +13,16 @@ class ServiceCatalogItemDetailBuilder {
         // do-nothing
       } else {
          $.each(data.serviceItems, (index, serviceCategoryItem) => {
-          let zendeskFormData = this.zendeskFormData[serviceCategory];
-          container.after(this.buildDetailPage(serviceCategoryItem, zendeskFormData));
+          container.after(this.buildDetailPage(serviceCategoryItem));
           this.bindItemDetailEventListener(serviceCategoryItem);
         });
       }
     });
   }
 
-  buildDetailPage(serviceCategoryItem, zendeskFormData) {
-    const queryParams         = zendeskFormData['queryParams'] || {};
-    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
+  buildDetailPage(serviceCategoryItem) {
+    const queryParams         = {};
+    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.title)
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
@@ -35,11 +35,15 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name).css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
-                                    .append($('<p>').text(serviceCategoryItem.price).css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
+    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.title)
+                                                    .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
+                                    .append($('<p>').text(serviceCategoryItem.cost_price)
+                                                    .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
 
-    queryParams['name'] = serviceCategoryItem.name;
+    queryParams['item_name']      = serviceCategoryItem.title;
+    queryParams['ticket_form_id'] = serviceCategoryItem.zendesk_form_id;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
+
     const requestServiceBtn = $('<a>').attr('role', 'button')
                                       .attr('href', url)
                                       .text('Request Service')
@@ -47,6 +51,7 @@ class ServiceCatalogItemDetailBuilder {
     detailPageHeader.append(headerContent, requestServiceBtn);
 
     const detailPageBody = $('<div>');
+    debugger;
     const detailPageFields = serviceCategoryItem.detail_page_fields;
     if (detailPageFields) {
       $.each(detailPageFields, (index, fieldData) => {
