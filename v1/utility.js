@@ -14,7 +14,11 @@ function isServiceCatalogPage() {
 }
 
 function isCorrectPage(regex) {
-  return regex.test(window.location.pathname);
+  return regex.test(currentPage());
+}
+
+function currentPage() {
+  return window.location.pathname;
 }
 
 function loadExternalFiles(filesToLoad, callback) {
@@ -55,11 +59,11 @@ function isMyAssignedAssets(serviceCategory) {
   return regex.test(serviceCategory);
 }
 
-function notSignedIn() {
-  return !isSignedIn();
+function isSignedIn() {
+  return !notSignedIn();
 }
 
-function isSignedIn() {
+function notSignedIn() {
   return window.HelpCenter.user.role === 'anonymous';
 }
 
@@ -90,4 +94,26 @@ function extractServiceItemsWithCategory(data) {
   return extractedServiceItems;
 }
 
-export { isCorrectPage, isRequestPage, isNewRequestPage, isServiceCatalogPage, isMyAssignedAssets, loadExternalFiles, extractServiceItemsWithCategory };
+function returnToPath() {
+  return window.location.href;
+}
+
+function signInPath() {
+  const queryParams = {};
+  queryParams.return_to = returnToPath();
+
+  const url = '/hc/requests/signin' + '?' + $.param(queryParams);
+  return url;
+}
+
+function current
+
+export {  isSignedIn,
+          signInPath,
+          isCorrectPage,
+          isRequestPage,
+          isNewRequestPage,
+          loadExternalFiles,
+          isMyAssignedAssets,
+          isServiceCatalogPage,
+          extractServiceItemsWithCategory };

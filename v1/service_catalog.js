@@ -1,7 +1,7 @@
 import { RequestForm }            from './request_form.js';
 import { NewRequestForm }         from './new_request_form.js';
 import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
-import { isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
+import { isSignedIn, signInPath, isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
 
 class ServiceCatalogManager {
   constructor(initializationData) {
@@ -27,13 +27,23 @@ class ServiceCatalogManager {
 
   initServiceCatalog() {
     if (isServiceCatalogPage()) {
-      this.serviceCatalogBuilder.buildServiceCatalog();
+      handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
       new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else if (isRequestPage()) {
       new RequestForm(this.ezoFieldId, this.ezoSubdomain).updateRequestForm();
     } else {
       // Handle other cases if needed
+    }
+  }
+
+  handleServiceCatalogRequest() {
+    if (isSignedIn()) {
+      debugger;
+      this.serviceCatalogBuilder.buildServiceCatalog();
+    } else {
+      debugger;
+      window.location.href = signInPath(); 
     }
   }
 
