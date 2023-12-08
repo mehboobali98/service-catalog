@@ -36,9 +36,8 @@ class ServiceCatalogItemBuilder {
 
     let serviceItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
-      debugger;
       serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
-      this.zendeskFormData = serviceCategoryItems.zendeskFormData;
+      this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
     } else {
       serviceItems = JSON.parse(serviceCategoryItems.service_items);
     }
