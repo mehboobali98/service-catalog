@@ -97,7 +97,7 @@ class ServiceCatalogItemBuilder {
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
-    queryParams['item_id']          = serviceCategoryItem.id;
+    queryParams['item_id']          = serviceCategoryItem.sequence_num;
     queryParams['item_name']        = assetName;
     queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
