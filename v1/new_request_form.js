@@ -68,7 +68,6 @@ class NewRequestForm {
         debugger;
         this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
         debugger;
-        this.preselectAssetsCustomField(this.extractQueryParams(window.location));
 
         $('form.request-form').on('submit', function() {
           var selectedIds = $('#ezo-asset-select').val();
@@ -116,6 +115,8 @@ class NewRequestForm {
         }
       },
     });
+    debugger;
+    this.preselectAssetsCustomField(this.extractQueryParams(window.location));
   }
 
   prepareSubject(searchParams) {
@@ -126,7 +127,6 @@ class NewRequestForm {
 
   preselectAssetsCustomField(searchParams) {
     let ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
-    debugger;
     if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
     let assetId   = searchParams.get('item_id');
@@ -137,7 +137,6 @@ class NewRequestForm {
     let ezoSelectEle = $('#ezo-asset-select');
     if (ezoSelectEle.length === 0) { this.renderEzoSelect2Field(ezoCustomFieldEle); }
 
-    debugger;
     // Set the value, creating a new option if necessary
     if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
       ezoSelectEle.val(assetId).trigger('change');
