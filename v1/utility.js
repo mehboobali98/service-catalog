@@ -102,8 +102,12 @@ function signInPath() {
   const queryParams = {};
   queryParams.return_to = returnToPath();
 
-  const url = '/hc/requests/signin' + '?' + $.param(queryParams);
+  const url = origin() + '/hc/requests/signin' + '?' + $.param(queryParams);
   return url;
+}
+
+function origin() {
+  return window.location.origin;
 }
 
 export {  isSignedIn,
