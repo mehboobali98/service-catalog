@@ -1,4 +1,4 @@
-import { extractServiceItemsWithCategory }  from './dummy_data.js';
+import { extractServiceItemsWithCategory }  from './utility.js';
 
 class Search {
     constructor(data, itemBuilder, itemDetailBuilder) {
