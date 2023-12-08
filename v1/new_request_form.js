@@ -18,11 +18,10 @@ class NewRequestForm {
     if ($('.nesty-input')[0].text === "-") { return; }
 
     const searchParams      = this.extractQueryParams(window.location);
-    const customFieldId     = this.ezoServiceItemFieldId;
     const customFieldValue  = searchParams.get('item_name');
 
     $('#request_subject').val(this.prepareSubject(searchParams));
-    $('#request_custom_fields_' + customFieldId).val(customFieldValue);
+    $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(customFieldValue);
     this.getTokenAndFetchAssignedAssets();
   }
 
