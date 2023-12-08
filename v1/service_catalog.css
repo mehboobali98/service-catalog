@@ -228,10 +228,12 @@ a.request-service-btn:hover {
 
 a.go-back-btn:hover {
   color:            white !important;
+  text-decoration:  none;
   background-color: var(--blue) !important;
 }
 
-a.contact-administrator-btn {
+a.contact-administrator-btn:hover {
   color:            white !important;
+  text-decoration:  none;
   background-color: var(--blue) !important;
 }
