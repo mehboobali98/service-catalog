@@ -119,7 +119,7 @@ class NewRequestForm {
   prepareSubject(searchParams) {
     const itemName        = searchParams.get('item_name');
     const serviceCategory = searchParams.get('service_category');
-    return `${itemName}-${serviceCategory}`;
+    return `${serviceCategory}-${itemName}`;
   }
 
   preselectAssetsCustomField(searchParams) {
