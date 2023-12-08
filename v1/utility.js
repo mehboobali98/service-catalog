@@ -81,6 +81,7 @@ function extractServiceItemsWithCategory(data) {
         for (const serviceItem of serviceItems) {
           // Add the service category name to the service item
           serviceItem.serviceCategoryName = categoryName;
+          debugger;
           extractedServiceItems.push(serviceItem);
         }
       }
