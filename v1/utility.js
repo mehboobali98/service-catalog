@@ -106,8 +106,6 @@ function signInPath() {
   return url;
 }
 
-function current
-
 export {  isSignedIn,
           signInPath,
           isCorrectPage,
