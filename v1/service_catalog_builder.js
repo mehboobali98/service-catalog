@@ -154,11 +154,11 @@ class ServiceCatalogBuilder {
     const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3');
     const goBackButton          = $('<a>').attr('href', '#_')
                                           .text('Go Back')
-                                          .addClass('btn btn-outline-primary go-back-button')
+                                          .addClass('btn btn-outline-primary go-back-btn')
                                           .click(function() { window.history.back(); });
     const contactAdminButton    = $('<a>').attr('href', '#_')
                                           .text('Contact Administrator')
-                                          .addClass('contact-administrator-button');
+                                          .addClass('contact-administrator-btn');
     buttonsContainer.append(goBackButton, contactAdminButton);
 
 
