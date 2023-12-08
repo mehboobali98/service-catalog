@@ -16,7 +16,10 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog() {
-    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems(this.buildUI);
+    const imageSection = $('<section>').addClass('section hero');
+    $('main').append(imageSection);
+    debugger;
+    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
   }
 
   buildUI = (data) => {
@@ -60,8 +63,7 @@ class ServiceCatalogBuilder {
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
-    const imageSection = $('<section>').addClass('section hero');
-    $('main').append(imageSection, newSection);
+    $('main').append(newSection);
     this.serviceCatalogItemDetailBuilder.build(this.data);
     this.bindEventListeners();
   }
@@ -134,6 +136,32 @@ class ServiceCatalogBuilder {
         self.fuzzySearch.updateResults(query, searchResultsContainer);
       }
     });
+  }
+
+  noAccessPage() {
+    const noAccessPageSection = $('<section>').attr('id', 'no_access_page_section')
+                                              .addClass('no-access-page-section');
+
+    const noAccessPageContainer = $('<div>').addClass('d-flex flex-column');
+    const noAccessImage         = $('<div>').addClass('no-access-image');
+    const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
+    const nextStepsMessage      = $('<p>').text('Please contact your administrator to get access');
+
+    // buttons
+    const buttonsContainer      = $('<div>').addClass('d-flex');
+    const goBackButton          = $('<button>').text('Go Back')
+                                               .addClass('go-back-button')
+                                               .click(function() { window.history.back(); });
+    const contactAdminButton    = $('<a>').attr('href', '#_')
+                                          .text('Contact Administrator')
+                                          .addClass('contact-administrator');
+    buttonsContainer.append(goBackButton, contactAdminButton);
+
+
+    noAccessPageContainer.append(noAccessImage, warningMessage, nextStepsMessage, buttonsContainer);
+    noAccessPageSection.append(noAccessPageContainer);
+
+    $('main').append(noAccessPageSection);
   }
 
   loadingIcon() {

@@ -3,7 +3,7 @@ class ApiService {
     this.ezoSubdomain = ezoSubdomain;
   }
 
-  fetchServiceCategoriesAndItems(callback) {
+  fetchServiceCategoriesAndItems(callback, noAccessPageCallback) {
     $.getJSON('/hc/api/v2/integration/token')
      .then(data => data.token)
      .then(token => {
@@ -17,7 +17,8 @@ class ApiService {
               if (response.status === 400) {
                 throw new Error('Bad Request: There was an issue with the request.');
               } else if (response.status === 404) {
-                throw new Error('Not Found: User account was not found.');
+                debugger;
+                return noAccessPageCallback();
               }
 
               if (!response.ok) {
