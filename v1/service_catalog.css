@@ -212,11 +212,13 @@ a.request-service-btn:hover {
 }
 
 .go-back-button {
+  color:          #00549F;
   border:         2px #00549F solid;
   border-radius:  10px;
 }
 
 .contact-administrator-button {
+  color:          #00549F;
   border:         2px #00549F solid;
   border-radius:  10px;
 }

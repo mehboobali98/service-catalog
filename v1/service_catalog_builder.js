@@ -151,7 +151,7 @@ class ServiceCatalogBuilder {
                                           .addClass('next-steps-message');
 
     // buttons
-    const buttonsContainer      = $('<div>').addClass('d-flex mt-3');
+    const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3');
     const goBackButton          = $('<a>').attr('href', '#_')
                                           .text('Go Back')
                                           .addClass('go-back-button')
