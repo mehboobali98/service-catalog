@@ -117,6 +117,7 @@ class ServiceCatalogItemBuilder {
 
   buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
     const card          = $('<div>').addClass('row service-item-card border border-light');
+    debugger;
     const displayFields = serviceCategoryItem.display_fields; 
 
     // Create the card image element
