@@ -143,19 +143,22 @@ class ServiceCatalogBuilder {
                                               .addClass('no-access-page-section');
 
     const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/no_access_image.svg');
+    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/no_access_image.svg')
+                                            .addClass('no-access-image');
+
     const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
     const nextStepsMessage      = $('<p>').text('Please contact your administrator to get access')
                                           .addClass('next-steps-message');
 
     // buttons
-    const buttonsContainer      = $('<div>').addClass('d-flex');
-    const goBackButton          = $('<button>').text('Go Back')
-                                               .addClass('go-back-button')
-                                               .click(function() { window.history.back(); });
+    const buttonsContainer      = $('<div>').addClass('d-flex mt-3');
+    const goBackButton          = $('<a>').attr('href', '#_')
+                                          .text('Go Back')
+                                          .addClass('go-back-button')
+                                          .click(function() { window.history.back(); });
     const contactAdminButton    = $('<a>').attr('href', '#_')
                                           .text('Contact Administrator')
-                                          .addClass('contact-administrator');
+                                          .addClass('contact-administrator-button');
     buttonsContainer.append(goBackButton, contactAdminButton);
 
 
