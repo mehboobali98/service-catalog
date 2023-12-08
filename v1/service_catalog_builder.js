@@ -2,7 +2,6 @@ import { Search }                           from './search.js';
 import { ApiService }                       from './api_service.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
-import { updateServiceCategoryItems }       from './dummy_data.js';
 
 class ServiceCatalogBuilder {
   constructor(ezoSubdomain) {
