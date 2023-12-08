@@ -143,7 +143,7 @@ class ServiceCatalogBuilder {
                                               .addClass('no-access-page-section');
 
     const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/assets/svg/no_access_image.svg');
+    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/no_access_image.svg');
     const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
     const nextStepsMessage      = $('<p>').text('Please contact your administrator to get access')
                                           .addClass('next-steps-message');
