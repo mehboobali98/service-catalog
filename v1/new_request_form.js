@@ -65,9 +65,8 @@ class NewRequestForm {
         ezoCustomFieldEle.hide();
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
-        debugger;
         this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
-        debugger;
+        this.preselectAssetsCustomField(this.extractQueryParams(window.location));
 
         $('form.request-form').on('submit', function() {
           var selectedIds = $('#ezo-asset-select').val();
@@ -115,8 +114,6 @@ class NewRequestForm {
         }
       },
     });
-    debugger;
-    this.preselectAssetsCustomField(this.extractQueryParams(window.location));
   }
 
   prepareSubject(searchParams) {

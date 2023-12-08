@@ -76,7 +76,6 @@ class ServiceCatalogBuilder {
     const navbar = $('<ul>');
 
     $.each(this.data, function(serviceCategory, serviceCategoryData) {
-      debugger;
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
                               .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
