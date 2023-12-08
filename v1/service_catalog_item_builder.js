@@ -42,7 +42,6 @@ class ServiceCatalogItemBuilder {
       serviceItems = JSON.parse(serviceCategoryItems.service_items);
     }
 
-    debugger;
     if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
@@ -89,7 +88,6 @@ class ServiceCatalogItemBuilder {
     const cardContent          = $('<table>').addClass('card-content-table');
     const displayFields        = this.prepareAssignedAssetDisplayFields(serviceCategoryItem);
 
-    debugger;
     $.each(displayFields, function(index, rowData) {
       let newRow = $("<tr>");
       newRow.append($('<th>').text(rowData.label));
@@ -102,7 +100,7 @@ class ServiceCatalogItemBuilder {
     queryParams['item_id']         = serviceCategoryItem.id;
     queryParams['item_name']       = assetName;
     queryParams['zendesk_form_id']  = this.zendeskFormId(serviceCategoryItem);
-    queryParams['service_category'] = serviceCategory;
+    queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card footer
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
@@ -168,7 +166,6 @@ class ServiceCatalogItemBuilder {
   prepareAssignedAssetDisplayFields(serviceItem) {
     const type          = serviceItem.type;
     const displayFields = [];
-    debugger;
     if (type === 'assigned_it_asset') {
       displayFields.push({
         label: 'Serial #', value: serviceItem.serial_num
@@ -183,7 +180,6 @@ class ServiceCatalogItemBuilder {
   }
 
   zendeskFormId(serviceItem) {
-    debugger;
     const type = serviceItem.type;
     if (type === 'assigned_it_asset') {
       return this.zendeskFormData.assets;
