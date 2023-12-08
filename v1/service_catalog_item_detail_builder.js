@@ -25,7 +25,8 @@ class ServiceCatalogItemDetailBuilder {
 
   buildDetailPage(serviceCategoryItem) {
     const queryParams         = {};
-    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.title)
+    const displayFields       = serviceCategoryItem.display_fields;
+    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + display_fields.title)
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
@@ -38,12 +39,12 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.title)
+    const headerContent = $('<div>').append($('<p>').text(display_fields.title)
                                                     .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
-                                    .append($('<p>').text(serviceCategoryItem.cost_price)
+                                    .append($('<p>').text(display_fields.cost_price)
                                                     .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
 
-    queryParams['item_name']      = serviceCategoryItem.title;
+    queryParams['item_name']      = display_fields.title;
     queryParams['ticket_form_id'] = serviceCategoryItem.zendesk_form_id;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
@@ -55,9 +56,8 @@ class ServiceCatalogItemDetailBuilder {
 
     const detailPageBody = $('<div>');
     debugger;
-    const detailPageFields = serviceCategoryItem.detail_page_fields;
-    if (detailPageFields) {
-      $.each(detailPageFields, (index, fieldData) => {
+    if (false) {
+      $.each(displayFields, (index, fieldData) => {
         let section         = $('<section>');
         let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
         let sectionContent  = this.prepareSectionContent(fieldData);
