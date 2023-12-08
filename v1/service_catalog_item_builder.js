@@ -6,6 +6,7 @@ class ServiceCatalogItemBuilder {
   }
 
   build(serviceCategoriesItems) {
+    debugger;
     this.zendeskFormData        = serviceCategoriesItems.zendesk_form_data;
     this.serviceCategoriesItems = serviceCategoriesItems
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
