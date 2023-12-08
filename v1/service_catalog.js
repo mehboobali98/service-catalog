@@ -39,7 +39,6 @@ class ServiceCatalogManager {
 
   handleServiceCatalogRequest() {
     if (isSignedIn()) {
-      debugger;
       this.serviceCatalogBuilder.buildServiceCatalog();
     } else {
       debugger;
