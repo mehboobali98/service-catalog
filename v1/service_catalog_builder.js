@@ -5,13 +5,11 @@ import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_
 import { updateServiceCategoryItems }       from './dummy_data.js';
 
 class ServiceCatalogBuilder {
-  constructor(demoData, zendeskFormData, ezoSubdomain) {
-    this.demoData           = demoData;
-    this.ezoSubdomain       = ezoSubdomain;
-    this.zendeskFormData    = zendeskFormData;
+  constructor(ezoSubdomain) {
+    this.ezoSubdomain                    = ezoSubdomain;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
-    this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
+    //this.fuzzySearch = new Search(this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
 
   addMenuItem(name, url, parent_ele) {

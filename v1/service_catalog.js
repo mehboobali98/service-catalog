@@ -4,11 +4,10 @@ import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
 import { isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
 
 class ServiceCatalogManager {
-  constructor(demoData, zendeskFormData, ezoFieldId, ezoSubdomain) {
-    this.demoData         = demoData;
-    this.ezoFieldId       = ezoFieldId;
-    this.ezoSubdomain     = ezoSubdomain;
-    this.zendeskFormData  = zendeskFormData;
+  constructor(initializationData) {
+    this.ezoFieldId             = initializationData.ezoFieldId;
+    this.ezoSubdomain           = initializationData.ezoSubdomain;
+    this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
     const files = this.filesToLoad();
     loadExternalFiles(files, () => {
@@ -17,7 +16,7 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain);
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.ezoSubdomain);
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }
@@ -30,7 +29,7 @@ class ServiceCatalogManager {
     if (isServiceCatalogPage()) {
       this.serviceCatalogBuilder.buildServiceCatalog();
     } else if (isNewRequestPage()) {
-      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, '13884803612562').updateRequestForm();
+      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else if (isRequestPage()) {
       new RequestForm(this.ezoFieldId, this.ezoSubdomain).updateRequestForm();
     } else {
