@@ -18,7 +18,7 @@ class ApiService {
                 throw new Error('Bad Request: There was an issue with the request.');
               } else if (response.status === 404) {
                 debugger;
-                return noAccessPageCallback();
+                noAccessPageCallback();
               }
 
               if (!response.ok) {
