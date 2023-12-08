@@ -24,7 +24,7 @@ class ServiceCatalogItemDetailBuilder {
     const queryParams         = {};
     debugger;
     const displayFields       = serviceCategoryItem.display_fields;
-    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + displayFields.title)
+    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + displayFields.title.value)
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
@@ -37,12 +37,13 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(displayFields.title)
+    const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
                                                     .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
-                                    .append($('<p>').text(displayFields.cost_price)
+                                    .append($('<p>').text(displayFields.cost_price.value)
                                                     .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
 
-    queryParams['item_name']      = displayFields.title;
+    queryParams['item_name']      = displayFields.title.value;
+    debugger;
     queryParams['ticket_form_id'] = serviceCategoryItem.zendesk_form_id;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
@@ -54,9 +55,10 @@ class ServiceCatalogItemDetailBuilder {
 
     const detailPageBody = $('<div>');
     debugger;
-    if (false) {
+    if (Object.keys(displayFields).length) {
       $.each(displayFields, (index, fieldData) => {
         let section         = $('<section>');
+        debugger;
         let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
         let sectionContent  = this.prepareSectionContent(fieldData);
         section.append(sectionHeader, sectionContent);
