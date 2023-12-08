@@ -31,8 +31,9 @@ class Search {
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
         // Display search results
-        results.forEach(({ item }) => {
-            let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(item.serviceCategoryName, item);
+        results.forEach(({ serviceItem }) => {
+            debugger;
+            let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceItem.serviceCategoryName, serviceItem);
             this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
             searchItemsFlex.append(serviceCategoryItem);
         });

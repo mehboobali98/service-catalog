@@ -65,15 +65,11 @@ function isSignedIn() {
 
 function extractServiceItemsWithCategory(data) {
   const extractedServiceItems = [];
-
-  debugger;
   for (const categoryName in data) {
     if (data.hasOwnProperty(categoryName)) {
       let serviceItems            = null;
       const serviceCategory       = data[categoryName];
       const serviceCategoryLabel  = serviceCategory.title;
-
-      debugger;
 
       if (isMyAssignedAssets(categoryName)) {
         serviceItems = serviceCategory.service_items['assets'].concat(serviceCategory.service_items['software_entitlements']);
@@ -81,19 +77,15 @@ function extractServiceItemsWithCategory(data) {
         serviceItems = JSON.parse(serviceCategory.service_items);
       }
 
-      debugger;
       if (serviceItems) {
         for (const serviceItem of serviceItems) {
           // Add the service category name to the service item
-          debugger;
           serviceItem.serviceCategoryName = categoryName;
           extractedServiceItems.push(serviceItem);
         }
       }
     }
   }
-
-  debugger;
 
   return extractedServiceItems;
 }
