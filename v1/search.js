@@ -11,6 +11,7 @@ class Search {
 
     initFuseSearch() {
         const searchableData = extractServiceItemsWithCategory(this.data);
+        debugger;
         // Create a Fuse instance with the data and desired options
         const options = {
             // Specify the property to search in
