@@ -14,7 +14,7 @@ class Search {
         // Create a Fuse instance with the data and desired options
         const options = {
             // Specify the property to search in
-            keys:          ['name', 'display_fields.description', 'display_fields.short_description'],
+            keys:          ['name', 'display_fields.title' ,'display_fields.description', 'display_fields.short_description'],
             includeScore:  true  // Include search score in the results
         };
         this.fuse = new Fuse(searchableData, options);
@@ -24,15 +24,12 @@ class Search {
     updateResults(query, searchResultsContainer) {
         const results = this.fuse.search(query);
 
-        debugger;
-
         // Clear previous results
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
         // Display search results
         results.forEach(({ serviceItem }) => {
-            debugger;
             let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceItem.serviceCategoryName, serviceItem);
             this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
             searchItemsFlex.append(serviceCategoryItem);
