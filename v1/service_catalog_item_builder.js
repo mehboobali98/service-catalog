@@ -6,8 +6,6 @@ class ServiceCatalogItemBuilder {
   }
 
   build(serviceCategoriesItems) {
-    debugger;
-    this.zendeskFormData        = serviceCategoriesItems.zendesk_form_data;
     this.serviceCategoriesItems = serviceCategoriesItems
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
@@ -38,11 +36,13 @@ class ServiceCatalogItemBuilder {
 
     let serviceItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
-      serviceItems = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
+      serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
+      this.zendeskFormData = serviceCategoryItems.zendeskFormData;
     } else {
       serviceItems = JSON.parse(serviceCategoryItems.service_items);
     }
 
+    debugger;
     if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
