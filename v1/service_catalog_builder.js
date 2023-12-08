@@ -71,8 +71,8 @@ class ServiceCatalogBuilder {
 
   // Create a function to generate the vertical navbar
   generateNavbar() {
-    const navbar           = $('<ul>');
-    const activeClassAdded = false;
+    const navbar         = $('<ul>');
+    let activeClassAdded = false;
 
     $.each(this.data, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
