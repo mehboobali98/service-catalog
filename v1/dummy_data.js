@@ -277,4 +277,4 @@ function prepareDisplayFieldsData(type, record) {
   return displayFields;
 }
 
-export { getServiceCategoriesItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems, extractServiceItemsWithCategory };
+export { getServiceCategoriesItems, getZendeskTicketFormData, findServiceCategoryItem, updateServiceCategoryItems };
