@@ -15,7 +15,7 @@ class Search {
         // Create a Fuse instance with the data and desired options
         const options = {
             // Specify the property to search in
-            keys:          ['name', 'display_fields.title', 'display_fields.description', 'display_fields.short_description'],
+            keys:          ['name', 'display_fields.title.value', 'display_fields.description.value', 'display_fields.short_description.value'],
             includeScore:  true  // Include search score in the results
         };
         this.fuse = new Fuse(searchableData, options);
