@@ -75,7 +75,7 @@ function extractServiceItemsWithCategory(data) {
 
       debugger;
 
-      if (isMyAssignedAssets(serviceCategory)) {
+      if (isMyAssignedAssets(categoryName)) {
         serviceItems = serviceCategory.service_items['assets'].concat(serviceCategory.service_items['software_entitlements']);
       } else {
         serviceItems = JSON.parse(serviceCategory.service_items);
