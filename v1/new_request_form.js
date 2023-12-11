@@ -57,10 +57,9 @@ class NewRequestForm {
         const assetsData = { data: [] };
         const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
-        debugger;
         this.processData(data.assets, assetsData, 'Asset');
-        this.processData(data.software_entitlements, assetsData, 'Software')
-        debugger;
+        this.processData(data.software_entitlements, assetsData, 'Software');
+
         ezoCustomFieldEle.hide();
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
@@ -69,7 +68,6 @@ class NewRequestForm {
 
         $('form.request-form').on('submit', function() {
           var selectedIds = $('#ezo-asset-select').val();
-          debugger;
           if (selectedIds.length > 0) {
             let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
             data = data.map((asset) => {
@@ -102,22 +100,17 @@ class NewRequestForm {
         },
 
         processResults: function(data, params) {
-          debugger;
           var assignedAssets = $.map(data.assets, function(asset) {
-            debugger;
             var sequenceNum = asset.sequence_num;
             return { id: sequenceNum, text: `Asset # ${sequenceNum} - ${asset.name}` };
           });
 
           var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
-            debugger;
             var sequenceNum = softwareEntitlement.sequence_num;
             return { id: sequenceNum, text: `Software # ${sequenceNum} - ${softwareEntitlement.name}` };
           });
 
-          debugger;
           var records = assignedAssets.concat(assignedSoftwareLicenses);
-          debugger;
           return {
             results:    records,
             pagination: { more: data.page < data.total_pages }

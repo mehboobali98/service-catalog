@@ -9,26 +9,34 @@ class RequestForm {
     const requestId   = this.extractRequestId();
     const requestUrl  = '/api/v2/requests/' + requestId;
 
+    debugger;
     this.hideAssetsCustomField();
+    debugger;
     $.getJSON(requestUrl).done((data) => {
       const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
 
+      debugger;
       if (!ezoFieldData || !ezoFieldData.value) { return true; }
 
       const options = { method: 'GET', headers: { } };
+      debugger;
       return self.withToken(token => {
         if (token) {
           options.headers['Authorization'] = 'Bearer ' + token;
        
+          debugger;
           const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
           const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
           const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
+          debugger;
           if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
 
           if (parsedEzoFieldValue.linked != 'true') {
             self.linkAssets(requestId, assetSequenceNums);
           }
+
+          debugger;
 
           if (assetNames) {
             self.addEZOContainer();
@@ -62,6 +70,7 @@ class RequestForm {
   }
 
   linkAssets(requestId, assetSequenceNums) {
+    debugger;
     $.ajax({
       url: 'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_tickets_to_assets_relation.json',
       type: 'POST',
@@ -78,6 +87,7 @@ class RequestForm {
   showLinkedAsset(assetName) {
     const assetUrl         = this.getAssetUrl(assetName);
     const ezoContainerBody = $('#ezo-assets-container dd ul');
+    debugger;
     if (assetUrl) {
       ezoContainerBody.append("<li><a target='_blank' href='" + assetUrl + "'>" + assetName + "</a></li>");
     } else {
