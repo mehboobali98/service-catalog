@@ -181,9 +181,9 @@ class ServiceCatalogItemBuilder {
 
   zendeskFormId(serviceItem) {
     const type = serviceItem.type;
-    if (type === 'assigned_it_asset') {
+    if (type === 'assigned_asset') {
       return this.zendeskFormData.assets;
-    } else if (type === 'assigned_software_entitlement') {
+    } else if (type === 'assigned_software_license') {
       return this.zendeskFormData.software_entitlements;
     }
   }
