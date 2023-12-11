@@ -172,6 +172,7 @@ class NewRequestForm {
     if (records) {
       $.each(records, function(index, record) {
         var sequenceNum = record.sequence_num;
+        debugger;
         dataContainer.data[index] = { id: sequenceNum, text: `${textPrefix} # ${record.sequenceNum} - ${record.name}` };
       });
     }
