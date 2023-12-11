@@ -98,19 +98,24 @@ class RequestForm {
     if (!assetName) { return null; }
 
     assetName       = assetName.trim();
-    debugger;
-    const matchData = assetName.match(/^(Asset|Asset Stock) # (\d+) /);
-    debugger;
-    if (matchData) {
-      const id   = matchData[2];
-      const type = matchData[1];
-      return 'https://' + this.ezoSubdomain + this.getAssetPath(id, type);
-    }
-    return null;
+    const matchData = assetName.match(/^(Asset|Asset Stock|Software) # (\d+) /);
+    if (!matchData) { return null; }
+
+    const id   = matchData[2];
+    const type = matchData[1];
+    return 'https://' + this.ezoSubdomain + this.getAssetPath(id, type);
   }
 
   getAssetPath(id, type) {
-    const path = type === 'Asset' ? '/assets/' : '/stock_assets/';
+    const pathMappings = {
+      'Asset':        '/assets/',
+      'Software':     '/software_licenses/',
+      'Stock Asset':  '/stock_assets/'
+    };
+
+    const defaultPath = '/dashboard';
+
+    const path = pathMappings[type] || defaultPath;
     return path + id;
   }
 }
