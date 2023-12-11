@@ -150,15 +150,12 @@ class ServiceCatalogBuilder {
                                           .addClass('next-steps-message');
 
     // buttons
-    const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3');
+    const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
     const goBackButton          = $('<a>').attr('href', '#_')
                                           .text('Go Back')
                                           .addClass('btn btn-outline-primary go-back-btn')
                                           .click(function() { window.history.back(); });
-    const contactAdminButton    = $('<a>').attr('href', '#_')
-                                          .text('Contact Administrator')
-                                          .addClass('btn btn-outline-primary contact-administrator-btn');
-    buttonsContainer.append(goBackButton, contactAdminButton);
+    buttonsContainer.append(goBackButton);
 
 
     noAccessPageContainer.append(noAccessImage, warningMessage, nextStepsMessage, buttonsContainer);
