@@ -54,10 +54,8 @@ class RequestForm {
   }
 
   hideAssetsCustomField() {
-    debugger;
     const valueToFind = '{'+'"assets":' + '[{'; // value to find dd element
     const ddElement   = $("dd:contains('" + valueToFind + "')"); // find dd element by
-    debugger;
 
     if (ddElement['0']) {
       ddElement['0'].style.display = 'none';
@@ -72,7 +70,6 @@ class RequestForm {
   }
 
   linkAssets(requestId, assetSequenceNums) {
-    debugger;
     $.ajax({
       url: 'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_tickets_to_assets_relation.json',
       type: 'POST',
@@ -101,7 +98,9 @@ class RequestForm {
     if (!assetName) { return null; }
 
     assetName       = assetName.trim();
+    debugger;
     const matchData = assetName.match(/^(Asset|Asset Stock) # (\d+) /);
+    debugger;
     if (matchData) {
       const id   = matchData[2];
       const type = matchData[1];
