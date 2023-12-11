@@ -40,7 +40,7 @@ class NewRequestForm {
           }
         };
 
-        const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
+        const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/user_assigned_assets_and_software_entitlements.json';
         return this.populateAssignedAssets(url, options);
       }
     });
@@ -57,8 +57,10 @@ class NewRequestForm {
         const assetsData = { data: [] };
         const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
+        debugger;
         if (data.assets) {
           $.each(data.assets, function(index, asset) {
+            debugger;
             assetsData.data[index] = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` }
           });
         }
@@ -88,10 +90,10 @@ class NewRequestForm {
     element.select2({
       dropdownParent: element.parents(parentElementSelector),
       ajax: {
-        url: url,
-        delay: 250,
+        url:      url,
+        delay:    250,
+        headers:  options.headers,
         dataType: 'json',
-        headers: options.headers,
         data: function(params) {
           var query = {
             page: params.page || 1,
@@ -103,6 +105,7 @@ class NewRequestForm {
 
         processResults: function(data, params) {
           var results = $.map(data.assets, function(asset) {
+            debugger;
             var objHash = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` };
             return objHash;
           });
