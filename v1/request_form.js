@@ -54,8 +54,10 @@ class RequestForm {
   }
 
   hideAssetsCustomField() {
+    debugger;
     const valueToFind = '{'+'"assets":' + '[{'; // value to find dd element
     const ddElement   = $("dd:contains('" + valueToFind + "')"); // find dd element by
+    debugger;
 
     if (ddElement['0']) {
       ddElement['0'].style.display = 'none';
