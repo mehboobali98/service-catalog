@@ -36,6 +36,7 @@ class ServiceCatalogItemBuilder {
 
     let serviceItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
+      debugger;
       serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
       this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
     } else {
@@ -180,6 +181,7 @@ class ServiceCatalogItemBuilder {
   }
 
   zendeskFormId(serviceItem) {
+    debugger;
     const type = serviceItem.type;
     if (type === 'assigned_it_asset') {
       return this.zendeskFormData.assets;
