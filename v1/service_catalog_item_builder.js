@@ -99,7 +99,6 @@ class ServiceCatalogItemBuilder {
 
     queryParams['item_id']          = serviceCategoryItem.sequence_num;
     queryParams['item_name']        = assetName;
-    debugger;
     queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
 
@@ -181,11 +180,10 @@ class ServiceCatalogItemBuilder {
   }
 
   zendeskFormId(serviceItem) {
-    debugger;
     const type = serviceItem.type;
-    if (type === 'assigned_it_asset') {
+    if (type === 'assigned_asset') {
       return this.zendeskFormData.assets;
-    } else if (type === 'assigned_software_entitlement') {
+    } else if (type === 'assigned_software_license') {
       return this.zendeskFormData.software_entitlements;
     }
   }
