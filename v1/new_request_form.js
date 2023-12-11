@@ -58,8 +58,8 @@ class NewRequestForm {
         const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
         debugger;
-        processData(data.assets, assetsData, 'Asset');
-        processData(data.software_entitlements, assetsData, 'Software')
+        this.processData(data.assets, assetsData, 'Asset');
+        this.processData(data.software_entitlements, assetsData, 'Software')
         debugger;
         ezoCustomFieldEle.hide();
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
