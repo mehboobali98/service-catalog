@@ -68,13 +68,16 @@ class NewRequestForm {
 
         $('form.request-form').on('submit', function() {
           var selectedIds = $('#ezo-asset-select').val();
+          debugger;
           if (selectedIds.length > 0) {
             let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
+            debugger;
             data = data.map((asset) => {
               let assetObj = {
                 [asset.id]: asset.text };
               return assetObj;
             });
+            debugger;
             ezoCustomFieldEle.val(JSON.stringify({ assets: data }));
           }
         });
