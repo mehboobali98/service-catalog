@@ -94,14 +94,15 @@ class NewRequestForm {
         dataType: 'json',
         data: function(params) {
           var query = {
-            page: params.page || 1,
-            search: params.term,
+            page:          params.page || 1,
+            search:        params.term,
             include_blank: $(element).data('include-blank')
           }
           return query;
         },
 
         processResults: function(data, params) {
+          debugger;
           var assignedAssets = $.map(data.assets, function(asset) {
             debugger;
             var sequenceNum = asset.sequence_num;
