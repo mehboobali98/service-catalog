@@ -115,7 +115,8 @@ class NewRequestForm {
             return { id: sequenceNum, text: `Software # ${sequenceNum} - ${softwareEntitlement.name}` };
           });
 
-          var records = $.merge([], assignedAssets, assignedSoftwareLicenses);
+          debugger;
+          var records = assignedAssets.concat(assignedSoftwareLicenses);
           debugger;
           return {
             results:    records,
