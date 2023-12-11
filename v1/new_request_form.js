@@ -58,12 +58,9 @@ class NewRequestForm {
         const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
         debugger;
-        if (data.assets) {
-          $.each(data.assets, function(index, asset) {
-            debugger;
-            assetsData.data[index] = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` }
-          });
-        }
+        processData(data.assets, assetsData, 'Asset');
+        processData(data.software_entitlements, assetsData, 'Software')
+        debugger;
         ezoCustomFieldEle.hide();
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
@@ -72,6 +69,7 @@ class NewRequestForm {
 
         $('form.request-form').on('submit', function() {
           var selectedIds = $('#ezo-asset-select').val();
+          debugger;
           if (selectedIds.length > 0) {
             let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
             data = data.map((asset) => {
@@ -104,14 +102,22 @@ class NewRequestForm {
         },
 
         processResults: function(data, params) {
-          var results = $.map(data.assets, function(asset) {
+          var assignedAssets = $.map(data.assets, function(asset) {
             debugger;
-            var objHash = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` };
-            return objHash;
+            var sequenceNum = asset.sequence_num;
+            return { id: sequenceNum, text: `Asset # ${sequenceNum} - ${asset.name}` };
           });
 
+          var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
+            debugger;
+            var sequenceNum = softwareEntitlement.sequence_num;
+            return { id: sequenceNum, text: `Software # ${sequenceNum} - ${softwareEntitlement.name}` };
+          });
+
+          var records = $.merge([], assignedAssets, assignedSoftwareLicenses);
+          debugger;
           return {
-            results: results,
+            results:    records,
             pagination: { more: data.page < data.total_pages }
           };
         }
@@ -160,6 +166,15 @@ class NewRequestForm {
               { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css'},
               { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js'  }
             ];
+  }
+
+  processData(records, dataContainer, textPrefix) {
+    if (records) {
+      $.each(records, function(index, record) {
+        var sequenceNum = record.sequence_num;
+        dataContainer.data[index] = { id: sequenceNum, text: `${textPrefix} # ${record.sequenceNum} - ${record.name}` };
+      });
+    }
   }
 }
 
