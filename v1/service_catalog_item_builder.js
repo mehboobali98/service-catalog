@@ -36,7 +36,6 @@ class ServiceCatalogItemBuilder {
 
     let serviceItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
-      debugger;
       serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
       this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
     } else {
@@ -100,6 +99,7 @@ class ServiceCatalogItemBuilder {
 
     queryParams['item_id']          = serviceCategoryItem.sequence_num;
     queryParams['item_name']        = assetName;
+    debugger;
     queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
 
