@@ -196,9 +196,9 @@ class ServiceCatalogItemBuilder {
     serviceCategoryItemsFlex.empty();
     let serviceCategoryItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
-      serviceCategoryItems = service_items['assets'].concat(service_items['software_entitlements']);
+      serviceCategoryItems = serviceItems['assets'].concat(serviceItems['software_entitlements']);
     } else {
-      serviceCategoryItems = service_items ? JSON.parse(service_items) : [];
+      serviceCategoryItems = serviceItems ? JSON.parse(serviceItems) : [];
     }
     debugger;
     if (serviceCategoryItems.length) {
