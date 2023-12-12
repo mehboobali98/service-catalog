@@ -190,7 +190,7 @@ class ServiceCatalogItemBuilder {
   }
 
   build_and_render_service_items(serviceCategory, serviceItems, serviceItemsContainer) {
-    
+    debugger;
   }
 }
 
