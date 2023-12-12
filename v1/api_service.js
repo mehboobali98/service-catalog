@@ -66,8 +66,8 @@ class ApiService {
             })
             .then(data => {
               debugger;
-              const categoryName = Object.keys(data);
-              const serviceItems = data.service_items;
+              const categoryName = Object.keys(data)[0];
+              const serviceItems = data[categoryName].service_items;
               callback(categoryName, serviceItems, callBackOptions.serviceItemsContainerId);
             })
             .catch(error => {

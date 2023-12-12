@@ -191,6 +191,13 @@ class ServiceCatalogItemBuilder {
 
   build_and_render_service_items(serviceCategory, serviceItems, serviceItemsContainer) {
     debugger;
+    const serviceCategoryItemsFlex = $(serviceItemsContainer);
+    debugger;
+    if (serviceItems.length) {
+      serviceItems.forEach((serviceCategoryItem, index) => {
+        if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
+      });
+    }
   }
 }
 
