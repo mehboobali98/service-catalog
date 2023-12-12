@@ -38,8 +38,10 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
     const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
                                                     .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
-                                    .append($('<p>').text(displayFields.cost_price.value)
-                                                    .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
+    if (displayFields.cost_price) {
+      headerContent.append($('<p>').text(displayFields.cost_price.value)
+                                   .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
+    }
 
     queryParams['item_name']        = displayFields.title.value;
     queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
@@ -53,7 +55,9 @@ class ServiceCatalogItemDetailBuilder {
     detailPageHeader.append(headerContent, requestServiceBtn);
 
     const detailPageBody = $('<div>');
+    debugger;
     if (Object.keys(displayFields).length) {
+      debugger;
       $.each(displayFields, (index, fieldData) => {
         let section         = $('<section>');
         let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
