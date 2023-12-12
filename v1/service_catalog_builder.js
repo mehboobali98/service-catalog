@@ -102,6 +102,7 @@ class ServiceCatalogBuilder {
 
       var categoryLinkId = $(this).attr('id');
       var containerId = categoryLinkId.replace('_link', '_container');
+      debugger;
 
       // hide service items of remaining categories
       $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
