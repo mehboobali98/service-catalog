@@ -20,7 +20,8 @@ class NewRequestForm {
     const searchParams      = this.extractQueryParams(window.location);
     const customFieldValue  = searchParams.get('item_name');
 
-    $('#request_subject').val(this.prepareSubject(searchParams));
+    const formSubject = this.prepareSubject(searchParams);
+    if (formSubject) { $('#request_subject').val(formSubject); }
     $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(customFieldValue);
     this.getTokenAndFetchAssignedAssets();
   }
@@ -119,6 +120,9 @@ class NewRequestForm {
   prepareSubject(searchParams) {
     const itemName        = searchParams.get('item_name');
     const serviceCategory = searchParams.get('service_category');
+
+    if (itemName == null || serviceCategory == null) { return null; }
+
     return `${serviceCategory} - ${itemName}`;
   }
 
