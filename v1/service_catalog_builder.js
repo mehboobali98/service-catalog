@@ -5,6 +5,7 @@ import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_
 
 class ServiceCatalogBuilder {
   constructor(ezoSubdomain) {
+    this.apiService                      = new ApiService(ezoSubdomain);
     this.ezoSubdomain                    = ezoSubdomain;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
@@ -18,7 +19,7 @@ class ServiceCatalogBuilder {
   buildServiceCatalog() {
     const imageSection = $('<section>').addClass('section hero');
     $('main').append(imageSection);
-    new ApiService(this.ezoSubdomain).fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
+    this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
   }
 
   buildUI = (data) => {
@@ -115,6 +116,12 @@ class ServiceCatalogBuilder {
       });
 
       $("[id*='detail_page_container']").hide();
+      debugger;
+      const callbackOptions    = {
+        serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
+      };
+      const categoryId = categoryLinkId.split('_')[0];
+      this.apiService.fetchServiceCategoryItems(categoryId, this.serviceCatalogItemBuilder.build_and_render_service_items, callbackOptions)
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
     });

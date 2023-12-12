@@ -188,6 +188,10 @@ class ServiceCatalogItemBuilder {
       return this.zendeskFormData.software_entitlements;
     }
   }
+
+  build_and_render_service_items(serviceCategory, serviceItems, serviceItemsContainer) {
+    
+  }
 }
 
 export { ServiceCatalogItemBuilder };
