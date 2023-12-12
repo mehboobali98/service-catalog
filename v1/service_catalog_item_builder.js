@@ -39,7 +39,7 @@ class ServiceCatalogItemBuilder {
       serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
       this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
     } else {
-      serviceItems = JSON.parse(serviceCategoryItems.service_items);
+      serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
     }
 
     if (serviceItems.length) {
