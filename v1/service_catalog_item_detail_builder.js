@@ -29,7 +29,7 @@ class ServiceCatalogItemDetailBuilder {
 
     const imageContainer = $('<div>').addClass('col-3');
     const image = $('<img>').attr('src', serviceCategoryItem.img_src)
-                            .attr('alt', 'Software')
+                            .attr('alt', 'placeholder image')
                             .addClass('w-100');
     imageContainer.append(image);
 
@@ -55,9 +55,7 @@ class ServiceCatalogItemDetailBuilder {
     detailPageHeader.append(headerContent, requestServiceBtn);
 
     const detailPageBody = $('<div>');
-    debugger;
     if (Object.keys(displayFields).length) {
-      debugger;
       $.each(displayFields, (fieldName, fieldData) => {
         if (fieldName == 'description') {
           let section         = $('<section>');
