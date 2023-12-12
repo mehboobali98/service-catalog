@@ -28,7 +28,7 @@ class ServiceCatalogItemDetailBuilder {
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
     const imageContainer = $('<div>').addClass('col-3');
-    const image = $('<img>').attr('src', serviceCategoryItem.img_src)
+    const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                             .attr('alt', 'placeholder image')
                             .addClass('w-100');
     imageContainer.append(image);
