@@ -189,8 +189,7 @@ class ServiceCatalogItemBuilder {
     }
   }
 
-  build_and_render_service_items = (serviceCategory, serviceItems, serviceItemsContainer) => {
-    debugger;
+  buildAndRenderServiceItems = (serviceCategory, serviceItems, serviceItemsContainer) => {
     // first child is the flexbox which contains service items
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
@@ -200,7 +199,7 @@ class ServiceCatalogItemBuilder {
     } else {
       serviceCategoryItems = serviceItems ? JSON.parse(serviceItems) : [];
     }
-    debugger;
+
     if (serviceCategoryItems.length) {
       serviceCategoryItems.forEach((serviceCategoryItem, index) => {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };

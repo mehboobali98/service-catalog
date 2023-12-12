@@ -89,22 +89,20 @@ class ServiceCatalogBuilder {
   }
 
   bindEventListeners() {
-    const self = this;
+    const self                 = this;
     const serviceCategories    = Object.keys(this.data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
-    debugger;
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
+      var categoryLinkId = $(this).attr('id');
+      if (categoryLinkId === e.target.id) { return false; }
+
       $('#service_categories_list ul li.active').removeClass('active');
       $('#' + e.target.id).parent().addClass('active');
 
-      if ($(this).attr('href') !== '#_') { return true; }
-
       e.preventDefault();
 
-      var categoryLinkId = $(this).attr('id');
       var containerId = categoryLinkId.replace('_link', '_container');
-      debugger;
 
       // hide service items of remaining categories
       $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
@@ -116,12 +114,11 @@ class ServiceCatalogBuilder {
       });
 
       $("[id*='detail_page_container']").hide();
-      debugger;
-      const callbackOptions    = {
+      const callbackOptions = {
         serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
       };
       const categoryId = categoryLinkId.split('_')[0];
-      self.apiService.fetchServiceCategoryItems(categoryId, self.serviceCatalogItemBuilder.build_and_render_service_items, callbackOptions)
+      self.apiService.fetchServiceCategoryItems(categoryId, self.serviceCatalogItemBuilder.buildAndRenderServiceItems, callbackOptions)
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
     });

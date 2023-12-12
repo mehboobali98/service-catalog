@@ -30,7 +30,6 @@ class ApiService {
               callback(data);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
@@ -48,7 +47,6 @@ class ApiService {
             service_category_id: categoryId
           }; 
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
-          debugger;
 
           fetch(url, options)
             .then(response => {
@@ -65,13 +63,11 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              debugger;
               const categoryName = Object.keys(data)[0];
               const serviceItems = data[categoryName].service_items;
               callback(categoryName, serviceItems, callBackOptions.serviceItemsContainerId);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
