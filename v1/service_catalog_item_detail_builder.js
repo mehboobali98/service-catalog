@@ -57,6 +57,7 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageBody = $('<div>');
     if (Object.keys(displayFields).length) {
       $.each(displayFields, (fieldName, fieldData) => {
+        // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
           let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
