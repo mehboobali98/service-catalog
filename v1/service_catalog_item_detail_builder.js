@@ -58,12 +58,14 @@ class ServiceCatalogItemDetailBuilder {
     debugger;
     if (Object.keys(displayFields).length) {
       debugger;
-      $.each(displayFields, (index, fieldData) => {
-        let section         = $('<section>');
-        let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
-        let sectionContent  = this.prepareSectionContent(fieldData);
-        section.append(sectionHeader, sectionContent);
-        detailPageBody.append(section);
+      $.each(displayFields, (fieldName, fieldData) => {
+        if (fieldName == 'description') {
+          let section         = $('<section>');
+          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
+          let sectionContent  = this.prepareSectionContent(fieldData);
+          section.append(sectionHeader, sectionContent);
+          detailPageBody.append(section);
+        }
       });
     }
 
