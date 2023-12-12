@@ -194,7 +194,7 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $(serviceItemsContainer);
     debugger;
     if (serviceItems.length) {
-      serviceItems.forEach((serviceCategoryItem, index) => {
+      JSON.parse(serviceItems).forEach((serviceCategoryItem, index) => {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
     }
