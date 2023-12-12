@@ -144,7 +144,6 @@ class ServiceCatalogItemBuilder {
 
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
-    const price      = $('<span>').text(displayFields.cost_price['value']);
     const arrow      = $('<span>').html('&#8594;')
                                   .addClass('footer-arrow float-end js-service-item-detail-page-btn')
                                   .data('id', serviceCategoryItem.id)
@@ -153,7 +152,8 @@ class ServiceCatalogItemBuilder {
     const arrowContainer = $('<a>').attr('href', '#_');
     arrowContainer.append(arrow);
 
-    if (serviceCategoryItem.price) {
+    if (displayFields.cost_price) {
+      const price = $('<span>').text(displayFields.cost_price['value']);
       cardFooter.append(price);
     }
     cardFooter.append(arrowContainer);
