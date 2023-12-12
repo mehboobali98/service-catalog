@@ -11,7 +11,6 @@ class ServiceCatalogItemBuilder {
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
 
-    debugger;
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
@@ -36,7 +35,6 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
     let serviceItems = null;
-    debugger;
     if (isMyAssignedAssets(serviceCategory)) {
       serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
       this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
@@ -44,7 +42,6 @@ class ServiceCatalogItemBuilder {
       serviceItems = JSON.parse(serviceCategoryItems.service_items);
     }
 
-    debugger;
     if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
@@ -58,7 +55,6 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceItem) {
-    debugger;
     if (isMyAssignedAssets(serviceCategory)) {
       return this.buildItAssetServiceItem(serviceCategory, serviceItem);
     } else {
@@ -67,7 +63,6 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem(serviceCategory, serviceCategoryItem) {
-    debugger;
     const card        = $('<div>').addClass('row service-item-card');
     const queryParams = {};
 
@@ -92,7 +87,6 @@ class ServiceCatalogItemBuilder {
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
     const displayFields        = this.prepareAssignedAssetDisplayFields(serviceCategoryItem);
-    debugger;
 
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
     $.each(fields, function(label, value) {
