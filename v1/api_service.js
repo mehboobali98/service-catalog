@@ -27,9 +27,11 @@ class ApiService {
               return response.json();
             })
             .then(data => {
+              debugger;
               callback(data);
             })
             .catch(error => {
+              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
