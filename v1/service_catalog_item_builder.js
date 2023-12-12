@@ -11,6 +11,7 @@ class ServiceCatalogItemBuilder {
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
 
+    debugger;
     // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
