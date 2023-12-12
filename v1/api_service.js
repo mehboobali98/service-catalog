@@ -45,11 +45,11 @@ class ApiService {
           const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
           const endPoint      = 'visible_service_categories_and_items';
           const queryParams   = {
-            service_category_id: categoryId;
+            service_category_id: categoryId
           }; 
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
           debugger;
-    
+
           fetch(url, options)
             .then(response => {
               if (response.status === 400) {
