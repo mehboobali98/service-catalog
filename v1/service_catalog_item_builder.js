@@ -35,6 +35,7 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
     let serviceItems = null;
+    debugger;
     if (isMyAssignedAssets(serviceCategory)) {
       serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
       this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
@@ -42,6 +43,7 @@ class ServiceCatalogItemBuilder {
       serviceItems = JSON.parse(serviceCategoryItems.service_items);
     }
 
+    debugger;
     if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {
         serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
@@ -55,6 +57,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceItem) {
+    debugger;
     if (isMyAssignedAssets(serviceCategory)) {
       return this.buildItAssetServiceItem(serviceCategory, serviceItem);
     } else {
@@ -63,6 +66,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem(serviceCategory, serviceCategoryItem) {
+    debugger;
     const card        = $('<div>').addClass('row service-item-card');
     const queryParams = {};
 
@@ -87,6 +91,7 @@ class ServiceCatalogItemBuilder {
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
     const displayFields        = this.prepareAssignedAssetDisplayFields(serviceCategoryItem);
+    debugger;
 
     $.each(displayFields, function(index, rowData) {
       let newRow = $("<tr>");
