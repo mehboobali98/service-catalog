@@ -194,9 +194,15 @@ class ServiceCatalogItemBuilder {
     // first child is the flexbox which contains service items
     const serviceCategoryItemsFlex = $(serviceItemsContainer + ':first');
     serviceCategoryItemsFlex.empty();
+    let serviceCategoryItems = null;
+    if (isMyAssignedAssets(serviceCategory)) {
+      serviceCategoryItems = service_items['assets'].concat(service_items['software_entitlements']);
+    } else {
+      serviceCategoryItems = service_items ? JSON.parse(service_items) : [];
+    }
     debugger;
-    if (serviceItems.length) {
-      JSON.parse(serviceItems).forEach((serviceCategoryItem, index) => {
+    if (serviceCategoryItems.length) {
+      serviceCategoryItems.forEach((serviceCategoryItem, index) => {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
     }
