@@ -192,7 +192,7 @@ class ServiceCatalogItemBuilder {
   build_and_render_service_items = (serviceCategory, serviceItems, serviceItemsContainer) => {
     debugger;
     // first child is the flexbox which contains service items
-    const serviceCategoryItemsFlex = $(serviceItemsContainer + ':first');
+    const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
     let serviceCategoryItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
