@@ -47,7 +47,7 @@ class ServiceCatalogItemBuilder {
     debugger;
     if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {
-        serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem));
+        if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
     }
 
@@ -94,10 +94,10 @@ class ServiceCatalogItemBuilder {
     const displayFields        = this.prepareAssignedAssetDisplayFields(serviceCategoryItem);
     debugger;
 
-    $.each(displayFields, function(index, rowData) {
+    $.each(serviceCategoryItem.asset_columns, function(label, value) {
       let newRow = $("<tr>");
-      newRow.append($('<th>').text(rowData.label));
-      newRow.append($('<td>').text(rowData.value));
+      newRow.append($('<th>').text(label));
+      newRow.append($('<td>').text(value));
       cardContent.append(newRow);
     });
     cardContentContainer.append(cardContent);
