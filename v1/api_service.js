@@ -3,7 +3,7 @@ class ApiService {
     this.ezoSubdomain = ezoSubdomain;
   }
 
-  fetchServiceCategoriesAndItems(callback, noAccessPageCallback) {
+  fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
     $.getJSON('/hc/api/v2/integration/token')
      .then(data => data.token)
      .then(token => {

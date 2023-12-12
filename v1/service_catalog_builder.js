@@ -91,6 +91,7 @@ class ServiceCatalogBuilder {
     const self = this;
     const serviceCategories    = Object.keys(this.data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
+    debugger;
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
       $('#service_categories_list ul li.active').removeClass('active');

@@ -10,7 +10,7 @@ class ServiceCatalogItemDetailBuilder {
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
       let container   = $('#' + containerId);
-      if (!isMyAssignedAssets(serviceCategory)) {
+      if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
         let serviceItems = JSON.parse(data.service_items);
         $.each(serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
