@@ -95,6 +95,7 @@ class ServiceCatalogBuilder {
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
       var categoryLinkId = $(this).attr('id');
+      debugger;
       if (categoryLinkId === e.target.id) { return false; }
 
       $('#service_categories_list ul li.active').removeClass('active');
