@@ -94,7 +94,8 @@ class ServiceCatalogItemBuilder {
     const displayFields        = this.prepareAssignedAssetDisplayFields(serviceCategoryItem);
     debugger;
 
-    $.each(serviceCategoryItem.asset_columns, function(label, value) {
+    const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+    $.each(fields, function(label, value) {
       let newRow = $("<tr>");
       newRow.append($('<th>').text(label));
       newRow.append($('<td>').text(value));
