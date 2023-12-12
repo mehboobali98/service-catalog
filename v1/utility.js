@@ -77,9 +77,11 @@ function extractServiceItemsWithCategory(data) {
 
       if (isMyAssignedAssets(categoryName)) {
         serviceItems = serviceCategory.service_items['assets'].concat(serviceCategory.service_items['software_entitlements']);
-      } else {
-        serviceItems = JSON.parse(serviceCategory.service_items);
+      // } else {
+      //   serviceItems = JSON.parse(serviceCategory.service_items);
+      // }
       }
+
 
       if (serviceItems) {
         for (const serviceItem of serviceItems) {
