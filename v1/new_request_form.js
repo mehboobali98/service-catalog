@@ -41,7 +41,7 @@ class NewRequestForm {
           }
         };
 
-        const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
+        const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/user_assigned_assets_and_software_entitlements.json';
         return this.populateAssignedAssets(url, options);
       }
     });
@@ -58,11 +58,9 @@ class NewRequestForm {
         const assetsData = { data: [] };
         const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
-        if (data.assets) {
-          $.each(data.assets, function(index, asset) {
-            assetsData.data[index] = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` }
-          });
-        }
+        this.processData(data.assets, assetsData, 'Asset');
+        this.processData(data.software_entitlements, assetsData, 'Software');
+
         ezoCustomFieldEle.hide();
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
@@ -89,27 +87,33 @@ class NewRequestForm {
     element.select2({
       dropdownParent: element.parents(parentElementSelector),
       ajax: {
-        url: url,
-        delay: 250,
+        url:      url,
+        delay:    250,
+        headers:  options.headers,
         dataType: 'json',
-        headers: options.headers,
         data: function(params) {
           var query = {
-            page: params.page || 1,
-            search: params.term,
+            page:          params.page || 1,
+            search:        params.term,
             include_blank: $(element).data('include-blank')
           }
           return query;
         },
 
         processResults: function(data, params) {
-          var results = $.map(data.assets, function(asset) {
-            var objHash = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` };
-            return objHash;
+          var assignedAssets = $.map(data.assets, function(asset) {
+            var sequenceNum = asset.sequence_num;
+            return { id: sequenceNum, text: `Asset # ${sequenceNum} - ${asset.name}` };
           });
 
+          var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
+            var sequenceNum = softwareEntitlement.sequence_num;
+            return { id: sequenceNum, text: `Software # ${sequenceNum} - ${softwareEntitlement.name}` };
+          });
+
+          var records = assignedAssets.concat(assignedSoftwareLicenses);
           return {
-            results: results,
+            results:    records,
             pagination: { more: data.page < data.total_pages }
           };
         }
@@ -161,6 +165,15 @@ class NewRequestForm {
               { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css'},
               { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js'  }
             ];
+  }
+
+  processData(records, dataContainer, textPrefix) {
+    if (records) {
+      $.each(records, function(index, record) {
+        var sequenceNum = record.sequence_num;
+        dataContainer.data[sequenceNum] = { id: sequenceNum, text: `${textPrefix} # ${sequenceNum} - ${record.name}` };
+      });
+    }
   }
 }
 

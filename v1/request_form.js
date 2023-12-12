@@ -16,10 +16,11 @@ class RequestForm {
       if (!ezoFieldData || !ezoFieldData.value) { return true; }
 
       const options = { method: 'GET', headers: { } };
+
       return self.withToken(token => {
         if (token) {
           options.headers['Authorization'] = 'Bearer ' + token;
-       
+
           const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
           const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
           const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
@@ -89,17 +90,24 @@ class RequestForm {
     if (!assetName) { return null; }
 
     assetName       = assetName.trim();
-    const matchData = assetName.match(/^(Asset|Asset Stock) # (\d+) /);
-    if (matchData) {
-      const id   = matchData[2];
-      const type = matchData[1];
-      return 'https://' + this.ezoSubdomain + this.getAssetPath(id, type);
-    }
-    return null;
+    const matchData = assetName.match(/^(Asset|Asset Stock|Software) # (\d+) /);
+    if (!matchData) { return null; }
+
+    const id   = matchData[2];
+    const type = matchData[1];
+    return 'https://' + this.ezoSubdomain + this.getAssetPath(id, type);
   }
 
   getAssetPath(id, type) {
-    const path = type === 'Asset' ? '/assets/' : '/stock_assets/';
+    const pathMappings = {
+      'Asset':        '/assets/',
+      'Software':     '/software_licenses/',
+      'Stock Asset':  '/stock_assets/'
+    };
+
+    const defaultPath = '/dashboard';
+
+    const path = pathMappings[type] || defaultPath;
     return path + id;
   }
 }
