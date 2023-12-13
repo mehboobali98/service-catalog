@@ -148,7 +148,7 @@ class ServiceCatalogBuilder {
                                               .addClass('no-access-page-section');
 
     const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/no_access_image.svg')
+    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/assets/svgs/no_access_image.svg')
                                             .addClass('no-access-image');
 
     const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
