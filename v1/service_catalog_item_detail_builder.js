@@ -1,45 +1,53 @@
+import { isMyAssignedAssets } from './utility.js';
+
 class ServiceCatalogItemDetailBuilder {
-  constructor(serviceCategoriesItems, zendeskFormData) {
-    this.zendeskFormData        = zendeskFormData;
-    this.serviceCategoriesItems = serviceCategoriesItems;
+  constructor() {
+    this.serviceCategoriesItems = null;
   }
 
-  build() {
+  build(serviceCategoriesItems) {
+    this.serviceCategoriesItems = serviceCategoriesItems;
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
       let container   = $('#' + containerId);
-      if (serviceCategory === 'my_it_assets' || serviceCategory === 'view_raised_requests') {
-        // do-nothing
-      } else {
-         $.each(data.serviceItems, (index, serviceCategoryItem) => {
-          let zendeskFormData = this.zendeskFormData[serviceCategory];
-          container.after(this.buildDetailPage(serviceCategoryItem, zendeskFormData));
+      if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
+        let serviceItems = JSON.parse(data.service_items);
+        $.each(serviceItems, (index, serviceCategoryItem) => {
+          container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
           this.bindItemDetailEventListener(serviceCategoryItem);
         });
       }
     });
   }
 
-  buildDetailPage(serviceCategoryItem, zendeskFormData) {
-    const queryParams         = zendeskFormData['queryParams'] || {};
-    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + serviceCategoryItem.name)
+  buildDetailPage(serviceCategory, serviceCategoryItem) {
+    const queryParams         = {};
+    const displayFields       = serviceCategoryItem.display_fields;
+    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + displayFields.title.value)
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
     const imageContainer = $('<div>').addClass('col-3');
-    const image = $('<img>').attr('src', serviceCategoryItem.img_src)
-                            .attr('alt', 'Software')
+    const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
+                            .attr('alt', 'placeholder image')
                             .addClass('w-100');
     imageContainer.append(image);
 
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(serviceCategoryItem.name).css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
-                                    .append($('<p>').text(serviceCategoryItem.price).css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
+    const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
+                                                    .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
+    if (displayFields.cost_price) {
+      headerContent.append($('<p>').text(displayFields.cost_price.value)
+                                   .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
+    }
 
-    queryParams['name'] = serviceCategoryItem.name;
+    queryParams['item_name']        = displayFields.title.value;
+    queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
+    queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
+
     const requestServiceBtn = $('<a>').attr('role', 'button')
                                       .attr('href', url)
                                       .text('Request Service')
@@ -47,14 +55,16 @@ class ServiceCatalogItemDetailBuilder {
     detailPageHeader.append(headerContent, requestServiceBtn);
 
     const detailPageBody = $('<div>');
-    const detailPageFields = serviceCategoryItem.detail_page_fields;
-    if (detailPageFields) {
-      $.each(detailPageFields, (index, fieldData) => {
-        let section         = $('<section>');
-        let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
-        let sectionContent  = this.prepareSectionContent(fieldData);
-        section.append(sectionHeader, sectionContent);
-        detailPageBody.append(section);
+    if (Object.keys(displayFields).length) {
+      $.each(displayFields, (fieldName, fieldData) => {
+        // Only showing description field for now.
+        if (fieldName == 'description') {
+          let section         = $('<section>');
+          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
+          let sectionContent  = this.prepareSectionContent(fieldData);
+          section.append(sectionHeader, sectionContent);
+          detailPageBody.append(section);
+        }
       });
     }
 

@@ -1,18 +1,14 @@
 import { Search }                           from './search.js';
+import { ApiService }                       from './api_service.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
-import { updateServiceCategoryItems }       from './dummy_data.js';
 
 class ServiceCatalogBuilder {
-  constructor(demoData, zendeskFormData, ezoSubdomain) {
-    this.demoData           = demoData;
-    this.ezoSubdomain       = ezoSubdomain;
-    this.zendeskFormData    = zendeskFormData;
-    this.userAuthenticated  = window.HelpCenter.user.role !== 'anonymous';
-
-    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(demoData, zendeskFormData);
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(demoData, zendeskFormData);
-    this.fuzzySearch = new Search(this.demoData, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
+  constructor(ezoSubdomain) {
+    this.apiService                      = new ApiService(ezoSubdomain);
+    this.ezoSubdomain                    = ezoSubdomain;
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
   }
 
   addMenuItem(name, url, parent_ele) {
@@ -20,12 +16,15 @@ class ServiceCatalogBuilder {
     $("#" + parent_ele).prepend(serviceCatalog);
   }
 
-  buildServiceCatalog(demoData, zendeskFormData) {
-    this.buildUI();
-    this.fetchUserAssetsAndSoftwareEntitlements();
+  buildServiceCatalog() {
+    const imageSection = $('<section>').addClass('section hero');
+    $('main').append(imageSection);
+    this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
   }
 
-  buildUI() {
+  buildUI = (data) => {
+    this.data = data;
+    //this.fuzzySearch = new Search(this.data, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
@@ -45,73 +44,12 @@ class ServiceCatalogBuilder {
       searchAndNavContainer: searchAndNavContainer,
       serviceCatalogContainer: serviceCatalogContainer
     };
-    this.createServiceCategoriesView(containers, true);
+    this.createServiceCategoriesView(containers);
   }
 
-  fetchUserAssetsAndSoftwareEntitlements() {
-    const myItAssetsContainer   = $('#my_it_assets_container');
-    const loadingIconContainer  = this.loadingIcon();
-    myItAssetsContainer.append(loadingIconContainer);
-
-    $.getJSON('/hc/api/v2/integration/token')
-      .then(data => data.token)
-      .then(token => {
-        if (token) {
-          const options = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
-          const endPoint = 'user_assigned_assets_and_software_entitlements';
-          const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
-
-          fetch(url, options)
-            .then(response => {
-
-              if (response.status === 400) {
-                throw new Error('Bad Request: There was an issue with the request.');
-              } else if (response.status === 404) {
-                throw new Error('Not Found: User account was not found.');
-              }
-
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-
-              return response.json();
-            })
-            .then(data => {
-              loadingIconContainer.hide();
-              this.demoData = updateServiceCategoryItems(this.demoData, 'my_it_assets', data);
-              this.serviceCatalogItemBuilder.renderMyItAssets(this.demoData['my_it_assets']);
-            })
-            .catch(error => {
-              alert('An error occurred while fetching data: ' + error.message);
-            });
-
-        } else {
-
-          loadingIconContainer.hide();
-
-          // user does not exist in AssetSonar, so hide my_it_assets
-          const myItAssetsLink = $('#my_it_assets_link');
-          myItAssetsLink.parent().hide();
-          myItAssetsContainer.hide();
-
-          // Determine service category and its item which should be shown.
-          const nextElement   = myItAssetsLink.parent().next();
-          const nextElementId = nextElement.children().attr('id');
-          
-          if (nextElementId === 'view_raised_requests_link' && window.HelpCenter.user.role === 'anonymous') {
-            nextElement.next().show();
-            myItAssetsContainer.parent().next().next().show();
-          } else {
-            nextElement.show();
-            myItAssetsContainer.parent().next().show();
-          }
-        }
-      });
-  }
-
-  createServiceCategoriesView(containers, userExists) {
+  createServiceCategoriesView(containers) {
     const navbarContainer = $('<div>').attr('id', 'service_categories_list').addClass('service-categories-list');
-    const navbar = this.generateNavbar(userExists);
+    const navbar = this.generateNavbar();
     navbarContainer.append(navbar);
 
     const newSection              = containers['newSection'];
@@ -119,35 +57,31 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
     searchAndNavContainer.append(navbarContainer);
-    const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(userExists);
+    const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
-    const imageSection = $('<section>').addClass('section hero');
-    $('main').append(imageSection, newSection);
-    this.serviceCatalogItemDetailBuilder.build();
+    $('main').append(newSection);
+    this.serviceCatalogItemDetailBuilder.build(this.data);
     this.bindEventListeners();
   }
 
   // Create a function to generate the vertical navbar
-  generateNavbar(userExists) {
+  generateNavbar() {
+    const navbar         = $('<ul>');
     let activeClassAdded = false;
-    const navbar = $('<ul>');
 
-    $.each(this.demoData, function(serviceCategory, serviceCategoryData) {
-      let link     = serviceCategory === 'view_raised_requests' ? '/hc/requests' : '#_';
-      let listItem = $('<li>').append($('<a>').attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' }).text(serviceCategoryData['label']));
-      if (serviceCategory === 'my_it_assets' && !userExists) {
-        listItem.addClass('collapse');
-      } else if (serviceCategory === 'view_raised_requests' && window.HelpCenter.user.role === 'anonymous') {
-        listItem.addClass('collapse');
-      } else if (!activeClassAdded) {
-        listItem.addClass('active');
+    $.each(this.data, function(serviceCategory, serviceCategoryData) {
+      let link     = '#_';
+      let listItem = $('<li>').append($('<a>')
+                              .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
+                              .text(serviceCategoryData['title']));
+      if (!activeClassAdded) {
         activeClassAdded = true;
+        listItem.addClass('active');
       }
-
       navbar.append(listItem);
     });
 
@@ -155,19 +89,19 @@ class ServiceCatalogBuilder {
   }
 
   bindEventListeners() {
-    const self = this;
-    const serviceCategories    = Object.keys(this.demoData);
+    const self                 = this;
+    const serviceCategories    = Object.keys(this.data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
+      var categoryLinkId = $(this).attr('id');
+      if ($('#' + e.target.id).parent().hasClass('active') ) { return false; }
+
       $('#service_categories_list ul li.active').removeClass('active');
       $('#' + e.target.id).parent().addClass('active');
 
-      if ($(this).attr('href') !== '#_') { return true; }
-
       e.preventDefault();
 
-      var categoryLinkId = $(this).attr('id');
       var containerId = categoryLinkId.replace('_link', '_container');
 
       // hide service items of remaining categories
@@ -180,6 +114,11 @@ class ServiceCatalogBuilder {
       });
 
       $("[id*='detail_page_container']").hide();
+      const callbackOptions = {
+        serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
+      };
+      const categoryId = categoryLinkId.split('_')[0];
+      self.apiService.fetchServiceCategoryItems(categoryId, self.serviceCatalogItemBuilder.buildAndRenderServiceItems, callbackOptions)
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
     });
@@ -202,6 +141,33 @@ class ServiceCatalogBuilder {
         self.fuzzySearch.updateResults(query, searchResultsContainer);
       }
     });
+  }
+
+  noAccessPage() {
+    const noAccessPageSection = $('<section>').attr('id', 'no_access_page_section')
+                                              .addClass('no-access-page-section');
+
+    const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
+    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/no_access_image.svg')
+                                            .addClass('no-access-image');
+
+    const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
+    const nextStepsMessage      = $('<p>').text('Please contact your administrator to get access')
+                                          .addClass('next-steps-message');
+
+    // buttons
+    const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
+    const goBackButton          = $('<a>').attr('href', '#_')
+                                          .text('Go Back')
+                                          .addClass('btn btn-outline-primary go-back-btn')
+                                          .click(function() { window.history.back(); });
+    buttonsContainer.append(goBackButton);
+
+
+    noAccessPageContainer.append(noAccessImage, warningMessage, nextStepsMessage, buttonsContainer);
+    noAccessPageSection.append(noAccessPageContainer);
+
+    $('main').append(noAccessPageSection);
   }
 
   loadingIcon() {

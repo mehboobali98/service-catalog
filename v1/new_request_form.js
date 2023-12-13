@@ -1,10 +1,10 @@
 import { loadExternalFiles } from './utility.js';
 
 class NewRequestForm {
-  constructor(ezoFieldId, ezoSubdomain, zendeskFormData) {
-    this.ezoFieldId = ezoFieldId;
-    this.ezoSubdomain = ezoSubdomain;
-    this.zendeskFormData = zendeskFormData;
+  constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    this.ezoFieldId             = ezoFieldId;
+    this.ezoSubdomain           = ezoSubdomain;
+    this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
   }
 
   updateRequestForm() {
@@ -17,33 +17,17 @@ class NewRequestForm {
   updateForm() {
     if ($('.nesty-input')[0].text === "-") { return; }
 
-    const searchParams = this.extractQueryParams(window.location);
-    const serviceCategory = searchParams.get('service_category');
-    const ticketFormData = this.extractTicketFormData(serviceCategory, searchParams);
-    if (ticketFormData) {
-      const customFieldId = ticketFormData.custom_field_id;
-      const customFieldValue = ticketFormData.custom_field_value;
-      const ticketFormSubject = ticketFormData.ticket_form_subject;
+    const searchParams      = this.extractQueryParams(window.location);
+    const customFieldValue  = searchParams.get('item_name');
 
-      $('#request_subject').val(this.updateSubject(ticketFormSubject, searchParams, serviceCategory));
-      $('#request_custom_fields_' + customFieldId).val(customFieldValue);
-    }
+    const formSubject = this.prepareSubject(searchParams);
+    if (formSubject) { $('#request_subject').val(formSubject); }
+    $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(customFieldValue);
     this.getTokenAndFetchAssignedAssets();
   }
 
   extractQueryParams(url) {
     return new URL(url).searchParams;
-  }
-
-  extractTicketFormData(serviceCategory, searchParams) {
-    if (!this.zendeskFormData || !serviceCategory) { return; }
-
-    if (serviceCategory === 'my_it_assets') {
-      const type = searchParams.get('type');
-      return this.zendeskFormData[serviceCategory][type]['ticketFormData'];
-    } else {
-      return this.zendeskFormData[serviceCategory]['ticketFormData'];
-    }
   }
 
   getTokenAndFetchAssignedAssets() {
@@ -57,7 +41,7 @@ class NewRequestForm {
           }
         };
 
-        const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/get_assigned_assets.json';
+        const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/user_assigned_assets_and_software_entitlements.json';
         return this.populateAssignedAssets(url, options);
       }
     });
@@ -74,11 +58,9 @@ class NewRequestForm {
         const assetsData = { data: [] };
         const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
-        if (data.assets) {
-          $.each(data.assets, function(index, asset) {
-            assetsData.data[index] = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` }
-          });
-        }
+        this.processData(data.assets, assetsData, 'Asset');
+        this.processData(data.software_entitlements, assetsData, 'Software');
+
         ezoCustomFieldEle.hide();
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
@@ -105,27 +87,33 @@ class NewRequestForm {
     element.select2({
       dropdownParent: element.parents(parentElementSelector),
       ajax: {
-        url: url,
-        delay: 250,
+        url:      url,
+        delay:    250,
+        headers:  options.headers,
         dataType: 'json',
-        headers: options.headers,
         data: function(params) {
           var query = {
-            page: params.page || 1,
-            search: params.term,
+            page:          params.page || 1,
+            search:        params.term,
             include_blank: $(element).data('include-blank')
           }
           return query;
         },
 
         processResults: function(data, params) {
-          var results = $.map(data.assets, function(asset) {
-            var objHash = { id: asset.sequence_num, text: `Asset # ${asset.sequence_num} - ${asset.name}` };
-            return objHash;
+          var assignedAssets = $.map(data.assets, function(asset) {
+            var sequenceNum = asset.sequence_num;
+            return { id: sequenceNum, text: `Asset # ${sequenceNum} - ${asset.name}` };
           });
 
+          var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
+            var sequenceNum = softwareEntitlement.sequence_num;
+            return { id: sequenceNum, text: `Software # ${sequenceNum} - ${softwareEntitlement.name}` };
+          });
+
+          var records = assignedAssets.concat(assignedSoftwareLicenses);
           return {
-            results: results,
+            results:    records,
             pagination: { more: data.page < data.total_pages }
           };
         }
@@ -133,24 +121,21 @@ class NewRequestForm {
     });
   }
 
-  updateSubject(subject, searchParams, serviceCategory) {
-    switch (serviceCategory) {
-      case 'my_it_assets':
-        return subject + searchParams.get('asset_name');
-      case 'request_new_software':
-      case 'request_laptops':
-        return subject + searchParams.get('name');
-      default:
-        return subject;
-    }
+  prepareSubject(searchParams) {
+    const itemName        = searchParams.get('item_name');
+    const serviceCategory = searchParams.get('service_category');
+
+    if (itemName == null || serviceCategory == null) { return null; }
+
+    return `${serviceCategory} - ${itemName}`;
   }
 
   preselectAssetsCustomField(searchParams) {
     let ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
     if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
-    let assetId = searchParams.get('asset_id');
-    let assetName = searchParams.get('asset_name');
+    let assetId   = searchParams.get('item_id');
+    let assetName = searchParams.get('item_name');
 
     if (!assetName || !assetId) { return; }
 
@@ -180,6 +165,15 @@ class NewRequestForm {
               { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css'},
               { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js'  }
             ];
+  }
+
+  processData(records, dataContainer, textPrefix) {
+    if (records) {
+      $.each(records, function(index, record) {
+        var sequenceNum = record.sequence_num;
+        dataContainer.data[sequenceNum] = { id: sequenceNum, text: `${textPrefix} # ${sequenceNum} - ${record.name}` };
+      });
+    }
   }
 }
 

@@ -1,4 +1,5 @@
 :root {
+  --blue:  #00549F;
   --white: #ffffff;
   --brown: #B29962;
 }
@@ -197,4 +198,42 @@
 a.request-service-btn:hover {
   color:            white !important;
   background-color: var(--brown) !important;
+}
+
+.no-access-image {
+  margin-bottom: 20px;
+}
+
+.next-steps-message {
+  color:        black;
+  word-wrap:    break-word;
+  font-size:    14px;
+  font-family:  Arial;
+  font-weight:  400;
+}
+
+.go-back-btn {
+  color:            var(--blue) !important;
+  border:           2px var(--blue) solid !important;
+  border-radius:    10px !important;
+  text-decoration:  none;
+}
+
+.contact-administrator-btn {
+  color:            var(--blue) !important;
+  border:           2px var(--blue) solid !important;
+  border-radius:    10px;
+  text-decoration:  none;
+}
+
+a.go-back-btn:hover {
+  color:            white !important;
+  text-decoration:  none;
+  background-color: var(--blue) !important;
+}
+
+a.contact-administrator-btn:hover {
+  color:            white !important;
+  text-decoration:  none;
+  background-color: var(--blue) !important;
 }

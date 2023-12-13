@@ -1,15 +1,13 @@
 import { RequestForm }            from './request_form.js';
 import { NewRequestForm }         from './new_request_form.js';
 import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
-import { getServiceCategoriesItems, getZendeskTicketFormData }   from './dummy_data.js'
-import { isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
+import { isSignedIn, signInPath, isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
 
 class ServiceCatalogManager {
-  constructor(demoData, zendeskFormData, ezoFieldId, ezoSubdomain) {
-    this.demoData         = demoData || getServiceCategoriesItems();
-    this.ezoFieldId       = ezoFieldId;
-    this.ezoSubdomain     = ezoSubdomain;
-    this.zendeskFormData  = zendeskFormData || getZendeskTicketFormData();
+  constructor(initializationData) {
+    this.ezoFieldId             = initializationData.ezoFieldId;
+    this.ezoSubdomain           = initializationData.ezoSubdomain;
+    this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
     const files = this.filesToLoad();
     loadExternalFiles(files, () => {
@@ -18,7 +16,7 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.demoData, this.zendeskFormData, this.ezoSubdomain);
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.ezoSubdomain);
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }
@@ -29,13 +27,22 @@ class ServiceCatalogManager {
 
   initServiceCatalog() {
     if (isServiceCatalogPage()) {
-      this.serviceCatalogBuilder.buildServiceCatalog();
+      this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
-      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.zendeskFormData).updateRequestForm();
+      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else if (isRequestPage()) {
       new RequestForm(this.ezoFieldId, this.ezoSubdomain).updateRequestForm();
     } else {
       // Handle other cases if needed
+    }
+  }
+
+  handleServiceCatalogRequest() {
+    if (isSignedIn()) {
+      this.serviceCatalogBuilder.buildServiceCatalog();
+    } else {
+      // to-do: Verify this
+      window.location.href = signInPath(); 
     }
   }
 

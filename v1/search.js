@@ -1,22 +1,23 @@
-import { extractServiceItemsWithCategory }  from './dummy_data.js';
+import { extractServiceItemsWithCategory }  from './utility.js';
 
 class Search {
-    constructor(demoData, itemBuilder, itemDetailBuilder) {
+    constructor(data, itemBuilder, itemDetailBuilder) {
         this.fuse               = null;
-        this.demoData           = demoData;
+        this.data               = data;
         this.itemBuilder        = itemBuilder;
         this.itemDetailBuilder  = itemDetailBuilder;
         this.initFuseSearch();
     }
 
     initFuseSearch() {
-        const data = extractServiceItemsWithCategory(this.demoData);
+        const searchableData = extractServiceItemsWithCategory(this.data);
         // Create a Fuse instance with the data and desired options
         const options = {
-            keys:          ['name', 'description'],      // Specify the property to search in
+            // Specify the property to search in
+            keys:          ['name', 'display_fields.title.value', 'display_fields.description.value', 'display_fields.short_description.value'],
             includeScore:  true  // Include search score in the results
         };
-        this.fuse = new Fuse(data, options);
+        this.fuse = new Fuse(searchableData, options);
     }
 
     // Function to update search results
