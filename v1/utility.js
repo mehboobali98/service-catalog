@@ -131,7 +131,7 @@ function mapHelpCenterStyling() {
 }
 
 function getCssVariableValue(variable) {
-  etComputedStyle(document.documentElement).getPropertyValue(`--${variable}`);
+  getComputedStyle(document.documentElement).getPropertyValue(`--${variable}`);
 }
 
 export {  isSignedIn,
