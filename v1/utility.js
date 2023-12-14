@@ -1,4 +1,4 @@
-import { SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
+import { HELP_CENTER_TO_EZ_CLASS_MAPPING, SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
 
 function isRequestPage() {
   const regex = /\/hc(\/en-us)?\/requests\/(\d+)/;
@@ -121,6 +121,10 @@ function placeholderImagePath(serviceItem) {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
   return `https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog_ux_changes/v1/assets/svgs/${imageName}.svg`;
+}
+
+function mapHelpCenterStyling() {
+
 }
 
 export {  isSignedIn,
