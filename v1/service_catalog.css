@@ -2,14 +2,14 @@
   --blue:  #00549F;
   --white: #ffffff;
   --brown: #B29962;
-  --ez_text_font:         ;
-  --ez_text_color:        ;
-  --ez_link_color:        ;
-  --ez_brand_color:       ;
-  --ez_heading_font:      ;
-  --visited_link_color:   ;
-  --ez_brand_text_color:  ;
-  --ez_background_color:  ;
+  --ez_text_font:           ;
+  --ez_text_color:          ;
+  --ez_link_color:          ;
+  --ez_brand_color:         ;
+  --ez_heading_font:        ;
+  --ez_brand_text_color:    ;
+  --ez_background_color:    ;
+  --ez_visited_link_color:  ;
 }
 
 .service-catalog-header-label {
