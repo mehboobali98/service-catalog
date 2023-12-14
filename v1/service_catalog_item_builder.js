@@ -70,12 +70,13 @@ class ServiceCatalogItemBuilder {
     // Card image
     const cardImageContainer    = $('<div>').addClass('col-4');
     const cardImageFlex         = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const placeholderPath       = this.placeholderImagePath(serviceCategoryItem);
     const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                             .attr('alt', 'IT Asset')
                                             .addClass('w-100')
                                             .on('error', function() {
                                               // If the image fails to load, replace the source with a placeholder image
-                                              $(this).attr('src', this.placeholderImagePath(serviceCategoryItem));
+                                              $(this).attr('src', placeholderPath);
                                             });
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
@@ -128,12 +129,13 @@ class ServiceCatalogItemBuilder {
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
     const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const placeholderPath    = this.placeholderImagePath(serviceCategoryItem);
     const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                          .attr('alt', 'Software')
                                          .addClass('w-100')
                                          .on('error', function() {
                                               // If the image fails to load, replace the source with a placeholder image
-                                              $(this).attr('src', this.placeholderImagePath(serviceCategoryItem))
+                                              $(this).attr('src', placeholderPath)
                                           });
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
