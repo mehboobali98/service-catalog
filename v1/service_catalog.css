@@ -14,15 +14,16 @@
 
 .service-catalog-header-label {
   margin-top:  34px;
-  margin-left: 173px;
+  margin-left: 170px;
 }
 
 .service-catalog-description {
-  margin-left: 173px;
+  margin-left: 170px;
 }
 
 .service-catalog-section {
-  margin-left: 120px;
+  margin-top:  50px;
+  margin-left: 100px;
 }
 
 .service-catalog-search {
