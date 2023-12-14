@@ -59,7 +59,7 @@ class NewRequestForm {
         const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
 
         this.processData(data.assets, assetsData, 'Asset');
-        this.processData(data.software_entitlements, assetsData, 'Software');
+        this.processData(data.software_entitlements, assetsData, 'Software License');
 
         ezoCustomFieldEle.hide();
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
@@ -108,7 +108,7 @@ class NewRequestForm {
 
           var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
             var sequenceNum = softwareEntitlement.sequence_num;
-            return { id: sequenceNum, text: `Software # ${sequenceNum} - ${softwareEntitlement.name}` };
+            return { id: sequenceNum, text: `Software License # ${sequenceNum} - ${softwareEntitlement.name}` };
           });
 
           var records = assignedAssets.concat(assignedSoftwareLicenses);
