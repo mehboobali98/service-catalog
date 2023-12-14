@@ -27,6 +27,7 @@ class ServiceCatalogItemDetailBuilder {
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
+    debugger;
     const imageContainer  = $('<div>').addClass('col-3');
     const placeholderPath = placeholderImagePath(serviceCategoryItem);
     const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
