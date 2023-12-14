@@ -99,9 +99,11 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   bindItemDetailEventListener(serviceCategoryItem) {
+    debugger;
     $('body').on('click', '.js-service-item-detail-page-btn', function(e) {
       e.preventDefault();
 
+      debugger;
       const id           = $(this).data('id');
       const name         = $(this).data('name');
       const containerId  = $(this).data('container-id');

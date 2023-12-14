@@ -1,3 +1,4 @@
+import { ServiceCatalogItemDetailBuilder }          from './service_catalog_item_detail_builder.js';
 import { isMyAssignedAssets, placeholderImagePath } from './utility.js';
 
 class ServiceCatalogItemBuilder {
@@ -199,8 +200,11 @@ class ServiceCatalogItemBuilder {
     }
   }
 
-  buildAndRenderServiceItems = (serviceCategory, serviceItems, serviceItemsContainer) => {
+  buildAndRenderServiceItems = (serviceCategoryItems, serviceItemsContainer) => {
     // first child is the flexbox which contains service items
+    debugger;
+    const categoryName = Object.keys(serviceCategoryItems)[0];
+    const serviceItems = serviceCategoryItems[categoryName].service_items;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
     let serviceCategoryItems = null;
@@ -215,6 +219,7 @@ class ServiceCatalogItemBuilder {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
     }
+    if (!isMyAssignedAssets(serviceCategory)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItems) };
   }
 }
 

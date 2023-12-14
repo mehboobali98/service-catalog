@@ -131,7 +131,11 @@ class ServiceCatalogBuilder {
         serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
       };
       const categoryId = categoryLinkId.split('_')[0];
-      self.apiService.fetchServiceCategoryItems(categoryId, self.serviceCatalogItemBuilder.buildAndRenderServiceItems, callbackOptions)
+      self.apiService.fetchServiceCategoryItems(
+        categoryId,
+        self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
+        callbackOptions
+      );
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
     });
