@@ -120,7 +120,6 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  debugger;
   return `https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog_ux_changes/v1/assets/svgs/${imageName}.svg`;
 }
 
