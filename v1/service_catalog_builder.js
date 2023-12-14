@@ -17,8 +17,8 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog() {
-    const imageSection = $('<section>').addClass('section hero');
-    $('main').append(imageSection);
+    // const imageSection = $('<section>').addClass('section hero');
+    // $('main').append(imageSection);
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
   }
 
