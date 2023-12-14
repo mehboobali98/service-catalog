@@ -72,7 +72,7 @@ class ServiceCatalogItemBuilder {
     const cardImageFlex         = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
     const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                             .attr('alt', 'IT Asset')
-                                            .addClass('w-100');
+                                            .addClass('w-100')
                                             .on('error', function() {
                                               // If the image fails to load, replace the source with a placeholder image
                                               $(this).attr('src', this.placeholderImagePath(serviceCategoryItem));
@@ -133,7 +133,7 @@ class ServiceCatalogItemBuilder {
                                          .addClass('w-100')
                                          .on('error', function() {
                                               // If the image fails to load, replace the source with a placeholder image
-                                              $(this).attr('src', this.placeholderImagePath(serviceCategoryItem));
+                                              $(this).attr('src', this.placeholderImagePath(serviceCategoryItem))
                                           });
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
