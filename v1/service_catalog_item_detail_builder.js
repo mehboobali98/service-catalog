@@ -29,7 +29,7 @@ class ServiceCatalogItemDetailBuilder {
 
     const imageContainer  = $('<div>').addClass('col-3');
     const placeholderPath = placeholderImagePath(serviceCategoryItem);
-    const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
+    const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
                             .attr('alt', 'placeholder image')
                             .addClass('w-100')
                             .on('error', function() {
@@ -99,11 +99,9 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   bindItemDetailEventListener(serviceCategoryItem) {
-    debugger;
     $('body').on('click', '.js-service-item-detail-page-btn', function(e) {
       e.preventDefault();
 
-      debugger;
       const id           = $(this).data('id');
       const name         = $(this).data('name');
       const containerId  = $(this).data('container-id');

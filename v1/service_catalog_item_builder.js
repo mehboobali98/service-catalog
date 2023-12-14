@@ -202,7 +202,6 @@ class ServiceCatalogItemBuilder {
 
   buildAndRenderServiceItems = (serviceCategoryItemsData, serviceItemsContainer) => {
     // first child is the flexbox which contains service items
-    debugger;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
