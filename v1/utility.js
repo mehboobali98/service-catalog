@@ -128,8 +128,7 @@ function mapHelpCenterStyling() {
     let helpCenterClassValue = getComputedStyle(document.documentElement).getPropertyValue(`--${helpCenterClass}`);
     debugger;
     document.documentElement.style.setProperty(`--${ezClass}`, helpCenterClassValue);
-
-  }
+  });
 }
 
 export {  isSignedIn,
