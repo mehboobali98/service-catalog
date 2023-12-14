@@ -137,5 +137,4 @@ export {  isSignedIn,
           getCssVariableValue,
           placeholderImagePath,
           isServiceCatalogPage,
-          mapHelpCenterStyling,
           extractServiceItemsWithCategory };
