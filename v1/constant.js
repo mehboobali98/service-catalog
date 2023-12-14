@@ -5,7 +5,7 @@ const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
 };
 
 const HELP_CENTER_TO_EZ_CLASS_MAPPING = {
-  'text_font':          'ez_text_color',
+  'text_font':          'ez_text_font',
   'text_color':         'ez_text_color',
   'link_color':         'ez_link_color',
   'brand_color':        'ez_brand_color',
