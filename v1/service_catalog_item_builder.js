@@ -207,8 +207,9 @@ class ServiceCatalogItemBuilder {
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
+
     let serviceCategoryItems = null;
-    if (isMyAssignedAssets(serviceCategory)) {
+    if (isMyAssignedAssets(categoryName)) {
       serviceCategoryItems = serviceItems['assets'].concat(serviceItems['software_entitlements']);
     } else {
       serviceCategoryItems = serviceItems ? JSON.parse(serviceItems) : [];
@@ -216,10 +217,10 @@ class ServiceCatalogItemBuilder {
 
     if (serviceCategoryItems.length) {
       serviceCategoryItems.forEach((serviceCategoryItem, index) => {
-        if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
+        if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)) };
       });
     }
-    if (!isMyAssignedAssets(serviceCategory)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItemsData) };
+    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItemsData) };
   }
 }
 
