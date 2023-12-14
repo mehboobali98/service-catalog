@@ -1,4 +1,5 @@
-import { isMyAssignedAssets } from './utility.js';
+import { isMyAssignedAssets }                     from './utility.js';
+import { SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -67,15 +68,15 @@ class ServiceCatalogItemBuilder {
     const queryParams = {};
 
     // Card image
-    const cardImageContainer = $('<div>').addClass('col-4');
-    const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
-    const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
-                                         .attr('alt', 'IT Asset')
-                                         .addClass('w-100');
-                                         // .on('error', function() {
-                                         //    // If the image fails to load, replace the source with a placeholder image
-                                         //    $(this).attr('src', 'path/to/placeholder.jpg');
-                                         //  });
+    const cardImageContainer    = $('<div>').addClass('col-4');
+    const cardImageFlex         = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
+                                            .attr('alt', 'IT Asset')
+                                            .addClass('w-100');
+                                            .on('error', function() {
+                                              // If the image fails to load, replace the source with a placeholder image
+                                              $(this).attr('src', this.placeholderImagePath(serviceCategoryItem));
+                                            });
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
 
@@ -129,7 +130,11 @@ class ServiceCatalogItemBuilder {
     const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
     const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                          .attr('alt', 'Software')
-                                         .addClass('w-100');
+                                         .addClass('w-100')
+                                         .on('error', function() {
+                                              // If the image fails to load, replace the source with a placeholder image
+                                              $(this).attr('src', this.placeholderImagePath(serviceCategoryItem));
+                                          });
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
 
@@ -209,6 +214,18 @@ class ServiceCatalogItemBuilder {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
     }
+  }
+
+  placeholderImagePath(serviceItem) {
+    let type      = serviceItem.type;
+    let imageName = null;
+    if (type) {
+      imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING[type];
+    } else {
+      imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
+    }
+    debugger;
+    return `https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/assets/svgs/${imageName}.svg`
   }
 }
 
