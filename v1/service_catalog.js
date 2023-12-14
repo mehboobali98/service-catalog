@@ -40,7 +40,7 @@ class ServiceCatalogManager {
 
   handleServiceCatalogRequest() {
     if (isSignedIn()) {
-
+      mapHelpCenterStyling();
       this.serviceCatalogBuilder.buildServiceCatalog();
     } else {
       // to-do: Verify this
