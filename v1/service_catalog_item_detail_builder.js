@@ -39,9 +39,8 @@ class ServiceCatalogItemDetailBuilder {
     imageContainer.append(image);
 
     const textFont          = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_font');
-    const textColor         = getComputedStyle(document.documentElement).getPropertyValue('ez_text_color');
-    const headingFont       = getComputedStyle(document.documentElement).getPropertyValue('ez_heading_font');
-    debugger;
+    const textColor         = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_color');
+    const headingFont       = getComputedStyle(document.documentElement).getPropertyValue('--ez_heading_font');
 
     const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
@@ -84,8 +83,8 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   prepareSectionContent(fieldData) {
-    const textFont    = getComputedStyle(document.documentElement).getPropertyValue('ez_text_font');
-    const textColor   = getComputedStyle(document.documentElement).getPropertyValue('ez_text_color');
+    const textFont    = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_font');
+    const textColor   = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_color');
     const fieldValue  = fieldData['value'];
     const fieldFormat = fieldData['format'];
 
