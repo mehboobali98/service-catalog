@@ -1,5 +1,5 @@
 import { ServiceCatalogItemDetailBuilder }          from './service_catalog_item_detail_builder.js';
-import { isMyAssignedAssets, placeholderImagePath } from './utility.js';
+import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from './utility.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {

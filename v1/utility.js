@@ -130,6 +130,10 @@ function mapHelpCenterStyling() {
   });
 }
 
+function getCssVariableValue(variable) {
+  etComputedStyle(document.documentElement).getPropertyValue(`--${variable}`);
+}
+
 export {  isSignedIn,
           signInPath,
           isCorrectPage,
@@ -137,6 +141,7 @@ export {  isSignedIn,
           isNewRequestPage,
           loadExternalFiles,
           isMyAssignedAssets,
+          getCssVariableValue,
           placeholderImagePath,
           isServiceCatalogPage,
           mapHelpCenterStyling,

@@ -27,7 +27,6 @@ class ServiceCatalogItemDetailBuilder {
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
-    debugger;
     const imageContainer  = $('<div>').addClass('col-3');
     const placeholderPath = placeholderImagePath(serviceCategoryItem);
     const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
@@ -39,14 +38,17 @@ class ServiceCatalogItemDetailBuilder {
                             });
     imageContainer.append(image);
 
-    const detailPageContent = $('<div>').addClass('col-9');
+    const textFont          = getCssVariableValue('ez_text_font');
+    const textColor         = getCssVariableValue('ez_text_color');
+    const headingFont       = getCssVariableValue('ez_heading_font');
 
+    const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
     const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
-                                                     .css({ 'color': 'black', 'line-height': '17px' }))
+                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont }));
     if (displayFields.cost_price) {
       headerContent.append($('<h4>').text(displayFields.cost_price.value)
-                                   .css({ 'color': 'black', 'line-height': '17px' }));
+                                    .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
@@ -66,7 +68,7 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
+          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': textFont });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
