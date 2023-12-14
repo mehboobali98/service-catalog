@@ -59,7 +59,7 @@ class ServiceCatalogItemDetailBuilder {
     const requestServiceBtn = $('<a>').attr('role', 'button')
                                       .attr('href', url)
                                       .text('Request Service')
-                                      .addClass('btn request-service-btn');
+                                      .addClass('btn btn-block request-service-btn');
     detailPageHeader.append(headerContent, requestServiceBtn);
 
     const detailPageBody = $('<div>');
