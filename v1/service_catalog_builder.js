@@ -19,7 +19,20 @@ class ServiceCatalogBuilder {
   buildServiceCatalog() {
     // const imageSection = $('<section>').addClass('section hero');
     // $('main').append(imageSection);
+    buildServiceCatalogHeaderSection();
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
+  }
+
+  buildServiceCatalogHeaderSection() {
+    const headerSection     = $('<section>');
+    const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid');
+    const headerEle         = $('<h1>').addClass('service-catalog-header-label')
+                                       .text('Service Catalog');
+    const headerDescription = $('<p>').addClass('service-catalog-description')
+                                      .text('Explore the Service Catalog to find a curated range of solutions to your needs');
+    headerContainer.append(headerEle, headerDescription);
+    headerSection.append(headerContainer);
+    $('main').append(headerSection);
   }
 
   buildUI = (data) => {
