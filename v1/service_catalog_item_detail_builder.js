@@ -42,6 +42,8 @@ class ServiceCatalogItemDetailBuilder {
     const textColor         = getCssVariableValue('ez_text_color');
     const headingFont       = getCssVariableValue('ez_heading_font');
 
+    debugger;
+
     const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
     const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
