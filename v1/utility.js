@@ -124,7 +124,12 @@ function placeholderImagePath(serviceItem) {
 }
 
 function mapHelpCenterStyling() {
+  $.each(HELP_CENTER_TO_EZ_CLASS_MAPPING, function(helpCenterClass, ezClass) {
+    let helpCenterClassValue = getComputedStyle(document.documentElement).getPropertyValue(`--${helpCenterClass}`);
+    debugger;
+    document.documentElement.style.setProperty(`--${ezClass}`, helpCenterClassValue);
 
+  }
 }
 
 export {  isSignedIn,
@@ -136,4 +141,5 @@ export {  isSignedIn,
           isMyAssignedAssets,
           placeholderImagePath,
           isServiceCatalogPage,
+          mapHelpCenterStyling,
           extractServiceItemsWithCategory };
