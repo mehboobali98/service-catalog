@@ -1,6 +1,5 @@
 import { RequestForm }            from './request_form.js';
 import { NewRequestForm }         from './new_request_form.js';
-import { mapHelpCenterStyling }   from './utility.js';
 import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
 import { isSignedIn, signInPath, isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
 
@@ -40,7 +39,6 @@ class ServiceCatalogManager {
 
   handleServiceCatalogRequest() {
     if (isSignedIn()) {
-      mapHelpCenterStyling();
       this.serviceCatalogBuilder.buildServiceCatalog();
     } else {
       // to-do: Verify this
