@@ -41,6 +41,7 @@ class ServiceCatalogItemDetailBuilder {
     const textFont          = getCssVariableValue('ez_text_font');
     const textColor         = getCssVariableValue('ez_text_color');
     const headingFont       = getCssVariableValue('ez_heading_font');
+    debugger;
 
     const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
@@ -68,7 +69,7 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont });
+          let sectionHeader   = $('<h4>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
