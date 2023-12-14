@@ -4,6 +4,15 @@
   --brown: #B29962;
 }
 
+.service-catalog-header-label {
+  margin-top:  34px;
+  margin-left: 173px;
+}
+
+.service-catalog-description {
+  margin-left: 173px;
+}
+
 .service-catalog-section {
   margin-left: 120px;
 }
