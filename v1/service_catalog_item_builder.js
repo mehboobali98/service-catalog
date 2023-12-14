@@ -119,6 +119,11 @@ class ServiceCatalogItemBuilder {
     cardBody.append(submitRequestBtn);
     card.append(cardImageContainer, cardBody);
 
+    card.click(function(e) {
+      e.preventDefault();
+
+      window.location.href = url;
+    });
     return card;
   }
 
