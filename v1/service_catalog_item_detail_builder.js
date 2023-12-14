@@ -38,9 +38,9 @@ class ServiceCatalogItemDetailBuilder {
                             });
     imageContainer.append(image);
 
-    const textFont          = getCssVariableValue('ez_text_font');
-    const textColor         = getCssVariableValue('ez_text_color');
-    const headingFont       = getCssVariableValue('ez_heading_font');
+    const textFont          = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_font');
+    const textColor         = getComputedStyle(document.documentElement).getPropertyValue('ez_text_color');
+    const headingFont       = getComputedStyle(document.documentElement).getPropertyValue('ez_heading_font');
     debugger;
 
     const detailPageContent = $('<div>').addClass('col-9');
@@ -84,8 +84,8 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   prepareSectionContent(fieldData) {
-    const textFont    = getCssVariableValue('ez_text_font');
-    const textColor   = getCssVariableValue('ez_text_color');
+    const textFont    = getComputedStyle(document.documentElement).getPropertyValue('ez_text_font');
+    const textColor   = getComputedStyle(document.documentElement).getPropertyValue('ez_text_color');
     const fieldValue  = fieldData['value'];
     const fieldFormat = fieldData['format'];
 
