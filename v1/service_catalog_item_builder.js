@@ -27,7 +27,7 @@ class ServiceCatalogItemBuilder {
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-    const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.title).addClass('service-category-label');
+    const serviceCategoryLabel = $('<h4>').text(serviceCategoryItems.title).addClass('service-category-label');
     const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
