@@ -11,7 +11,8 @@ const HELP_CENTER_TO_EZ_CLASS_MAPPING = {
   'brand_color':        'ez_brand_color',
   'heading_font':       'ez_heading_font',
   'background_color':   'ez_background_color',
-  'brand_text_color':   'ez_brand_text_color'
+  'brand_text_color':   'ez_brand_text_color',
+  'visited_link_color': 'ez_visited_link_color'
 };
 
 export { SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING, HELP_CENTER_TO_EZ_CLASS_MAPPING };
