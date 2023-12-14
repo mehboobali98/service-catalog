@@ -84,9 +84,9 @@
 }
 
 .service-category-label {
-  color:        black;
   word-wrap:    break-word;
   font-size:    18px;
+  font-style:   var(--ez_heading_font);
   font-weight:  400;
 }
 
@@ -117,6 +117,7 @@
 }
 
 .service-item-card .card-body .card-title {
+  color:         var(--ez_text_color);
   font-size:     12px;
   padding-top:   10px;
   padding-right: 10px;
@@ -130,21 +131,22 @@
   width:        100%;
   font-size:    11px;
   word-wrap:    break-word; 
+  font-style:   var(--ez_text_font);
   font-weight:  400;
   line-height:  14px;
   padding-top:  10px;
 }
 
 .service-item-card .card-body .card-content-table tr th {
-  color: #595959;
+  color: var(--ez_text_color);
 }
 
 .service-item-card .card-body .card-content-table tr td {
-  color: black;
+  color: var(--ez_text_color);
 }
 
 .service-item-card .description {
-  color:        #595959;
+  color:        var(--ez_text_color);
   word-wrap:    break-word;
   font-size:    11px;
   font-weight:  400;
