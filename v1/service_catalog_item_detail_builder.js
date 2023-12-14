@@ -1,4 +1,4 @@
-import { isMyAssignedAssets } from './utility.js';
+import { isMyAssignedAssets, placeholderImagePath } from './utility.js';
 
 class ServiceCatalogItemDetailBuilder {
   constructor() {
@@ -27,10 +27,15 @@ class ServiceCatalogItemDetailBuilder {
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
-    const imageContainer = $('<div>').addClass('col-3');
+    const imageContainer  = $('<div>').addClass('col-3');
+    const placeholderPath = placeholderImagePath(serviceCategoryItem);
     const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                             .attr('alt', 'placeholder image')
-                            .addClass('w-100');
+                            .addClass('w-100')
+                            .on('error', function() {
+                              // If the image fails to load, replace the source with a placeholder image
+                              $(this).attr('src', placeholderPath)
+                            });
     imageContainer.append(image);
 
     const detailPageContent = $('<div>').addClass('col-9');

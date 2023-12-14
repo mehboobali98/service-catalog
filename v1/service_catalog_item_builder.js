@@ -1,5 +1,4 @@
-import { isMyAssignedAssets }                     from './utility.js';
-import { SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
+import { isMyAssignedAssets, placeholderImagePath } from './utility.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -70,7 +69,7 @@ class ServiceCatalogItemBuilder {
     // Card image
     const cardImageContainer    = $('<div>').addClass('col-4');
     const cardImageFlex         = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
-    const placeholderPath       = this.placeholderImagePath(serviceCategoryItem);
+    const placeholderPath       = placeholderImagePath(serviceCategoryItem);
     const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                             .attr('alt', 'IT Asset')
                                             .addClass('w-100')
@@ -129,7 +128,7 @@ class ServiceCatalogItemBuilder {
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
     const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
-    const placeholderPath    = this.placeholderImagePath(serviceCategoryItem);
+    const placeholderPath    = placeholderImagePath(serviceCategoryItem);
     const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                          .attr('alt', 'Software')
                                          .addClass('w-100')
@@ -216,18 +215,6 @@ class ServiceCatalogItemBuilder {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
     }
-  }
-
-  placeholderImagePath(serviceItem) {
-    let type      = serviceItem.type;
-    let imageName = null;
-    if (type) {
-      imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING[type];
-    } else {
-      imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
-    }
-    debugger;
-    return `https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/assets/svgs/${imageName}.svg`
   }
 }
 
