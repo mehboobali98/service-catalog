@@ -200,11 +200,11 @@ class ServiceCatalogItemBuilder {
     }
   }
 
-  buildAndRenderServiceItems = (serviceCategoryItems, serviceItemsContainer) => {
+  buildAndRenderServiceItems = (serviceCategoryItemsData, serviceItemsContainer) => {
     // first child is the flexbox which contains service items
     debugger;
-    const categoryName = Object.keys(serviceCategoryItems)[0];
-    const serviceItems = serviceCategoryItems[categoryName].service_items;
+    const categoryName = Object.keys(serviceCategoryItemsData)[0];
+    const serviceItems = serviceCategoryItemsData[categoryName].service_items;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
     let serviceCategoryItems = null;
@@ -219,7 +219,7 @@ class ServiceCatalogItemBuilder {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
     }
-    if (!isMyAssignedAssets(serviceCategory)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItems) };
+    if (!isMyAssignedAssets(serviceCategory)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItemsData) };
   }
 }
 
