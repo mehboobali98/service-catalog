@@ -42,11 +42,11 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
 
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
-                                                    .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
+    const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
+                                                     .css({ 'color': 'black', 'line-height': '17px' }))
     if (displayFields.cost_price) {
-      headerContent.append($('<p>').text(displayFields.cost_price.value)
-                                   .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
+      headerContent.append($('<h4>').text(displayFields.cost_price.value)
+                                   .css({ 'color': 'black', 'line-height': '17px' }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
