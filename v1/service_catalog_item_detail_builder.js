@@ -42,15 +42,13 @@ class ServiceCatalogItemDetailBuilder {
     const textColor         = getCssVariableValue('ez_text_color');
     const headingFont       = getCssVariableValue('ez_heading_font');
 
-    debugger;
-
     const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
     const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
-                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont }));
+                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
       headerContent.append($('<h4>').text(displayFields.cost_price.value)
-                                    .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont }));
+                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
@@ -70,7 +68,7 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': textFont });
+          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
@@ -85,10 +83,12 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   prepareSectionContent(fieldData) {
+    const textFont    = getCssVariableValue('ez_text_font');
+    const textColor   = getCssVariableValue('ez_text_color');
     const fieldValue  = fieldData['value'];
     const fieldFormat = fieldData['format'];
 
-    if (!fieldFormat) { return $('<p>').text(fieldValue).css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }); }
+    if (!fieldFormat) { return $('<p>').text(fieldValue).css({ 'color': textColor, 'font-size': '14px', 'font-weight': '400', 'line-height': '17px', 'font-family': textFont }); }
 
     if (fieldFormat === 'list') {
       const listEle     = $('<ul>').addClass('service-item-detail-description-list');
