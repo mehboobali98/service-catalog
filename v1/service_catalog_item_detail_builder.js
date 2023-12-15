@@ -56,10 +56,9 @@ class ServiceCatalogItemDetailBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
-    const requestServiceBtn = $('<a>').attr('role', 'button')
-                                      .attr('href', url)
+    const requestServiceBtn = $('<a>').attr('href', url)
                                       .text('Request Service')
-                                      .addClass('btn btn-block request-service-btn');
+                                      .addClass('btn btn-outline-primary request-service-btn');
     detailPageHeader.append(headerContent, requestServiceBtn);
 
     const detailPageBody = $('<div>');
