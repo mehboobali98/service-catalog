@@ -3,6 +3,7 @@ import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from '.
 
 class ServiceCatalogItemBuilder {
   constructor() {
+    this.zendeskFormData        = null;
     this.serviceCategoriesItems = null;
   }
 

@@ -22,6 +22,7 @@ class Search {
             let serviceItems = [];
             if (isMyAssignedAssets(serviceCategory)) {
                 serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
+                self.itemBuilder.zendeskFormData = serviceCategoryData.zendesk_form_data
             } else {
                 serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
             }
