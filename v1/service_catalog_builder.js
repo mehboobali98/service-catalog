@@ -19,7 +19,7 @@ class ServiceCatalogBuilder {
 
   buildServiceCatalog() {
     this.buildServiceCatalogHeaderSection();
-    this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
+    this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
   }
 
   buildServiceCatalogHeaderSection() {
