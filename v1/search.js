@@ -10,6 +10,7 @@ class Search {
 
     // Function to update search results
     updateResults = (serviceCategoriesItems, options) => {
+        self = this;
         const searchResultsContainer = options.searchResultsContainer;
         // Clear previous results
         searchResultsContainer.empty();
@@ -27,8 +28,8 @@ class Search {
 
             // Display search results
             serviceItems.forEach(({ item }) => {
-                let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
-                this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+                let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
+                self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                 searchItemsFlex.append(serviceCategoryItem);
             });
         });
