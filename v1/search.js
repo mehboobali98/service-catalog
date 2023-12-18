@@ -12,12 +12,9 @@ class Search {
     updateResults = (serviceCategoriesItems, options) => {
         self                         = this;
         self.itemBuilder             = options.itemBuilder;
+        const searchItemsFlex        = $('<div>').addClass('d-flex flex-wrap gap-3');
         self.itemDetailBuilder       = options.itemDetailBuilder;
         const searchResultsContainer = options.searchResultsContainer;
-
-        // Clear previous results
-        searchResultsContainer.empty();
-        const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
         $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
             let serviceItems = [];
