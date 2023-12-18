@@ -27,11 +27,9 @@ class Search {
             }
 
             debugger;
-
-            // Display search results
-            serviceItems.forEach(({ item }) => {
+            $.each(serviceItems, function(index, serviceItem) {
                 debugger;
-                let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
+                let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
                 self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                 searchItemsFlex.append(serviceCategoryItem);
             });
