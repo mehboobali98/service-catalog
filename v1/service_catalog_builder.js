@@ -147,6 +147,8 @@ class ServiceCatalogBuilder {
 
       $('#service_categories_list ul li.active').removeClass('active');
 
+      debugger;
+
       if (query.length === 0) {
         searchResultsContainer.hide();
         serviceItemsContainer.show();

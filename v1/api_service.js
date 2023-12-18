@@ -4,6 +4,7 @@ class ApiService {
   }
 
   fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
+    debugger;
     this.withToken().then(token => {
         if (token) {
           const endPoint        = 'visible_service_categories_and_items';
@@ -14,6 +15,7 @@ class ApiService {
             queryParams.search_query = options.searchQuery; 
           }
 
+          debugger;
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
 
           fetch(url, requestOptions)
@@ -31,9 +33,11 @@ class ApiService {
               return response.json();
             })
             .then(data => {
+              debugger;
               callback(data, options);
             })
             .catch(error => {
+              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }

@@ -12,6 +12,7 @@ class Search {
         // Clear previous results
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
+        debugger;
 
         $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
             let serviceItems = null;
@@ -20,6 +21,8 @@ class Search {
             } else {
                 serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
             }
+
+            debugger;
 
             // Display search results
             serviceItems.forEach(({ item }) => {
