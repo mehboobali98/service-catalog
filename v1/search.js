@@ -4,14 +4,17 @@ import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_
 
 class Search {
     constructor() {
-        this.itemBuilder        = new ServiceCatalogItemBuilder();
-        this.itemDetailBuilder  = new ServiceCatalogItemDetailBuilder();
+        this.itemBuilder        = null;
+        this.itemDetailBuilder  = null;
     }
 
     // Function to update search results
     updateResults = (serviceCategoriesItems, options) => {
-        self = this;
+        self                         = this;
+        self.itemBuilder             = options.itemBuilder;
+        self.itemDetailBuilder       = options.itemDetailBuilder;
         const searchResultsContainer = options.searchResultsContainer;
+
         // Clear previous results
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
@@ -22,7 +25,6 @@ class Search {
             let serviceItems = [];
             if (isMyAssignedAssets(serviceCategory)) {
                 serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
-                self.itemBuilder.zendeskFormData = serviceCategoryData.zendesk_form_data
             } else {
                 serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
             }
