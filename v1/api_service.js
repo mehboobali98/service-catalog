@@ -6,9 +6,15 @@ class ApiService {
   fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
     this.withToken().then(token => {
         if (token) {
-          const requestOptions = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
-          const endPoint = 'visible_service_categories_and_items';
-          const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json';
+          const endPoint        = 'visible_service_categories_and_items';
+          const queryParams     = {};
+          const requestOptions  = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+
+          if(options.searchQuery) {
+            queryParams.search_query = options.searchQuery; 
+          }
+
+          const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
 
           fetch(url, requestOptions)
             .then(response => {
@@ -25,7 +31,7 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              callback(data);
+              callback(data, options);
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);

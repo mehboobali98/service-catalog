@@ -7,7 +7,8 @@ class Search {
     }
 
     // Function to update search results
-    updateResults = (serviceCategoriesItems, searchResultsContainer) => {
+    updateResults = (serviceCategoriesItems, options) => {
+        const searchResultsContainer = options.searchResultsContainer;
         // Clear previous results
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');

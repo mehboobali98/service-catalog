@@ -34,7 +34,7 @@ class ServiceCatalogBuilder {
     $('main').append(headerSection);
   }
 
-  buildUI = (data) => {
+  buildUI = (data, options) => {
     this.data = data;
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
@@ -153,7 +153,7 @@ class ServiceCatalogBuilder {
       } else {
         serviceItemsContainer.hide();
         searchResultsContainer.show();
-        self.apiService.fetchServiceCategoriesAndItems(self.search.updateResults, self.noAccessPage, { searchResultsContainer: searchResultsContainer })
+        self.apiService.fetchServiceCategoriesAndItems(self.search.updateResults, self.noAccessPage, { searchQuery: query, searchResultsContainer: searchResultsContainer })
       }
     });
   }
