@@ -9,7 +9,7 @@ class ServiceCatalogBuilder {
     this.ezoSubdomain                    = ezoSubdomain;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
-    this.search                          = new Search(this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
+    this.search                          = new Search();
   }
 
   addMenuItem(name, url, parent_ele) {

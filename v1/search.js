@@ -1,13 +1,18 @@
-import { isMyAssignedAssets } from './utility.js'
+import { isMyAssignedAssets }               from './utility.js'
+import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
+import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class Search {
-    constructor(itemBuilder, itemDetailBuilder) {
-        this.itemBuilder        = itemBuilder;
-        this.itemDetailBuilder  = itemDetailBuilder;
+    constructor() {
+        this.itemBuilder        = null;
+        this.itemDetailBuilder  = null;
     }
 
     // Function to update search results
     updateResults = (serviceCategoriesItems, options) => {
+        this.itemBuilder             = new ServiceCatalogItemBuilder();
+        this.itemDetailBuilder       = new ServiceCatalogItemDetailBuilder();
+
         const searchResultsContainer = options.searchResultsContainer;
         // Clear previous results
         searchResultsContainer.empty();
