@@ -14,28 +14,28 @@ class Search {
         // Clear previous results
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
+
         debugger;
 
-        let allServiceItems = [];
         $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
             let serviceItems = null;
             if (isMyAssignedAssets(serviceCategory)) {
                 serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
             } else {
-                serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
+                serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
             }
 
-            allServiceItems = allServiceItems.concat(serviceItems);
+            // Display search results
+            serviceItems.forEach(({ item }) => {
+                let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
+                this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+                searchItemsFlex.append(serviceCategoryItem);
+            });
         });
 
         debugger;
 
-        // Display search results
-        allServiceItems.forEach(({ item }) => {
-            let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
-            this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
-            searchItemsFlex.append(serviceCategoryItem);
-        });
+
         searchResultsContainer.append(searchItemsFlex);
     }
 }
