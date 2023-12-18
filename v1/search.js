@@ -19,8 +19,6 @@ class Search {
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-        debugger;
-
         $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
             let serviceItems = [];
             if (isMyAssignedAssets(serviceCategory)) {
@@ -29,18 +27,12 @@ class Search {
                 serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
             }
 
-            debugger;
             $.each(serviceItems, function(index, serviceItem) {
-                debugger;
                 let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
                 self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                 searchItemsFlex.append(serviceCategoryItem);
             });
         });
-
-        debugger;
-
-
         searchResultsContainer.append(searchItemsFlex);
     }
 }

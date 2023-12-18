@@ -4,7 +4,6 @@ class ApiService {
   }
 
   fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
-    debugger;
     $.getJSON('/hc/api/v2/integration/token').then(data => data.token).then(token => {
         if (token) {
           const endPoint        = 'visible_service_categories_and_items';
@@ -35,7 +34,6 @@ class ApiService {
               callback(data, options);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
