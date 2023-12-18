@@ -5,7 +5,7 @@ class ApiService {
 
   fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
     debugger;
-    this.withToken().then(token => {
+    $.getJSON('/hc/api/v2/integration/token').then(data => data.token).then(token => {
         if (token) {
           const endPoint        = 'visible_service_categories_and_items';
           const queryParams     = {};
@@ -45,7 +45,7 @@ class ApiService {
   }
 
   fetchServiceCategoryItems(categoryId, callback, callBackOptions) {
-    this.withToken().then(token => {
+    $.getJSON('/hc/api/v2/integration/token').then(data => data.token).then(token => {
       if (token) {
         const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
         const endPoint      = 'visible_service_categories_and_items';
