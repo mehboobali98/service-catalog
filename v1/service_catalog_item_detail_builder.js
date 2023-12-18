@@ -1,4 +1,4 @@
-import { isMyAssignedAssets } from './utility.js';
+import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from './utility.js';
 
 class ServiceCatalogItemDetailBuilder {
   constructor() {
@@ -27,20 +27,28 @@ class ServiceCatalogItemDetailBuilder {
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
-    const imageContainer = $('<div>').addClass('col-3');
-    const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
+    const imageContainer  = $('<div>').addClass('col-3');
+    const placeholderPath = placeholderImagePath(serviceCategoryItem);
+    const image = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
                             .attr('alt', 'placeholder image')
-                            .addClass('w-100');
+                            .addClass('w-100')
+                            .on('error', function() {
+                              // If the image fails to load, replace the source with a placeholder image
+                              $(this).attr('src', placeholderPath)
+                            });
     imageContainer.append(image);
 
-    const detailPageContent = $('<div>').addClass('col-9');
+    const textFont          = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_font');
+    const textColor         = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_color');
+    const headingFont       = getComputedStyle(document.documentElement).getPropertyValue('--ez_heading_font');
 
+    const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
-                                                    .css({ 'color': 'black', 'font-size': '22px', 'font-weight': '700', 'line-height': '17px' }))
+    const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
+                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
-      headerContent.append($('<p>').text(displayFields.cost_price.value)
-                                   .css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }));
+      headerContent.append($('<h4>').text(displayFields.cost_price.value)
+                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
@@ -48,10 +56,9 @@ class ServiceCatalogItemDetailBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
-    const requestServiceBtn = $('<a>').attr('role', 'button')
-                                      .attr('href', url)
+    const requestServiceBtn = $('<a>').attr('href', url)
                                       .text('Request Service')
-                                      .addClass('btn request-service-btn');
+                                      .addClass('btn btn-outline-primary request-service-btn');
     detailPageHeader.append(headerContent, requestServiceBtn);
 
     const detailPageBody = $('<div>');
@@ -60,7 +67,7 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': 'black', 'font-size': '16px', 'font-weight': '700', 'line-height': '17px' });
+          let sectionHeader   = $('<h4>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
@@ -75,10 +82,12 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   prepareSectionContent(fieldData) {
+    const textFont    = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_font');
+    const textColor   = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_color');
     const fieldValue  = fieldData['value'];
     const fieldFormat = fieldData['format'];
 
-    if (!fieldFormat) { return $('<p>').text(fieldValue).css({ 'color': 'black', 'font-size': '14px', 'font-weight': '400', 'line-height': '17px' }); }
+    if (!fieldFormat) { return $('<p>').text(fieldValue).css({ 'color': textColor, 'font-size': '14px', 'font-weight': '400', 'line-height': '17px', 'font-family': textFont }); }
 
     if (fieldFormat === 'list') {
       const listEle     = $('<ul>').addClass('service-item-detail-description-list');
@@ -94,7 +103,7 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   bindItemDetailEventListener(serviceCategoryItem) {
-    $('body').on('click', '.js-service-item-detail-page-btn', function(e) {
+    $('body').on('click', '.js-service-item-detail-page-btn, .js-default-service-item', function(e) {
       e.preventDefault();
 
       const id           = $(this).data('id');

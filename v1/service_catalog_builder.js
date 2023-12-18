@@ -17,9 +17,22 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog() {
-    const imageSection = $('<section>').addClass('section hero');
-    $('main').append(imageSection);
+    // const imageSection = $('<section>').addClass('section hero');
+    // $('main').append(imageSection);
+    this.buildServiceCatalogHeaderSection();
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
+  }
+
+  buildServiceCatalogHeaderSection() {
+    const headerSection     = $('<section>');
+    const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid');
+    const headerEle         = $('<h1>').addClass('service-catalog-header-label')
+                                       .text('Service Catalog');
+    const headerDescription = $('<p>').addClass('service-catalog-description')
+                                      .text('Explore the Service Catalog to find a curated range of solutions to your needs');
+    headerContainer.append(headerEle, headerDescription);
+    headerSection.append(headerContainer);
+    $('main').append(headerSection);
   }
 
   buildUI = (data) => {
@@ -118,7 +131,11 @@ class ServiceCatalogBuilder {
         serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
       };
       const categoryId = categoryLinkId.split('_')[0];
-      self.apiService.fetchServiceCategoryItems(categoryId, self.serviceCatalogItemBuilder.buildAndRenderServiceItems, callbackOptions)
+      self.apiService.fetchServiceCategoryItems(
+        categoryId,
+        self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
+        callbackOptions
+      );
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
     });
@@ -148,7 +165,7 @@ class ServiceCatalogBuilder {
                                               .addClass('no-access-page-section');
 
     const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/connect_service_catalog_with_api/v1/assets/svgs/no_access_image.svg')
+    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog_ux_changes/v1/assets/svgs/no_access_image.svg')
                                             .addClass('no-access-image');
 
     const warningMessage        = $('<h4>').text('You do not have permission to access this page!');

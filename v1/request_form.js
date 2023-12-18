@@ -90,7 +90,7 @@ class RequestForm {
     if (!assetName) { return null; }
 
     assetName       = assetName.trim();
-    const matchData = assetName.match(/^(Asset|Asset Stock|Software) # (\d+) /);
+    const matchData = assetName.match(/^(Asset|Asset Stock|Software License) # (\d+) /);
     if (!matchData) { return null; }
 
     const id   = matchData[2];
@@ -100,9 +100,9 @@ class RequestForm {
 
   getAssetPath(id, type) {
     const pathMappings = {
-      'Asset':        '/assets/',
-      'Software':     '/software_licenses/',
-      'Stock Asset':  '/stock_assets/'
+      'Asset':                '/assets/',
+      'Stock Asset':          '/stock_assets/',
+      'Software License':     '/software_licenses/'
     };
 
     const defaultPath = '/dashboard';

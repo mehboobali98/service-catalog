@@ -1,3 +1,5 @@
+import { SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
+
 function isRequestPage() {
   const regex = /\/hc(\/en-us)?\/requests\/(\d+)/;
   return isCorrectPage(regex);
@@ -110,6 +112,21 @@ function origin() {
   return window.location.origin;
 }
 
+function placeholderImagePath(serviceItem) {
+  let type      = serviceItem.type;
+  let imageName = null;
+  if (type) {
+    imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING[type];
+  } else {
+    imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
+  }
+  return `https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog_ux_changes/v1/assets/svgs/${imageName}.svg`;
+}
+
+function getCssVariableValue(variable) {
+  getComputedStyle(document.documentElement).getPropertyValue(`--${variable}`);
+}
+
 export {  isSignedIn,
           signInPath,
           isCorrectPage,
@@ -117,5 +134,7 @@ export {  isSignedIn,
           isNewRequestPage,
           loadExternalFiles,
           isMyAssignedAssets,
+          getCssVariableValue,
+          placeholderImagePath,
           isServiceCatalogPage,
           extractServiceItemsWithCategory };

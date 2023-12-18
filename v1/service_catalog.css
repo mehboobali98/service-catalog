@@ -4,8 +4,18 @@
   --brown: #B29962;
 }
 
+.service-catalog-header-label {
+  margin-top:  34px;
+  margin-left: 170px;
+}
+
+.service-catalog-description {
+  margin-left: 170px;
+}
+
 .service-catalog-section {
-  margin-left: 120px;
+  margin-top:  50px;
+  margin-left: 170px;
 }
 
 .service-catalog-search {
@@ -20,7 +30,7 @@
 .service-catalog-search input {
   color:          #808080;
   height:         30px;
-  border:         1px #808080 solid;
+  border:         1px var(--ez_brand_color) solid;
   font-size:      12px;
   font-weight:    400;
   line-height:    17px;
@@ -48,7 +58,7 @@
 }
 
 .service-categories-list ul li.active {
-  color: var(--brand_color);
+  color: var(--ez_brand_color);
   font-weight: 700;
 }
 
@@ -58,31 +68,34 @@
 }
 
 .service-categories-list ul li a:hover {
-  color: var(--brown);
+  color: var(--ez_brand_color);
 }
 
 .service-categories-list ul li a:active {
-  color: var(--brown);
+  color: var(--ez_brand_color);
 }
 
 .service-category-label {
-  color:        black;
+  color:        var(--ez_text_color) !important;
   word-wrap:    break-word;
   font-size:    18px;
+  font-family:   var(--ez_heading_font);
   font-weight:  400;
 }
 
 .service-category-description {
-  color:        #808080;
+  color:        var(--ez_text_color);
   font-size:    14px;
   word-wrap:    break-word;
+  font-family:    var(--ez_text_font);
   font-weight:  400;
 }
 
 .service-item-card {
   width:        280px;
   height:       120px;
-  border:       1px #D9D9D9 solid !important;
+  cursor:       pointer;
+  border:       1px var(--ez_brand_color) solid !important;
   padding:      4px;
   background:   white;
   margin-top:   12px;
@@ -99,6 +112,7 @@
 }
 
 .service-item-card .card-body .card-title {
+  color:         var(--ez_text_color);
   font-size:     12px;
   padding-top:   10px;
   padding-right: 10px;
@@ -112,21 +126,22 @@
   width:        100%;
   font-size:    11px;
   word-wrap:    break-word; 
+  font-family:   var(--ez_text_font);
   font-weight:  400;
   line-height:  14px;
   padding-top:  10px;
 }
 
 .service-item-card .card-body .card-content-table tr th {
-  color: #595959;
+  color: var(--ez_text_color);
 }
 
 .service-item-card .card-body .card-content-table tr td {
-  color: black;
+  color: var(--ez_text_color);
 }
 
 .service-item-card .description {
-  color:        #595959;
+  color:        var(--ez_text_color);
   word-wrap:    break-word;
   font-size:    11px;
   font-weight:  400;
@@ -140,7 +155,7 @@
 }
 
 .service-item-card .card-footer {
-  color:        #595959;
+  color:        var(--ez_brand_color);
   right:        0;
   bottom:       0;
   position:     absolute;
@@ -152,7 +167,7 @@
 
 .service-item-card .it-asset-card-footer {
   right:        0;
-  color:        var(--brown);
+  color:        var(--ez_brand_color);
   bottom:       0;
   position:     absolute;
   font-size:    11px;
@@ -162,7 +177,7 @@
 }
 
 .service-item-card .card-footer .footer-arrow {
-  color:        var(--brown);
+  color:        var(--ez_brand_color);
   font-size:    15px;
   font-weight:  700; 
   margin-right: 5px;
@@ -176,15 +191,15 @@
 }
 
 .request-service-btn {
-  color:            var(--white);
+  color:            var(--ez_brand_color);
   width:            140px;
   height:           42px;
-  border:           2px solid var(--brown);
+  border:           2px solid var(--ez_brand_color);
   font-size:        14px;
-  background:       var(--brown);
+  font-family:      var(--ez_text_font);
+  background:       var(--white);
   font-weight:      700;
   border-radius:    10px;
-  text-decoration:  none !important;
 }
 
 .service-item-detail-description-list {
@@ -196,8 +211,9 @@
 }
 
 a.request-service-btn:hover {
-  color:            white !important;
-  background-color: var(--brown) !important;
+  color:            var(--ez_brand_text_color);
+  text-decoration:  none !important;
+  background-color: var(--ez_brand_color) !important;
 }
 
 .no-access-image {

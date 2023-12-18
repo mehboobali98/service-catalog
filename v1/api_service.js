@@ -63,9 +63,7 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              const categoryName = Object.keys(data)[0];
-              const serviceItems = data[categoryName].service_items;
-              callback(categoryName, serviceItems, callBackOptions.serviceItemsContainerId);
+              callback(data, callBackOptions.serviceItemsContainerId);
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);

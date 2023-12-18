@@ -1,4 +1,5 @@
-import { isMyAssignedAssets } from './utility.js';
+import { ServiceCatalogItemDetailBuilder }          from './service_catalog_item_detail_builder.js';
+import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from './utility.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -26,7 +27,7 @@ class ServiceCatalogItemBuilder {
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-    const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.title).addClass('service-category-label');
+    const serviceCategoryLabel = $('<h4>').text(serviceCategoryItems.title).addClass('service-category-label');
     const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
@@ -67,11 +68,16 @@ class ServiceCatalogItemBuilder {
     const queryParams = {};
 
     // Card image
-    const cardImageContainer = $('<div>').addClass('col-4');
-    const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
-    const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
-                                         .attr('alt', 'IT Asset')
-                                         .addClass('w-100');
+    const cardImageContainer    = $('<div>').addClass('col-4');
+    const cardImageFlex         = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const placeholderPath       = placeholderImagePath(serviceCategoryItem);
+    const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
+                                            .attr('alt', 'IT Asset')
+                                            .addClass('w-100')
+                                            .on('error', function() {
+                                              // If the image fails to load, replace the source with a placeholder image
+                                              $(this).attr('src', placeholderPath);
+                                            });
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
 
@@ -113,19 +119,29 @@ class ServiceCatalogItemBuilder {
     cardBody.append(submitRequestBtn);
     card.append(cardImageContainer, cardBody);
 
+    card.click(function(e) {
+      e.preventDefault();
+
+      window.location.href = url;
+    });
     return card;
   }
 
   buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
-    const card          = $('<div>').addClass('row service-item-card border border-light');
+    const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item');
     const displayFields = serviceCategoryItem.display_fields;
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
     const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
-    const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
+    const placeholderPath    = placeholderImagePath(serviceCategoryItem);
+    const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
                                          .attr('alt', 'Software')
-                                         .addClass('w-100');
+                                         .addClass('w-100')
+                                         .on('error', function() {
+                                              // If the image fails to load, replace the source with a placeholder image
+                                              $(this).attr('src', placeholderPath)
+                                          });
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
 
@@ -189,12 +205,15 @@ class ServiceCatalogItemBuilder {
     }
   }
 
-  buildAndRenderServiceItems = (serviceCategory, serviceItems, serviceItemsContainer) => {
+  buildAndRenderServiceItems = (serviceCategoryItemsData, serviceItemsContainer) => {
     // first child is the flexbox which contains service items
+    const categoryName = Object.keys(serviceCategoryItemsData)[0];
+    const serviceItems = serviceCategoryItemsData[categoryName].service_items;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
+
     let serviceCategoryItems = null;
-    if (isMyAssignedAssets(serviceCategory)) {
+    if (isMyAssignedAssets(categoryName)) {
       serviceCategoryItems = serviceItems['assets'].concat(serviceItems['software_entitlements']);
     } else {
       serviceCategoryItems = serviceItems ? JSON.parse(serviceItems) : [];
@@ -202,9 +221,10 @@ class ServiceCatalogItemBuilder {
 
     if (serviceCategoryItems.length) {
       serviceCategoryItems.forEach((serviceCategoryItem, index) => {
-        if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
+        if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)) };
       });
     }
+    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItemsData) };
   }
 }
 
