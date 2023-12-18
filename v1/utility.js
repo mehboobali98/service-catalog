@@ -113,6 +113,7 @@ function origin() {
 }
 
 function placeholderImagePath(serviceItem) {
+  debugger;
   let type      = serviceItem.type;
   let imageName = null;
   if (type) {

@@ -15,7 +15,6 @@ class ApiService {
             queryParams.search_query = options.searchQuery; 
           }
 
-          debugger;
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
 
           fetch(url, requestOptions)
@@ -33,7 +32,6 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              debugger;
               callback(data, options);
             })
             .catch(error => {

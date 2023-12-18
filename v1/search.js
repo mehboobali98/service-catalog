@@ -28,6 +28,7 @@ class Search {
 
             // Display search results
             serviceItems.forEach(({ item }) => {
+                debugger;
                 let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
                 self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                 searchItemsFlex.append(serviceCategoryItem);
