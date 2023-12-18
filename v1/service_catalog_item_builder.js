@@ -153,6 +153,7 @@ class ServiceCatalogItemBuilder {
     const itemName   = displayFields.title['value'];
     const cardTitle  = $('<p>').text(itemName).addClass('card-title');
     cardBody.append(cardTitle);
+    debugger;
 
     // card description
     const cardDescription = $('<p>').text(displayFields.short_description['value'])
