@@ -155,7 +155,7 @@ class ServiceCatalogBuilder {
       } else {
         serviceItemsContainer.hide();
         searchResultsContainer.show();
-        self.apiService.fetchServiceCategoriesAndItems(self.search.updateResults, self.noAccessPage, { searchQuery: query, searchResultsContainer: searchResultsContainer, itemBuilder: self.serviceCatalogItemBuilder, itemDetailBuilder: self.ServiceCatalogItemDetailBuilder })
+        self.apiService.fetchServiceCategoriesAndItems(self.search.updateResults, self.noAccessPage, { searchQuery: query, searchResultsContainer: searchResultsContainer, itemBuilder: self.serviceCatalogItemBuilder, itemDetailBuilder: self.serviceCatalogItemDetailBuilder })
       }
     });
   }
