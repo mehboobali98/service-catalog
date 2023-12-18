@@ -17,7 +17,7 @@ class Search {
 
         debugger;
 
-        $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
+        $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
             let serviceItems = null;
             if (isMyAssignedAssets(serviceCategory)) {
                 serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
