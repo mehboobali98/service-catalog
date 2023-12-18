@@ -1,40 +1,33 @@
-import { extractServiceItemsWithCategory }  from './utility.js';
+import { isMyAssignedAssets } from './utility.js'
 
 class Search {
-    constructor(data, itemBuilder, itemDetailBuilder) {
-        this.fuse               = null;
-        this.data               = data;
+    constructor(itemBuilder, itemDetailBuilder) {
         this.itemBuilder        = itemBuilder;
         this.itemDetailBuilder  = itemDetailBuilder;
-        this.initFuseSearch();
-    }
-
-    initFuseSearch() {
-        const searchableData = extractServiceItemsWithCategory(this.data);
-        // Create a Fuse instance with the data and desired options
-        const options = {
-            // Specify the property to search in
-            keys:          ['name', 'display_fields.title.value', 'display_fields.description.value', 'display_fields.short_description.value'],
-            includeScore:  true  // Include search score in the results
-        };
-        this.fuse = new Fuse(searchableData, options);
     }
 
     // Function to update search results
-    updateResults(query, searchResultsContainer) {
-        const results = this.fuse.search(query);
-
+    updateResults = (serviceCategoriesItems, searchResultsContainer) => {
         // Clear previous results
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-        // Display search results
-        results.forEach(({ item }) => {
-            let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(item.serviceCategoryName, item);
-            this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
-            searchItemsFlex.append(serviceCategoryItem);
+        $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
+            let serviceItems = null;
+            if (isMyAssignedAssets(serviceCategory)) {
+                serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
+            } else {
+                serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+            }
+
+            // Display search results
+            serviceItems.forEach(({ item }) => {
+                let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
+                this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+                searchItemsFlex.append(serviceCategoryItem);
+            });
+            searchResultsContainer.append(searchItemsFlex);
         });
-        searchResultsContainer.append(searchItemsFlex);
     }
 }
 

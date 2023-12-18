@@ -9,6 +9,7 @@ class ServiceCatalogBuilder {
     this.ezoSubdomain                    = ezoSubdomain;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
+    this.search                          = new Search(this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
   }
 
   addMenuItem(name, url, parent_ele) {
@@ -17,8 +18,6 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog() {
-    // const imageSection = $('<section>').addClass('section hero');
-    // $('main').append(imageSection);
     this.buildServiceCatalogHeaderSection();
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage);
   }
@@ -37,7 +36,6 @@ class ServiceCatalogBuilder {
 
   buildUI = (data) => {
     this.data = data;
-    //this.fuzzySearch = new Search(this.data, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
@@ -155,7 +153,7 @@ class ServiceCatalogBuilder {
       } else {
         serviceItemsContainer.hide();
         searchResultsContainer.show();
-        self.fuzzySearch.updateResults(query, searchResultsContainer);
+        self.apiService.fetchServiceCategoriesAndItems(self.search.updateResults, self.noAccessPage, { searchResultsContainer: searchResultsContainer })
       }
     });
   }
