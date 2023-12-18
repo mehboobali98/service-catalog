@@ -120,7 +120,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog_ux_changes/v1/assets/svgs/${imageName}.svg`;
+  return `https://raw.githubusercontent.com/mehboobali98/service-catalog/enable_search_in_sc/v1/assets/svgs/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {
