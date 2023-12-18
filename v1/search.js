@@ -19,12 +19,14 @@ class Search {
         debugger;
 
         $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
-            let serviceItems = null;
+            let serviceItems = [];
             if (isMyAssignedAssets(serviceCategory)) {
                 serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
             } else {
                 serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
             }
+
+            debugger;
 
             // Display search results
             serviceItems.forEach(({ item }) => {
