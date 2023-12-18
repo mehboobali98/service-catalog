@@ -22,7 +22,7 @@ class Search {
             if (isMyAssignedAssets(serviceCategory)) {
                 serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
             } else {
-                serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+                serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
             }
 
             allServiceItems = allServiceItems.concat(serviceItems);
