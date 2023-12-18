@@ -4,21 +4,19 @@ import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_
 
 class Search {
     constructor() {
-        this.itemBuilder        = null;
-        this.itemDetailBuilder  = null;
+        this.itemBuilder        = new ServiceCatalogItemBuilder();
+        this.itemDetailBuilder  = new ServiceCatalogItemDetailBuilder();
     }
 
     // Function to update search results
     updateResults = (serviceCategoriesItems, options) => {
-        this.itemBuilder             = new ServiceCatalogItemBuilder();
-        this.itemDetailBuilder       = new ServiceCatalogItemDetailBuilder();
-
         const searchResultsContainer = options.searchResultsContainer;
         // Clear previous results
         searchResultsContainer.empty();
         const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
         debugger;
 
+        let allServiceItems = [];
         $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
             let serviceItems = null;
             if (isMyAssignedAssets(serviceCategory)) {
@@ -27,16 +25,18 @@ class Search {
                 serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
             }
 
-            debugger;
-
-            // Display search results
-            serviceItems.forEach(({ item }) => {
-                let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
-                this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
-                searchItemsFlex.append(serviceCategoryItem);
-            });
-            searchResultsContainer.append(searchItemsFlex);
+            allServiceItems = allServiceItems.concat(serviceItems);
         });
+
+        debugger;
+
+        // Display search results
+        allServiceItems.forEach(({ item }) => {
+            let serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, item);
+            this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+            searchItemsFlex.append(serviceCategoryItem);
+        });
+        searchResultsContainer.append(searchItemsFlex);
     }
 }
 
