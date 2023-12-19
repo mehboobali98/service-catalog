@@ -110,13 +110,14 @@ class ServiceCatalogItemBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card footer
+    const cardFooter = $('<div>').addClass('it-asset-card-footer w-100');
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .text('Report Issue')
-                                     .addClass('it-asset-card-footer');
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
+    cardFooter.append(submitRequestBtn);
 
-    cardBody.append(submitRequestBtn);
+    cardBody.append(cardFooter);
     card.append(cardImageContainer, cardBody);
 
     card.click(function(e) {
