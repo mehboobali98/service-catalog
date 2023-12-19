@@ -114,7 +114,7 @@ class ServiceCatalogItemBuilder {
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .text('Report Issue')
-                                     .addClass('float-end');
+                                     .addClass('float-end footer-text');
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
     cardFooter.append(submitRequestBtn);
 

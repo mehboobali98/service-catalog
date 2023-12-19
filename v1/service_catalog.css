@@ -183,6 +183,10 @@
   margin-right: 5px;
 }
 
+.service-item-card .it-asset-card-footer .footer-text {
+  color: var(--ez_brand_color);
+}
+
 .service-item-card .it-asset-card-footer .footer-arrow {
   color:        var(--ez_brand_color);
   font-size:    15px;
