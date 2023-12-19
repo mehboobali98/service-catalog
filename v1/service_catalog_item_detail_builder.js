@@ -51,7 +51,7 @@ class ServiceCatalogItemDetailBuilder {
                                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
       headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
-                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
+                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'padding-top': '10px' }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
@@ -59,10 +59,13 @@ class ServiceCatalogItemDetailBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
+    const requestServiceBtnContainer = $('<div>').addClass('request-service-btn');
     const requestServiceBtn = $('<a>').attr('href', url)
                                       .text('Request Service')
                                       .addClass('btn btn-outline-primary request-service-btn');
-    detailPageHeader.append(headerContent, requestServiceBtn);
+    requestServiceBtnContainer.append(requestServiceBtn);
+
+    detailPageHeader.append(headerContent, requestServiceBtnContainer);
 
     const detailPageBody = $('<div>').addClass('mt-5');
     if (Object.keys(displayFields).length) {
