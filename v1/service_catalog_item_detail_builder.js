@@ -50,8 +50,8 @@ class ServiceCatalogItemDetailBuilder {
     const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
                                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
-      headerContent.append($('<h4>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
-                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
+      headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
+                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
@@ -64,7 +64,7 @@ class ServiceCatalogItemDetailBuilder {
                                       .addClass('btn btn-outline-primary request-service-btn');
     detailPageHeader.append(headerContent, requestServiceBtn);
 
-    const detailPageBody = $('<div>');
+    const detailPageBody = $('<div>').addClass('mt-5');
     if (Object.keys(displayFields).length) {
       $.each(displayFields, (fieldName, fieldData) => {
         // Only showing description field for now.
