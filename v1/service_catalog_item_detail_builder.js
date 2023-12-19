@@ -9,7 +9,6 @@ class ServiceCatalogItemDetailBuilder {
   build(data) {
     this.currency               = data.currency;
     this.serviceCategoriesItems = data.service_catalog_data;
-    debugger;
 
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
