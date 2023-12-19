@@ -93,7 +93,7 @@
 
 .service-item-card {
   width:        280px;
-  height:       120px;
+  height:       300px;
   cursor:       pointer;
   border:       1px var(--ez_brand_color) solid !important;
   padding:      4px;
