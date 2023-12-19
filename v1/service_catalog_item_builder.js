@@ -174,7 +174,7 @@ class ServiceCatalogItemBuilder {
     arrowContainer.append(arrow);
 
     if (displayFields.cost_price) {
-      const price = $('<span>').text(`${this.currency} ${displayFields.cost_price['value']}`);
+      const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
       cardFooter.append(price);
     }
     cardFooter.append(arrowContainer);

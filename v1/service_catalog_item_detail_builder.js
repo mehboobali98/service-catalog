@@ -50,7 +50,7 @@ class ServiceCatalogItemDetailBuilder {
     const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
                                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
-      headerContent.append($('<h4>').text(`${this.currency} ${displayFields.cost_price['value']}`)
+      headerContent.append($('<h4>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
                                     .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     }
 
