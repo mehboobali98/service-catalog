@@ -59,7 +59,7 @@ class ServiceCatalogItemDetailBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
-    const requestServiceBtnContainer = $('<div>').addClass('request-service-btn');
+    const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
     const requestServiceBtn = $('<a>').attr('href', url)
                                       .text('Request Service')
                                       .addClass('btn btn-outline-primary request-service-btn');
@@ -67,7 +67,7 @@ class ServiceCatalogItemDetailBuilder {
 
     detailPageHeader.append(headerContent, requestServiceBtnContainer);
 
-    const detailPageBody = $('<div>').addClass('mt-5');
+    const detailPageBody = $('<div>').addClass('mt-3');
     if (Object.keys(displayFields).length) {
       $.each(displayFields, (fieldName, fieldData) => {
         // Only showing description field for now.

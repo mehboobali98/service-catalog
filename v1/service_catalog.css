@@ -195,7 +195,7 @@
   padding-left: 5px;
 }
 
-.request-service-btn {
+.request-service-btn-container .request-service-btn {
   color:            var(--ez_brand_color);
   width:            140px;
   border:           2px solid var(--ez_brand_color);
