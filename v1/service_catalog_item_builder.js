@@ -8,7 +8,6 @@ class ServiceCatalogItemBuilder {
   }
 
   build(data) {
-    debugger;
     this.currency               = data.currency;
     this.serviceCategoriesItems = data.service_catalog_data;
 
@@ -211,8 +210,10 @@ class ServiceCatalogItemBuilder {
     }
   }
 
-  buildAndRenderServiceItems = (serviceCategoryItemsData, serviceItemsContainer) => {
+  buildAndRenderServiceItems = (data, serviceItemsContainer) => {
     // first child is the flexbox which contains service items
+    const serviceCategoryItemsData = data.service_catalog_data;
+    this.currency      = data.currency;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
@@ -230,7 +231,7 @@ class ServiceCatalogItemBuilder {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)) };
       });
     }
-    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItemsData) };
+    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(data) };
   }
 }
 
