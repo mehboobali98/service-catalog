@@ -56,6 +56,11 @@ function loadFile(url, fileType, callback) {
   document.head.appendChild(element);
 }
 
+function serviceCatalogDataPresent(data) {
+  const serviceCategories = Object.keys(data);
+  return serviceCategories.length > 0;
+}
+
 function isMyAssignedAssets(serviceCategory) {
   const regex = /^\d*_my_assigned_assets$/;
   return regex.test(serviceCategory);
@@ -137,4 +142,5 @@ export {  isSignedIn,
           getCssVariableValue,
           placeholderImagePath,
           isServiceCatalogPage,
+          serviceCatalogDataPresent,
           extractServiceItemsWithCategory };

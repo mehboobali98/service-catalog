@@ -1,5 +1,6 @@
 import { Search }                           from './search.js';
 import { ApiService }                       from './api_service.js';
+import { serviceCatalogDataPresent }        from './utility.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
@@ -37,6 +38,9 @@ class ServiceCatalogBuilder {
 
   buildUI = (data) => {
     this.data = data;
+
+    if (!serviceCatalogDataPresent(data)) { return; }
+
     //this.fuzzySearch = new Search(this.data, this.serviceCatalogItemBuilder, this.serviceCatalogItemDetailBuilder);
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
@@ -44,7 +48,6 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = $('<div>').addClass('row');
 
     const searchAndNavContainer = $('<div>').addClass('col-2');
-    debugger;
     const searchAndNavContainerText = $('<h4>').text('Categories').addClass('service-categories-heading');
 
     const searchField = $('<input>').attr('id', 'search_input')
