@@ -167,7 +167,6 @@
 }
 
 .service-item-card .it-asset-card-footer {
-  right:        0;
   color:        var(--ez_brand_color);
   bottom:       0;
   position:     absolute;
