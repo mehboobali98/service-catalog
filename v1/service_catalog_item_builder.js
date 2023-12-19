@@ -3,11 +3,15 @@ import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from '.
 
 class ServiceCatalogItemBuilder {
   constructor() {
+    this.currency               = null;
     this.serviceCategoriesItems = null;
   }
 
-  build(serviceCategoriesItems) {
-    this.serviceCategoriesItems = serviceCategoriesItems
+  build(data) {
+    debugger;
+    this.currency               = data.currency;
+    this.serviceCategoriesItems = data.service_catalog_data;
+
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
@@ -171,7 +175,7 @@ class ServiceCatalogItemBuilder {
     arrowContainer.append(arrow);
 
     if (displayFields.cost_price) {
-      const price = $('<span>').text(displayFields.cost_price['value']);
+      const price = $('<span>').text(`${this.currency} ${displayFields.cost_price['value']}`);
       cardFooter.append(price);
     }
     cardFooter.append(arrowContainer);
