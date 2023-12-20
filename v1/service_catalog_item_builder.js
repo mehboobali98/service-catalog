@@ -3,12 +3,15 @@ import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from '.
 
 class ServiceCatalogItemBuilder {
   constructor() {
+    this.currency               = null;
     this.zendeskFormData        = null;
     this.serviceCategoriesItems = null;
   }
 
-  build(serviceCategoriesItems) {
-    this.serviceCategoriesItems = serviceCategoriesItems
+  build(data) {
+    this.currency               = data.currency;
+    this.serviceCategoriesItems = data.service_catalog_data;
+
     const serviceCategories     = Object.keys(this.serviceCategoriesItems);
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
@@ -111,13 +114,15 @@ class ServiceCatalogItemBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card footer
+    const cardFooter = $('<div>').addClass('it-asset-card-footer w-100');
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .text('Report Issue')
-                                     .addClass('it-asset-card-footer');
+                                     .addClass('float-end footer-text');
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
+    cardFooter.append(submitRequestBtn);
 
-    cardBody.append(submitRequestBtn);
+    cardBody.append(cardFooter);
     card.append(cardImageContainer, cardBody);
 
     card.click(function(e) {
@@ -170,7 +175,7 @@ class ServiceCatalogItemBuilder {
     arrowContainer.append(arrow);
 
     if (displayFields.cost_price) {
-      const price = $('<span>').text(displayFields.cost_price['value']);
+      const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
       cardFooter.append(price);
     }
     cardFooter.append(arrowContainer);
@@ -206,8 +211,10 @@ class ServiceCatalogItemBuilder {
     }
   }
 
-  buildAndRenderServiceItems = (serviceCategoryItemsData, serviceItemsContainer) => {
+  buildAndRenderServiceItems = (data, serviceItemsContainer) => {
     // first child is the flexbox which contains service items
+    const serviceCategoryItemsData = data.service_catalog_data;
+    this.currency      = data.currency;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
@@ -225,7 +232,7 @@ class ServiceCatalogItemBuilder {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)) };
       });
     }
-    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(serviceCategoryItemsData) };
+    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(data) };
   }
 }
 

@@ -1,5 +1,6 @@
 import { Search }                           from './search.js';
 import { ApiService }                       from './api_service.js';
+import { serviceCatalogDataPresent }        from './utility.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
@@ -36,6 +37,9 @@ class ServiceCatalogBuilder {
 
   buildUI = (data, options) => {
     this.data = data;
+
+    if (!serviceCatalogDataPresent(data)) { return; }
+
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
@@ -48,7 +52,7 @@ class ServiceCatalogBuilder {
                                     .attr('type', 'text')
                                     .attr('placeholder', 'search...');
     const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
-    searchAndNavContainer.append(searchAndNavContainerText, searchBar);
+    searchAndNavContainer.append(searchAndNavContainerText);
 
     const containers = {
       newSection: newSection,
@@ -81,10 +85,11 @@ class ServiceCatalogBuilder {
 
   // Create a function to generate the vertical navbar
   generateNavbar() {
-    const navbar         = $('<ul>');
-    let activeClassAdded = false;
+    const navbar                 = $('<ul>');
+    let activeClassAdded         = false;
+    const serviceCategoriesItems = this.data.service_catalog_data;
 
-    $.each(this.data, function(serviceCategory, serviceCategoryData) {
+    $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
                               .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
@@ -101,7 +106,7 @@ class ServiceCatalogBuilder {
 
   bindEventListeners() {
     const self                 = this;
-    const serviceCategories    = Object.keys(this.data);
+    const serviceCategories    = Object.keys(this.data.service_catalog_data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {

@@ -2,11 +2,14 @@ import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from '.
 
 class ServiceCatalogItemDetailBuilder {
   constructor() {
+    this.currency               = null;
     this.serviceCategoriesItems = null;
   }
 
-  build(serviceCategoriesItems) {
-    this.serviceCategoriesItems = serviceCategoriesItems;
+  build(data) {
+    this.currency               = data.currency;
+    this.serviceCategoriesItems = data.service_catalog_data;
+
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = serviceCategory + '_container';
       let container   = $('#' + containerId);
@@ -47,8 +50,8 @@ class ServiceCatalogItemDetailBuilder {
     const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
                                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
-      headerContent.append($('<h4>').text(displayFields.cost_price.value)
-                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
+      headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
+                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'padding-top': '10px' }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
@@ -56,12 +59,15 @@ class ServiceCatalogItemDetailBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
     const url = '/hc/requests/new' + '?' + $.param(queryParams);
 
+    const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
     const requestServiceBtn = $('<a>').attr('href', url)
                                       .text('Request Service')
                                       .addClass('btn btn-outline-primary request-service-btn');
-    detailPageHeader.append(headerContent, requestServiceBtn);
+    requestServiceBtnContainer.append(requestServiceBtn);
 
-    const detailPageBody = $('<div>');
+    detailPageHeader.append(headerContent, requestServiceBtnContainer);
+
+    const detailPageBody = $('<div>').addClass('mt-3');
     if (Object.keys(displayFields).length) {
       $.each(displayFields, (fieldName, fieldData) => {
         // Only showing description field for now.

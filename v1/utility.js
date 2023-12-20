@@ -56,6 +56,11 @@ function loadFile(url, fileType, callback) {
   document.head.appendChild(element);
 }
 
+function serviceCatalogDataPresent(data) {
+  const serviceCategories = Object.keys(data);
+  return serviceCategories.length > 0;
+}
+
 function isMyAssignedAssets(serviceCategory) {
   const regex = /^\d*_my_assigned_assets$/;
   return regex.test(serviceCategory);
@@ -120,7 +125,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `https://raw.githubusercontent.com/mehboobali98/service-catalog/enable_search_in_sc/v1/assets/svgs/${imageName}.svg`;
+  return `https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog/v1/assets/svgs/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {
@@ -137,4 +142,5 @@ export {  isSignedIn,
           getCssVariableValue,
           placeholderImagePath,
           isServiceCatalogPage,
+          serviceCatalogDataPresent,
           extractServiceItemsWithCategory };
