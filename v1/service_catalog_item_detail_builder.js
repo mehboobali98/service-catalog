@@ -26,7 +26,7 @@ class ServiceCatalogItemDetailBuilder {
   buildDetailPage(serviceCategory, serviceCategoryItem) {
     const queryParams         = {};
     const displayFields       = serviceCategoryItem.display_fields;
-    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategory + serviceCategoryItem.id + displayFields.title.value)
+    const detailPageContainer = $('<div>').attr('id', 'detail_page_container' + serviceCategoryItem.id + displayFields.title.value)
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
 
@@ -116,7 +116,7 @@ class ServiceCatalogItemDetailBuilder {
       const name         = $(this).data('name');
       const containerId  = $(this).data('container-id');
       const containerEle = $('#' + containerId);
-      const detailPageContainerId = 'detail_page_container' + serviceCategory + id + name;
+      const detailPageContainerId = 'detail_page_container' + id + name;
       // to-do: unable to find elemeny by id using jquery but its found using javascript??
       const detailPageEle = $(document.getElementById(detailPageContainerId));
       $('#service_catalog_item_search_results_container').hide();
