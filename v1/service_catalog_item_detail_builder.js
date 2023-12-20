@@ -47,8 +47,8 @@ class ServiceCatalogItemDetailBuilder {
 
     const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
-    const headerContent = $('<div>').append($('<h4>').text(displayFields.title.value)
-                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
+    const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
+                                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
       headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'padding-top': '10px' }));
@@ -73,7 +73,7 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<h4>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont });
+          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
