@@ -73,7 +73,7 @@ class ServiceCatalogItemBuilder {
 
     // Card image
     const cardImageContainer    = $('<div>').addClass('col-4');
-    const cardImageFlex         = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const cardImageFlex         = $('<div>').addClass('d-flex flex-column h-100');
     const placeholderPath       = placeholderImagePath(serviceCategoryItem);
     const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                             .attr('alt', 'IT Asset')
@@ -139,7 +139,7 @@ class ServiceCatalogItemBuilder {
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
-    const cardImageFlex      = $('<div>').addClass('d-flex flex-column justify-content-center h-100');
+    const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100');
     const placeholderPath    = placeholderImagePath(serviceCategoryItem);
     const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
                                          .attr('alt', 'Software')

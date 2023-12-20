@@ -35,7 +35,7 @@
 }
 
 .service-catalog-search input {
-  color:          #808080;
+  color:          black;
   height:         30px;
   border:         1px var(--ez_brand_color) solid;
   font-size:      12px;
@@ -120,8 +120,9 @@
 
 .service-item-card .card-body .card-title {
   color:         var(--ez_text_color);
-  font-size:     12px;
+  font-size:     14px;
   padding-top:   10px;
+  font-weight:   500;
   padding-right: 10px;
 }
 
@@ -132,7 +133,7 @@
 
 .service-item-card .card-body .card-content-table {
   width:        100%;
-  font-size:    11px;
+  font-size:    12px;
   word-wrap:    break-word; 
   font-family:   var(--ez_text_font);
   font-weight:  400;
@@ -178,7 +179,7 @@
   color:        var(--ez_brand_color);
   bottom:       0;
   position:     absolute;
-  font-size:    11px;
+  font-size:    12px;
   padding-top:  10px;
   font-weight:  700;
   padding-top:  10px;

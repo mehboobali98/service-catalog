@@ -51,7 +51,7 @@ class ServiceCatalogItemDetailBuilder {
                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     if (displayFields.cost_price) {
       headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
-                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'padding-top': '10px' }));
+                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
