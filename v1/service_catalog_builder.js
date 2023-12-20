@@ -75,7 +75,7 @@ class ServiceCatalogBuilder {
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
-    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
+    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer, this.loadingIcon());
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
@@ -148,16 +148,17 @@ class ServiceCatalogBuilder {
       e.preventDefault();
 
       const query                  = $(this).val().trim();
+      const loadingIconContainer   = $('#loading_icon_container');
       const serviceItemsContainer  = $('#service_items_container');
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
 
-      debugger;
       const activeCategory = $('#service_categories_list ul li.active');
-      activeCategory.removeClass('active');
-      searchResultsContainer.data('active-category', activeCategory);
+      // to-do: Handle this.
+      //activeCategory.removeClass('active');
+      //searchResultsContainer.data('active-category', activeCategory);
 
       if (query.length === 0) {
-        searchResultsContainer.data('active-category').addClass('active');
+        //searchResultsContainer.data('active-category').addClass('active');
         searchResultsContainer.hide();
         serviceItemsContainer.show();
       } else {
@@ -165,8 +166,8 @@ class ServiceCatalogBuilder {
         // Clear previous results
         searchResultsContainer.empty();
         searchResultsContainer.show();
+        loadingIconContainer.show();
 
-        debugger;
         if (timer) {
           clearTimeout(timer);
         } else {
@@ -183,7 +184,7 @@ class ServiceCatalogBuilder {
                 }
               );
             },
-            1000
+            500
           );
         }
       }
@@ -219,7 +220,7 @@ class ServiceCatalogBuilder {
 
   loadingIcon() {
     const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
-                                              .addClass('col-10');
+                                              .addClass('col-10 collapse');
     const loadingIconFlex         = $('<div>').addClass('d-flex flex-column align-items-center');
     // to-do: store this on cdn and use.
     const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',

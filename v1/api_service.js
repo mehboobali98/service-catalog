@@ -1,6 +1,7 @@
 class ApiService {
   constructor(ezoSubdomain) {
-    this.ezoSubdomain = ezoSubdomain;
+    this.ezoSubdomain         = ezoSubdomain;
+    this.loadingIconContainer = $('#loading_icon_container');
   }
 
   fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
@@ -15,7 +16,7 @@ class ApiService {
           }
 
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
-
+          this.loadingIconContainer.show();
           fetch(url, requestOptions)
             .then(response => {
               if (response.status === 400) {
@@ -31,6 +32,8 @@ class ApiService {
               return response.json();
             })
             .then(data => {
+              debugger;
+              this.loadingIconContainer.hide();
               debugger;
               callback(data, options);
             })
@@ -51,6 +54,7 @@ class ApiService {
           service_category_id: categoryId
         }; 
         const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
+        this.loadingIconContainer.show();
 
         fetch(url, options)
           .then(response => {
@@ -67,6 +71,9 @@ class ApiService {
             return response.json();
           })
           .then(data => {
+            debugger;
+            this.loadingIconContainer.hide();
+            debugger;
             callback(data, callBackOptions.serviceItemsContainerId);
           })
           .catch(error => {
