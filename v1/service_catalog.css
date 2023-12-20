@@ -95,7 +95,7 @@
   width:        280px;
   height:       150px;
   cursor:       pointer;
-  border:       1px var(--ez_brand_color) solid !important;
+  border:       1px #D9D9D9 solid !important;
   padding:      4px;
   background:   white;
   margin-top:   12px;
