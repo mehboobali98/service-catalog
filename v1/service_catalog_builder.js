@@ -1,6 +1,6 @@
 import { Search }                           from './search.js';
 import { ApiService }                       from './api_service.js';
-import { serviceCatalogDataPresent }        from './utility.js';
+import { loadingIcon, serviceCatalogDataPresent }        from './utility.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
@@ -20,6 +20,7 @@ class ServiceCatalogBuilder {
 
   buildServiceCatalog() {
     this.buildServiceCatalogHeaderSection();
+    $('main').append(loadingIcon());
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
   }
 
