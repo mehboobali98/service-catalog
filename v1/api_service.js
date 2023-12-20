@@ -15,7 +15,6 @@ class ApiService {
           }
 
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
-          $('#loading_icon_container').show();
           fetch(url, requestOptions)
             .then(response => {
               if (response.status === 400) {
@@ -31,8 +30,6 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              debugger;
-              $('#loading_icon_container').hide();
               debugger;
               callback(data, options);
             })
@@ -70,8 +67,6 @@ class ApiService {
             return response.json();
           })
           .then(data => {
-            debugger;
-            $('#loading_icon_container').hide();
             debugger;
             callback(data, callBackOptions.serviceItemsContainerId);
           })

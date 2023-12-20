@@ -1,5 +1,5 @@
 import { ServiceCatalogItemDetailBuilder }          from './service_catalog_item_detail_builder.js';
-import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from './utility.js';
+import { loadingIcon, isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from './utility.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -29,7 +29,10 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsContainer = $('<div>');
     serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
 
-    if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
+    if (!isVisible) {
+      serviceCategoryItemsContainer.addClass('collapse');
+      serviceCategoryItemsContainer.append(loadingIcon());
+    }
 
     const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.title).addClass('service-category-label');
     const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');
@@ -96,7 +99,6 @@ class ServiceCatalogItemBuilder {
     // Card content
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
-    const displayFields        = this.prepareAssignedAssetDisplayFields(serviceCategoryItem);
 
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
     $.each(fields, function(label, value) {
@@ -186,22 +188,6 @@ class ServiceCatalogItemBuilder {
     return card;
   }
 
-  prepareAssignedAssetDisplayFields(serviceItem) {
-    const type          = serviceItem.type;
-    const displayFields = [];
-    if (type === 'assigned_it_asset') {
-      displayFields.push({
-        label: 'Serial #', value: serviceItem.serial_num
-      });
-    } else if (type === 'assigned_software_entitlement') {
-      displayFields.push({
-        label: 'Seats Given', value: serviceItem.seats_given
-      })
-    }
-    displayFields.push({ label: 'Assigned On', value: serviceItem.assigned_on });
-    return displayFields;
-  }
-
   zendeskFormId(serviceItem) {
     const type = serviceItem.type;
     if (type === 'assigned_asset') {
@@ -217,6 +203,7 @@ class ServiceCatalogItemBuilder {
     this.currency      = data.currency;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
+    debugger;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
 

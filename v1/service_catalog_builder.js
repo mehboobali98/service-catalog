@@ -75,7 +75,7 @@ class ServiceCatalogBuilder {
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
-    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer, this.loadingIcon());
+    serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
@@ -216,20 +216,6 @@ class ServiceCatalogBuilder {
     noAccessPageSection.append(noAccessPageContainer);
 
     $('main').append(noAccessPageSection);
-  }
-
-  loadingIcon() {
-    const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
-                                              .addClass('col-10 collapse');
-    const loadingIconFlex         = $('<div>').addClass('d-flex flex-column align-items-center');
-    // to-do: store this on cdn and use.
-    const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',
-                                                      'alt': 'Loading...'
-                                                    });
-    loadingIconFlex.append(loadingIcon);
-    loadingIconContainer.append(loadingIconFlex);
-
-    return loadingIconContainer;
   }
 }
 
