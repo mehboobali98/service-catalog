@@ -201,8 +201,7 @@ class ServiceCatalogItemBuilder {
     this.currency      = data.currency;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
-    const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
-    debugger;
+    const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
 
     let serviceCategoryItems = null;
@@ -212,7 +211,6 @@ class ServiceCatalogItemBuilder {
       serviceCategoryItems = serviceItems ? JSON.parse(serviceItems) : [];
     }
 
-    debugger;
     if (serviceCategoryItems.length) {
       serviceCategoryItems.forEach((serviceCategoryItem, index) => {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)) };
