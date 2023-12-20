@@ -37,7 +37,7 @@
 .service-catalog-search input {
   color:          black;
   height:         30px;
-  border:         1px var(--ez_brand_color) solid;
+  border:         1px var(--ez_brand_color, var(--primary_color)) solid;
   font-size:      12px;
   font-weight:    400;
   line-height:    17px;
@@ -65,7 +65,7 @@
 }
 
 .service-categories-list ul li.active {
-  color: var(--ez_brand_color);
+  color: var(--ez_brand_color, var(--primary_color));
   font-weight: 700;
 }
 
@@ -75,11 +75,11 @@
 }
 
 .service-categories-list ul li a:hover {
-  color: var(--ez_brand_color);
+  color: var(--ez_brand_color, var(--primary_color));
 }
 
 .service-categories-list ul li a:active {
-  color: var(--ez_brand_color);
+  color: var(--ez_brand_color, var(--primary_color));
 }
 
 .service-category-label {
@@ -165,7 +165,7 @@
 }
 
 .service-item-card .card-footer {
-  color:        var(--ez_brand_color);
+  color:        var(--ez_brand_color, var(--primary_color));
   right:        0;
   bottom:       0;
   position:     absolute;
@@ -176,7 +176,7 @@
 }
 
 .service-item-card .it-asset-card-footer {
-  color:        var(--ez_brand_color);
+  color:        var(--ez_brand_color, var(--primary_color));
   bottom:       0;
   position:     absolute;
   font-size:    12px;
@@ -186,18 +186,18 @@
 }
 
 .service-item-card .card-footer .footer-arrow {
-  color:        var(--ez_brand_color);
+  color:        var(--ez_brand_color, var(--primary_color));
   font-size:    15px;
   font-weight:  700; 
   margin-right: 5px;
 }
 
 .service-item-card .it-asset-card-footer .footer-text {
-  color: var(--ez_brand_color);
+  color: var(--ez_brand_color, var(--primary_color));
 }
 
 .service-item-card .it-asset-card-footer .footer-arrow {
-  color:        var(--ez_brand_color);
+  color:        var(--ez_brand_color, var(--primary_color));
   font-size:    15px;
   font-weight:  700; 
   margin-right: 5px;
@@ -205,9 +205,9 @@
 }
 
 .request-service-btn-container .request-service-btn {
-  color:            var(--ez_brand_color);
+  color:            var(--ez_brand_color, var(--primary_color));
   width:            140px;
-  border:           2px solid var(--ez_brand_color);
+  border:           2px solid var(--ez_brand_color, var(--primary_color));
   font-size:        14px;
   font-family:      var(--ez_text_font);
   background:       var(--white);
