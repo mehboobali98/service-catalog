@@ -1,7 +1,6 @@
 class ApiService {
   constructor(ezoSubdomain) {
-    this.ezoSubdomain         = ezoSubdomain;
-    this.loadingIconContainer = $('#loading_icon_container');
+    this.ezoSubdomain = ezoSubdomain;
   }
 
   fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
@@ -16,7 +15,7 @@ class ApiService {
           }
 
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
-          this.loadingIconContainer.show();
+          $('#loading_icon_container').show();
           fetch(url, requestOptions)
             .then(response => {
               if (response.status === 400) {
@@ -33,7 +32,7 @@ class ApiService {
             })
             .then(data => {
               debugger;
-              this.loadingIconContainer.hide();
+              $('#loading_icon_container').hide();
               debugger;
               callback(data, options);
             })
@@ -54,7 +53,7 @@ class ApiService {
           service_category_id: categoryId
         }; 
         const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
-        this.loadingIconContainer.show();
+        $('#loading_icon_container').show();
 
         fetch(url, options)
           .then(response => {
@@ -72,7 +71,7 @@ class ApiService {
           })
           .then(data => {
             debugger;
-            this.loadingIconContainer.hide();
+            $('#loading_icon_container').hide();
             debugger;
             callback(data, callBackOptions.serviceItemsContainerId);
           })
@@ -85,6 +84,10 @@ class ApiService {
 
   withToken() {
     return $.getJSON('/hc/api/v2/integration/token').then(data => data.token);
+  }
+
+  loadingIconContainer() {
+    return 
   }
 }
 
