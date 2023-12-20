@@ -25,8 +25,8 @@ class ServiceCatalogBuilder {
 
   buildServiceCatalogHeaderSection() {
     const headerSection     = $('<section>');
-    const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid');
-    const headerEle         = $('<h1>').addClass('service-catalog-header-label')
+    const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
+    const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                        .text('Service Catalog');
     const headerDescription = $('<p>').addClass('service-catalog-description')
                                       .text('Explore the Service Catalog to find a curated range of solutions to your needs');
@@ -46,7 +46,7 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = $('<div>').addClass('row');
 
     const searchAndNavContainer = $('<div>').addClass('col-2');
-    const searchAndNavContainerText = $('<h4>').text('Categories').addClass('service-categories-heading');
+    const searchAndNavContainerText = $('<p>').text('Categories').addClass('service-categories-heading');
 
     const searchField = $('<input>').attr('id', 'search_input')
                                     .attr('type', 'text')
