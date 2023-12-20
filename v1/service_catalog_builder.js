@@ -19,7 +19,7 @@ class ServiceCatalogBuilder {
                                     href: url,
                                     text: name
                                   }).addClass('service-catalog-nav-item nav-link');
-    if ($parentEle.children().first().is('li')) {
+    if (parentElement.children().first().is('li')) {
       parentElement.prepend($('<li>').append(serviceCatalogNavItem));
     } else {
       parentElement.prepend(serviceCatalogNavItem);
