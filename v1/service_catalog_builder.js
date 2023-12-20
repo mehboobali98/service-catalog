@@ -13,9 +13,15 @@ class ServiceCatalogBuilder {
     this.search                          = new Search();
   }
 
-  addMenuItem(name, url, parent_ele) {
-    const serviceCatalog = $('<a>').attr('href', url).text(name).attr('id', 'service-catalog-nav-item');
-    $("#" + parent_ele).prepend(serviceCatalog);
+  addMenuItem(name, url, parentEle) {
+    const $parentEle = $(parentEle);
+    const $containerEle = $parentEle.children().first().is('li') ? $('<li>').appendTo($parentEle) : $parentEle;
+    
+    $('<a>', {
+        href: url,
+        text: name,
+        id: 'service-catalog-nav-item nav-link'
+    }).appendTo($containerEle);
   }
 
   buildServiceCatalog() {
