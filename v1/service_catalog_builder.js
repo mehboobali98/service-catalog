@@ -152,9 +152,12 @@ class ServiceCatalogBuilder {
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
 
       debugger;
-      $('#service_categories_list ul li.active').removeClass('active');
+      const activeCategory = $('#service_categories_list ul li.active');
+      activeCategory.removeClass('active');
+      searchResultsContainer.data('active-category', activeCategory);
 
       if (query.length === 0) {
+        searchResultsContainer.data('active-category').addClass('active');
         searchResultsContainer.hide();
         serviceItemsContainer.show();
       } else {
