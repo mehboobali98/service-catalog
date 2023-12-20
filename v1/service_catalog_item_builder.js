@@ -134,7 +134,11 @@ class ServiceCatalogItemBuilder {
   }
 
   buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
-    const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item');
+    const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item')
+                                    .data('id', serviceCategoryItem.id)
+                                    .data('name', displayFields.title['value'])
+                                    .data('container-id', serviceCategory + '_service_items_container');
+
     const displayFields = serviceCategoryItem.display_fields;
 
     // Create the card image element
