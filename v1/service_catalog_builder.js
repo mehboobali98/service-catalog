@@ -14,15 +14,17 @@ class ServiceCatalogBuilder {
   }
 
   addMenuItem(name, url, parentEle) {
-    const $parentEle    = $(`#${parentEle}`);
-    const $containerEle = $parentEle.children().first().is('li') ? $('<li>').appendTo($parentEle) : $parentEle;
-    debugger;
-    
-    $('<a>', {
-        href: url,
-        text: name,
-        id: 'service-catalog-nav-item nav-link'
-    }).appendTo($containerEle);
+    const parentElement = $(`#${parentEle}`);
+    const serviceCatalogNavItem = $('<a>', {
+                                    id:   'service-catalog-nav-item nav-link',
+                                    href: url,
+                                    text: name
+                                  });
+    if ($parentEle.children().first().is('li')) {
+      parentElement.prepend($('<li>').append(serviceCatalogNavItem));
+    } else {
+      parentElement.prepend(serviceCatalogNavItem);
+    }
   }
 
   buildServiceCatalog() {
