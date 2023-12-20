@@ -29,10 +29,7 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsContainer = $('<div>');
     serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
 
-    if (!isVisible) {
-      serviceCategoryItemsContainer.addClass('collapse');
-      serviceCategoryItemsContainer.append(loadingIcon());
-    }
+    if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
     const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.title).addClass('service-category-label');
     const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');
@@ -40,6 +37,7 @@ class ServiceCatalogItemBuilder {
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
     const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
+    if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon()); }
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
     let serviceItems = null;
