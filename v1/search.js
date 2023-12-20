@@ -9,13 +9,13 @@ class Search {
     }
 
     // Function to update search results
-    updateResults = (serviceCategoriesItems, options) => {
+    updateResults = (data, options) => {
         self                         = this;
         self.itemBuilder             = options.itemBuilder;
         const searchItemsFlex        = $('<div>').addClass('d-flex flex-wrap gap-3');
         self.itemDetailBuilder       = options.itemDetailBuilder;
         const searchResultsContainer = options.searchResultsContainer;
-        debugger;
+        const serviceCategoriesItems = data.service_catalog_data;
 
         $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
             let serviceItems = [];

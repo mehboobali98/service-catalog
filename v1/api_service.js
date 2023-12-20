@@ -65,7 +65,6 @@ class ApiService {
             return response.json();
           })
           .then(data => {
-            debugger;
             callback(data, callBackOptions.serviceItemsContainerId);
           })
           .catch(error => {
