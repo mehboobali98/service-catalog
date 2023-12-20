@@ -30,11 +30,9 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              debugger;
               callback(data, options);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
@@ -67,7 +65,6 @@ class ApiService {
             return response.json();
           })
           .then(data => {
-            debugger;
             callback(data, callBackOptions.serviceItemsContainerId);
           })
           .catch(error => {

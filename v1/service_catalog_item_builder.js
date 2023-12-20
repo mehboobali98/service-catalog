@@ -201,7 +201,6 @@ class ServiceCatalogItemBuilder {
     this.currency      = data.currency;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
-    debugger;
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().first();
     serviceCategoryItemsFlex.empty();
 
