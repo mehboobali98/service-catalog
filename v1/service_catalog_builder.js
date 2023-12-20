@@ -105,6 +105,7 @@ class ServiceCatalogBuilder {
   }
 
   bindEventListeners() {
+    let timer                  = null;
     const self                 = this;
     const serviceCategories    = Object.keys(this.data.service_catalog_data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
@@ -146,7 +147,6 @@ class ServiceCatalogBuilder {
     $('#search_input').on('keyup', function(e) {
       e.preventDefault();
 
-      let timer                    = null;
       const query                  = $(this).val().trim();
       const serviceItemsContainer  = $('#service_items_container');
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
