@@ -14,8 +14,9 @@ class ServiceCatalogBuilder {
   }
 
   addMenuItem(name, url, parentEle) {
-    const $parentEle = $(parentEle);
+    const $parentEle    = $(parentEle);
     const $containerEle = $parentEle.children().first().is('li') ? $('<li>').appendTo($parentEle) : $parentEle;
+    debugger;
     
     $('<a>', {
         href: url,
