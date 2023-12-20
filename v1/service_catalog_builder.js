@@ -16,10 +16,9 @@ class ServiceCatalogBuilder {
   addMenuItem(name, url, parentEle) {
     const parentElement = $(`#${parentEle}`);
     const serviceCatalogNavItem = $('<a>', {
-                                    id:   'service-catalog-nav-item nav-link',
                                     href: url,
                                     text: name
-                                  });
+                                  }).addClass('service-catalog-nav-item nav-link');
     if ($parentEle.children().first().is('li')) {
       parentElement.prepend($('<li>').append(serviceCatalogNavItem));
     } else {
