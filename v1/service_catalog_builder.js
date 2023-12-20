@@ -180,7 +180,7 @@ class ServiceCatalogBuilder {
                 }
               );
             },
-            5000
+            1000
           );
         }
       }
