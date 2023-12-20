@@ -5,10 +5,12 @@
 }
 
 .service-catalog-header-container {
+  height:           150px;
   background-image: url(//theme.zdassets.com/theme_assets/859601/eabf50894a56b2eb7b2c5b5dac193b307d3aeccc.jpg);
 }
 
 .service-catalog-header-label {
+  padding-top: 35px;
   margin-top:  34px;
   margin-left: 170px;
 }
@@ -29,7 +31,6 @@
 
 .service-categories-heading {
   font-size:   18px;
-  font-weight: bold;
   font-family: var(--ez_heading_font);
 }
 
