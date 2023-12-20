@@ -163,6 +163,7 @@ class ServiceCatalogBuilder {
         searchResultsContainer.empty();
         searchResultsContainer.show();
 
+        debugger;
         if (timer) {
           clearTimeout(timer);
         } else {
