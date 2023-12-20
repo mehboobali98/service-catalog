@@ -52,7 +52,7 @@ class ServiceCatalogBuilder {
                                     .attr('type', 'text')
                                     .attr('placeholder', 'search...');
     const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
-    searchAndNavContainer.append(searchAndNavContainerText);
+    searchAndNavContainer.append(searchAndNavContainerText, searchBar);
 
     const containers = {
       newSection: newSection,
