@@ -146,10 +146,12 @@ class ServiceCatalogBuilder {
     $('#search_input').on('keyup', function(e) {
       e.preventDefault();
 
-      const query = $(this).val().trim();
+      let timer                    = null;
+      const query                  = $(this).val().trim();
       const serviceItemsContainer  = $('#service_items_container');
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
 
+      debugger;
       $('#service_categories_list ul li.active').removeClass('active');
 
       if (query.length === 0) {
@@ -160,7 +162,26 @@ class ServiceCatalogBuilder {
         // Clear previous results
         searchResultsContainer.empty();
         searchResultsContainer.show();
-        self.apiService.fetchServiceCategoriesAndItems(self.search.updateResults, self.noAccessPage, { searchQuery: query, searchResultsContainer: searchResultsContainer, itemBuilder: self.serviceCatalogItemBuilder, itemDetailBuilder: self.serviceCatalogItemDetailBuilder })
+
+        if (timer) {
+          clearTimeout(timer);
+        } else {
+          timer = setTimeout(
+            function () {
+              self.apiService.fetchServiceCategoriesAndItems(
+                self.search.updateResults,
+                self.noAccessPage,
+                {
+                  searchQuery: query,
+                  searchResultsContainer: searchResultsContainer,
+                  itemBuilder: self.serviceCatalogItemBuilder,
+                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                }
+              );
+            },
+            5000
+          );
+        }
       }
     });
   }
