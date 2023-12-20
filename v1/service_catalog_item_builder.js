@@ -201,6 +201,7 @@ class ServiceCatalogItemBuilder {
     this.currency      = data.currency;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
     const serviceItems = serviceCategoryItemsData[categoryName].service_items;
+    $(serviceItemsContainer).children().first().hide(); // loading icon
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
 
