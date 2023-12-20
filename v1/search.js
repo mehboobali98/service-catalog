@@ -15,6 +15,7 @@ class Search {
         const searchItemsFlex        = $('<div>').addClass('d-flex flex-wrap gap-3');
         self.itemDetailBuilder       = options.itemDetailBuilder;
         const searchResultsContainer = options.searchResultsContainer;
+        debugger;
 
         $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
             let serviceItems = [];
