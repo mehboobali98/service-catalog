@@ -6,8 +6,11 @@
 
 .service-catalog-header-container {
   height:                150px;
-  background-image:      url(https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-  background-position-y: bottom;
+  background-image:      url(https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
 }
 
 .service-catalog-header-label {
@@ -125,6 +128,9 @@
   padding-top:   10px;
   font-weight:   500;
   padding-right: 10px;
+  overflow:       hidden;
+  white-space:    nowrap;
+  text-overflow:  ellipsis;
 }
 
 .service-item-card .card-body .card-content-container {
