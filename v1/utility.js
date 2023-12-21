@@ -132,9 +132,9 @@ function getCssVariableValue(variable) {
   getComputedStyle(document.documentElement).getPropertyValue(`--${variable}`);
 }
 
-function loadingIcon() {
+function loadingIcon(containerClass) {
   const loadingIconContainer    = $('<div>').attr('id', 'loading_icon_container')
-                                            .addClass('col-10');
+                                            .addClass(containerClass);
   const loadingIconFlex         = $('<div>').addClass('d-flex flex-column align-items-center');
   // to-do: store this on cdn and use.
   const loadingIcon             = $('<img>').attr({ 'src': 'https://s2.svgbox.net/loaders.svg?ic=puff',
