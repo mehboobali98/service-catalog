@@ -35,13 +35,14 @@
 
 .service-categories-heading {
   font-size:   18px;
+  font-weight: 600;
   font-family: var(--ez_heading_font);
 }
 
 .service-catalog-search input {
   color:          black;
   height:         30px;
-  border:         1px var(--ez_brand_color, var(--primarycolor)) solid;
+  border:         1px #D9D9D9 solid;
   font-size:      12px;
   font-weight:    400;
   line-height:    17px;
@@ -91,7 +92,7 @@
   word-wrap:    break-word;
   font-size:    18px;
   font-family:   var(--ez_heading_font);
-  font-weight:  400;
+  font-weight:  600;
 }
 
 .service-category-description {
@@ -103,15 +104,16 @@
 }
 
 .service-item-card {
-  width:        280px;
-  height:       150px;
-  cursor:       pointer;
-  border:       1px #D9D9D9 solid !important;
-  padding:      4px;
-  background:   white;
-  margin-top:   12px;
-  margin-left:  inherit;
-  margin-right: 20px;
+  width:          280px;
+  height:         150px;
+  cursor:         pointer;
+  border:         1px #D9D9D9 solid !important;
+  padding:        4px;
+  background:     white;
+  margin-top:     12px;
+  margin-left:    inherit;
+  margin-right:   20px;
+  border-radius:  7px;
 }
 
 .service-item-card a {
