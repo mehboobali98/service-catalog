@@ -174,7 +174,6 @@ class ServiceCatalogBuilder {
         serviceItemsContainer.hide();
         // Clear previous results
         searchResultsContainer.empty();
-        debugger;
         searchResultsContainer.append(loadingIcon('col-10'));
         searchResultsContainer.show();
 

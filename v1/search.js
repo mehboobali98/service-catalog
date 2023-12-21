@@ -17,6 +17,7 @@ class Search {
         const searchResultsContainer = options.searchResultsContainer;
         const serviceCategoriesItems = data.service_catalog_data;
 
+        searchResultsContainer.empty();
         $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
             let serviceItems = [];
             if (isMyAssignedAssets(serviceCategory)) {
