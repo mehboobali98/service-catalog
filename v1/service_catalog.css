@@ -143,13 +143,15 @@
 }
 
 .service-item-card .card-body .card-content-table tr th {
-  color:        var(--ez_text_color);
-  opacity:      80%;
-  font-weight:  normal;
+  color:          var(--ez_text_color);
+  opacity:        70%;
+  font-weight:    normal;
+  vertical-align: top;
 }
 
 .service-item-card .card-body .card-content-table tr td {
-  color: var(--ez_text_color);
+  color:          var(--ez_text_color);
+  vertical-align: top;
 }
 
 .service-item-card .description {
