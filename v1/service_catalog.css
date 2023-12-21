@@ -5,8 +5,9 @@
 }
 
 .service-catalog-header-container {
-  height:           150px;
-  background-image: url(//theme.zdassets.com/theme_assets/859601/eabf50894a56b2eb7b2c5b5dac193b307d3aeccc.jpg);
+  height:                150px;
+  background-image:      url(https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-position-y: bottom;
 }
 
 .service-catalog-header-label {
