@@ -142,8 +142,9 @@
 }
 
 .service-item-card .card-body .card-content-table tr th {
-  color: var(--ez_text_color);
-  opacity: 80%;
+  color:        var(--ez_text_color);
+  opacity:      80%;
+  font-weight:  normal;
 }
 
 .service-item-card .card-body .card-content-table tr td {
