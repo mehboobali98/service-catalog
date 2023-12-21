@@ -177,26 +177,25 @@ class ServiceCatalogBuilder {
         searchResultsContainer.empty();
         searchResultsContainer.show();
         loadingIconContainer.show();
+        debugger;
 
-        if (timer) {
-          clearTimeout(timer);
-        } else {
-          timer = setTimeout(
-            function () {
-              self.apiService.fetchServiceCategoriesAndItems(
-                self.search.updateResults,
-                self.noAccessPage,
-                {
-                  searchQuery: query,
-                  searchResultsContainer: searchResultsContainer,
-                  itemBuilder: self.serviceCatalogItemBuilder,
-                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
-                }
-              );
-            },
-            500
-          );
-        }
+        if (timer) { clearTimeout(timer); }
+
+        timer = setTimeout(
+          function () {
+            self.apiService.fetchServiceCategoriesAndItems(
+              self.search.updateResults,
+              self.noAccessPage,
+              {
+                searchQuery: query,
+                searchResultsContainer: searchResultsContainer,
+                itemBuilder: self.serviceCatalogItemBuilder,
+                itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+              }
+            );
+          },
+          500
+        );
       }
     });
   }
