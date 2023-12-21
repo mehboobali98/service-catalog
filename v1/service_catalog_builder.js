@@ -29,7 +29,7 @@ class ServiceCatalogBuilder {
 
   buildServiceCatalog() {
     this.buildServiceCatalogHeaderSection();
-    $('main').append(loadingIcon());
+    $('main').append(loadingIcon('mt-5'));
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
   }
 
