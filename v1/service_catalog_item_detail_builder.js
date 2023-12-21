@@ -48,10 +48,10 @@ class ServiceCatalogItemDetailBuilder {
     const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
     const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
-                                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
+                                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-weight': '600', 'font-size': '16px' }));
     if (displayFields.cost_price) {
       headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
-                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont }));
+                                   .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
     }
 
     queryParams['item_name']        = displayFields.title.value;
@@ -73,7 +73,7 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont });
+          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
@@ -93,7 +93,7 @@ class ServiceCatalogItemDetailBuilder {
     const fieldValue  = fieldData['value'];
     const fieldFormat = fieldData['format'];
 
-    if (!fieldFormat) { return $('<p>').text(fieldValue).css({ 'color': textColor, 'font-size': '14px', 'font-weight': '400', 'line-height': '17px', 'font-family': textFont }); }
+    if (!fieldFormat) { return $('<p>').text(fieldValue).css({ 'color': textColor, 'font-size': '14px', 'font-weight': '400', 'line-height': '17px', 'font-family': textFont, 'font-size': '12px' }); }
 
     if (fieldFormat === 'list') {
       const listEle     = $('<ul>').addClass('service-item-detail-description-list');
