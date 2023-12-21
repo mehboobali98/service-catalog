@@ -231,7 +231,11 @@ a.request-service-btn:hover {
   color:            var(--ez_brand_text_color);
   border-color:     var(--ez_brand_text_color);
   text-decoration:  none !important;
-  background-color: var(--ez_brand_color) !important;
+  background-color: var(--ez_brand_color, var(--primarycolor)) !important;
+}
+
+.no-access-page-section {
+  margin-top: 100px;
 }
 
 .no-access-image {
@@ -247,27 +251,15 @@ a.request-service-btn:hover {
 }
 
 .go-back-btn {
-  color:            var(--blue) !important;
-  border:           2px var(--blue) solid !important;
+  color:            var(--ez_brand_color, var(--primarycolor)) !important;
+  border:           2px var(--ez_brand_color, var(--primarycolor)) solid !important;
   border-radius:    10px !important;
   text-decoration:  none;
 }
 
-.contact-administrator-btn {
-  color:            var(--blue) !important;
-  border:           2px var(--blue) solid !important;
-  border-radius:    10px;
-  text-decoration:  none;
-}
-
 a.go-back-btn:hover {
-  color:            white !important;
-  text-decoration:  none;
-  background-color: var(--blue) !important;
-}
-
-a.contact-administrator-btn:hover {
-  color:            white !important;
-  text-decoration:  none;
-  background-color: var(--blue) !important;
+  color:            var(--ez_brand_text_color) !important;
+  border-color:     var(--ez_brand_text_color);
+  text-decoration:  none !important;
+  background-color: var(--ez_brand_color, var(--primarycolor)) !important;
 }
