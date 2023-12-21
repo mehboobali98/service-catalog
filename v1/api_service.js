@@ -30,7 +30,7 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              $('#loading_icon_container').empty();
+              $('#loading_icon_container').hide();
               callback(data, options);
             })
             .catch(error => {
