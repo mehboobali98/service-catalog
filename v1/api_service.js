@@ -31,11 +31,9 @@ class ApiService {
             })
             .then(data => {
               $('#loading_icon_container').empty();
-              debugger;
               callback(data, options);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
@@ -68,11 +66,9 @@ class ApiService {
             return response.json();
           })
           .then(data => {
-            debugger;
             callback(data, callBackOptions.serviceItemsContainerId);
           })
           .catch(error => {
-            debugger;
             console.error('An error occurred while fetching service categories and items: ' + error.message);
           });
       }

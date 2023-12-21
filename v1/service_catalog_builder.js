@@ -177,7 +177,6 @@ class ServiceCatalogBuilder {
         searchResultsContainer.empty();
         searchResultsContainer.show();
         loadingIconContainer.show();
-        debugger;
 
         if (timer) { clearTimeout(timer); }
 

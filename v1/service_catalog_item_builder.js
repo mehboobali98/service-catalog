@@ -76,12 +76,10 @@ class ServiceCatalogItemBuilder {
     const cardImageContainer    = $('<div>').addClass('col-4');
     const cardImageFlex         = $('<div>').addClass('d-flex flex-column h-100');
     const placeholderPath       = placeholderImagePath(serviceCategoryItem);
-    debugger;
     const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                             .attr('alt', 'IT Asset')
                                             .addClass('w-100')
                                             .on('error', function() {
-                                              debugger;
                                               // If the image fails to load, replace the source with a placeholder image
                                               $(this).attr('src', placeholderPath);
                                             });
@@ -141,7 +139,6 @@ class ServiceCatalogItemBuilder {
                                     .data('id', serviceCategoryItem.id)
                                     .data('name', displayFields.title['value'])
                                     .data('container-id', serviceCategory + '_service_items_container');
-    debugger;
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
@@ -151,7 +148,6 @@ class ServiceCatalogItemBuilder {
                                          .attr('alt', 'Software')
                                          .addClass('w-100')
                                          .on('error', function() {
-                                          debugger;
                                               // If the image fails to load, replace the source with a placeholder image
                                               $(this).attr('src', placeholderPath)
                                           });
