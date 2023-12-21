@@ -158,7 +158,6 @@ class ServiceCatalogBuilder {
       e.preventDefault();
 
       const query                  = $(this).val().trim();
-      const loadingIconContainer   = $('#loading_icon_container');
       const serviceItemsContainer  = $('#service_items_container');
       const searchResultsContainer = $('#service_catalog_item_search_results_container');
 
@@ -175,8 +174,9 @@ class ServiceCatalogBuilder {
         serviceItemsContainer.hide();
         // Clear previous results
         searchResultsContainer.empty();
+        debugger;
+        searchResultsContainer.append(loadingIcon('col-10'));
         searchResultsContainer.show();
-        loadingIconContainer.show();
 
         if (timer) { clearTimeout(timer); }
 
