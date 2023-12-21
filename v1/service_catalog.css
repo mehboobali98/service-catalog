@@ -19,6 +19,8 @@
 }
 
 .service-catalog-description {
+  color:       var(--ez_text_color);
+  font-family: var(--ez_text_font);
   margin-left: 170px;
 }
 
@@ -45,18 +47,21 @@
   font-size:      12px;
   background:     transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 5px center;
   font-weight:    400;
+  font-family:    var(--ez_text_font);
   line-height:    17px;
   padding-left:   25px;
   border-radius:  7px;
 }
 
 .service-categories-list {
+  color:        var(--ez_text_color);
   height:       450px;
   font-size:    14px;
   list-style:   none;
   overflow-y:   scroll;
   font-weight:  400;
   line-height:  17px;
+  font-family:  var(--ez_text_font);
   padding-top:  10px;
 }
 
