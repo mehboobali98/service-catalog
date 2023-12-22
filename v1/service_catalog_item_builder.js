@@ -199,7 +199,7 @@ class ServiceCatalogItemBuilder {
     const truncationRequired = value.length > TRUNCATE_LENGTH;
     if (!truncationRequired) { return ele.text(value); }
 
-    const truncatedValue = truncationRequired ? `${value.substring(0, maxLength)}...` : value;
+    const truncatedValue = truncationRequired ? `${value.substring(0, TRUNCATE_LENGTH)}...` : value;
     debugger;
     return ele.text(truncatedValue)
               .attr('title', value)
