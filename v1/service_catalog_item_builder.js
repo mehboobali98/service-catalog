@@ -218,19 +218,17 @@ class ServiceCatalogItemBuilder {
     // first child is the flexbox which contains service items
     const serviceCategoryItemsData = data.service_catalog_data;
     this.currency      = data.currency;
-    debugger;
     const categoryName = Object.keys(serviceCategoryItemsData)[0];
-    debugger;
-    const serviceItems = serviceCategoryItemsData[categoryName].service_items;
+    const serviceCategoryData = serviceCategoryItemsData[categoryName];
     $(serviceItemsContainer).children().first().hide(); // loading icon
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
 
     let serviceCategoryItems = null;
     if (isMyAssignedAssets(categoryName)) {
-      serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceItems);
+      serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
     } else {
-      serviceCategoryItems = serviceItems ? JSON.parse(serviceItems) : [];
+      serviceCategoryItems = serviceCategoryData.serviceItems ? JSON.parse(serviceCategoryData.serviceItems) : [];
     }
 
     if (serviceCategoryItems.length) {
