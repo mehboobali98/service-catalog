@@ -14,24 +14,32 @@ class Search {
         self.itemBuilder             = options.itemBuilder;
         const searchItemsFlex        = $('<div>').addClass('d-flex flex-wrap gap-3');
         self.itemDetailBuilder       = options.itemDetailBuilder;
+        const searchResults          = JSON.parse(data.search_results);
         const searchResultsContainer = options.searchResultsContainer;
-        const serviceCategoriesItems = data.service_catalog_data;
 
         searchResultsContainer.empty();
-        $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
-            let serviceItems = [];
-            if (isMyAssignedAssets(serviceCategory)) {
-                serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
-            } else {
-                serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
-            }
+        debugger;
+        $.each(searchResults, function(index, serviceItem)) {
+            let serviceCategory = service.service_category_title_with_id;
+            let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
+            self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+            searchItemsFlex.append(serviceCategoryItem);
+        }
+        debugger;
+        // $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
+        //     let serviceItems = [];
+        //     if (isMyAssignedAssets(serviceCategory)) {
+        //         serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
+        //     } else {
+        //         serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
+        //     }
 
-            $.each(serviceItems, function(index, serviceItem) {
-                let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
-                self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
-                searchItemsFlex.append(serviceCategoryItem);
-            });
-        });
+        //     $.each(serviceItems, function(index, serviceItem) {
+        //         let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
+        //         self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+        //         searchItemsFlex.append(serviceCategoryItem);
+        //     });
+        // });
         searchResultsContainer.append(searchItemsFlex);
     }
 }
