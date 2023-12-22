@@ -19,12 +19,12 @@ class Search {
 
         searchResultsContainer.empty();
         debugger;
-        $.each(searchResults, function(index, serviceItem)) {
+        $.each(searchResults, function(index, serviceItem) {
             let serviceCategory = service.service_category_title_with_id;
             let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
             self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
             searchItemsFlex.append(serviceCategoryItem);
-        }
+        });
         debugger;
         // $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
         //     let serviceItems = [];
