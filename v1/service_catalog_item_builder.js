@@ -203,8 +203,7 @@ class ServiceCatalogItemBuilder {
     debugger;
     return ele.text(truncatedValue)
               .attr('title', value)
-              .attr('data-toggle', 'tooltip')
-              .tooltip();
+              .attr('data-toggle', 'tooltip');
   }
 
   zendeskFormId(serviceItem) {
