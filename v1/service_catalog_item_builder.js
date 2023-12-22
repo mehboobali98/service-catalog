@@ -105,8 +105,8 @@ class ServiceCatalogItemBuilder {
 
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
     $.each(fields, (label, value) => {
-      let newRow = $("<tr>");
-      newRow.append(this.fieldValueElement(label, 'th', 15));
+      let newRow = $('<tr>');
+      newRow.append(this.fieldValueElement(label, 'th', label.length));
       newRow.append(this.fieldValueElement(value, 'td', DEFAULT_TRUNCATE_LENGTH));
       cardContent.append(newRow);
     });
