@@ -139,9 +139,10 @@ class ServiceCatalogItemBuilder {
   }
 
   buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
+    debugger;
     const displayFields = serviceCategoryItem.display_fields;
     const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item')
-                                    .data('id', serviceCategoryItem.id)
+                                    .data('id', serviceCategoryItem.id + serviceCategory)
                                     .data('name', displayFields.title['value'])
                                     .data('container-id', serviceCategory + '_service_items_container');
 
@@ -176,7 +177,7 @@ class ServiceCatalogItemBuilder {
     const cardFooter = $('<div>').addClass('card-footer w-100');
     const arrow      = $('<span>').html('&#8594;')
                                   .addClass('footer-arrow float-end js-service-item-detail-page-btn')
-                                  .data('id', serviceCategoryItem.id)
+                                  .data('id', serviceCategoryItem.id + serviceCategory)
                                   .data('name', displayFields.title['value'])
                                   .data('container-id', serviceCategory + '_service_items_container');
     const arrowContainer = $('<a>').attr('href', '#_');
