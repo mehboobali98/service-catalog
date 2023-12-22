@@ -74,6 +74,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
+    const self        = this;
     const card        = $('<div>').addClass('row service-item-card');
     const queryParams = {};
 
