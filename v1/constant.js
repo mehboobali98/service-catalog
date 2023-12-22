@@ -1,4 +1,4 @@
-const TRUNCATE_LENGTH = 20;
+const TRUNCATE_LENGTH = 15;
 
 const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
   'service_item':                'service_item_placeholder',
