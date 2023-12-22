@@ -18,28 +18,12 @@ class Search {
         const searchResultsContainer = options.searchResultsContainer;
 
         searchResultsContainer.empty();
-        debugger;
         $.each(searchResults, function(index, serviceItem) {
             debugger;
             let serviceCategory = serviceItem.service_category_title_with_id;
-            // let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
-            // self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
-            // searchItemsFlex.append(serviceCategoryItem);
-        });
-        debugger;
-        $.each(serviceCategoriesItems, (serviceCategory, serviceCategoryData) => {
-            let serviceItems = [];
-            if (isMyAssignedAssets(serviceCategory)) {
-                serviceItems = serviceCategoryData.service_items['assets'].concat(serviceCategoryData.service_items['software_entitlements']);
-            } else {
-                serviceItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
-            }
-
-            $.each(serviceItems, function(index, serviceItem) {
-                let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
-                self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
-                searchItemsFlex.append(serviceCategoryItem);
-            });
+            let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
+            self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+            searchItemsFlex.append(serviceCategoryItem);
         });
         searchResultsContainer.append(searchItemsFlex);
     }
