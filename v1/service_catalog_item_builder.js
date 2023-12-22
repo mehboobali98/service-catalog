@@ -74,7 +74,6 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-    const self        = this;
     const card        = $('<div>').addClass('row service-item-card');
     const queryParams = {};
 
@@ -105,11 +104,10 @@ class ServiceCatalogItemBuilder {
     const cardContent          = $('<table>').addClass('card-content-table');
 
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-    $.each(fields, function(label, value) {
+    $.each(fields, (label, value) => {
       let newRow = $("<tr>");
       newRow.append($('<th>').text(label));
-      debugger;
-      newRow.append($('<td>').text(value));
+      newRow.append(this.fieldValueElement(value));
       cardContent.append(newRow);
     });
     cardContentContainer.append(cardContent);
@@ -199,7 +197,6 @@ class ServiceCatalogItemBuilder {
   fieldValueElement(value) {
     const ele = $('<td>');
     const truncationRequired = value.length > TRUNCATE_LENGTH;
-    debugger;
     if (!truncationRequired) { return ele.text(value); }
 
     const truncatedValue = truncationRequired ? `${value.substring(0, maxLength)}...` : value;
