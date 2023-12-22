@@ -224,6 +224,7 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
 
+    debugger;
     let serviceCategoryItems = null;
     if (isMyAssignedAssets(categoryName)) {
       serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
