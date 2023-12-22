@@ -204,6 +204,7 @@ class ServiceCatalogItemBuilder {
     debugger;
     return ele.text(truncatedValue)
               .attr('title', value)
+              .attr('data-toggle', 'tooltip')
               .tooltip();
   }
 
