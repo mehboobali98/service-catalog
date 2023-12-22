@@ -2,9 +2,9 @@ import { loadingIcon,
          isMyAssignedAssets,
          getCssVariableValue,
          placeholderImagePath,
-         getMyAssignedAssetsServiceItems } from './utility.js';
-import { TRUNCATE_LENGTH }                 from './constant.js'
-import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
+         getMyAssignedAssetsServiceItems }              from './utility.js';
+import { ServiceCatalogItemDetailBuilder }              from './service_catalog_item_detail_builder.js';
+import { TRUNCATE_LENGTH, CARD_TITLE_TRUNCATE_LENGTH }  from './constant.js'
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -96,7 +96,7 @@ class ServiceCatalogItemBuilder {
 
     // Card title
     const assetName = serviceCategoryItem.name;
-    const cardTitle = $('<p>').text(assetName).addClass('card-title');
+    const cardTitle = this.fieldValueElement(assetName, 'p', CARD_TITLE_TRUNCATE_LENGTH).addClass('card-title');
     cardBody.append(cardTitle);
 
     // Card content
@@ -106,8 +106,8 @@ class ServiceCatalogItemBuilder {
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
     $.each(fields, (label, value) => {
       let newRow = $("<tr>");
-      newRow.append($('<th>').text(label));
-      newRow.append(this.fieldValueElement(value));
+      newRow.append(this.fieldValueElement(label, 'th', TRUNCATE_LENGTH));
+      newRow.append(this.fieldValueElement(value, 'td', TRUNCATE_LENGTH));
       cardContent.append(newRow);
     });
     cardContentContainer.append(cardContent);
@@ -194,12 +194,12 @@ class ServiceCatalogItemBuilder {
     return card;
   }
 
-  fieldValueElement(value) {
-    const ele = $('<td>');
-    const truncationRequired = value.length > TRUNCATE_LENGTH;
+  fieldValueElement(value, eleType, maxLength) {
+    const ele = $(`<${eleType}>`);
+    const truncationRequired = value.length > maxLength;
     if (!truncationRequired) { return ele.text(value); }
 
-    const truncatedValue = truncationRequired ? `${value.substring(0, TRUNCATE_LENGTH)}...` : value;
+    const truncatedValue = truncationRequired ? `${value.substring(0, maxLength)}...` : value;
     return ele.text(truncatedValue)
               .attr('title', value)
               .attr('data-toggle', 'tooltip');
