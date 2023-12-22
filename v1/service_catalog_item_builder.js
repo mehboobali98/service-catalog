@@ -108,7 +108,7 @@ class ServiceCatalogItemBuilder {
       let newRow = $("<tr>");
       newRow.append($('<th>').text(label));
       debugger;
-      newRow.append(this.fieldValueElement(value));
+      newRow.append($('<td>').text(value));
       cardContent.append(newRow);
     });
     cardContentContainer.append(cardContent);
