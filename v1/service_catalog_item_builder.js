@@ -1,5 +1,10 @@
-import { ServiceCatalogItemDetailBuilder }          from './service_catalog_item_detail_builder.js';
-import { loadingIcon, isMyAssignedAssets, placeholderImagePath, getCssVariableValue, getMyAssignedAssetsServiceItems } from './utility.js';
+import { loadingIcon,
+         isMyAssignedAssets,
+         getCssVariableValue,
+         placeholderImagePath,
+         getMyAssignedAssetsServiceItems } from './utility.js';
+import { TRUNCATE_LENGTH }                 from './constant.js'
+import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -102,7 +107,7 @@ class ServiceCatalogItemBuilder {
     $.each(fields, function(label, value) {
       let newRow = $("<tr>");
       newRow.append($('<th>').text(label));
-      newRow.append($('<td>').text(value));
+      newRow.append(fieldValueElement(value));
       cardContent.append(newRow);
     });
     cardContentContainer.append(cardContent);
@@ -187,6 +192,19 @@ class ServiceCatalogItemBuilder {
     card.append(cardImageContainer, cardBody);
 
     return card;
+  }
+
+  fieldValueElement(value) {
+    const ele = $('<td>');
+    const truncationRequired = value.length > TRUNCATE_LENGTH;
+    debugger;
+    if (!truncationRequired) { return ele.text(value); }
+
+    const truncatedValue = truncationRequired ? `${value.substring(0, maxLength)}...` : value;
+    debugger;
+    return ele.text(truncatedValue)
+              .attr('title', value)
+              .tooltip();
   }
 
   zendeskFormId(serviceItem) {

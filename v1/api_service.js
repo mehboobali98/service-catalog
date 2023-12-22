@@ -30,12 +30,10 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              debugger;
               $('#loading_icon_container').empty();
               callback(data, options);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
