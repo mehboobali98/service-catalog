@@ -19,7 +19,6 @@ class Search {
 
         searchResultsContainer.empty();
         $.each(searchResults, function(index, serviceItem) {
-            debugger;
             let serviceCategory = serviceItem.service_category_title_with_id;
             let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
             self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);

@@ -61,7 +61,6 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceItem) {
-    debugger;
     if (isMyAssignedAssets(serviceCategory)) {
       return this.buildItAssetServiceItem(serviceCategory, serviceItem);
     } else {
