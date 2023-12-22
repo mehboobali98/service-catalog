@@ -120,6 +120,7 @@ class ServiceCatalogItemDetailBuilder {
       // to-do: unable to find elemeny by id using jquery but its found using javascript??
       const detailPageEle = $(document.getElementById(detailPageContainerId));
       $('#service_catalog_item_search_results_container').hide();
+      debugger;
       containerEle.hide();
       $("[id*='_service_items_container']").hide();
       $('#service_items_container').show();
