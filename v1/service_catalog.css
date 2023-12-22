@@ -130,13 +130,10 @@
 
 .service-item-card .card-body .card-title {
   color:          var(--ez_text_color);
-  overflow:       hidden;
   font-size:      14px;
   padding-top:    10px;
   font-weight:    500;
-  white-space:    nowrap;
   padding-right:  10px;
-  text-overflow:  ellipsis;
 }
 
 .service-item-card .card-body .card-content-container {
