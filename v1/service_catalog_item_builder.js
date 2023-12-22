@@ -4,7 +4,7 @@ import { loadingIcon,
          placeholderImagePath,
          getMyAssignedAssetsServiceItems }              from './utility.js';
 import { ServiceCatalogItemDetailBuilder }              from './service_catalog_item_detail_builder.js';
-import { TRUNCATE_LENGTH, CARD_TITLE_TRUNCATE_LENGTH }  from './constant.js'
+import { DEFAULT_TRUNCATE_LENGTH, CARD_TITLE_TRUNCATE_LENGTH }  from './constant.js'
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -106,8 +106,8 @@ class ServiceCatalogItemBuilder {
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
     $.each(fields, (label, value) => {
       let newRow = $("<tr>");
-      newRow.append(this.fieldValueElement(label, 'th', TRUNCATE_LENGTH));
-      newRow.append(this.fieldValueElement(value, 'td', TRUNCATE_LENGTH));
+      newRow.append(this.fieldValueElement(label, 'th', 15));
+      newRow.append(this.fieldValueElement(value, 'td', DEFAULT_TRUNCATE_LENGTH));
       cardContent.append(newRow);
     });
     cardContentContainer.append(cardContent);
