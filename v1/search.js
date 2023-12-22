@@ -14,11 +14,9 @@ class Search {
         self.itemBuilder             = options.itemBuilder;
         const searchItemsFlex        = $('<div>').addClass('d-flex flex-wrap gap-3');
         self.itemDetailBuilder       = options.itemDetailBuilder;
-        debugger;
         const searchResults          = JSON.parse(data.search_results);
         const searchResultsContainer = options.searchResultsContainer;
 
-        debugger;
         searchResultsContainer.empty();
         $.each(searchResults, function(index, serviceItem) {
             let serviceCategory = serviceItem.service_category_title_with_id;
