@@ -1,5 +1,5 @@
 import { ServiceCatalogItemDetailBuilder }          from './service_catalog_item_detail_builder.js';
-import { loadingIcon, isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from './utility.js';
+import { loadingIcon, isMyAssignedAssets, placeholderImagePath, getCssVariableValue, getMyAssignedAssetsServiceItems } from './utility.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -42,7 +42,7 @@ class ServiceCatalogItemBuilder {
 
     let serviceItems = null;
     if (isMyAssignedAssets(serviceCategory)) {
-      serviceItems         = serviceCategoryItems.service_items['assets'].concat(serviceCategoryItems.service_items['software_entitlements']);
+      serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
       this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
     } else {
       serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
@@ -210,7 +210,7 @@ class ServiceCatalogItemBuilder {
 
     let serviceCategoryItems = null;
     if (isMyAssignedAssets(categoryName)) {
-      serviceCategoryItems = serviceItems['assets'].concat(serviceItems['software_entitlements']);
+      serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceItems);
     } else {
       serviceCategoryItems = serviceItems ? JSON.parse(serviceItems) : [];
     }

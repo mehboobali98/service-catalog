@@ -146,6 +146,12 @@ function loadingIcon(containerClass) {
   return loadingIconContainer;
 }
 
+function getMyAssignedAssetsServiceItems(serviceCategoryItems) {
+  let assetServiceItems           = serviceCategoryItems.service_items['assets'] || [];
+  let softwareLicenseServiceItems = serviceCategoryItems.service_items['software_entitlements'] || [];
+  return assetServiceItems.concat(softwareLicenseServiceItems);
+}
+
 export {  isSignedIn,
           signInPath,
           loadingIcon,
@@ -158,4 +164,5 @@ export {  isSignedIn,
           placeholderImagePath,
           isServiceCatalogPage,
           serviceCatalogDataPresent,
+          getMyAssignedAssetsServiceItems,
           extractServiceItemsWithCategory };
