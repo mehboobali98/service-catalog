@@ -224,12 +224,11 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
 
-    debugger;
     let serviceCategoryItems = null;
     if (isMyAssignedAssets(categoryName)) {
       serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
     } else {
-      serviceCategoryItems = serviceCategoryData.serviceItems ? JSON.parse(serviceCategoryData.serviceItems) : [];
+      serviceCategoryItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
     }
 
     if (serviceCategoryItems.length) {
