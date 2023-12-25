@@ -10,7 +10,7 @@ class Search {
 
     // Function to update search results
     updateResults = (data, options) => {
-        debugger;
+        searchResultsContainer.empty();
         if (!data.search_results.length) { return; }
 
         self                         = this;
@@ -20,10 +20,9 @@ class Search {
         const searchResults          = JSON.parse(data.search_results);
         const searchResultsContainer = options.searchResultsContainer;
 
-        searchResultsContainer.empty();
         $.each(searchResults, function(index, serviceItem) {
             if (serviceItem) {
-                let serviceCategory = serviceItem.service_category_title_with_id;
+                let serviceCategory     = serviceItem.service_category_title_with_id;
                 let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
                 self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                 searchItemsFlex.append(serviceCategoryItem);
