@@ -123,7 +123,7 @@ class ServiceCatalogItemBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card footer
-    const url              = `/hc/requests/new${$.param(queryParams)}`;
+    const url              = `/hc/requests/new?${$.param(queryParams)}`;
     const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .text('Report Issue')
