@@ -151,7 +151,6 @@ class ServiceCatalogBuilder {
         self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
         callbackOptions
       );
-      debugger;
       $('#service_catalog_item_search_results_container').hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
