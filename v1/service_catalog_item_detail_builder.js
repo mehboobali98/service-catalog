@@ -25,9 +25,9 @@ class ServiceCatalogItemDetailBuilder {
   }
 
   buildDetailPage(serviceCategory, serviceCategoryItem) {
+    const displayFields       = serviceCategoryItem.display_fields;
     const containerId         = `detail_page_container${serviceCategoryItem.id}${serviceCategory}${displayFields.title.value}`;       
     const queryParams         = {};
-    const displayFields       = serviceCategoryItem.display_fields;
     const detailPageContainer = $('<div>').attr('id', containerId)
                                           .addClass('row')
                                           .css({ 'display': 'none', 'margin-top': '38px', 'margin-right': '184px' });
