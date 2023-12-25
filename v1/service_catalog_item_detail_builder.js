@@ -1,5 +1,4 @@
-import {  getComputedStyle,
-          isMyAssignedAssets,
+import {  isMyAssignedAssets,
           placeholderImagePath } from './utility.js';
 
 class ServiceCatalogItemDetailBuilder {
