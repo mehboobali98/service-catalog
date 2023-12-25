@@ -10,6 +10,8 @@ class Search {
 
     // Function to update search results
     updateResults = (data, options) => {
+        if (!data.search_results.length) { return; }
+
         self                         = this;
         self.itemBuilder             = options.itemBuilder;
         const searchItemsFlex        = $('<div>').addClass('d-flex flex-wrap gap-3');
@@ -17,7 +19,6 @@ class Search {
         const searchResults          = JSON.parse(data.search_results);
         const searchResultsContainer = options.searchResultsContainer;
 
-        debugger;
         searchResultsContainer.empty();
         $.each(searchResults, function(index, serviceItem) {
             if (serviceItem) {
