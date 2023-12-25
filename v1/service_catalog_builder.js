@@ -152,8 +152,11 @@ class ServiceCatalogBuilder {
         callbackOptions
       );
       debugger;
+      $('#service_catalog_item_search_results_container').hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
+      $('#service_items_container').show();
+
     });
 
     $('#search_input').on('keyup', function(e) {
