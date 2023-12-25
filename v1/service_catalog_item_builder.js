@@ -228,6 +228,7 @@ class ServiceCatalogItemBuilder {
     $(serviceItemsContainer).children().first().hide(); // loading icon
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
+    debugger;
 
     let serviceCategoryItems = [];
     if (isMyAssignedAssets(categoryName)) {
