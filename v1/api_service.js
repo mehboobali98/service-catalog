@@ -31,7 +31,6 @@ class ApiService {
             })
             .then(data => {
               $('#loading_icon_container').empty();
-              debugger;
               callback(data, options);
             })
             .catch(error => {

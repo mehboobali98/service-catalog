@@ -10,6 +10,7 @@ class Search {
 
     // Function to update search results
     updateResults = (data, options) => {
+        debugger;
         if (!data.search_results.length) { return; }
 
         self                         = this;
