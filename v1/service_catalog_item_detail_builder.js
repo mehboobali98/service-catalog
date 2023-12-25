@@ -1,4 +1,6 @@
-import { isMyAssignedAssets, placeholderImagePath, getCssVariableValue } from './utility.js';
+import {  getComputedStyle,
+          isMyAssignedAssets,
+          placeholderImagePath } from './utility.js';
 
 class ServiceCatalogItemDetailBuilder {
   constructor() {
@@ -11,8 +13,8 @@ class ServiceCatalogItemDetailBuilder {
     this.serviceCategoriesItems = data.service_catalog_data;
 
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
-      let containerId = serviceCategory + '_container';
-      let container   = $('#' + containerId);
+      let containerId = `${serviceCategory}_container`;
+      let container   = $(`#${containerId}`);
       if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
         let serviceItems = JSON.parse(data.service_items);
         $.each(serviceItems, (index, serviceCategoryItem) => {
@@ -42,9 +44,9 @@ class ServiceCatalogItemDetailBuilder {
                             });
     imageContainer.append(image);
 
-    const textFont          = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_font');
-    const textColor         = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_color');
-    const headingFont       = getComputedStyle(document.documentElement).getPropertyValue('--ez_heading_font');
+    const textFont    = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_font');
+    const textColor   = getComputedStyle(document.documentElement).getPropertyValue('--ez_text_color');
+    const headingFont = getComputedStyle(document.documentElement).getPropertyValue('--ez_heading_font');
 
     const detailPageContent = $('<div>').addClass('col-9');
     const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
@@ -58,7 +60,7 @@ class ServiceCatalogItemDetailBuilder {
     queryParams['item_name']        = displayFields.title.value;
     queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
-    const url = '/hc/requests/new' + '?' + $.param(queryParams);
+    const url = `/hc/requests/new?${$.param(queryParams)}`;
 
     const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
     const requestServiceBtn = $('<a>').attr('href', url)
@@ -74,7 +76,7 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData['label']).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
+          let sectionHeader   = $('<p>').text(fieldData.label).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
@@ -116,7 +118,7 @@ class ServiceCatalogItemDetailBuilder {
       const id           = $(this).data('id');
       const name         = $(this).data('name');
       const containerId  = $(this).data('container-id');
-      const containerEle = $('#' + containerId);
+      const containerEle = $(`#${containerId}`);
       const detailPageContainerId = `detail_page_container${id}${name}`;
       // to-do: unable to find elemeny by id using jquery but its found using javascript??
       const detailPageEle = $(document.getElementById(detailPageContainerId));

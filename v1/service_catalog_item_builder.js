@@ -1,10 +1,11 @@
+import { DEFAULT_FIELD_VALUE,
+         DEFAULT_TRUNCATE_LENGTH,
+         CARD_TITLE_TRUNCATE_LENGTH }      from './constant.js';
 import { loadingIcon,
          isMyAssignedAssets,
-         getCssVariableValue,
          placeholderImagePath,
-         getMyAssignedAssetsServiceItems }              from './utility.js';
-import { ServiceCatalogItemDetailBuilder }              from './service_catalog_item_detail_builder.js';
-import { DEFAULT_FIELD_VALUE, DEFAULT_TRUNCATE_LENGTH, CARD_TITLE_TRUNCATE_LENGTH }  from './constant.js'
+         getMyAssignedAssetsServiceItems } from './utility.js';
+import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {
@@ -21,7 +22,6 @@ class ServiceCatalogItemBuilder {
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
 
-    // to-do: handle if no service categories present.
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
       serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, 0 === index));
@@ -32,20 +32,23 @@ class ServiceCatalogItemBuilder {
 
   buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
     const serviceCategoryItemsContainer = $('<div>');
-    serviceCategoryItemsContainer.attr('id', serviceCategory + '_container');
+    serviceCategoryItemsContainer.attr('id', `${serviceCategory}_container`);
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-    const serviceCategoryLabel = $('<p>').text(serviceCategoryItems.title).addClass('service-category-label');
-    const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description).addClass('service-category-description');
+    const serviceCategoryLabel       = $('<p>').text(serviceCategoryItems.title)
+                                               .addClass('service-category-label');
+    const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description)
+                                               .addClass('service-category-description');
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
-    const serviceCategoryItemsFlexContainer = $('<div>').attr('id', serviceCategory + '_service_items_container');
+    const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
     if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
+
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-    let serviceItems = null;
+    let serviceItems = [];
     if (isMyAssignedAssets(serviceCategory)) {
       serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
       this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
@@ -96,7 +99,8 @@ class ServiceCatalogItemBuilder {
 
     // Card title
     const assetName = serviceCategoryItem.name;
-    const cardTitle = this.fieldValueElement(assetName, 'p', CARD_TITLE_TRUNCATE_LENGTH).addClass('card-title');
+    const cardTitle = this.fieldValueElement(assetName, 'p', CARD_TITLE_TRUNCATE_LENGTH)
+                          .addClass('card-title');
     cardBody.append(cardTitle);
 
     // Card content
@@ -119,8 +123,8 @@ class ServiceCatalogItemBuilder {
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card footer
-    const cardFooter = $('<div>').addClass('it-asset-card-footer w-100');
-    const url = '/hc/requests/new' + '?' + $.param(queryParams);
+    const url              = `/hc/requests/new${$.param(queryParams)}`;
+    const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .text('Report Issue')
                                      .addClass('float-end footer-text');
@@ -135,15 +139,16 @@ class ServiceCatalogItemBuilder {
 
       window.location.href = url;
     });
+
     return card;
   }
 
   buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
     const displayFields = serviceCategoryItem.display_fields;
     const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item')
-                                    .data('id', serviceCategoryItem.id + serviceCategory)
-                                    .data('name', displayFields.title['value'])
-                                    .data('container-id', serviceCategory + '_service_items_container');
+                                    .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
+                                    .data('name', displayFields.title.value)
+                                    .data('container-id', `${serviceCategory}_service_items_container`);
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
@@ -163,12 +168,12 @@ class ServiceCatalogItemBuilder {
     const cardBody = $('<div>').addClass('col-8 card-body');
 
     // card title
-    const itemName   = displayFields.title['value'];
+    const itemName   = displayFields.title.value;
     const cardTitle  = $('<p>').text(itemName).addClass('card-title');
     cardBody.append(cardTitle);
 
     // card description
-    const cardDescription = $('<p>').text(displayFields.short_description['value'])
+    const cardDescription = $('<p>').text(displayFields.short_description.value)
                                     .addClass('description');
     cardBody.append(cardDescription);
 
@@ -176,9 +181,9 @@ class ServiceCatalogItemBuilder {
     const cardFooter = $('<div>').addClass('card-footer w-100');
     const arrow      = $('<span>').html('&#8594;')
                                   .addClass('footer-arrow float-end js-service-item-detail-page-btn')
-                                  .data('id', serviceCategoryItem.id + serviceCategory)
-                                  .data('name', displayFields.title['value'])
-                                  .data('container-id', serviceCategory + '_service_items_container');
+                                  .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
+                                  .data('name', displayFields.title.value)
+                                  .data('container-id', `${serviceCategory}_service_items_container`);
     const arrowContainer = $('<a>').attr('href', '#_');
     arrowContainer.append(arrow);
 
@@ -224,7 +229,7 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
 
-    let serviceCategoryItems = null;
+    let serviceCategoryItems = [];
     if (isMyAssignedAssets(categoryName)) {
       serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
     } else {

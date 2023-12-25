@@ -74,33 +74,6 @@ function notSignedIn() {
   return window.HelpCenter.user.role === 'anonymous';
 }
 
-function extractServiceItemsWithCategory(data) {
-  const extractedServiceItems = [];
-  for (const categoryName in data) {
-    if (data.hasOwnProperty(categoryName)) {
-      let serviceItems            = null;
-      const serviceCategory       = data[categoryName];
-      const serviceCategoryLabel  = serviceCategory.title;
-
-      if (isMyAssignedAssets(categoryName)) {
-        serviceItems = serviceCategory.service_items['assets'].concat(serviceCategory.service_items['software_entitlements']);
-      } else {
-        serviceItems = JSON.parse(serviceCategory.service_items);
-      }
-
-      if (serviceItems) {
-        for (const serviceItem of serviceItems) {
-          // Add the service category name to the service item
-          serviceItem.serviceCategoryName = categoryName;
-          extractedServiceItems.push(serviceItem);
-        }
-      }
-    }
-  }
-
-  return extractedServiceItems;
-}
-
 function returnToPath() {
   return window.location.href;
 }
@@ -109,7 +82,7 @@ function signInPath() {
   const queryParams = {};
   queryParams.return_to = returnToPath();
 
-  const url = origin() + '/hc/signin' + '?' + $.param(queryParams);
+  const url = `${origin()}/hc/signin${$.param(queryParams)}`;
   return url;
 }
 
@@ -164,5 +137,4 @@ export {  isSignedIn,
           placeholderImagePath,
           isServiceCatalogPage,
           serviceCatalogDataPresent,
-          getMyAssignedAssetsServiceItems,
-          extractServiceItemsWithCategory };
+          getMyAssignedAssetsServiceItems };

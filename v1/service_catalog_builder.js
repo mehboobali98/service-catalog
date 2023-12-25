@@ -1,8 +1,9 @@
-import { Search }                           from './search.js';
-import { ApiService }                       from './api_service.js';
-import { loadingIcon, serviceCatalogDataPresent }        from './utility.js';
-import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
-import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
+import {  Search }                           from './search.js';
+import {  ApiService }                       from './api_service.js';
+import {  loadingIcon,
+          serviceCatalogDataPresent }        from './utility.js';
+import {  ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
+import {  ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
   constructor(ezoSubdomain) {
@@ -53,9 +54,8 @@ class ServiceCatalogBuilder {
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
-    const serviceCatalogContainer = $('<div>').addClass('row');
-
-    const searchAndNavContainer = $('<div>').addClass('col-2');
+    const serviceCatalogContainer   = $('<div>').addClass('row');
+    const searchAndNavContainer     = $('<div>').addClass('col-2');
     const searchAndNavContainerText = $('<p>').text('Categories').addClass('service-categories-heading');
 
     const searchField = $('<input>').attr('id', 'search_input')
@@ -73,7 +73,8 @@ class ServiceCatalogBuilder {
   }
 
   createServiceCategoriesView(containers) {
-    const navbarContainer = $('<div>').attr('id', 'service_categories_list').addClass('service-categories-list');
+    const navbarContainer = $('<div>').attr('id', 'service_categories_list')
+                                      .addClass('service-categories-list');
     const navbar = this.generateNavbar();
     navbarContainer.append(navbar);
 
@@ -103,7 +104,7 @@ class ServiceCatalogBuilder {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
                               .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
-                              .text(serviceCategoryData['title']));
+                              .text(serviceCategoryData.title));
       if (!activeClassAdded) {
         activeClassAdded = true;
         listItem.addClass('active');
@@ -217,7 +218,6 @@ class ServiceCatalogBuilder {
                                           .addClass('btn btn-outline-primary go-back-btn')
                                           .click(function() { window.history.back(); });
     buttonsContainer.append(goBackButton);
-
 
     noAccessPageContainer.append(noAccessImage, warningMessage, nextStepsMessage, buttonsContainer);
     noAccessPageSection.append(noAccessPageContainer);

@@ -78,10 +78,6 @@ class ApiService {
   withToken() {
     return $.getJSON('/hc/api/v2/integration/token').then(data => data.token);
   }
-
-  loadingIconContainer() {
-    return 
-  }
 }
 
 export { ApiService };

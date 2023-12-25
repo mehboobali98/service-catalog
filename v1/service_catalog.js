@@ -1,7 +1,12 @@
-import { RequestForm }            from './request_form.js';
-import { NewRequestForm }         from './new_request_form.js';
-import { ServiceCatalogBuilder }  from './service_catalog_builder.js';
-import { isSignedIn, signInPath, isServiceCatalogPage, isNewRequestPage, isRequestPage, loadExternalFiles } from './utility.js';
+import { isSignedIn,
+         signInPath,
+         isRequestPage,
+         isNewRequestPage,
+         loadExternalFiles,
+         isServiceCatalogPage   } from './utility.js';
+import { RequestForm            } from './request_form.js';
+import { NewRequestForm         } from './new_request_form.js';
+import { ServiceCatalogBuilder  } from './service_catalog_builder.js';
 
 class ServiceCatalogManager {
   constructor(initializationData) {
