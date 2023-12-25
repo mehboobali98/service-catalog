@@ -4,6 +4,10 @@
   --brown: #B29962;
 }
 
+main {
+  overflow-x: clip;
+}
+
 .service-catalog-header-container {
   height:                 150px;
   background-size:        cover;
