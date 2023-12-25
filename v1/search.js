@@ -20,10 +20,12 @@ class Search {
         debugger;
         searchResultsContainer.empty();
         $.each(searchResults, function(index, serviceItem) {
-            let serviceCategory = serviceItem.service_category_title_with_id;
-            let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
-            self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
-            searchItemsFlex.append(serviceCategoryItem);
+            if (serviceItem) {
+                let serviceCategory = serviceItem.service_category_title_with_id;
+                let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
+                self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+                searchItemsFlex.append(serviceCategoryItem);
+            }
         });
         searchResultsContainer.append(searchItemsFlex);
     }
