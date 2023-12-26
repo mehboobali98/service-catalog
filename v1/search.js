@@ -1,3 +1,4 @@
+import { noResultsFound }                   from './view_helper.js'
 import { isMyAssignedAssets }               from './utility.js'
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
@@ -12,7 +13,9 @@ class Search {
     updateResults = (data, options) => {
         const searchResultsContainer = options.searchResultsContainer;
         searchResultsContainer.empty();
-        if (!data.search_results.length) { return; }
+        if (!data.search_results.length) {
+            return searchResultsContainer.append(noResultsFound());
+        }
 
         self                    = this;
         self.itemBuilder        = options.itemBuilder;
