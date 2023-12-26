@@ -278,7 +278,8 @@ a.go-back-btn:hover {
 }
 
 .no-results-container {
-  padding-top: 50px;
+  padding-top:   100px;
+  padding-right: 250px;
 }
 
 .no-results-image {
