@@ -5,10 +5,7 @@ function noResultsFound() {
                                     .addClass('no-results-image');
   const noResultsLabel  = $('<p>').text('No Search Results Found')
                                   .addClass('no-results-message');
-  debugger;
   noResultsContainer.append(noResultsImage, noResultsLabel);
-
-  debugger;
   return noResultsContainer;
 }
 
