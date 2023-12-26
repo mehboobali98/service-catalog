@@ -1,9 +1,10 @@
-import {  Search }                           from './search.js';
-import {  ApiService }                       from './api_service.js';
-import {  loadingIcon,
-          serviceCatalogDataPresent }        from './utility.js';
-import {  ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
-import {  ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
+import { Search }                           from './search.js';
+import { loadingIcon,
+         serviceCatalogDataPresent }        from './utility.js';
+import { STAGING_CDN_URL }                  from './constant.js';
+import { ApiService }                       from './api_service.js';
+import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
+import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
   constructor(ezoSubdomain) {
@@ -207,7 +208,7 @@ class ServiceCatalogBuilder {
                                               .addClass('no-access-page-section');
 
     const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-    const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog/v1/assets/svg/no_access_image.svg')
+    const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/service-catalog/service_catalog/v1/assets/svg/no_access_image.svg`)
                                             .addClass('no-access-image');
 
     const warningMessage        = $('<h4>').text('You do not have permission to access this page!');

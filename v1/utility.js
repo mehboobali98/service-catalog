@@ -1,4 +1,5 @@
-import { SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
+import {  STAGING_CDN_URL,
+          SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
 
 function isRequestPage() {
   const regex = /\/hc(\/en-us)?\/requests\/(\d+)/;
@@ -98,7 +99,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog/v1/assets/svg/${imageName}.svg`;
+  return `${STAGING_CDN_URL}/service-catalog/service_catalog/v1/assets/svg/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {
