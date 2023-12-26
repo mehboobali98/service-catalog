@@ -6,10 +6,12 @@ import { isSignedIn,
          isServiceCatalogPage   } from './utility.js';
 import { RequestForm            } from './request_form.js';
 import { NewRequestForm         } from './new_request_form.js';
+import { STAGING_CDN_URL        } from './constant.js';       
 import { ServiceCatalogBuilder  } from './service_catalog_builder.js';
 
 class ServiceCatalogManager {
   constructor(initializationData) {
+    this.timeStamp              = initializationData.timeStamp;
     this.ezoFieldId             = initializationData.ezoFieldId;
     this.ezoSubdomain           = initializationData.ezoSubdomain;
     this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
@@ -54,7 +56,7 @@ class ServiceCatalogManager {
   filesToLoad() {
     return [
               { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-              { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/v1/service_catalog.css' },
+              { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/v1/service_catalog.css?${this.timeStamp}` },
               { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
            ];
   }
