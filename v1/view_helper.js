@@ -7,6 +7,7 @@ function noResultsFound() {
                                   .addClass('no-results-message');
   container.append(noResultsImage, noResultsLabel);
 
+  debugger;
   return container;
 }
 
