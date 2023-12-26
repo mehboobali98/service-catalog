@@ -99,7 +99,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `${STAGING_CDN_URL}/service-catalog/service_catalog/v1/assets/svg/${imageName}.svg`;
+  return `${STAGING_CDN_URL}/service_catalog/v1/assets/svg/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {
