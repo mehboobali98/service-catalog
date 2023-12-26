@@ -288,9 +288,7 @@ a.go-back-btn:hover {
 .no-results-message {
   color:          var(--ez_text_color);
   font-size:      14px;
-  text-align:     left;
   font-weight:    400;
-  line-height:    16px;
+  padding-top:    15px;
   font-family:    var(--ez_text_font);
-  letter-spacing: 0em;
 }
