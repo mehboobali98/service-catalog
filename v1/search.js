@@ -13,9 +13,12 @@ class Search {
     updateResults = (data, options) => {
         const searchResultsContainer = options.searchResultsContainer;
         searchResultsContainer.empty();
+        debugger;
         if (!data.search_results.length) {
-            return searchResultsContainer.append(noResultsFound());
+            searchResultsContainer.append(noResultsFound());
+            return;
         }
+        debugger;
 
         self                    = this;
         self.itemBuilder        = options.itemBuilder;
