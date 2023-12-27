@@ -112,7 +112,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog/v1/assets/svg/${imageName}.svg`;
+    return `https://raw.githubusercontent.com/mehboobali98/service-catalog/code_restructure/assets/images/svg/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
@@ -426,7 +426,7 @@
   function noResultsFound() {
     const noResultsContainer = $('<div>').attr('id', 'no_results_container')
                                        .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage  = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog/v1/assets/svg/no_results_found.svg')
+    const noResultsImage  = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/code_restructure/assets/images/svg/no_results_found.svg')
                                       .addClass('no-results-image');
     const noResultsLabel  = $('<p>').text('No Result Found')
                                     .addClass('no-results-message');
@@ -1113,7 +1113,7 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/service_catalog/v1/assets/svg/no_access_image.svg')
+      const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/code_restructure/assets/images/svg/no_access_image.svg')
                                               .addClass('no-access-image');
 
       const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
@@ -1179,7 +1179,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/v1/service_catalog.css' },
+                { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/code_restructure/assets/stylesheets/service_catalog.css' },
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
