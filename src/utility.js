@@ -98,7 +98,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `https://mehboobali98.github.io/service-catalog/assets/assets/images/svg/${imageName}.svg`;
+  return `https://mehboobali98.github.io/service-catalog/assets/images/svg/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {
