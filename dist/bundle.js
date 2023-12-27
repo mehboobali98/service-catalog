@@ -112,7 +112,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `https://raw.githubusercontent.com/mehboobali98/service-catalog/code_restructure/assets/images/svg/${imageName}.svg`;
+    return `https://raw.githubusercontent.com/mehboobali98/service-catalog/assets/images/svg/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
@@ -426,7 +426,7 @@
   function noResultsFound() {
     const noResultsContainer = $('<div>').attr('id', 'no_results_container')
                                        .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage  = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/code_restructure/assets/images/svg/no_results_found.svg')
+    const noResultsImage  = $('<img>').attr('src', 'https://mehboobali98.github.io/service-catalog/assets/assets/images/svg/no_results_found.svg')
                                       .addClass('no-results-image');
     const noResultsLabel  = $('<p>').text('No Result Found')
                                     .addClass('no-results-message');
@@ -1113,7 +1113,7 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/code_restructure/assets/images/svg/no_access_image.svg')
+      const noAccessImage         = $('<img>').attr('src', 'https://raw.githubusercontent.com/mehboobali98/service-catalog/assets/images/svg/no_access_image.svg')
                                               .addClass('no-access-image');
 
       const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
