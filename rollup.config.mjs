@@ -7,12 +7,12 @@ export default {
     {
       name:   'ServiceCatalog bundle.js',
       file:   'dist/bundle.js',
-      format: 'cjs'
+      format: 'umd'
     },
     {
       name:   'ServiceCatalog bundle.min.js',
       file:   'dist/bundle.min.js',
-      format: 'cjs',
+      format: 'umd',
       plugins: [terser()]
     }
   ]
