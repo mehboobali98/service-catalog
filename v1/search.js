@@ -22,6 +22,7 @@ class Search {
         self.itemBuilder        = options.itemBuilder;
         const searchItemsFlex   = $('<div>').addClass('d-flex flex-wrap gap-3');
         self.itemDetailBuilder  = options.itemDetailBuilder;
+        debugger;
         const searchResults     = JSON.parse(data.search_results);
 
         $.each(searchResults, function(index, serviceItem) {
