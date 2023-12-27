@@ -5,12 +5,12 @@ export default {
   input: 'src/service_catalog.js',
   output: [
     {
-      name:   'ServiceCatalog bundle.js',
+      name:   'ServiceCatalogbundle.js',
       file:   'dist/bundle.js',
       format: 'umd'
     },
     {
-      name:   'ServiceCatalog bundle.min.js',
+      name:   'ServiceCatalogbundle.min.js',
       file:   'dist/bundle.min.js',
       format: 'umd',
       plugins: [terser()]
