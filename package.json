@@ -1,0 +1,13 @@
+{
+  "name": "service-catalog",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4"
+  }
+}
