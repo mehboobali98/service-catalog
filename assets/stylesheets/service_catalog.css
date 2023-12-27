@@ -11,7 +11,7 @@ main {
 .service-catalog-header-container {
   height:                 150px;
   background-size:        cover;
-  background-image:       url(https://cdn.inventoryontrack.com/shared/service_catalog/v1/assets/jpg/service-catalog-bg.jpg);
+  background-image:       url(https://cdn.inventoryontrack.com/shared/service_catalog/assets/images/jpg/service-catalog-bg.jpg);
   background-repeat:      no-repeat;
   background-position-y:  center;
 }
