@@ -96,7 +96,7 @@
     const queryParams = {};
     queryParams.return_to = returnToPath();
 
-    const url = `${origin()}/hc/signin${$.param(queryParams)}`;
+    const url = `${origin()}/hc/signin?${$.param(queryParams)}`;
     return url;
   }
 
