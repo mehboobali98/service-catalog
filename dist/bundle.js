@@ -5,6 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const STAGING_CDN_URL            = 'https://cdn.inventoryontrack.com';
+  const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE        = '--';
   const DEFAULT_TRUNCATE_LENGTH    = 15;
   const CARD_TITLE_TRUNCATE_LENGTH = 20;
@@ -1114,7 +1115,7 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`    )
+      const noAccessImage         = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`    )
 
                                               .addClass('no-access-image');
 
@@ -1182,7 +1183,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}` },
+                { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}` },
                 { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/assets/stylesheets/service_catalog.css' },
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
