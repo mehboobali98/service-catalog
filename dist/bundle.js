@@ -4,6 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ServiceCatalog = global.ServiceCatalog || {}, global.ServiceCatalog.js = {})));
 })(this, (function (exports) { 'use strict';
 
+  const STAGING_CDN_URL            = 'https://cdn.inventoryontrack.com';
   const DEFAULT_FIELD_VALUE        = '--';
   const DEFAULT_TRUNCATE_LENGTH    = 15;
   const CARD_TITLE_TRUNCATE_LENGTH = 20;
@@ -112,7 +113,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `https://mehboobali98.github.io/service-catalog/assets/images/svg/${imageName}.svg`;
+    return `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
@@ -1113,7 +1114,8 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', 'https://mehboobali98.github.io/service-catalog/assets/assets/images/svg/no_access_image.svg')
+      const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`    )
+
                                               .addClass('no-access-image');
 
       const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
@@ -1137,6 +1139,7 @@
 
   class ServiceCatalogManager {
     constructor(initializationData) {
+      this.timeStamp              = initializationData.timeStamp;
       this.ezoFieldId             = initializationData.ezoFieldId;
       this.ezoSubdomain           = initializationData.ezoSubdomain;
       this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
@@ -1179,6 +1182,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
+                { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}` },
                 { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/assets/stylesheets/service_catalog.css' },
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];

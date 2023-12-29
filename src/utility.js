@@ -1,4 +1,5 @@
-import { SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
+import {  STAGING_CDN_URL,
+          SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
 
 function isRequestPage() {
   const regex = /\/hc(\/en-us)?\/requests\/(\d+)/;
@@ -82,7 +83,7 @@ function signInPath() {
   const queryParams = {};
   queryParams.return_to = returnToPath();
 
-  const url = `${origin()}/hc/signin${$.param(queryParams)}`;
+  const url = `${origin()}/hc/signin?${$.param(queryParams)}`;
   return url;
 }
 
@@ -98,7 +99,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `https://mehboobali98.github.io/service-catalog/assets/images/svg/${imageName}.svg`;
+  return `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {
