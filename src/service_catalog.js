@@ -58,7 +58,6 @@ class ServiceCatalogManager {
     return [
               { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
               { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}` },
-              { type: 'link',   url: 'https://mehboobali98.github.io/service-catalog/assets/stylesheets/service_catalog.css' },
               { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
            ];
   }
