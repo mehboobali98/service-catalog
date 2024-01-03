@@ -1,4 +1,5 @@
 import {  STAGING_CDN_URL,
+          PRODUCTION_CDN_URL,
           SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
 
 function isRequestPage() {
@@ -99,7 +100,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/${imageName}.svg`;
+  return `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {
