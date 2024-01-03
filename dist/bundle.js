@@ -4,6 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ServiceCatalog = global.ServiceCatalog || {}, global.ServiceCatalog.js = {})));
 })(this, (function (exports) { 'use strict';
 
+  const STAGING_CDN_URL            = 'https://cdn.inventoryontrack.com';
   const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE        = '--';
   const DEFAULT_TRUNCATE_LENGTH    = 15;
@@ -113,7 +114,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/${imageName}.svg`;
+    return `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
@@ -427,7 +428,7 @@
   function noResultsFound() {
     const noResultsContainer = $('<div>').attr('id', 'no_results_container')
                                          .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage  = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_results_found.svg`)
+    const noResultsImage  = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_results_found.svg`)
                                       .addClass('no-results-image');
     const noResultsLabel  = $('<p>').text('No Result Found')
                                     .addClass('no-results-message');
@@ -1114,7 +1115,7 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`    )
+      const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`    )
 
                                               .addClass('no-access-image');
 
