@@ -89,7 +89,7 @@ class RequestForm {
     debugger;
 
     $.ajax({
-      url:  'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_ticket_to_resource_relation',
+      url:  'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource',
       type: 'POST',
       data: { 'ticket': queryParams }
     });
