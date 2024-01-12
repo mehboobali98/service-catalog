@@ -163,7 +163,7 @@
         return self.withToken(token => {
           if (token) {
 
-            if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.processEzoServiceItemField(ezoServiceItemFieldData); }
+            if (ezoServiceItemFieldDataPresent) { self.processEzoServiceItemField(requestId); }
 
             const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
             const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
