@@ -162,7 +162,7 @@
         return self.withToken(token => {
           if (token) {
 
-            if (ezoServiceItemFieldDataPresent) { self.linkResources(requestId, { serviceItemFieldId: self.ezoServiceItemFieldId }); }
+            if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
             const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
             const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
@@ -409,7 +409,7 @@
       if (itemName == null && serviceItemId == null) { return null; }
 
       if(serviceItemId) {
-        return `${itemName} - ${serviceItemId}`;
+        return `${serviceItemId} - ${itemName}`;
       } else {
         return itemName;
       }
