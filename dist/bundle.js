@@ -162,7 +162,7 @@
         return self.withToken(token => {
           if (token) {
 
-            if (ezoServiceItemFieldDataPresent) { self.linkResources(requestId, { serviceItemFieldId: self.serviceItemFieldId }); }
+            if (ezoServiceItemFieldDataPresent) { self.linkResources(requestId, { serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
             const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
             const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
