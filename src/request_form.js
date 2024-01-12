@@ -19,7 +19,6 @@ class RequestForm {
       const ezoFieldDataPresent            = self.fieldDataPresent(ezoFieldData);
       const ezoServiceItemFieldDataPresent = self.fieldDataPresent(ezoServiceItemFieldData); 
 
-      debugger;
       if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
 
       const options = { method: 'GET', headers: { } };
@@ -81,8 +80,6 @@ class RequestForm {
 
     if (assetsFieldId)      { queryParams.assets_field_id       = assetsFieldId;      }
     if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
-
-    debugger;
 
     $.ajax({
       url:  'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource',
