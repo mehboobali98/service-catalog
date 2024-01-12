@@ -16,6 +16,7 @@ class RequestForm {
       const ezoFieldData            = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
       const ezoServiceItemFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
 
+      debugger;
       const ezoFieldDataPresent            = self.fieldDataPresent(ezoFieldData);
       const ezoServiceItemFieldDataPresent = self.fieldDataPresent(ezoServiceItemFieldData); 
 
