@@ -153,7 +153,6 @@
         const ezoFieldData            = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
         const ezoServiceItemFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
 
-        debugger;
         const ezoFieldDataPresent            = self.fieldDataPresent(ezoFieldData);
         const ezoServiceItemFieldDataPresent = self.fieldDataPresent(ezoServiceItemFieldData); 
 
@@ -163,7 +162,7 @@
         return self.withToken(token => {
           if (token) {
 
-            if (ezoServiceItemFieldDataPresent) { self.processEzoServiceItemField(requestId); }
+            if (ezoServiceItemFieldDataPresent) { self.linkResources(requestId, { serviceItemFieldId: self.serviceItemFieldId }); }
 
             const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
             const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
@@ -204,10 +203,6 @@
       return $.getJSON('/hc/api/v2/integration/token').then(data => {
         return callback(data.token);
       })
-    }
-
-    processEzoServiceItemField(requestId) {
-      return linkResources(requestId, { serviceItemFieldId: this.serviceItemFieldId });
     }
 
     linkResources(requestId, options) {
