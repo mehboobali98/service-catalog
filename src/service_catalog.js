@@ -39,7 +39,7 @@ class ServiceCatalogManager {
     } else if (isNewRequestPage()) {
       new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else if (isRequestPage()) {
-      new RequestForm(this.ezoFieldId, this.ezoSubdomain).updateRequestForm();
+      new RequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else {
       // Handle other cases if needed
     }
