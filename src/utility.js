@@ -59,7 +59,6 @@ function loadFile(url, fileType, callback) {
 }
 
 function serviceCatalogDataPresent(data) {
-  // Check if service_catalog_data exists and is not empty
   return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
 }
 
