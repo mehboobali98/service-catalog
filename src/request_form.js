@@ -1,7 +1,8 @@
 class RequestForm {
-  constructor(ezoFieldId, ezoSubdomain) {
-    this.ezoFieldId   = ezoFieldId;
-    this.ezoSubdomain = ezoSubdomain;
+  constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    this.ezoFieldId             = ezoFieldId;
+    this.ezoSubdomain           = ezoSubdomain;
+    this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
   }
 
   updateRequestForm() {
@@ -10,10 +11,16 @@ class RequestForm {
     const requestUrl  = '/api/v2/requests/' + requestId;
 
     this.hideAssetsCustomField();
-    $.getJSON(requestUrl).done((data) => {
-      const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
 
-      if (!ezoFieldData || !ezoFieldData.value) { return true; }
+    $.getJSON(requestUrl).done((data) => {
+      const ezoFieldData            = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
+      const ezoServiceItemFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
+
+      const ezoFieldDataPresent            = fieldDataPresent(ezoFieldData);
+      const ezoServiceItemFieldDataPresent = fieldDataPresent(ezoServiceItemFieldData); 
+
+      debugger;
+      if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
 
       const options = { method: 'GET', headers: { } };
 
@@ -21,14 +28,16 @@ class RequestForm {
         if (token) {
           options.headers['Authorization'] = 'Bearer ' + token;
 
+          if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { processEzoServiceItemField(ezoServiceItemFieldData); }
+
           const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
           const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
           const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
-          if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
+          if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
           if (parsedEzoFieldValue.linked != 'true') {
-            self.linkAssets(requestId, assetSequenceNums);
+            self.linkResources(requestId, { ezoFieldId: self.ezoFieldId });
           }
 
           if (assetNames) {
@@ -62,11 +71,27 @@ class RequestForm {
     })
   }
 
-  linkAssets(requestId, assetSequenceNums) {
+  processEzoServiceItemField(requestId) {
+    return linkResources(requestId, { serviceItemFieldId: this.serviceItemFieldId });
+  }
+
+  linkResources(requestId, options) {
+    const assetsFieldId      = options.ezoFieldId;
+    const serviceItemFieldId = options.serviceItemFieldId;
+
+    const queryParams = {
+      ticket_id: requestId,
+    };
+
+    if (assetsFieldId)      { queryParams.assets_field_id       = assetsFieldId;      }
+    if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
+
+    debugger;
+
     $.ajax({
-      url: 'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_tickets_to_assets_relation.json',
+      url:  'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_ticket_to_resource_relation',
       type: 'POST',
-      data: { "ticket": { "ticket_id": requestId, "assets_field_id": this.ezoFieldId } }
+      data: { 'ticket': queryParams }
     });
   }
 
@@ -109,6 +134,10 @@ class RequestForm {
 
     const path = pathMappings[type] || defaultPath;
     return path + id;
+  }
+
+  fieldDataPresent(fieldData) {
+   return fieldData && fieldData.value
   }
 }
 

@@ -17,12 +17,13 @@ class NewRequestForm {
   updateForm() {
     if ($('.nesty-input')[0].text === "-") { return; }
 
-    const searchParams      = this.extractQueryParams(window.location);
-    const customFieldValue  = searchParams.get('item_name');
+    const searchParams          = this.extractQueryParams(window.location);
+    const formSubject           = this.prepareSubject(searchParams);
+    const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
-    const formSubject = this.prepareSubject(searchParams);
     if (formSubject) { $('#request_subject').val(formSubject); }
-    $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(customFieldValue);
+    if (serviceItemFieldValue) { $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
+
     this.getTokenAndFetchAssignedAssets();
   }
 
@@ -128,6 +129,19 @@ class NewRequestForm {
     if (itemName == null || serviceCategory == null) { return null; }
 
     return `${serviceCategory} - ${itemName}`;
+  }
+
+  prepareServiceItemFieldValue(searchParams) {
+    const itemName      = searchParams.get('item_name');
+    const serviceItemId = searchParams.get('service_item_id');
+
+    if (itemName == null && serviceItemId == null) { return null; }
+
+    if(serviceItemId) {
+      return `${itemName} - ${serviceItemId}`;
+    } else {
+      return itemName;
+    }
   }
 
   preselectAssetsCustomField(searchParams) {
