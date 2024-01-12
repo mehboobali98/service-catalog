@@ -16,8 +16,8 @@ class RequestForm {
       const ezoFieldData            = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
       const ezoServiceItemFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
 
-      const ezoFieldDataPresent            = fieldDataPresent(ezoFieldData);
-      const ezoServiceItemFieldDataPresent = fieldDataPresent(ezoServiceItemFieldData); 
+      const ezoFieldDataPresent            = self.fieldDataPresent(ezoFieldData);
+      const ezoServiceItemFieldDataPresent = self.fieldDataPresent(ezoServiceItemFieldData); 
 
       debugger;
       if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
@@ -28,7 +28,7 @@ class RequestForm {
         if (token) {
           options.headers['Authorization'] = 'Bearer ' + token;
 
-          if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { processEzoServiceItemField(ezoServiceItemFieldData); }
+          if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.processEzoServiceItemField(ezoServiceItemFieldData); }
 
           const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
           const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
