@@ -72,7 +72,6 @@
   }
 
   function serviceCatalogDataPresent(data) {
-    // Check if service_catalog_data exists and is not empty
     return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
   }
 
@@ -137,9 +136,10 @@
   }
 
   class RequestForm {
-    constructor(ezoFieldId, ezoSubdomain) {
-      this.ezoFieldId   = ezoFieldId;
-      this.ezoSubdomain = ezoSubdomain;
+    constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+      this.ezoFieldId             = ezoFieldId;
+      this.ezoSubdomain           = ezoSubdomain;
+      this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
     }
 
     updateRequestForm() {
@@ -148,22 +148,29 @@
       const requestUrl  = '/api/v2/requests/' + requestId;
 
       this.hideAssetsCustomField();
-      $.getJSON(requestUrl).done((data) => {
-        const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
 
-        if (!ezoFieldData || !ezoFieldData.value) { return true; }
+      $.getJSON(requestUrl).done((data) => {
+        const ezoFieldData            = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
+        const ezoServiceItemFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
+
+        const ezoFieldDataPresent            = fieldDataPresent(ezoFieldData);
+        const ezoServiceItemFieldDataPresent = fieldDataPresent(ezoServiceItemFieldData); 
+
+        if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
 
         return self.withToken(token => {
           if (token) {
+
+            if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { processEzoServiceItemField(ezoServiceItemFieldData); }
 
             const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
             const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
             const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
-            if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
+            if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
             if (parsedEzoFieldValue.linked != 'true') {
-              self.linkAssets(requestId, assetSequenceNums);
+              self.linkResources(requestId, { ezoFieldId: self.ezoFieldId });
             }
 
             if (assetNames) {
@@ -197,11 +204,25 @@
       })
     }
 
-    linkAssets(requestId, assetSequenceNums) {
+    processEzoServiceItemField(requestId) {
+      return linkResources(requestId, { serviceItemFieldId: this.serviceItemFieldId });
+    }
+
+    linkResources(requestId, options) {
+      const assetsFieldId      = options.ezoFieldId;
+      const serviceItemFieldId = options.serviceItemFieldId;
+
+      const queryParams = {
+        ticket_id: requestId,
+      };
+
+      if (assetsFieldId)      { queryParams.assets_field_id       = assetsFieldId;      }
+      if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
+
       $.ajax({
-        url: 'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_tickets_to_assets_relation.json',
+        url:  'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_ticket_to_resource_relation',
         type: 'POST',
-        data: { "ticket": { "ticket_id": requestId, "assets_field_id": this.ezoFieldId } }
+        data: { 'ticket': queryParams }
       });
     }
 
@@ -245,6 +266,10 @@
       const path = pathMappings[type] || defaultPath;
       return path + id;
     }
+
+    fieldDataPresent(fieldData) {
+     return fieldData && fieldData.value
+    }
   }
 
   class NewRequestForm {
@@ -264,12 +289,13 @@
     updateForm() {
       if ($('.nesty-input')[0].text === "-") { return; }
 
-      const searchParams      = this.extractQueryParams(window.location);
-      const customFieldValue  = searchParams.get('item_name');
+      const searchParams          = this.extractQueryParams(window.location);
+      const formSubject           = this.prepareSubject(searchParams);
+      const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
-      const formSubject = this.prepareSubject(searchParams);
       if (formSubject) { $('#request_subject').val(formSubject); }
-      $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(customFieldValue);
+      if (serviceItemFieldValue) { $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
+
       this.getTokenAndFetchAssignedAssets();
     }
 
@@ -375,6 +401,19 @@
       if (itemName == null || serviceCategory == null) { return null; }
 
       return `${serviceCategory} - ${itemName}`;
+    }
+
+    prepareServiceItemFieldValue(searchParams) {
+      const itemName      = searchParams.get('item_name');
+      const serviceItemId = searchParams.get('service_item_id');
+
+      if (itemName == null && serviceItemId == null) { return null; }
+
+      if(serviceItemId) {
+        return `${itemName} - ${serviceItemId}`;
+      } else {
+        return itemName;
+      }
     }
 
     preselectAssetsCustomField(searchParams) {
@@ -492,6 +531,7 @@
 
       queryParams['item_name']        = displayFields.title.value;
       queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
+      queryParams['service_item_id']  = serviceCategoryItem.id;
       queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
       const url = `/hc/requests/new?${$.param(queryParams)}`;
 
@@ -1166,7 +1206,7 @@
       } else if (isNewRequestPage()) {
         new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else if (isRequestPage()) {
-        new RequestForm(this.ezoFieldId, this.ezoSubdomain).updateRequestForm();
+        new RequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else ;
     }
 
