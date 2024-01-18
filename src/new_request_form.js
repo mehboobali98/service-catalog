@@ -138,7 +138,7 @@ class NewRequestForm {
     if (itemName == null && serviceItemId == null) { return null; }
 
     if(serviceItemId) {
-      return `${serviceItemId} - ${itemName}`;
+      return `${itemName} - ${serviceItemId}`;
     } else {
       return itemName;
     }
