@@ -158,8 +158,12 @@
 
         if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
 
+        const options = { headers: { } };
+
         return self.withToken(token => {
           if (token) {
+            options.headers['Authorization']              = 'Bearer ' + token;
+            options.headers['ngrok-skip-browser-warning'] = true;
 
             if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
@@ -170,7 +174,8 @@
             if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
             if (parsedEzoFieldValue.linked != 'true') {
-              self.linkResources(requestId, { ezoFieldId: self.ezoFieldId });
+
+              self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
             }
 
             if (assetNames) {
@@ -216,9 +221,10 @@
       if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
 
       $.ajax({
-        url:  'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource',
-        type: 'POST',
-        data: { 'ticket': queryParams }
+        url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource',
+        type:    'POST',
+        data:     { 'ticket': queryParams },
+        headers:  options.headers
       });
     }
 
@@ -406,7 +412,7 @@
       if (itemName == null && serviceItemId == null) { return null; }
 
       if(serviceItemId) {
-        return `${serviceItemId} - ${itemName}`;
+        return `${itemName} - ${serviceItemId}`;
       } else {
         return itemName;
       }
