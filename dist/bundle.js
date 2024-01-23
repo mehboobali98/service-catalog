@@ -230,6 +230,7 @@
       $.ajax({
         url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource',
         type:    'POST',
+        crossDomain: true,
         data:     { 'ticket': queryParams },
         headers:  headers
       });
