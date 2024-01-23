@@ -85,8 +85,6 @@ class RequestForm {
 
     const headers = options.headers || {};
 
-    debugger;
-
     $.ajax({
       url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
       type:    'POST',
