@@ -85,11 +85,16 @@ class RequestForm {
 
     debugger;
 
+    const headers = options.headers || {};
+    headers['Access-Control-Allow-Origin'] = "*";
+
+    debugger;
+
     $.ajax({
       url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource',
       type:    'POST',
       data:     { 'ticket': queryParams },
-      headers:  options.headers
+      headers:  headers
     });
   }
 
