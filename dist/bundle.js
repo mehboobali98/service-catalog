@@ -165,7 +165,7 @@
             options.headers['Authorization']              = 'Bearer ' + token;
             options.headers['ngrok-skip-browser-warning'] = true;
 
-            if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { serviceItemFieldId: self.ezoServiceItemFieldId }); }
+            if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
             const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
             const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
