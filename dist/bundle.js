@@ -414,7 +414,7 @@
       if (itemName == null && serviceItemId == null) { return null; }
 
       if(serviceItemId) {
-        return `${itemName} - ${serviceItemId}`;
+        return `${serviceItemId} - ${itemName}`;
       } else {
         return itemName;
       }
