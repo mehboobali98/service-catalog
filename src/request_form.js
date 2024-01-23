@@ -83,17 +83,15 @@ class RequestForm {
     if (assetsFieldId)      { queryParams.assets_field_id       = assetsFieldId;      }
     if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
 
-    debugger;
-
     const headers = options.headers || {};
-    headers['Access-Control-Allow-Origin'] = "*";
 
     debugger;
 
     $.ajax({
-      url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource',
+      url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
       type:    'POST',
-      data:     { 'ticket': queryParams }
+      data:     { 'ticket': queryParams },
+      headers:  headers
     });
   }
 
