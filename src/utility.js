@@ -3,17 +3,17 @@ import {  STAGING_CDN_URL,
           SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
 
 function isRequestPage() {
-  const regex = /\/hc(\/en-us)?\/requests\/(\d+)/;
+  const regex = /\/requests\/(\d+)$/;
   return isCorrectPage(regex);
 }
 
 function isNewRequestPage() {
-  const regex = /\/hc(\/en-us)?\/requests\/new/;
+  const regex = /\/requests\/new$/;
   return isCorrectPage(regex);
 }
 
 function isServiceCatalogPage() {
-  const regex = /\/hc(\/en-us)?\/p\/service_catalog/;
+  const regex = /\/service_catalog$/i;
   return isCorrectPage(regex);
 }
 
@@ -59,7 +59,6 @@ function loadFile(url, fileType, callback) {
 }
 
 function serviceCatalogDataPresent(data) {
-  // Check if service_catalog_data exists and is not empty
   return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
 }
 

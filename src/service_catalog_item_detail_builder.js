@@ -58,6 +58,7 @@ class ServiceCatalogItemDetailBuilder {
 
     queryParams['item_name']        = displayFields.title.value;
     queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
+    queryParams['service_item_id']  = serviceCategoryItem.id;
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
     const url = `/hc/requests/new?${$.param(queryParams)}`;
 

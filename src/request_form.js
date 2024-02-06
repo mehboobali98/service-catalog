@@ -1,7 +1,8 @@
 class RequestForm {
-  constructor(ezoFieldId, ezoSubdomain) {
-    this.ezoFieldId   = ezoFieldId;
-    this.ezoSubdomain = ezoSubdomain;
+  constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    this.ezoFieldId             = ezoFieldId;
+    this.ezoSubdomain           = ezoSubdomain;
+    this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
   }
 
   updateRequestForm() {
@@ -10,25 +11,34 @@ class RequestForm {
     const requestUrl  = '/api/v2/requests/' + requestId;
 
     this.hideAssetsCustomField();
+
     $.getJSON(requestUrl).done((data) => {
-      const ezoFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
+      const ezoFieldData            = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
+      const ezoServiceItemFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
 
-      if (!ezoFieldData || !ezoFieldData.value) { return true; }
+      const ezoFieldDataPresent            = self.fieldDataPresent(ezoFieldData);
+      const ezoServiceItemFieldDataPresent = self.fieldDataPresent(ezoServiceItemFieldData); 
 
-      const options = { method: 'GET', headers: { } };
+      if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
+
+      const options = { headers: { } };
 
       return self.withToken(token => {
         if (token) {
-          options.headers['Authorization'] = 'Bearer ' + token;
+          options.headers['Authorization']              = 'Bearer ' + token;
+          options.headers['ngrok-skip-browser-warning'] = true;
+
+          if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
           const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
           const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
           const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
-          if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
+          if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
           if (parsedEzoFieldValue.linked != 'true') {
-            self.linkAssets(requestId, assetSequenceNums);
+
+            self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
           }
 
           if (assetNames) {
@@ -62,11 +72,24 @@ class RequestForm {
     })
   }
 
-  linkAssets(requestId, assetSequenceNums) {
+  linkResources(requestId, options) {
+    const assetsFieldId      = options.ezoFieldId;
+    const serviceItemFieldId = options.serviceItemFieldId;
+
+    const queryParams = {
+      ticket_id: requestId,
+    };
+
+    if (assetsFieldId)      { queryParams.assets_field_id       = assetsFieldId;      }
+    if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
+
+    const headers = options.headers || {};
+
     $.ajax({
-      url: 'https://' + this.ezoSubdomain + '/webhooks/zendesk/sync_tickets_to_assets_relation.json',
-      type: 'POST',
-      data: { "ticket": { "ticket_id": requestId, "assets_field_id": this.ezoFieldId } }
+      url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
+      type:    'POST',
+      data:     { 'ticket': queryParams },
+      headers:  headers
     });
   }
 
@@ -109,6 +132,10 @@ class RequestForm {
 
     const path = pathMappings[type] || defaultPath;
     return path + id;
+  }
+
+  fieldDataPresent(fieldData) {
+   return fieldData && fieldData.value
   }
 }
 
