@@ -3,17 +3,17 @@ import {  STAGING_CDN_URL,
           SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
 
 function isRequestPage() {
-  const regex = /\/hc(\/[^\/]*)?\/requests\/(\d+)$/;
+  const regex = /\/requests\/(\d+)$/;
   return isCorrectPage(regex);
 }
 
 function isNewRequestPage() {
-  const regex = /\/hc(\/[^\/]*)?\/requests\/new$/;
+  const regex = /\/requests\/new$/;
   return isCorrectPage(regex);
 }
 
 function isServiceCatalogPage() {
-  const regex = /\/hc(\/[^\/]*)?\/p\/service_catalog$/i;
+  const regex = /\/service_catalog$/i;
   return isCorrectPage(regex);
 }
 
