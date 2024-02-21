@@ -214,7 +214,7 @@ main {
   color: var(--ez_brand_color, var(--primarycolor));
 }
 
-.service-item-card .it-asset-card-footer .footer-text {
+.service-item-card .card-footer .footer-text {
   color: var(--ez_brand_color, var(--primarycolor));
 }
 
