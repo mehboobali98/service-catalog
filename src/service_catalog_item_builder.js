@@ -122,7 +122,7 @@ class ServiceCatalogItemBuilder {
 
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
 
-    if (Object.keys(fields).length > 10) {
+    if (Object.keys(fields).length) {
       $.each(fields, (label, value) => {
         let newRow = $('<tr>');
         newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', label.length || DEFAULT_TRUNCATE_LENGTH));
