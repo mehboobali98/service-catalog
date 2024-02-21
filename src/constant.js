@@ -1,6 +1,5 @@
 const STAGING_CDN_URL            = 'https://cdn.inventoryontrack.com';
 const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
-const SERVICE_CATALOG_BUILDER_PRODUCTION_URL = `https://${subdomain}.assetsonar.com/`
 const DEFAULT_FIELD_VALUE        = '--';
 const DEFAULT_TRUNCATE_LENGTH    = 15;
 const CARD_TITLE_TRUNCATE_LENGTH = 20;
