@@ -701,7 +701,6 @@
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
       if (serviceCategoryItems.service_items) {
-        debugger
         let serviceItems = [];
         if (isMyAssignedAssets(serviceCategory)) {
           serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
@@ -842,13 +841,6 @@
                                       .addClass('description');
       cardBody.append(cardDescription);
 
-      //
-      // const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
-      // const submitRequestBtn = $('<a>').attr('href', url)
-      //                                  .text('Report Issue')
-      //                                  .addClass('float-end footer-text');
-      // submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
-
       //card footer (price and arrow)
       const cardFooter = $('<div>').addClass('card-footer w-100');
 
@@ -877,13 +869,8 @@
 
     fieldValueElement(value, eleType, maxLength) {
       const ele = $(`<${eleType}>`);
-      const truncationRequired = value.length > maxLength;
-      if (!truncationRequired) { return ele.text(value); }
-
-      const truncatedValue = truncationRequired ? `${value.substring(0, maxLength)}...` : value;
-      return ele.text(truncatedValue)
-                .attr('title', value)
-                .attr('data-toggle', 'tooltip');
+      value.length > maxLength;
+      { return ele.text(value); }
     }
 
     zendeskFormId(serviceItem) {
