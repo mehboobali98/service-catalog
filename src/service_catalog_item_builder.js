@@ -67,11 +67,11 @@ class ServiceCatalogItemBuilder {
         serviceItems.forEach((serviceCategoryItem, index) => {
           if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
         });
-      } else {
-        if (isMyAssignedAssets(serviceCategory)) {
-          // render empty screen
-          serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
-        }
+      }
+    } else {
+      if (isMyAssignedAssets(serviceCategory)) {
+        // render empty screen
+        serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
       }
     }
 
