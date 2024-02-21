@@ -5,7 +5,6 @@
 })(this, (function (exports) { 'use strict';
 
   const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
-`https://${subdomain}.assetsonar.com/`;
   const DEFAULT_FIELD_VALUE        = '--';
   const DEFAULT_TRUNCATE_LENGTH    = 15;
   const CARD_TITLE_TRUNCATE_LENGTH = 20;
