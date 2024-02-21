@@ -121,12 +121,18 @@ class ServiceCatalogItemBuilder {
     const cardContent          = $('<table>').addClass('card-content-table');
 
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-    $.each(fields, (label, value) => {
-      let newRow = $('<tr>');
-      newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', label.length));
-      newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-      cardContent.append(newRow);
-    });
+
+    if (Object.keys(fields).length > 10) {
+      $.each(fields, (label, value) => {
+        let newRow = $('<tr>');
+        newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', label.length || DEFAULT_TRUNCATE_LENGTH));
+        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
+        cardContent.append(newRow);
+      });
+    } else {
+      const noAttributesText = 'No attributes configured';
+      cardContent.append($('<tr>').append(this.fieldValueElement(noAttributesText, 'th', noAttributesText.length)))
+    }
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 

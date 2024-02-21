@@ -49,7 +49,6 @@ class ServiceCatalogManager {
     if (isSignedIn()) {
       this.serviceCatalogBuilder.buildServiceCatalog();
     } else {
-      // to-do: Verify this
       window.location.href = signInPath(); 
     }
   }
