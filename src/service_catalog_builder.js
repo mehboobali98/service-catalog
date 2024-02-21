@@ -51,8 +51,6 @@ class ServiceCatalogBuilder {
   buildUI = (data, options) => {
     this.data = data;
 
-    if (!serviceCatalogDataPresent(data)) { return; }
-
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
