@@ -199,22 +199,25 @@ class ServiceCatalogItemBuilder {
 
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
-    const arrow      = $('<span>').html('&#8594;')
-                                  .addClass('footer-arrow float-end js-service-item-detail-page-btn')
-                                  .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
-                                  .data('name', displayFields.title.value)
-                                  .data('container-id', `${serviceCategory}_service_items_container`);
-    const arrowContainer = $('<a>').attr('href', '#_')
-                                   .text('Request');
-    arrowContainer.append(arrow);
 
     if (displayFields.cost_price) {
       const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
       cardFooter.append(price);
     }
-    cardFooter.append(arrowContainer);
-    cardBody.append(cardFooter);
 
+    const arrowContainer = $('<a>').attr('href', '#_')
+                                   .text('Request')
+                                   .addClass('float-end footer-text');
+    const arrow          = $('<span>').html('&#8594;')
+                                      .addClass('footer-arrow float-end js-service-item-detail-page-btn')
+                                      .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
+                                      .data('name', displayFields.title.value)
+                                      .data('container-id', `${serviceCategory}_service_items_container`);
+    
+    arrowContainer.append(arrow);
+    cardFooter.append(arrowContainer);
+
+    cardBody.append(cardFooter);
     card.append(cardImageContainer, cardBody);
 
     return card;
