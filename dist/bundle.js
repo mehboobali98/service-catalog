@@ -957,7 +957,7 @@
               .then(data => {
                 debugger;
                 $('#loading_icon_container').empty();
-                if (!data.service_catalog_enabled) {
+                if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                   $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                 } else if (!serviceCatalogDataPresent(data)) {
                   $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
