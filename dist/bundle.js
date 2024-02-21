@@ -741,7 +741,7 @@
 
       // Card image
       const cardImageContainer    = $('<div>').addClass('col-4');
-      const cardImageFlex         = $('<div>').addClass('d-flex flex-column h-100');
+      const cardImageFlex         = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
       const placeholderPath       = placeholderImagePath(serviceCategoryItem);
       const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                               .attr('alt', 'IT Asset')
@@ -811,7 +811,7 @@
 
       // Create the card image element
       const cardImageContainer = $('<div>').addClass('col-4');
-      const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100');
+      const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
       const placeholderPath    = placeholderImagePath(serviceCategoryItem);
       const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
                                            .attr('alt', 'Software')
