@@ -36,6 +36,7 @@ class ApiService {
               return response.json();
             })
             .then(data => {
+              debugger;
               if (!data.service_catalog_enabled) {
                 $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
               } else if (!serviceCatalogDataPresent(data)) {
