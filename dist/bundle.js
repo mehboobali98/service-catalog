@@ -5,6 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
+`https://${subdomain}.assetsonar.com/`;
   const DEFAULT_FIELD_VALUE        = '--';
   const DEFAULT_TRUNCATE_LENGTH    = 15;
   const CARD_TITLE_TRUNCATE_LENGTH = 20;
@@ -467,12 +468,43 @@
     }
   }
 
+  function serviceCatalogDisabled(ezoSubdomain) {
+    const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center');
+    const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`)
+                                                      .addClass('no-access-image');
+
+    const nextStepsMessage                = $('<p>').text('Please enable Service Catalog Builder in Asset Sonar to start using Service Catalog.')
+                                                    .addClass('next-steps-message');
+
+    // button
+    const buttonsContainer                = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
+    const companySettingsUrl              = `https://${ezoSubdomain}.assetsonar.com/companies/settings`;
+    const companySettingsBtn              = $('<a>').attr('href', companySettingsUrl)
+                                                    .text('Go to AssetSonar')
+                                                    .addClass('btn btn-outline-primary go-back-btn');
+    buttonsContainer.append(companySettingsBtn);
+
+    serviceCatalogDisabledContainer.append(noAccessImage, nextStepsMessage, buttonsContainer);
+    return serviceCatalogDisabledContainer;
+  }
+
   function noResultsFound() {
     const noResultsContainer = $('<div>').attr('id', 'no_results_container')
                                          .addClass('d-flex flex-column align-items-center no-results-container');
     const noResultsImage  = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_results_found.svg`)
                                       .addClass('no-results-image');
     const noResultsLabel  = $('<p>').text('No Result Found')
+                                    .addClass('no-results-message');
+    noResultsContainer.append(noResultsImage, noResultsLabel);
+    return noResultsContainer;
+  }
+
+  function noServiceItems(notFoundMessage) {
+    const noResultsContainer = $('<div>').attr('id', 'no_service_items_found_container')
+                                         .addClass('d-flex flex-column align-items-center no-results-container');
+    const noResultsImage  = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/service_asset.svg`)
+                                      .addClass('no-results-image');
+    const noResultsLabel  = $('<p>').text(notFoundMessage)
                                     .addClass('no-results-message');
     noResultsContainer.append(noResultsImage, noResultsLabel);
     return noResultsContainer;
@@ -660,6 +692,11 @@
       if (serviceItems.length) {
         serviceItems.forEach((serviceCategoryItem, index) => {
           if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)); }      });
+      } else {
+        if (isMyAssignedAssets(serviceCategory)) {
+          // render empty screen
+          serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
+        }
       }
 
       serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
@@ -777,6 +814,13 @@
                                       .addClass('description');
       cardBody.append(cardDescription);
 
+      //
+      // const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
+      // const submitRequestBtn = $('<a>').attr('href', url)
+      //                                  .text('Report Issue')
+      //                                  .addClass('float-end footer-text');
+      // submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
+
       //card footer (price and arrow)
       const cardFooter = $('<div>').addClass('card-footer w-100');
       const arrow      = $('<span>').html('&#8594;')
@@ -784,7 +828,8 @@
                                     .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                     .data('name', displayFields.title.value)
                                     .data('container-id', `${serviceCategory}_service_items_container`);
-      const arrowContainer = $('<a>').attr('href', '#_');
+      const arrowContainer = $('<a>').attr('href', '#_')
+                                     .text('Request');
       arrowContainer.append(arrow);
 
       if (displayFields.cost_price) {
@@ -896,9 +941,11 @@
             fetch(url, requestOptions)
               .then(response => {
                 debugger;
-                if (response.status === 400) {
+                if (response.status == 400) {
                   throw new Error('Bad Request: There was an issue with the request.');
-                } else if (response.status === 404) {
+                } else if (response.status == 403) {
+                  return response.json();
+                } else if (response.status == 404) {
                   return noAccessPageCallback();
                 }
 
@@ -909,8 +956,14 @@
                 return response.json();
               })
               .then(data => {
-                $('#loading_icon_container').empty();
-                callback(data, options);
+                if (!data.service_catalog_enabled) {
+                  $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
+                } else if (!serviceCatalogDataPresent(data)) {
+                  $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
+                } else {
+                  $('#loading_icon_container').empty();
+                  callback(data, options);
+                }
               })
               .catch(error => {
                 console.error('An error occurred while fetching service categories and items: ' + error.message);
