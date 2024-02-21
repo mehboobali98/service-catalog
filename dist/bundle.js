@@ -700,21 +700,24 @@
 
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-      let serviceItems = [];
-      if (isMyAssignedAssets(serviceCategory)) {
-        serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
-        this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
-      } else {
-        serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
-      }
-
-      if (serviceItems.length) {
-        serviceItems.forEach((serviceCategoryItem, index) => {
-          if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)); }      });
-      } else {
+      if (serviceCategoryItems.service_items) {
+        debugger
+        let serviceItems = [];
         if (isMyAssignedAssets(serviceCategory)) {
-          // render empty screen
-          serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
+          serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
+          this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+        } else {
+          serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+        }
+
+        if (serviceItems.length) {
+          serviceItems.forEach((serviceCategoryItem, index) => {
+            if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)); }        });
+        } else {
+          if (isMyAssignedAssets(serviceCategory)) {
+            // render empty screen
+            serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
+          }
         }
       }
 
@@ -986,6 +989,7 @@
                 }
               })
               .catch(error => {
+                debugger;
                 console.error('An error occurred while fetching service categories and items: ' + error.message);
               });
           }
@@ -1075,8 +1079,6 @@
 
     buildUI = (data, options) => {
       this.data = data;
-
-      if (!serviceCatalogDataPresent(data)) { return; }
 
       const newSection = $('<section>').attr('id', 'service_catalog_section')
                                        .addClass('service-catalog-section');
