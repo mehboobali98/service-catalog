@@ -956,12 +956,12 @@
               })
               .then(data => {
                 debugger;
+                $('#loading_icon_container').empty();
                 if (!data.service_catalog_enabled) {
                   $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                 } else if (!serviceCatalogDataPresent(data)) {
                   $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
                 } else {
-                  $('#loading_icon_container').empty();
                   callback(data, options);
                 }
               })
