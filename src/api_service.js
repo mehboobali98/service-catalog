@@ -1,3 +1,6 @@
+import { serviceCatalogDataPresent }              from './utility.js';
+import { noResultsFound, serviceCatalogDisabled } from './view_helper.js';
+
 class ApiService {
   constructor(ezoSubdomain) {
     this.ezoSubdomain = ezoSubdomain;
@@ -18,9 +21,11 @@ class ApiService {
           fetch(url, requestOptions)
             .then(response => {
               debugger;
-              if (response.status === 400) {
+              if (response.status == 400) {
                 throw new Error('Bad Request: There was an issue with the request.');
-              } else if (response.status === 404) {
+              } else if (response.status == 403) {
+                return response.json();
+              } else if (response.status == 404) {
                 return noAccessPageCallback();
               }
 
@@ -31,8 +36,14 @@ class ApiService {
               return response.json();
             })
             .then(data => {
-              $('#loading_icon_container').empty();
-              callback(data, options);
+              if (!data.service_catalog_enabled) {
+                $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
+              } else if (!serviceCatalogDataPresent(data)) {
+                $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
+              } else {
+                $('#loading_icon_container').empty();
+                callback(data, options);
+              }
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);

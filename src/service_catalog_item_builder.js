@@ -5,6 +5,11 @@ import { loadingIcon,
          isMyAssignedAssets,
          placeholderImagePath,
          getMyAssignedAssetsServiceItems } from './utility.js';
+
+import {
+  noServiceItems
+} from './view_helper.js'
+
 import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
@@ -60,6 +65,11 @@ class ServiceCatalogItemBuilder {
       serviceItems.forEach((serviceCategoryItem, index) => {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
       });
+    } else {
+      if (isMyAssignedAssets(serviceCategory)) {
+        // render empty screen
+        serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
+      }
     }
 
     serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
@@ -177,6 +187,13 @@ class ServiceCatalogItemBuilder {
                                     .addClass('description');
     cardBody.append(cardDescription);
 
+    //
+    // const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
+    // const submitRequestBtn = $('<a>').attr('href', url)
+    //                                  .text('Report Issue')
+    //                                  .addClass('float-end footer-text');
+    // submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
+
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
     const arrow      = $('<span>').html('&#8594;')
@@ -184,7 +201,8 @@ class ServiceCatalogItemBuilder {
                                   .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                   .data('name', displayFields.title.value)
                                   .data('container-id', `${serviceCategory}_service_items_container`);
-    const arrowContainer = $('<a>').attr('href', '#_');
+    const arrowContainer = $('<a>').attr('href', '#_')
+                                   .text('Request');
     arrowContainer.append(arrow);
 
     if (displayFields.cost_price) {
