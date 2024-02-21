@@ -1,5 +1,7 @@
 import { serviceCatalogDataPresent }              from './utility.js';
-import { noResultsFound, serviceCatalogDisabled } from './view_helper.js';
+import { 
+  noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
+} from './view_helper.js';
 
 class ApiService {
   constructor(ezoSubdomain) {
