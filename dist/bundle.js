@@ -6,7 +6,7 @@
 
   const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE        = '--';
-  const DEFAULT_TRUNCATE_LENGTH    = 15;
+  const DEFAULT_TRUNCATE_LENGTH    = 20;
 
   const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
     'service_item':                'service_item_placeholder',
