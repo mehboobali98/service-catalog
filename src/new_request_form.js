@@ -128,7 +128,7 @@ class NewRequestForm {
 
     if (itemName == null || serviceCategory == null) { return null; }
 
-    return `${serviceCategory} - ${itemName}`;
+    return `Report Issue on ${serviceCategory} - ${itemName}`;
   }
 
   prepareServiceItemFieldValue(searchParams) {

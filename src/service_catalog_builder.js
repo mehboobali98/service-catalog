@@ -92,6 +92,7 @@ class ServiceCatalogBuilder {
     $('main').append(newSection);
     this.serviceCatalogItemDetailBuilder.build(this.data);
     this.bindEventListeners();
+    this.addTooltipsForTruncatedText();
   }
 
   // Create a function to generate the vertical navbar
@@ -200,6 +201,10 @@ class ServiceCatalogBuilder {
         );
       }
     });
+  }
+
+  addTooltipsForTruncatedText() {
+    const elementsWithTruncation = $('.truncate-text')
   }
 
   noAccessPage() {

@@ -8,6 +8,12 @@ main {
   overflow-x: clip;
 }
 
+.truncate-text {
+  overflow:       hidden;
+  white-space:    nowrap;
+  text-overflow:  ellipsis;
+}
+
 .service-catalog-header-container {
   height:                 150px;
   background-size:        cover;

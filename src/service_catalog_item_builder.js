@@ -187,7 +187,9 @@ class ServiceCatalogItemBuilder {
 
     // card title
     const itemName   = displayFields.title.value;
-    const cardTitle  = $('<p>').text(itemName).addClass('card-title');
+    const cardTitle  = $('<p>').text(itemName)
+                               .addClass('card-title truncate-text')
+                               .data('text', itemName);
     cardBody.append(cardTitle);
 
     // card description

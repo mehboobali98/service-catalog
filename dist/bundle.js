@@ -404,7 +404,7 @@
 
       if (itemName == null || serviceCategory == null) { return null; }
 
-      return `${serviceCategory} - ${itemName}`;
+      return `Report Issue on ${serviceCategory} - ${itemName}`;
     }
 
     prepareServiceItemFieldValue(searchParams) {
@@ -833,7 +833,9 @@
 
       // card title
       const itemName   = displayFields.title.value;
-      const cardTitle  = $('<p>').text(itemName).addClass('card-title');
+      const cardTitle  = $('<p>').text(itemName)
+                                 .addClass('card-title truncate-text')
+                                 .data('text', itemName);
       cardBody.append(cardTitle);
 
       // card description
@@ -1117,6 +1119,7 @@
       $('main').append(newSection);
       this.serviceCatalogItemDetailBuilder.build(this.data);
       this.bindEventListeners();
+      this.addTooltipsForTruncatedText();
     }
 
     // Create a function to generate the vertical navbar
@@ -1223,6 +1226,10 @@
           );
         }
       });
+    }
+
+    addTooltipsForTruncatedText() {
+      $('.truncate-text');
     }
 
     noAccessPage() {
