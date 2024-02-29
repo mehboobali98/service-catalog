@@ -204,7 +204,8 @@ class ServiceCatalogBuilder {
   }
 
   addTooltipsForTruncatedText() {
-    const elementsWithTruncation = $('.truncate-text')
+    const elementsWithTruncation = $('.truncate-text');
+    debugger;
   }
 
   noAccessPage() {

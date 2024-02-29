@@ -112,7 +112,8 @@ class ServiceCatalogItemBuilder {
     // Card title
     const assetName = serviceCategoryItem.name;
     const cardTitle = this.fieldValueElement(assetName, 'p', CARD_TITLE_TRUNCATE_LENGTH)
-                          .addClass('card-title');
+                          .addClass('card-title truncate-text')
+                          .data('text', assetName);
     cardBody.append(cardTitle);
 
     // Card content
