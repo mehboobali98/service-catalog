@@ -227,7 +227,7 @@ class ServiceCatalogItemBuilder {
   fieldValueElement(value, eleType, maxLength) {
     const ele = $(`<${eleType}>`);
     const truncationRequired = value.length > maxLength;
-    if (!false) { return ele.text(value); }
+    if (!truncationRequired) { return ele.text(value); }
 
     const truncatedValue = truncationRequired ? `${value.substring(0, maxLength)}...` : value;
     return ele.text(truncatedValue)

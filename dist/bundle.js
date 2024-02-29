@@ -871,8 +871,13 @@
 
     fieldValueElement(value, eleType, maxLength) {
       const ele = $(`<${eleType}>`);
-      value.length > maxLength;
-      { return ele.text(value); }
+      const truncationRequired = value.length > maxLength;
+      if (!truncationRequired) { return ele.text(value); }
+
+      const truncatedValue = truncationRequired ? `${value.substring(0, maxLength)}...` : value;
+      return ele.text(truncatedValue)
+                .attr('title', value)
+                .attr('data-toggle', 'tooltip');
     }
 
     zendeskFormId(serviceItem) {
