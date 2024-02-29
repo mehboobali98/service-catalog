@@ -51,8 +51,6 @@ class ServiceCatalogBuilder {
   buildUI = (data, options) => {
     this.data = data;
 
-    if (!serviceCatalogDataPresent(data)) { return; }
-
     const newSection = $('<section>').attr('id', 'service_catalog_section')
                                      .addClass('service-catalog-section');
 
@@ -94,6 +92,7 @@ class ServiceCatalogBuilder {
     $('main').append(newSection);
     this.serviceCatalogItemDetailBuilder.build(this.data);
     this.bindEventListeners();
+    this.addTooltipsForTruncatedText();
   }
 
   // Create a function to generate the vertical navbar
@@ -200,6 +199,18 @@ class ServiceCatalogBuilder {
           },
           500
         );
+      }
+    });
+  }
+
+  addTooltipsForTruncatedText() {
+    $('.truncate-text, .truncate-text-two-lines').each(function() {
+      // Check if the element's scroll width is greater than its offset width
+      if (this.scrollWidth > this.offsetWidth) {
+        var fullText = $(this).attr('data-text');
+
+        // Add tooltip attributes to the element
+        $(this).attr('title', fullText).attr('data-toggle', 'tooltip');
       }
     });
   }

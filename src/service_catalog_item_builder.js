@@ -5,6 +5,11 @@ import { loadingIcon,
          isMyAssignedAssets,
          placeholderImagePath,
          getMyAssignedAssetsServiceItems } from './utility.js';
+
+import {
+  noServiceItems
+} from './view_helper.js'
+
 import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
@@ -48,18 +53,25 @@ class ServiceCatalogItemBuilder {
 
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
-    let serviceItems = [];
-    if (isMyAssignedAssets(serviceCategory)) {
-      serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
-      this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
-    } else {
-      serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
-    }
+    if (serviceCategoryItems.service_items) {
+      let serviceItems = [];
+      if (isMyAssignedAssets(serviceCategory)) {
+        serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
+        this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+      } else {
+        serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+      }
 
-    if (serviceItems.length) {
-      serviceItems.forEach((serviceCategoryItem, index) => {
-        if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
-      });
+      if (serviceItems.length) {
+        serviceItems.forEach((serviceCategoryItem, index) => {
+          if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
+        });
+      }
+    } else {
+      if (isMyAssignedAssets(serviceCategory)) {
+        // render empty screen
+        serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
+      }
     }
 
     serviceCategoryItemsFlexContainer.append(serviceCategoryItemsFlex);
@@ -82,7 +94,7 @@ class ServiceCatalogItemBuilder {
 
     // Card image
     const cardImageContainer    = $('<div>').addClass('col-4');
-    const cardImageFlex         = $('<div>').addClass('d-flex flex-column h-100');
+    const cardImageFlex         = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
     const placeholderPath       = placeholderImagePath(serviceCategoryItem);
     const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                             .attr('alt', 'IT Asset')
@@ -99,8 +111,9 @@ class ServiceCatalogItemBuilder {
 
     // Card title
     const assetName = serviceCategoryItem.name;
-    const cardTitle = this.fieldValueElement(assetName, 'p', CARD_TITLE_TRUNCATE_LENGTH)
-                          .addClass('card-title');
+    const cardTitle = $('<p>').text(assetName)
+                              .addClass('card-title truncate-text')
+                              .attr('data-text', assetName);
     cardBody.append(cardTitle);
 
     // Card content
@@ -108,12 +121,18 @@ class ServiceCatalogItemBuilder {
     const cardContent          = $('<table>').addClass('card-content-table');
 
     const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-    $.each(fields, (label, value) => {
-      let newRow = $('<tr>');
-      newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', label.length));
-      newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-      cardContent.append(newRow);
-    });
+
+    if (Object.keys(fields).length) {
+      $.each(fields, (label, value) => {
+        let newRow = $('<tr>');
+        newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
+        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
+        cardContent.append(newRow);
+      });
+    } else {
+      const noAttributesText = 'No attributes configured';
+      cardContent.append($('<tr>').append(this.fieldValueElement(noAttributesText, 'th', noAttributesText.length)))
+    }
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
@@ -152,7 +171,7 @@ class ServiceCatalogItemBuilder {
 
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
-    const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100');
+    const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
     const placeholderPath    = placeholderImagePath(serviceCategoryItem);
     const cardImage          = $('<img>').attr('src', serviceCategoryItem.display_picture_url || placeholderPath)
                                          .attr('alt', 'Software')
@@ -169,7 +188,9 @@ class ServiceCatalogItemBuilder {
 
     // card title
     const itemName   = displayFields.title.value;
-    const cardTitle  = $('<p>').text(itemName).addClass('card-title');
+    const cardTitle  = $('<p>').text(itemName)
+                               .addClass('card-title truncate-text')
+                               .attr('data-text', itemName);
     cardBody.append(cardTitle);
 
     // card description
@@ -179,21 +200,25 @@ class ServiceCatalogItemBuilder {
 
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
-    const arrow      = $('<span>').html('&#8594;')
-                                  .addClass('footer-arrow float-end js-service-item-detail-page-btn')
-                                  .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
-                                  .data('name', displayFields.title.value)
-                                  .data('container-id', `${serviceCategory}_service_items_container`);
-    const arrowContainer = $('<a>').attr('href', '#_');
-    arrowContainer.append(arrow);
 
     if (displayFields.cost_price) {
       const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
       cardFooter.append(price);
     }
-    cardFooter.append(arrowContainer);
-    cardBody.append(cardFooter);
 
+    const arrowContainer = $('<a>').attr('href', '#_')
+                                   .text('Request')
+                                   .addClass('float-end footer-text');
+    const arrow          = $('<span>').html('&#8594;')
+                                      .addClass('footer-arrow float-end js-service-item-detail-page-btn')
+                                      .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
+                                      .data('name', displayFields.title.value)
+                                      .data('container-id', `${serviceCategory}_service_items_container`);
+    
+    arrowContainer.append(arrow);
+    cardFooter.append(arrowContainer);
+
+    cardBody.append(cardFooter);
     card.append(cardImageContainer, cardBody);
 
     return card;

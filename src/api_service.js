@@ -1,3 +1,8 @@
+import { serviceCatalogDataPresent }              from './utility.js';
+import { 
+  noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
+} from './view_helper.js';
+
 class ApiService {
   constructor(ezoSubdomain) {
     this.ezoSubdomain = ezoSubdomain;
@@ -17,9 +22,14 @@ class ApiService {
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
           fetch(url, requestOptions)
             .then(response => {
-              if (response.status === 400) {
+              if (response.status == 400) {
                 throw new Error('Bad Request: There was an issue with the request.');
-              } else if (response.status === 404) {
+              } else if (response.status == 403) {
+                return response.json().catch(() => {
+                  // Handle non-JSON response here
+                  return noAccessPageCallback();
+                });
+              } else if (response.status == 404) {
                 return noAccessPageCallback();
               }
 
@@ -31,7 +41,13 @@ class ApiService {
             })
             .then(data => {
               $('#loading_icon_container').empty();
-              callback(data, options);
+              if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
+                $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
+              } else if (!serviceCatalogDataPresent(data)) {
+                $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
+              } else {
+                callback(data, options);
+              }
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);
