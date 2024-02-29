@@ -204,7 +204,7 @@ class ServiceCatalogBuilder {
   }
 
   addTooltipsForTruncatedText() {
-    $('.truncate-text').each(function() {
+    $('.truncate-text, .truncate-text-two-lines').each(function() {
       // Check if the element's scroll width is greater than its offset width
       if (this.scrollWidth > this.offsetWidth) {
         var fullText = $(this).attr('data-text');

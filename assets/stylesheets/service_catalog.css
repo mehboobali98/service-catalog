@@ -14,6 +14,14 @@ main {
   text-overflow:  ellipsis;
 }
 
+.truncate-text-two-lines {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .service-catalog-header-container {
   height:                 150px;
   background-size:        cover;

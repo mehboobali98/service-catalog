@@ -125,8 +125,8 @@ class ServiceCatalogItemBuilder {
     if (Object.keys(fields).length) {
       $.each(fields, (label, value) => {
         let newRow = $('<tr>');
-        newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', label.length || DEFAULT_TRUNCATE_LENGTH));
-        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
+        newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', label.length || DEFAULT_TRUNCATE_LENGTH).addClass('truncate-text-two-lines').attr('data-text', label));
+        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH).addClass('truncate-text-two-lines').attr('data-text', value));
         cardContent.append(newRow);
       });
     } else {
