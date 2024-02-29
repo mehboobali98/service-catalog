@@ -204,8 +204,15 @@ class ServiceCatalogBuilder {
   }
 
   addTooltipsForTruncatedText() {
-    const elementsWithTruncation = $('.truncate-text');
-    debugger;
+    $('.truncate-text').each(function() {
+      // Check if the element's scroll width is greater than its offset width
+      if (this.scrollWidth > this.offsetWidth) {
+        var fullText = $(this).attr('data-text');
+        
+        // Add tooltip attributes to the element
+        $(this).attr('title', fullText).attr('data-toggle', 'tooltip');
+      }
+    });
   }
 
   noAccessPage() {
