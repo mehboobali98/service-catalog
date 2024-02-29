@@ -167,6 +167,7 @@ main {
 
 .service-item-card .card-body .card-content-table tr th {
   color:          var(--ez_text_color);
+  width:          100px !important;
   opacity:        70%;
   font-weight:    normal;
   vertical-align: top;
@@ -174,6 +175,7 @@ main {
 
 .service-item-card .card-body .card-content-table tr td {
   color:          var(--ez_text_color);
+  padding-left:   10px;
   vertical-align: top;
 }
 
