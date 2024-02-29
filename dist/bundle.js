@@ -759,7 +759,7 @@
       const assetName = serviceCategoryItem.name;
       const cardTitle = this.fieldValueElement(assetName, 'p', CARD_TITLE_TRUNCATE_LENGTH)
                             .addClass('card-title truncate-text')
-                            .data('text', assetName);
+                            .attr('data-text', assetName);
       cardBody.append(cardTitle);
 
       // Card content
@@ -836,7 +836,7 @@
       const itemName   = displayFields.title.value;
       const cardTitle  = $('<p>').text(itemName)
                                  .addClass('card-title truncate-text')
-                                 .data('text', itemName);
+                                 .attr('data-text', itemName);
       cardBody.append(cardTitle);
 
       // card description
