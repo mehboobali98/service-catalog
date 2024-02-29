@@ -970,7 +970,13 @@
                 if (response.status == 400) {
                   throw new Error('Bad Request: There was an issue with the request.');
                 } else if (response.status == 403) {
-                  return response.json();
+                  const contentType = response.headers.get('Content-Type');
+                  if (contentType && contentType.includes('application/json')) {
+                    return response.json();
+                  } else {
+                    // Handle non-JSON response here
+                    return noAccessPageCallback();
+                  }
                 } else if (response.status == 404) {
                   return noAccessPageCallback();
                 }
