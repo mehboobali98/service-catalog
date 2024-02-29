@@ -965,7 +965,6 @@
             const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
             fetch(url, requestOptions)
               .then(response => {
-                debugger;
                 if (response.status == 400) {
                   throw new Error('Bad Request: There was an issue with the request.');
                 } else if (response.status == 403) {
@@ -981,7 +980,6 @@
                 return response.json();
               })
               .then(data => {
-                debugger;
                 $('#loading_icon_container').empty();
                 if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                   $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
@@ -992,7 +990,6 @@
                 }
               })
               .catch(error => {
-                debugger;
                 console.error('An error occurred while fetching service categories and items: ' + error.message);
               });
           }
@@ -1236,11 +1233,9 @@
     addTooltipsForTruncatedText() {
       $('.truncate-text, .truncate-text-two-lines').each(function() {
         // Check if the element's scroll width is greater than its offset width
-        debugger;
         if (this.scrollWidth > this.offsetWidth) {
           var fullText = $(this).attr('data-text');
-          
-          debugger;
+
           // Add tooltip attributes to the element
           $(this).attr('title', fullText).attr('data-toggle', 'tooltip');
         }
