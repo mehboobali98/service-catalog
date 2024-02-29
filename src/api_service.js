@@ -22,6 +22,7 @@ class ApiService {
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
           fetch(url, requestOptions)
             .then(response => {
+              debugger;
               if (response.status == 400) {
                 throw new Error('Bad Request: There was an issue with the request.');
               } else if (response.status == 403) {
