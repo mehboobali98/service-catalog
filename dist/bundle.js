@@ -7,7 +7,6 @@
   const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE        = '--';
   const DEFAULT_TRUNCATE_LENGTH    = 15;
-  const CARD_TITLE_TRUNCATE_LENGTH = 20;
 
   const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
     'service_item':                'service_item_placeholder',
@@ -757,9 +756,9 @@
 
       // Card title
       const assetName = serviceCategoryItem.name;
-      const cardTitle = this.fieldValueElement(assetName, 'p', CARD_TITLE_TRUNCATE_LENGTH)
-                            .addClass('card-title truncate-text')
-                            .attr('data-text', assetName);
+      const cardTitle = $('<p>').text(assetName)
+                                .addClass('card-title truncate-text')
+                                .attr('data-text', assetName);
       cardBody.append(cardTitle);
 
       // Card content
@@ -771,8 +770,8 @@
       if (Object.keys(fields).length) {
         $.each(fields, (label, value) => {
           let newRow = $('<tr>');
-          newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', label.length || DEFAULT_TRUNCATE_LENGTH).addClass('truncate-text-two-lines').attr('data-text', label));
-          newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH).addClass('truncate-text-two-lines').attr('data-text', value));
+          newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
+          newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
           cardContent.append(newRow);
         });
       } else {
@@ -1232,9 +1231,11 @@
     addTooltipsForTruncatedText() {
       $('.truncate-text, .truncate-text-two-lines').each(function() {
         // Check if the element's scroll width is greater than its offset width
+        debugger;
         if (this.scrollWidth > this.offsetWidth) {
           var fullText = $(this).attr('data-text');
           
+          debugger;
           // Add tooltip attributes to the element
           $(this).attr('title', fullText).attr('data-toggle', 'tooltip');
         }
