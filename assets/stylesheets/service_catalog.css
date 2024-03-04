@@ -312,3 +312,7 @@ a.go-back-btn:hover {
   padding-top:    15px;
   font-family:    var(--ez_text_font);
 }
+
+.service-catalog-empty-container {
+  margin-top: 8rem;
+}
