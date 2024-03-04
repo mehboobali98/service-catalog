@@ -46,7 +46,7 @@ class ApiService {
               debugger;
               if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                 $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
-              } else if (!serviceCatalogDataPresent(data)) {
+              } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
                 $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
               } else {
                 callback(data, options);
