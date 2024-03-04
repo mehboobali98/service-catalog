@@ -5,6 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const STAGING_CDN_URL            = 'https://cdn.inventoryontrack.com';
+  const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE        = '--';
   const DEFAULT_TRUNCATE_LENGTH    = 30;
 
@@ -468,7 +469,7 @@
 
   function serviceCatalogDisabled(ezoSubdomain) {
     const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
-    const noAccessImage                   = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`)
+    const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`)
                                                       .addClass('no-access-image');
 
     const nextStepsMessage                = $('<p>').text('Please enable Service Catalog Builder in Asset Sonar to start using Service Catalog.')
@@ -488,7 +489,7 @@
 
   function serviceCatalogEmpty(ezoSubdomain) {
     const serviceCatalogEmptyContainer    = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-empty-container');
-    const serviceCategoryImage            = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/service_category.svg`)
+    const serviceCategoryImage            = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/service_category.svg`)
                                                       .addClass('no-access-image');
 
     const nextStepsMessage                = $('<p>').text('Please create and enable service categories in the builder to start using Service Catalog.')
@@ -509,7 +510,7 @@
   function noResultsFound() {
     const noResultsContainer = $('<div>').attr('id', 'no_results_container')
                                          .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage  = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_results_found.svg`)
+    const noResultsImage  = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_results_found.svg`)
                                       .addClass('no-results-image');
     const noResultsLabel  = $('<p>').text('No Result Found')
                                     .addClass('no-results-message');
@@ -520,7 +521,7 @@
   function noServiceItems(notFoundMessage) {
     const noResultsContainer = $('<div>').attr('id', 'no_service_items_found_container')
                                          .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage  = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/service_asset.svg`)
+    const noResultsImage  = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/service_asset.svg`)
                                       .addClass('no-results-image');
     const noResultsLabel  = $('<p>').text(notFoundMessage)
                                     .addClass('no-results-message');
@@ -986,7 +987,7 @@
                 $('#loading_icon_container').empty();
                 if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                   $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
-                } else if (!serviceCatalogDataPresent(data)) {
+                } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
                   $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
                 } else {
                   callback(data, options);
@@ -1317,7 +1318,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}` },
+                { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
