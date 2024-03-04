@@ -1,7 +1,8 @@
 :root {
-  --blue:  #00549F;
-  --white: #ffffff;
-  --brown: #B29962;
+  --blue:         #00549F;
+  --white:        #ffffff;
+  --brown:        #B29962;
+  --primarycolor: var(--brown);
 }
 
 main {
