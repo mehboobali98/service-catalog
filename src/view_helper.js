@@ -2,7 +2,7 @@ import { STAGING_CDN_URL,
          PRODUCTION_CDN_URL } from './constant.js';
 
 function serviceCatalogDisabled(ezoSubdomain) {
-  const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center');
+  const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
   const noAccessImage                   = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`)
                                                     .addClass('no-access-image');
 
@@ -22,7 +22,7 @@ function serviceCatalogDisabled(ezoSubdomain) {
 }
 
 function serviceCatalogEmpty(ezoSubdomain) {
-  const serviceCatalogEmptyContainer    = $('<div>').addClass('d-flex flex-column align-items-center');
+  const serviceCatalogEmptyContainer    = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-empty-container');
   const serviceCategoryImage            = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/service_category.svg`)
                                                     .addClass('no-access-image');
 
