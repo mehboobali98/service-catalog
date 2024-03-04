@@ -468,7 +468,7 @@
   }
 
   function serviceCatalogDisabled(ezoSubdomain) {
-    const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center');
+    const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
     const noAccessImage                   = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`)
                                                       .addClass('no-access-image');
 

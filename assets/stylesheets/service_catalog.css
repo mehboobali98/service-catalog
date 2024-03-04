@@ -313,6 +313,10 @@ a.go-back-btn:hover {
   font-family:    var(--ez_text_font);
 }
 
+.service-catalog-disabled-container {
+  margin-top: 6rem;
+}
+
 .service-catalog-empty-container {
-  margin-top: 8rem;
+  margin-top: 6rem;
 }
