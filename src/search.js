@@ -13,6 +13,7 @@ class Search {
     updateResults = (data, options) => {
         const searchResultsContainer = options.searchResultsContainer;
         searchResultsContainer.empty();
+        debugger;
         if (!data.search_results.length) {
             searchResultsContainer.append(noResultsFound());
             return;
@@ -24,6 +25,7 @@ class Search {
         self.itemDetailBuilder  = options.itemDetailBuilder;       
         const searchResults     = Array.isArray(data.search_results) ? data.search_results : JSON.parse(data.search_results);
 
+        debugger;
         $.each(searchResults, function(index, serviceItem) {
             if (serviceItem) {
                 let serviceCategory     = serviceItem.service_category_title_with_id;
