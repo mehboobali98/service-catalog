@@ -22,7 +22,6 @@ class ApiService {
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
           fetch(url, requestOptions)
             .then(response => {
-              debugger;
               if (response.status == 400) {
                 throw new Error('Bad Request: There was an issue with the request.');
               } else if (response.status == 403) {
@@ -38,12 +37,10 @@ class ApiService {
                 throw new Error('Network response was not ok');
               }
 
-              debugger;
               return response.json();
             })
             .then(data => {
               $('#loading_icon_container').empty();
-              debugger;
               if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                 $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
               } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
@@ -53,7 +50,6 @@ class ApiService {
               }
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }

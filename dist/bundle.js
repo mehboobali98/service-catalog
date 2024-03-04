@@ -923,7 +923,6 @@
       updateResults = (data, options) => {
           const searchResultsContainer = options.searchResultsContainer;
           searchResultsContainer.empty();
-          debugger;
           if (!data.search_results.length) {
               searchResultsContainer.append(noResultsFound());
               return;
@@ -935,7 +934,6 @@
           self.itemDetailBuilder  = options.itemDetailBuilder;       
           const searchResults     = Array.isArray(data.search_results) ? data.search_results : JSON.parse(data.search_results);
 
-          debugger;
           $.each(searchResults, function(index, serviceItem) {
               if (serviceItem) {
                   let serviceCategory     = serviceItem.service_category_title_with_id;
@@ -967,7 +965,6 @@
             const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
             fetch(url, requestOptions)
               .then(response => {
-                debugger;
                 if (response.status == 400) {
                   throw new Error('Bad Request: There was an issue with the request.');
                 } else if (response.status == 403) {
@@ -983,12 +980,10 @@
                   throw new Error('Network response was not ok');
                 }
 
-                debugger;
                 return response.json();
               })
               .then(data => {
                 $('#loading_icon_container').empty();
-                debugger;
                 if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                   $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                 } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
@@ -998,7 +993,6 @@
                 }
               })
               .catch(error => {
-                debugger;
                 console.error('An error occurred while fetching service categories and items: ' + error.message);
               });
           }
