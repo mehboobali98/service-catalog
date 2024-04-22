@@ -49,6 +49,8 @@ class ApiService {
               } else {
                 debugger;
                 callback(data, options);
+                debugger;
+                setLocale();
               }
             })
             .catch(error => {
