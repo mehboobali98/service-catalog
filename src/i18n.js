@@ -28,7 +28,6 @@ function setLocale(newLocale) {
 // Retrieve translations JSON object for the given
 // locale over the network
 function fetchTranslationsFor(newLocale) {
-  debugger;
   return $.getJSON(`https://mehboobali98.github.io/service-catalog/i18n/${newLocale}.json`);
 }
 

@@ -167,7 +167,6 @@
   // Retrieve translations JSON object for the given
   // locale over the network
   function fetchTranslationsFor(newLocale) {
-    debugger;
     return $.getJSON(`https://mehboobali98.github.io/service-catalog/i18n/${newLocale}.json`);
   }
 
@@ -1140,6 +1139,7 @@
       const headerDescription = $('<p>').addClass('service-catalog-description')
                                         .data('i18n', 'service-catalog-description')
                                         .text('Explore the Service Catalog to find a curated range of solutions to your needs');
+      debugger;
       headerContainer.append(headerEle, headerDescription);
       headerSection.append(headerContainer);
       $('main').append(headerSection);
