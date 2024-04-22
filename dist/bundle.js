@@ -134,6 +134,10 @@
     return assetServiceItems.concat(softwareLicenseServiceItems);
   }
 
+  function getLocale() {
+    return window.HelpCenter.user.locale.split('-')[0];
+  }
+
   class RequestForm {
     constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
       this.ezoFieldId             = ezoFieldId;
@@ -1074,6 +1078,7 @@
       const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                          .text('Service Catalog');
       const headerDescription = $('<p>').addClass('service-catalog-description')
+                                        .data('i18n', 'service-catalog-description')
                                         .text('Explore the Service Catalog to find a curated range of solutions to your needs');
       headerContainer.append(headerEle, headerDescription);
       headerSection.append(headerContainer);
@@ -1275,6 +1280,7 @@
 
   class ServiceCatalogManager {
     constructor(initializationData) {
+      this.locale                 = getLocale();
       this.timeStamp              = initializationData.timeStamp;
       this.ezoFieldId             = initializationData.ezoFieldId;
       this.ezoSubdomain           = initializationData.ezoSubdomain;
@@ -1309,6 +1315,12 @@
     handleServiceCatalogRequest() {
       if (isSignedIn()) {
         this.serviceCatalogBuilder.buildServiceCatalog();
+        debugger;
+        $.i18n().load({
+          'en': 'i18n/en.json'
+        }).done(function () {
+          $('body').i18n();
+        });
       } else {
         window.location.href = signInPath(); 
       }
@@ -1318,7 +1330,8 @@
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
                 { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}`},
-                { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
+                { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' },
+                { type: 'script', url: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.9/jquery.i18n.min.js' }
              ];
     }
   }

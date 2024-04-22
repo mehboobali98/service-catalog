@@ -126,7 +126,12 @@ function getMyAssignedAssetsServiceItems(serviceCategoryItems) {
   return assetServiceItems.concat(softwareLicenseServiceItems);
 }
 
-export {  isSignedIn,
+function getLocale() {
+  return window.HelpCenter.user.locale.split('-')[0];
+}
+
+export {  getLocale,
+          isSignedIn,
           signInPath,
           loadingIcon,
           isCorrectPage,

@@ -42,6 +42,7 @@ class ServiceCatalogBuilder {
     const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                        .text('Service Catalog');
     const headerDescription = $('<p>').addClass('service-catalog-description')
+                                      .data('i18n', 'service-catalog-description')
                                       .text('Explore the Service Catalog to find a curated range of solutions to your needs');
     headerContainer.append(headerEle, headerDescription);
     headerSection.append(headerContainer);
