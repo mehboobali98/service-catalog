@@ -1,5 +1,6 @@
-import { serviceCatalogDataPresent }  from './utility.js';
 import { setLocale } from './i18n.js';
+import {  getLocale,
+          serviceCatalogDataPresent }  from './utility.js';
 import { 
   noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
 } from './view_helper.js';
@@ -50,7 +51,7 @@ class ApiService {
                 debugger;
                 callback(data, options);
                 debugger;
-                setLocale();
+                setLocale(getLocale());
               }
             })
             .catch(error => {

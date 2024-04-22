@@ -10,12 +10,14 @@ let translations = {};
 // Load translations for the given locale and translate
 // the page to this locale
 function setLocale(newLocale) {
+  debugger;
   if (newLocale === locale) return;
   debugger;
   fetchTranslationsFor(newLocale)
     .done(function(newTranslations) {
       locale = newLocale;
       translations = newTranslations;
+      debugger;
       translatePage(translations);
     })
     .fail(function() {
@@ -33,7 +35,8 @@ function fetchTranslationsFor(newLocale) {
 // data-i18n-key attribute with the translation corresponding
 // to its data-i18n-key
 function translatePage(translations) {
-  $("[data-i18n-key]").each(function() {
+  debugger;
+  $("[data-i18n]").each(function() {
     translateElement($(this));
   });
 }
@@ -44,6 +47,7 @@ function translatePage(translations) {
 function translateElement(element) {
   const key = element.attr("data-i18n-key");
   const translation = translations[key];
+  debugger;
   if (translation !== undefined) {
     element.text(translation);
   } else {
