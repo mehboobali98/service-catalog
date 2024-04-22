@@ -8,6 +8,10 @@
     "message-documentation": "qqq",
     "AnotherMetadata": "AnotherMetadataValue"
   },
+  "go-back": "Go Back",
+  "categories": "Categories",
   "service-catalog": "Service Catalog",
-  "service-catalog-description": "Explore the Service Catalog to find a curated range of solutions to your needs"
+  "unauthorized-label": "You do not have permission to access this page!",
+  "contact-administrator-label": "Please contact your administrator to get access",
+  "service-catalog-description": "Explore the Service Catalogeeeeee to find a curated range of solutions to your needs"
 }

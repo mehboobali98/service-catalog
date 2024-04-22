@@ -138,8 +138,6 @@
     return window.HelpCenter.user.locale.split('-')[0];
   }
 
-  // The locale our app first shows
-
   // The active locale
   let locale;
 
@@ -149,14 +147,11 @@
   // Load translations for the given locale and translate
   // the page to this locale
   function setLocale(newLocale) {
-    debugger;
     if (newLocale === locale) return;
-    debugger;
     fetchTranslationsFor(newLocale)
       .done(function(newTranslations) {
         locale = newLocale;
         translations = newTranslations;
-        debugger;
         translatePage();
       })
       .fail(function() {
@@ -164,8 +159,7 @@
       });
   }
 
-  // Retrieve translations JSON object for the given
-  // locale over the network
+  // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
     return $.getJSON(`https://mehboobali98.github.io/service-catalog/i18n/${newLocale}.json`);
   }
@@ -173,8 +167,7 @@
   // Replace the inner text of each element that has a
   // data-i18n-key attribute with the translation corresponding
   // to its data-i18n-key
-  function translatePage(translations) {
-    debugger;
+  function translatePage() {
     $("[data-i18n]").each(function() {
       translateElement($(this));
     });
@@ -1135,11 +1128,11 @@
       const headerSection     = $('<section>');
       const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
       const headerEle         = $('<h2>').addClass('service-catalog-header-label')
+                                         .attr('data-i18n', 'service-catalog')
                                          .text('Service Catalog');
       const headerDescription = $('<p>').addClass('service-catalog-description')
                                         .attr('data-i18n', 'service-catalog-description')
                                         .text('Explore the Service Catalog to find a curated range of solutions to your needs');
-      debugger;
       headerContainer.append(headerEle, headerDescription);
       headerSection.append(headerContainer);
       $('main').append(headerSection);
@@ -1153,7 +1146,9 @@
 
       const serviceCatalogContainer   = $('<div>').addClass('row');
       const searchAndNavContainer     = $('<div>').addClass('col-2');
-      const searchAndNavContainerText = $('<p>').text('Categories').addClass('service-categories-heading');
+      const searchAndNavContainerText = $('<p>').addClass('service-categories-heading')
+                                                .attr('data-i18n', 'categories')
+                                                .text('Categories');
 
       const searchField = $('<input>').attr('id', 'search_input')
                                       .attr('type', 'text')
@@ -1319,13 +1314,16 @@
 
                                               .addClass('no-access-image');
 
-      const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
-      const nextStepsMessage      = $('<p>').text('Please contact your administrator to get access')
+      const warningMessage        = $('<h4>').attr('data-i18n', 'unauthorized-label')
+                                             .text('You do not have permission to access this page!');
+      const nextStepsMessage      = $('<p>').attr('data-i18n', 'contact-administrator-label')
+                                            .text('Please contact your administrator to get access')
                                             .addClass('next-steps-message');
 
       // buttons
       const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
       const goBackButton          = $('<a>').attr('href', '#_')
+                                            .attr('data-i18n', 'go-back')
                                             .text('Go Back')
                                             .addClass('btn btn-outline-primary go-back-btn')
                                             .click(function() { window.history.back(); });
