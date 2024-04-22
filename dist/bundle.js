@@ -644,6 +644,7 @@
 
       const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
       const requestServiceBtn = $('<a>').attr('href', url)
+                                        .attr('data-i18n', 'request-service')
                                         .text('Request Service')
                                         .addClass('btn btn-outline-primary request-service-btn');
       requestServiceBtnContainer.append(requestServiceBtn);
@@ -843,6 +844,7 @@
       const url              = `/hc/requests/new?${$.param(queryParams)}`;
       const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
       const submitRequestBtn = $('<a>').attr('href', url)
+                                       .attr('data-i18n', 'report-issue')
                                        .text('Report Issue')
                                        .addClass('float-end footer-text');
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
@@ -905,6 +907,7 @@
       }
 
       const arrowContainer = $('<a>').attr('href', '#_')
+                                     .attr('data-i18n', 'request')
                                      .text('Request')
                                      .addClass('float-end footer-text');
       const arrow          = $('<span>').html('&#8594;')

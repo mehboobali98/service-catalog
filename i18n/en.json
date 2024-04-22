@@ -8,8 +8,11 @@
     "message-documentation": "qqq",
     "AnotherMetadata": "AnotherMetadataValue"
   },
+  "request": "Request",
   "go-back": "Go Back",
   "categories": "Categories",
+  "report-issue": "Report Issue",
+  "request-service": "Request Service",
   "service-catalog": "Service Catalog",
   "unauthorized-label": "You do not have permission to access this page!",
   "contact-administrator-label": "Please contact your administrator to get access",

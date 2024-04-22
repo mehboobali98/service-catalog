@@ -1,5 +1,7 @@
-import {  isMyAssignedAssets,
-          placeholderImagePath } from './utility.js';
+import {
+  isMyAssignedAssets,
+  placeholderImagePath
+} from './utility.js';
 
 class ServiceCatalogItemDetailBuilder {
   constructor() {
@@ -64,6 +66,7 @@ class ServiceCatalogItemDetailBuilder {
 
     const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
     const requestServiceBtn = $('<a>').attr('href', url)
+                                      .attr('data-i18n', 'request-service')
                                       .text('Request Service')
                                       .addClass('btn btn-outline-primary request-service-btn');
     requestServiceBtnContainer.append(requestServiceBtn);
