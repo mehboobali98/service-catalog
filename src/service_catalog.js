@@ -50,12 +50,6 @@ class ServiceCatalogManager {
   handleServiceCatalogRequest() {
     if (isSignedIn()) {
       this.serviceCatalogBuilder.buildServiceCatalog();
-      debugger;
-      $.i18n().load({
-        'en': 'i18n/en.json'
-      }).done(function () {
-        $('body').i18n();
-      });
     } else {
       window.location.href = signInPath(); 
     }

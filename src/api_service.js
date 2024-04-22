@@ -1,4 +1,5 @@
-import { serviceCatalogDataPresent }              from './utility.js';
+import { serviceCatalogDataPresent }  from './utility.js';
+import { loadTranslations } from './i18n.js';
 import { 
   noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
 } from './view_helper.js';
@@ -46,6 +47,7 @@ class ApiService {
               } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
                 $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
               } else {
+                debugger;
                 callback(data, options);
               }
             })
