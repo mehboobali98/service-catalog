@@ -45,7 +45,7 @@ function translatePage(translations) {
 // with the translation in the active locale,
 // corresponding to the element's data-i18n-key
 function translateElement(element) {
-  const key = element.attr("data-i18n-key");
+  const key = element.attr("data-i18n");
   const translation = translations[key];
   debugger;
   if (translation !== undefined) {
