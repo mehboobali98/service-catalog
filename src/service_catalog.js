@@ -5,6 +5,7 @@ import { getLocale,
          isNewRequestPage,
          loadExternalFiles,
          isServiceCatalogPage   } from './utility.js';
+import { setLocale              } from './i18n.js';
 import { RequestForm            } from './request_form.js';
 import { NewRequestForm         } from './new_request_form.js';
 import { STAGING_CDN_URL,
@@ -59,8 +60,7 @@ class ServiceCatalogManager {
     return [
               { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
               { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}`},
-              { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' },
-              { type: 'script', url: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.9/jquery.i18n.min.js' }
+              { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
            ];
   }
 }

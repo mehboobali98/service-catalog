@@ -1,5 +1,5 @@
 import { serviceCatalogDataPresent }  from './utility.js';
-import { loadTranslations } from './i18n.js';
+import { setLocale } from './i18n.js';
 import { 
   noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
 } from './view_helper.js';
