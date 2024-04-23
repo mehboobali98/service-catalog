@@ -240,9 +240,11 @@ class ServiceCatalogItemBuilder {
     }
 
     if (this.locale == 'fr') {
+      debugger;
       $.each(columnNames, (columnName) => {
         let columnValue = serviceCategoryItem[columnName];
         let newRow = $('<tr>');
+        debugger;
         newRow.append(
           this.fieldValueElement(columnName || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH).attr('data-i18n', columnName)
         );
