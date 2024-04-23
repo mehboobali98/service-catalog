@@ -898,7 +898,7 @@
 
       if (this.locale == 'fr') {
         debugger;
-        $.each(columnNames, (columnName) => {
+        $.each(columnNames, (index, columnName) => {
           let columnValue = serviceCategoryItem[columnName];
           let newRow = $('<tr>');
           debugger;
