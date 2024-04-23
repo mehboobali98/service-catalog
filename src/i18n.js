@@ -7,6 +7,7 @@ let locale;
 
 // Load translations for the given locale and translate the page to this locale
 function setLocale(newLocale) {
+  debugger;
   if (newLocale === locale) return;
 
   fetchTranslationsFor(newLocale)
