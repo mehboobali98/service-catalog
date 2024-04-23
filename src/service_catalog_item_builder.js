@@ -5,7 +5,7 @@ import {
 import {
   DEFAULT_FIELD_VALUE,
   DEFAULT_TRUNCATE_LENGTH,
-  CARD_TITLE_TRUNCATE_LENGTH
+  CARD_FIELD_VALUE_TRUNCATE_LENGTH
 } from './constant.js';
 
 import {
@@ -247,7 +247,7 @@ class ServiceCatalogItemBuilder {
       }
       newRow.append(columnLabelEle);
 
-      newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
+      newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', CARD_FIELD_VALUE_TRUNCATE_LENGTH));
       cardContentElement.append(newRow);
     });
   }

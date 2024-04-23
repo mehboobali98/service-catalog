@@ -4,10 +4,11 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ServiceCatalog = global.ServiceCatalog || {}, global.ServiceCatalog.js = {})));
 })(this, (function (exports) { 'use strict';
 
-  const TRANSLATIONS               = {};
-  const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
-  const DEFAULT_FIELD_VALUE        = '--';
-  const DEFAULT_TRUNCATE_LENGTH    = 15;
+  const TRANSLATIONS                      = {};
+  const PRODUCTION_CDN_URL                = 'https://cdn.ezassets.com';
+  const DEFAULT_FIELD_VALUE               = '--';
+  const DEFAULT_TRUNCATE_LENGTH           = 30;
+  const CARD_FIELD_VALUE_TRUNCATE_LENGTH  = 20;
 
   const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
     'service_item':                'service_item_placeholder',
@@ -955,7 +956,7 @@
         }
         newRow.append(columnLabelEle);
 
-        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
+        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', CARD_FIELD_VALUE_TRUNCATE_LENGTH));
         cardContentElement.append(newRow);
       });
     }
