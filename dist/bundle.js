@@ -8,7 +8,7 @@
   const PRODUCTION_CDN_URL                = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE               = '--';
   const DEFAULT_TRUNCATE_LENGTH           = 30;
-  const CARD_FIELD_VALUE_TRUNCATE_LENGTH  = 20;
+  const CARD_FIELD_VALUE_TRUNCATE_LENGTH  = 17;
 
   const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
     'service_item':                'service_item_placeholder',
@@ -1423,7 +1423,8 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}`},
+                //{ type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}`},
+                { type: 'link',   url: `https://mehboobali98.github.io/service-catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}` },
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
