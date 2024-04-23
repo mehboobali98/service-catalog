@@ -243,7 +243,6 @@ class ServiceCatalogItemBuilder {
       let newRow        = $('<tr>');
       let columnLabelEle = this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH);
       if (this.locale == 'fr') {
-        debugger;
         columnLabelEle.attr('data-i18n', generateI18nKey(label));
       }
       newRow.append(columnLabelEle);

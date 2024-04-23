@@ -577,10 +577,8 @@
   function translateElement(element) {
     const key = element.attr("data-i18n");
     const translation = TRANSLATIONS[key];
-    debugger;
     if (translation !== undefined) {
       if (element.attr("placeholder") !== undefined) {
-        debugger;
         element.attr("placeholder", translation);
       } else {
         element.text(translation);
@@ -591,7 +589,6 @@
   }
 
   function generateI18nKey(columnLabel) {
-    debugger;
     if (columnLabel == 'Asset #') {
       return 'sequence_num';
     } else if (columnLabel == 'AIN') {
@@ -952,7 +949,6 @@
         let newRow        = $('<tr>');
         let columnLabelEle = this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH);
         if (this.locale == 'fr') {
-          debugger;
           columnLabelEle.attr('data-i18n', generateI18nKey(label));
         }
         newRow.append(columnLabelEle);
@@ -1150,7 +1146,8 @@
       const serviceCatalogNavItem = $('<a>', {
                                       href: url,
                                       text: name
-                                    }).addClass('service-catalog-nav-item nav-link');
+                                    }).addClass('service-catalog-nav-item nav-link')
+                                      .attr('data-i18n', 'service-catalog');
       const firstChildElement = parentElement.children(':first');
       if (firstChildElement.is('ul')) {
         firstChildElement.prepend($('<li>').append(serviceCatalogNavItem));

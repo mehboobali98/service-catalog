@@ -22,7 +22,8 @@ class ServiceCatalogBuilder {
     const serviceCatalogNavItem = $('<a>', {
                                     href: url,
                                     text: name
-                                  }).addClass('service-catalog-nav-item nav-link');
+                                  }).addClass('service-catalog-nav-item nav-link')
+                                    .attr('data-i18n', 'service-catalog');
     const firstChildElement = parentElement.children(':first');
     if (firstChildElement.is('ul')) {
       firstChildElement.prepend($('<li>').append(serviceCatalogNavItem));
