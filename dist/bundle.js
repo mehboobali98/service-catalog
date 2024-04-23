@@ -1055,6 +1055,7 @@
                 } else {
                   callback(data, options);
                 }
+                debugger;
                 setLocale(getLocale());
               })
               .catch(error => {
@@ -1091,6 +1092,7 @@
             })
             .then(data => {
               callback(data, callBackOptions.serviceItemsContainerId);
+              debugger;
               setLocale(getLocale());
             })
             .catch(error => {
