@@ -828,6 +828,7 @@
       const cardContent          = $('<table>').addClass('card-content-table');
 
       const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+      debugger;
 
       if (Object.keys(fields).length) {
         $.each(fields, (label, value) => {
@@ -838,7 +839,9 @@
         });
       } else {
         const noAttributesText = 'No attributes configured';
-        cardContent.append($('<tr>').append(this.fieldValueElement(noAttributesText, 'th', noAttributesText.length)));
+        cardContent.append($('<tr>').append(
+          this.fieldValueElement(noAttributesText, 'th', noAttributesText.length).attr('data-i18n', 'no-attributes-configured')
+        ));
       }
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);

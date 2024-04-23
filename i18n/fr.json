@@ -6,5 +6,22 @@
     "last-updated": "2024-04-22",
     "locale": "fr"
   },
-  "service-catalog: Service Catalog"
+  "search": "recherche...",
+  "request": "Demander",
+  "go-back": "Retour",
+  "load-more": "Charger plus",
+  "categories": "Retour",
+  "report-issue": "Signaler un problème",
+  "request-service": "Demander un service",
+  "service-catalog": "Catalogue de services",
+  "go-to-assetsonar": "Aller à AssetSonar",
+  "no-results-found": "No Results Found",
+  "no-assigned-items": "Aucun actif ne vous a été attribué dans le système",
+  "unauthorized-label": "Vous n'avez pas l'autorisation d'accéder à cette page!",
+  "enable-service-catalog": "Veuillez activer le créateur de catalogue de Services dans AssetSonar avant de commencer à utiliser le Catalogue de Services.",
+  "no-attributes-configured": "Aucun attribut configuré",
+  "contact-administrator-label": "Veuillez contacter votre administrateur pour obtenir l'accès",
+  "service-catalog-description": "Explorez le catalogue pour trouver un ensemble de services adaptés à vos besoins",
+  "go-to-service-catalog-builder": "Aller au créateur de catalogue de services",
+  "create-and-enable-service-categories": "Veuillez activer les catégories de services pour commencer à utiliser le Catalogue de Services."
 }
