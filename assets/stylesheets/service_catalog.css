@@ -215,8 +215,8 @@ main {
 
 .service-item-card .it-asset-card-footer {
   color:        var(--ez_brand_color, var(--primarycolor));
-/*  bottom:       0;
-  position:     absolute;*/
+  bottom:       0;
+  position:     absolute;
   font-size:    12px;
   font-weight:  700;
 /*  padding-top:  10px;*/

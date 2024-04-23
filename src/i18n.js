@@ -53,9 +53,13 @@ function translateElement(element) {
 
 function generateI18nKey(columnLabel) {
   if (columnLabel == 'Asset #') {
-    return 'asset_sequence_num';
+    return 'asset-sequence-num';
   } else if (columnLabel == 'AIN') {
     return 'identifier';
+  } else if (columnLabel == 'Software License #') {
+    return 'software-license-sequence-num';
+  } else if (columnLabel == 'License Identification Number') {
+    return 'software-license-identifier';
   } else {
     return columnLabel.replace(/\s+/g, '-').toLowerCase()
   }
