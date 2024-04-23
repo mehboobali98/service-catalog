@@ -890,7 +890,7 @@
 
       if (Object.keys(fields).length === 0 || columnNames.length === 0) {
         const noAttributesText = 'No attributes configured';
-        cardContent.append($('<tr>').append(
+        cardContentElement.append($('<tr>').append(
           this.fieldValueElement(noAttributesText, 'th', noAttributesText.length).attr('data-i18n', 'no-attributes-configured')
         ));
         return;
@@ -904,14 +904,14 @@
             this.fieldValueElement(columnName || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH).attr('data-i18n', columnName)
           );
           newRow.append(this.fieldValueElement(columnValue || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-          cardContent.append(newRow);
+          cardContentElement.append(newRow);
         });
       } else { // 'en' is already translated from rails side.
         $.each(fields, (label, value) => {
           let newRow = $('<tr>');
           newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
           newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-          cardContent.append(newRow);
+          cardContentElement.append(newRow);
         });
       }
     }
