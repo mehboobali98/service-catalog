@@ -172,7 +172,12 @@
     const key = element.attr("data-i18n");
     const translation = TRANSLATIONS[key];
     if (translation !== undefined) {
-      element.text(translation);
+      if (element.attr("placeholder") !== undefined) {
+        debugger;
+        element.attr("placeholder", translation);
+      } else {
+        element.text(translation);
+      }
     } else {
       console.warn(`Translation for key '${key}' not found.`);
     }
@@ -1157,6 +1162,7 @@
 
       const searchField = $('<input>').attr('id', 'search_input')
                                       .attr('type', 'text')
+                                      .attr('data-i18n', 'search')
                                       .attr('placeholder', 'search...');
       const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
       searchAndNavContainer.append(searchAndNavContainerText, searchBar);

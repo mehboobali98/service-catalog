@@ -39,7 +39,12 @@ function translateElement(element) {
   const key = element.attr("data-i18n");
   const translation = TRANSLATIONS[key];
   if (translation !== undefined) {
-    element.text(translation);
+    if (element.attr("placeholder") !== undefined) {
+      debugger;
+      element.attr("placeholder", translation);
+    } else {
+      element.text(translation);
+    }
   } else {
     console.warn(`Translation for key '${key}' not found.`);
   }

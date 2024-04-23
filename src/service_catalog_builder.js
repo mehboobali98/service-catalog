@@ -64,6 +64,7 @@ class ServiceCatalogBuilder {
 
     const searchField = $('<input>').attr('id', 'search_input')
                                     .attr('type', 'text')
+                                    .attr('data-i18n', 'search')
                                     .attr('placeholder', 'search...');
     const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
     searchAndNavContainer.append(searchAndNavContainerText, searchBar);
