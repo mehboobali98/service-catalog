@@ -576,6 +576,8 @@
   // with the translation in the active locale, corresponding to the element's data-i18n
   function translateElement(element) {
     const key = element.attr("data-i18n");
+    if (key == 'report-issue' || key == 'request-service') { return; }
+
     const translation = TRANSLATIONS[key];
     if (translation !== undefined) {
       if (element.attr("placeholder") !== undefined) {
