@@ -785,24 +785,12 @@
       const cardContentContainer = $('<div>').addClass('card-content-container');
       const cardContent          = $('<table>').addClass('card-content-table');
 
-      const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+      serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
       debugger;
 
       this.populateCardContent(cardContent, serviceCategoryItem);
+      debugger;
 
-      if (Object.keys(fields).length) {
-        $.each(fields, (label, value) => {
-          let newRow = $('<tr>');
-          newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
-          newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-          cardContent.append(newRow);
-        });
-      } else {
-        const noAttributesText = 'No attributes configured';
-        cardContent.append($('<tr>').append(
-          this.fieldValueElement(noAttributesText, 'th', noAttributesText.length).attr('data-i18n', 'no-attributes-configured')
-        ));
-      }
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);
 
