@@ -139,17 +139,13 @@
     return window.HelpCenter.user.locale.split('-')[0];
   }
 
-  // The active locale
-  let locale;
-
   // Load translations for the given locale and translate the page to this locale
   function setLocale(newLocale) {
     debugger;
-    if (newLocale === locale) return;
+    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
 
     fetchTranslationsFor(newLocale)
       .done(function(newTranslations) {
-        locale        = newLocale;
         $.extend(TRANSLATIONS, newTranslations);
         translatePage();
       })
