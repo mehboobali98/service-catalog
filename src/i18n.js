@@ -12,7 +12,7 @@ function setLocale(newLocale) {
   fetchTranslationsFor(newLocale)
     .done(function(newTranslations) {
       locale        = newLocale;
-      TRANSLATIONS  = newTranslations;
+      $.extend(TRANSLATIONS, newTranslations);
       translatePage();
     })
     .fail(function() {

@@ -1,6 +1,8 @@
-import {  STAGING_CDN_URL,
-          PRODUCTION_CDN_URL,
-          SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING } from './constant.js';
+import {
+  STAGING_CDN_URL,
+  PRODUCTION_CDN_URL,
+  SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
+} from './constant.js';
 
 function isRequestPage() {
   const regex = /\/requests\/(\d+)$/;
@@ -130,17 +132,19 @@ function getLocale() {
   return window.HelpCenter.user.locale.split('-')[0];
 }
 
-export {  getLocale,
-          isSignedIn,
-          signInPath,
-          loadingIcon,
-          isCorrectPage,
-          isRequestPage,
-          isNewRequestPage,
-          loadExternalFiles,
-          isMyAssignedAssets,
-          getCssVariableValue,
-          placeholderImagePath,
-          isServiceCatalogPage,
-          serviceCatalogDataPresent,
-          getMyAssignedAssetsServiceItems };
+export {
+  getLocale,
+  isSignedIn,
+  signInPath,
+  loadingIcon,
+  isCorrectPage,
+  isRequestPage,
+  isNewRequestPage,
+  loadExternalFiles,
+  isMyAssignedAssets,
+  getCssVariableValue,
+  placeholderImagePath,
+  isServiceCatalogPage,
+  serviceCatalogDataPresent,
+  getMyAssignedAssetsServiceItems
+};

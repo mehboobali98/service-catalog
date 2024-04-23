@@ -77,4 +77,9 @@ function noServiceItems(notFoundMessageKey) {
   return noResultsContainer;
 }
 
-export { noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled, noServiceItems };
+export {
+  noServiceItems,
+  noResultsFound,
+  serviceCatalogEmpty,
+  serviceCatalogDisabled
+};

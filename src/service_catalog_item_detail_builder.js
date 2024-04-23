@@ -134,4 +134,6 @@ class ServiceCatalogItemDetailBuilder {
   }
 }
 
-export { ServiceCatalogItemDetailBuilder };
+export {
+  ServiceCatalogItemDetailBuilder
+};

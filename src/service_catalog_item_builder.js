@@ -279,4 +279,6 @@ class ServiceCatalogItemBuilder {
   }
 }
 
-export { ServiceCatalogItemBuilder };
+export {
+  ServiceCatalogItemBuilder
+};
