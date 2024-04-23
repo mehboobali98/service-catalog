@@ -1,12 +1,10 @@
 {
   "@metadata": {
     "authors": [
-      "Mehboob"
+      "AssetSonar"
     ],
     "last-updated": "2024-04-22",
-    "locale": "en",
-    "message-documentation": "qqq",
-    "AnotherMetadata": "AnotherMetadataValue"
+    "locale": "en"
   },
   "request": "Request",
   "go-back": "Go Back",
@@ -14,7 +12,13 @@
   "report-issue": "Report Issue",
   "request-service": "Request Service",
   "service-catalog": "Service Catalog",
+  "go-to-assetsonar": "Go to AssetSonar",
+  "no-results-found": "No Results Found",
+  "no-assigned-items": "",
   "unauthorized-label": "You do not have permission to access this page!",
+  "enable-service-catalog": "Please enable Service Catalog Builder in Asset Sonar to start using Service Catalog.",
   "contact-administrator-label": "Please contact your administrator to get access",
-  "service-catalog-description": "Explore the Service Catalogeeeeee to find a curated range of solutions to your needs"
+  "service-catalog-description": "Explore the Service Catalogeeeeee to find a curated range of solutions to your needs",
+  "go-to-service-catalog-builder": "Go to Service Catalog Builder",
+  "create-and-enable-service-categories": "Please create and enable service categories in the builder to start using Service Catalog."
 }

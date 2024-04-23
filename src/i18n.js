@@ -1,18 +1,19 @@
+import {
+  TRANSLATIONS
+} from './constant.js';
+
 // The active locale
 let locale;
 
-// Gets filled with active locale translations
-let translations = {};
-
-// Load translations for the given locale and translate
-// the page to this locale
+// Load translations for the given locale and translate the page to this locale
 function setLocale(newLocale) {
   if (newLocale === locale) return;
+
   fetchTranslationsFor(newLocale)
     .done(function(newTranslations) {
-      locale = newLocale;
-      translations = newTranslations;
-      translatePage(translations);
+      locale        = newLocale;
+      TRANSLATIONS  = newTranslations;
+      translatePage();
     })
     .fail(function() {
       console.error("Failed to load translations.");
@@ -25,8 +26,7 @@ function fetchTranslationsFor(newLocale) {
 }
 
 // Replace the inner text of each element that has a
-// data-i18n-key attribute with the translation corresponding
-// to its data-i18n-key
+// data-i18n attribute with the translation corresponding to its data-i18n
 function translatePage() {
   $("[data-i18n]").each(function() {
     translateElement($(this));
@@ -34,12 +34,11 @@ function translatePage() {
 }
 
 // Replace the inner text of the given HTML element
-// with the translation in the active locale,
-// corresponding to the element's data-i18n-key
+// with the translation in the active locale, corresponding to the element's data-i18n
 function translateElement(element) {
   const key = element.attr("data-i18n");
-  const translation = translations[key];
-  debugger;
+  const translation = TRANSLATIONS[key];
+  debugger
   if (translation !== undefined) {
     element.text(translation);
   } else {

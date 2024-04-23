@@ -1,16 +1,23 @@
-import { DEFAULT_FIELD_VALUE,
-         DEFAULT_TRUNCATE_LENGTH,
-         CARD_TITLE_TRUNCATE_LENGTH }      from './constant.js';
-import { loadingIcon,
-         isMyAssignedAssets,
-         placeholderImagePath,
-         getMyAssignedAssetsServiceItems } from './utility.js';
+import {
+  DEFAULT_FIELD_VALUE,
+  DEFAULT_TRUNCATE_LENGTH,
+  CARD_TITLE_TRUNCATE_LENGTH
+} from './constant.js';
+
+import {
+  loadingIcon,
+  isMyAssignedAssets,
+  placeholderImagePath,
+  getMyAssignedAssetsServiceItems
+} from './utility.js';
 
 import {
   noServiceItems
-} from './view_helper.js'
+} from './view_helper.js';
 
-import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
+import {
+  ServiceCatalogItemDetailBuilder
+} from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
   constructor() {

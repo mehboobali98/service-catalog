@@ -1,6 +1,12 @@
-import { setLocale } from './i18n.js';
-import {  getLocale,
-          serviceCatalogDataPresent }  from './utility.js';
+import {
+  setLocale
+} from './i18n.js';
+
+import {
+  getLocale,
+  serviceCatalogDataPresent
+} from './utility.js';
+
 import { 
   noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
 } from './view_helper.js';
@@ -48,11 +54,9 @@ class ApiService {
               } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
                 $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
               } else {
-                debugger;
                 callback(data, options);
-                debugger;
-                setLocale(getLocale());
               }
+              setLocale(getLocale());
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -88,6 +92,7 @@ class ApiService {
           })
           .then(data => {
             callback(data, callBackOptions.serviceItemsContainerId);
+            setLocale(getLocale());
           })
           .catch(error => {
             console.error('An error occurred while fetching service categories and items: ' + error.message);
