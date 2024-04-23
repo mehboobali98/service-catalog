@@ -7,7 +7,6 @@ let locale;
 
 // Load translations for the given locale and translate the page to this locale
 function setLocale(newLocale) {
-  debugger;
   if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
 
   fetchTranslationsFor(newLocale)
@@ -39,7 +38,6 @@ function translatePage() {
 function translateElement(element) {
   const key = element.attr("data-i18n");
   const translation = TRANSLATIONS[key];
-  debugger
   if (translation !== undefined) {
     element.text(translation);
   } else {

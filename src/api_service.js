@@ -56,7 +56,6 @@ class ApiService {
               } else {
                 callback(data, options);
               }
-              debugger;
               setLocale(getLocale());
             })
             .catch(error => {
@@ -93,7 +92,6 @@ class ApiService {
           })
           .then(data => {
             callback(data, callBackOptions.serviceItemsContainerId);
-            debugger;
             setLocale(getLocale());
           })
           .catch(error => {

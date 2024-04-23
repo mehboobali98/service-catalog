@@ -1,12 +1,10 @@
 {
   "@metadata": {
     "authors": [
-      "Mehboob"
+      "AssetSonar"
     ],
     "last-updated": "2024-04-22",
-    "locale": "en",
-    "message-documentation": "qqq",
-    "AnotherMetadata": "AnotherMedatadataValue"
+    "locale": "fr"
   },
   "service-catalog: Service Catalog"
 }
