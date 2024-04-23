@@ -23,5 +23,7 @@
   "contact-administrator-label": "Veuillez contacter votre administrateur pour obtenir l'accès",
   "service-catalog-description": "Explorez le catalogue pour trouver un ensemble de services adaptés à vos besoins",
   "go-to-service-catalog-builder": "Aller au créateur de catalogue de services",
-  "create-and-enable-service-categories": "Veuillez activer les catégories de services pour commencer à utiliser le Catalogue de Services."
+  "create-and-enable-service-categories": "Veuillez activer les catégories de services pour commencer à utiliser le Catalogue de Services.",
+  "sequence_num": "N° Actif",
+  "identifier": "ID Actif"
 }

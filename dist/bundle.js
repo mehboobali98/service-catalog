@@ -545,6 +545,62 @@
     return noResultsContainer;
   }
 
+  // Load translations for the given locale and translate the page to this locale
+  function setLocale(newLocale) {
+    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
+
+    fetchTranslationsFor(newLocale)
+      .done(function(newTranslations) {
+        $.extend(TRANSLATIONS, newTranslations);
+        translatePage();
+      })
+      .fail(function() {
+        console.error("Failed to load translations.");
+      });
+  }
+
+  // Retrieve translations JSON object for the given locale over the network
+  function fetchTranslationsFor(newLocale) {
+    return $.getJSON(`https://mehboobali98.github.io/service-catalog/i18n/${newLocale}.json`);
+  }
+
+  // Replace the inner text of each element that has a
+  // data-i18n attribute with the translation corresponding to its data-i18n
+  function translatePage() {
+    $("[data-i18n]").each(function() {
+      translateElement($(this));
+    });
+  }
+
+  // Replace the inner text of the given HTML element
+  // with the translation in the active locale, corresponding to the element's data-i18n
+  function translateElement(element) {
+    const key = element.attr("data-i18n");
+    const translation = TRANSLATIONS[key];
+    debugger;
+    if (translation !== undefined) {
+      if (element.attr("placeholder") !== undefined) {
+        debugger;
+        element.attr("placeholder", translation);
+      } else {
+        element.text(translation);
+      }
+    } else {
+      console.warn(`Translation for key '${key}' not found.`);
+    }
+  }
+
+  function generateI18nKey(columnLabel) {
+    debugger;
+    if (columnLabel == 'Asset #') {
+      return 'sequence_num';
+    } else if (columnLabel == 'AIN') {
+      return 'identifier';
+    } else {
+      return columnLabel.replace(/\s+/g, '-').toLowerCase()
+    }
+  }
+
   class ServiceCatalogItemDetailBuilder {
     constructor(locale) {
       this.locale                 = locale;
@@ -785,11 +841,7 @@
       const cardContentContainer = $('<div>').addClass('card-content-container');
       const cardContent          = $('<table>').addClass('card-content-table');
 
-      serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-      debugger;
-
       this.populateCardContent(cardContent, serviceCategoryItem);
-      debugger;
 
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);
@@ -885,10 +937,9 @@
     }
 
     populateCardContent(cardContentElement, serviceCategoryItem) {
-      const fields      = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-      const columnNames = serviceCategoryItem.column_names;
+      const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
 
-      if (Object.keys(fields).length === 0 || columnNames.length === 0) {
+      if (Object.keys(fields).length === 0) {
         const noAttributesText = 'No attributes configured';
         cardContentElement.append($('<tr>').append(
           this.fieldValueElement(noAttributesText, 'th', noAttributesText.length).attr('data-i18n', 'no-attributes-configured')
@@ -896,26 +947,19 @@
         return;
       }
 
-      if (this.locale == 'fr') {
-        debugger;
-        $.each(columnNames, (index, columnName) => {
-          let columnValue = serviceCategoryItem[columnName];
-          let newRow = $('<tr>');
+      // 'en' is already translated from rails side.
+      $.each(fields, (label, value) => {
+        let newRow        = $('<tr>');
+        let columnLabelEle = this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH);
+        if (this.locale == 'fr') {
           debugger;
-          newRow.append(
-            this.fieldValueElement(columnName || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH).attr('data-i18n', columnName)
-          );
-          newRow.append(this.fieldValueElement(columnValue || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-          cardContentElement.append(newRow);
-        });
-      } else { // 'en' is already translated from rails side.
-        $.each(fields, (label, value) => {
-          let newRow = $('<tr>');
-          newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
-          newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-          cardContentElement.append(newRow);
-        });
-      }
+          columnLabelEle.attr('data-i18n', generateI18nKey(label));
+        }
+        newRow.append(columnLabelEle);
+
+        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
+        cardContentElement.append(newRow);
+      });
     }
 
     fieldValueElement(value, eleType, maxLength) {
@@ -993,50 +1037,6 @@
           });
           searchResultsContainer.append(searchItemsFlex);
       }
-  }
-
-  // Load translations for the given locale and translate the page to this locale
-  function setLocale(newLocale) {
-    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
-
-    fetchTranslationsFor(newLocale)
-      .done(function(newTranslations) {
-        $.extend(TRANSLATIONS, newTranslations);
-        translatePage();
-      })
-      .fail(function() {
-        console.error("Failed to load translations.");
-      });
-  }
-
-  // Retrieve translations JSON object for the given locale over the network
-  function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`https://mehboobali98.github.io/service-catalog/i18n/${newLocale}.json`);
-  }
-
-  // Replace the inner text of each element that has a
-  // data-i18n attribute with the translation corresponding to its data-i18n
-  function translatePage() {
-    $("[data-i18n]").each(function() {
-      translateElement($(this));
-    });
-  }
-
-  // Replace the inner text of the given HTML element
-  // with the translation in the active locale, corresponding to the element's data-i18n
-  function translateElement(element) {
-    const key = element.attr("data-i18n");
-    const translation = TRANSLATIONS[key];
-    if (translation !== undefined) {
-      if (element.attr("placeholder") !== undefined) {
-        debugger;
-        element.attr("placeholder", translation);
-      } else {
-        element.text(translation);
-      }
-    } else {
-      console.warn(`Translation for key '${key}' not found.`);
-    }
   }
 
   class ApiService {

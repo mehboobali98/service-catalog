@@ -38,6 +38,7 @@ function translatePage() {
 function translateElement(element) {
   const key = element.attr("data-i18n");
   const translation = TRANSLATIONS[key];
+  debugger;
   if (translation !== undefined) {
     if (element.attr("placeholder") !== undefined) {
       debugger;
@@ -50,7 +51,19 @@ function translateElement(element) {
   }
 }
 
+function generateI18nKey(columnLabel) {
+  debugger;
+  if (columnLabel == 'Asset #') {
+    return 'sequence_num';
+  } else if (columnLabel == 'AIN') {
+    return 'identifier';
+  } else {
+    return columnLabel.replace(/\s+/g, '-').toLowerCase()
+  }
+}
+
 export {
   locale,
-  setLocale
+  setLocale,
+  generateI18nKey
 };

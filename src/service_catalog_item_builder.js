@@ -1,4 +1,8 @@
 import {
+  generateI18nKey
+} from './i18n.js';
+
+import {
   DEFAULT_FIELD_VALUE,
   DEFAULT_TRUNCATE_LENGTH,
   CARD_TITLE_TRUNCATE_LENGTH
@@ -128,11 +132,7 @@ class ServiceCatalogItemBuilder {
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
 
-    const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-    debugger;
-
     this.populateCardContent(cardContent, serviceCategoryItem);
-    debugger;
 
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
@@ -228,10 +228,9 @@ class ServiceCatalogItemBuilder {
   }
 
   populateCardContent(cardContentElement, serviceCategoryItem) {
-    const fields      = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-    const columnNames = serviceCategoryItem.column_names;
+    const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
 
-    if (Object.keys(fields).length === 0 || columnNames.length === 0) {
+    if (Object.keys(fields).length === 0) {
       const noAttributesText = 'No attributes configured';
       cardContentElement.append($('<tr>').append(
         this.fieldValueElement(noAttributesText, 'th', noAttributesText.length).attr('data-i18n', 'no-attributes-configured')
@@ -239,26 +238,19 @@ class ServiceCatalogItemBuilder {
       return;
     }
 
-    if (this.locale == 'fr') {
-      debugger;
-      $.each(columnNames, (index, columnName) => {
-        let columnValue = serviceCategoryItem[columnName];
-        let newRow = $('<tr>');
+    // 'en' is already translated from rails side.
+    $.each(fields, (label, value) => {
+      let newRow        = $('<tr>');
+      let columnLabelEle = this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH);
+      if (this.locale == 'fr') {
         debugger;
-        newRow.append(
-          this.fieldValueElement(columnName || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH).attr('data-i18n', columnName)
-        );
-        newRow.append(this.fieldValueElement(columnValue || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-        cardContentElement.append(newRow);
-      });
-    } else { // 'en' is already translated from rails side.
-      $.each(fields, (label, value) => {
-        let newRow = $('<tr>');
-        newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
-        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-        cardContentElement.append(newRow);
-      });
-    }
+        columnLabelEle.attr('data-i18n', generateI18nKey(label));
+      }
+      newRow.append(columnLabelEle);
+
+      newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
+      cardContentElement.append(newRow);
+    });
   }
 
   fieldValueElement(value, eleType, maxLength) {
