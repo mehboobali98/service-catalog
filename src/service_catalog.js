@@ -1,16 +1,29 @@
-import { getLocale,
-         isSignedIn,
-         signInPath,
-         isRequestPage,
-         isNewRequestPage,
-         loadExternalFiles,
-         isServiceCatalogPage   } from './utility.js';
-import { setLocale              } from './i18n.js';
-import { RequestForm            } from './request_form.js';
-import { NewRequestForm         } from './new_request_form.js';
-import { STAGING_CDN_URL,
-         PRODUCTION_CDN_URL     } from './constant.js';       
-import { ServiceCatalogBuilder  } from './service_catalog_builder.js';
+import {
+  getLocale,
+  isSignedIn,
+  signInPath,
+  isRequestPage,
+  isNewRequestPage,
+  loadExternalFiles,
+  isServiceCatalogPage
+} from './utility.js';
+
+import {
+  STAGING_CDN_URL,
+  PRODUCTION_CDN_URL
+} from './constant.js';
+
+import {
+  RequestForm
+} from './request_form.js';
+
+import {
+  NewRequestForm
+} from './new_request_form.js';
+
+import {
+  ServiceCatalogBuilder
+} from './service_catalog_builder.js';
 
 class ServiceCatalogManager {
   constructor(initializationData) {
@@ -27,7 +40,7 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.ezoSubdomain);
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }

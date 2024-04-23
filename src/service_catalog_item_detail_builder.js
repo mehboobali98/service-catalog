@@ -4,7 +4,8 @@ import {
 } from './utility.js';
 
 class ServiceCatalogItemDetailBuilder {
-  constructor() {
+  constructor(locale) {
+    this.locale                 = locale;
     this.currency               = null;
     this.serviceCategoriesItems = null;
   }

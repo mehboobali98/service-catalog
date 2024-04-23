@@ -50,4 +50,7 @@ function translateElement(element) {
   }
 }
 
-export { setLocale };
+export {
+  locale,
+  setLocale
+};

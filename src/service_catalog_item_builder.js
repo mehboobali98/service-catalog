@@ -20,7 +20,8 @@ import {
 } from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
-  constructor() {
+  constructor(locale) {
+    this.locale                 = locale;
     this.currency               = null;
     this.zendeskFormData        = null;
     this.serviceCategoriesItems = null;

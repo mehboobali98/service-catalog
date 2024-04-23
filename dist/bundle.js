@@ -139,50 +139,6 @@
     return window.HelpCenter.user.locale.split('-')[0];
   }
 
-  // Load translations for the given locale and translate the page to this locale
-  function setLocale(newLocale) {
-    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
-
-    fetchTranslationsFor(newLocale)
-      .done(function(newTranslations) {
-        $.extend(TRANSLATIONS, newTranslations);
-        translatePage();
-      })
-      .fail(function() {
-        console.error("Failed to load translations.");
-      });
-  }
-
-  // Retrieve translations JSON object for the given locale over the network
-  function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`https://mehboobali98.github.io/service-catalog/i18n/${newLocale}.json`);
-  }
-
-  // Replace the inner text of each element that has a
-  // data-i18n attribute with the translation corresponding to its data-i18n
-  function translatePage() {
-    $("[data-i18n]").each(function() {
-      translateElement($(this));
-    });
-  }
-
-  // Replace the inner text of the given HTML element
-  // with the translation in the active locale, corresponding to the element's data-i18n
-  function translateElement(element) {
-    const key = element.attr("data-i18n");
-    const translation = TRANSLATIONS[key];
-    if (translation !== undefined) {
-      if (element.attr("placeholder") !== undefined) {
-        debugger;
-        element.attr("placeholder", translation);
-      } else {
-        element.text(translation);
-      }
-    } else {
-      console.warn(`Translation for key '${key}' not found.`);
-    }
-  }
-
   class RequestForm {
     constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
       this.ezoFieldId             = ezoFieldId;
@@ -590,7 +546,8 @@
   }
 
   class ServiceCatalogItemDetailBuilder {
-    constructor() {
+    constructor(locale) {
+      this.locale                 = locale;
       this.currency               = null;
       this.serviceCategoriesItems = null;
     }
@@ -721,7 +678,8 @@
   }
 
   class ServiceCatalogItemBuilder {
-    constructor() {
+    constructor(locale) {
+      this.locale                 = locale;
       this.currency               = null;
       this.zendeskFormData        = null;
       this.serviceCategoriesItems = null;
@@ -1013,8 +971,53 @@
       }
   }
 
+  // Load translations for the given locale and translate the page to this locale
+  function setLocale(newLocale) {
+    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
+
+    fetchTranslationsFor(newLocale)
+      .done(function(newTranslations) {
+        $.extend(TRANSLATIONS, newTranslations);
+        translatePage();
+      })
+      .fail(function() {
+        console.error("Failed to load translations.");
+      });
+  }
+
+  // Retrieve translations JSON object for the given locale over the network
+  function fetchTranslationsFor(newLocale) {
+    return $.getJSON(`https://mehboobali98.github.io/service-catalog/i18n/${newLocale}.json`);
+  }
+
+  // Replace the inner text of each element that has a
+  // data-i18n attribute with the translation corresponding to its data-i18n
+  function translatePage() {
+    $("[data-i18n]").each(function() {
+      translateElement($(this));
+    });
+  }
+
+  // Replace the inner text of the given HTML element
+  // with the translation in the active locale, corresponding to the element's data-i18n
+  function translateElement(element) {
+    const key = element.attr("data-i18n");
+    const translation = TRANSLATIONS[key];
+    if (translation !== undefined) {
+      if (element.attr("placeholder") !== undefined) {
+        debugger;
+        element.attr("placeholder", translation);
+      } else {
+        element.text(translation);
+      }
+    } else {
+      console.warn(`Translation for key '${key}' not found.`);
+    }
+  }
+
   class ApiService {
-    constructor(ezoSubdomain) {
+    constructor(locale, ezoSubdomain) {
+      this.locale       = locale;
       this.ezoSubdomain = ezoSubdomain;
     }
 
@@ -1058,7 +1061,7 @@
                 } else {
                   callback(data, options);
                 }
-                setLocale(getLocale());
+                setLocale(this.locale);
               })
               .catch(error => {
                 console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -1094,7 +1097,7 @@
             })
             .then(data => {
               callback(data, callBackOptions.serviceItemsContainerId);
-              setLocale(getLocale());
+              setLocale(this.locale);
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -1109,11 +1112,12 @@
   }
 
   class ServiceCatalogBuilder {
-    constructor(ezoSubdomain) {
+    constructor(locale, ezoSubdomain) {
+      this.locale                          = locale;
       this.apiService                      = new ApiService(ezoSubdomain);
       this.ezoSubdomain                    = ezoSubdomain;
-      this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
-      this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
+      this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
+      this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
       this.search                          = new Search();
     }
 
@@ -1365,7 +1369,7 @@
     }
 
     initialize() {
-      this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.ezoSubdomain);
+      this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
       this.addServiceCatalogMenuItem();
       this.initServiceCatalog();
     }

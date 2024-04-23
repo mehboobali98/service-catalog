@@ -8,11 +8,12 @@ import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
-  constructor(ezoSubdomain) {
+  constructor(locale, ezoSubdomain) {
+    this.locale                          = locale;
     this.apiService                      = new ApiService(ezoSubdomain);
     this.ezoSubdomain                    = ezoSubdomain;
-    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
     this.search                          = new Search();
   }
 

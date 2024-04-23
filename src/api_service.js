@@ -3,7 +3,6 @@ import {
 } from './i18n.js';
 
 import {
-  getLocale,
   serviceCatalogDataPresent
 } from './utility.js';
 
@@ -12,7 +11,8 @@ import {
 } from './view_helper.js';
 
 class ApiService {
-  constructor(ezoSubdomain) {
+  constructor(locale, ezoSubdomain) {
+    this.locale       = locale;
     this.ezoSubdomain = ezoSubdomain;
   }
 
@@ -56,7 +56,7 @@ class ApiService {
               } else {
                 callback(data, options);
               }
-              setLocale(getLocale());
+              setLocale(this.locale);
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -92,7 +92,7 @@ class ApiService {
           })
           .then(data => {
             callback(data, callBackOptions.serviceItemsContainerId);
-            setLocale(getLocale());
+            setLocale(this.locale);
           })
           .catch(error => {
             console.error('An error occurred while fetching service categories and items: ' + error.message);
