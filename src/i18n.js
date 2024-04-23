@@ -51,7 +51,7 @@ function translateElement(element) {
 
 function generateI18nKey(columnLabel) {
   if (columnLabel == 'Asset #') {
-    return 'sequence_num';
+    return 'asset_sequence_num';
   } else if (columnLabel == 'AIN') {
     return 'identifier';
   } else {
