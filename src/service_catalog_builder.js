@@ -10,7 +10,7 @@ import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_
 class ServiceCatalogBuilder {
   constructor(locale, ezoSubdomain) {
     this.locale                          = locale;
-    this.apiService                      = new ApiService(ezoSubdomain);
+    this.apiService                      = new ApiService(locale, ezoSubdomain);
     this.ezoSubdomain                    = ezoSubdomain;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
     this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
