@@ -128,7 +128,7 @@ main {
 
 .service-item-card {
   width:          280px;
-/*  height:         150px;*/
+  height:         150px;
   cursor:         pointer;
   border:         1px #D9D9D9 solid !important;
   padding:        4px;
@@ -162,7 +162,7 @@ main {
 
 .service-item-card .card-body .card-content-container {
   padding-top:    10px;
-/*  padding-bottom: 10px;*/
+  padding-bottom: 10px;
 }
 
 .service-item-card .card-body .card-content-table {
@@ -219,7 +219,7 @@ main {
   position:     absolute;
   font-size:    12px;
   font-weight:  700;
-/*  padding-top:  10px;*/
+  padding-top:  10px;
 }
 
 .service-item-card .card-footer .footer-arrow {
