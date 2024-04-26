@@ -577,7 +577,8 @@
   // with the translation in the active locale, corresponding to the element's data-i18n
   function translateElement(element) {
     const key = element.attr("data-i18n");
-    if (key == 'report-issue' || key == 'request-service') { return; }
+    debugger;
+    if (key == 'report-issue' || key == 'request') { return; }
 
     const translation = TRANSLATIONS[key];
     if (translation !== undefined) {
@@ -665,7 +666,6 @@
       queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
       queryParams['service_item_id']  = serviceCategoryItem.id;
       queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
-      debugger;
       const url = `/hc/requests/new?${$.param(queryParams)}`;
 
       const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
