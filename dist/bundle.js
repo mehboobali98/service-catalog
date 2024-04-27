@@ -577,7 +577,6 @@
   // with the translation in the active locale, corresponding to the element's data-i18n
   function translateElement(element) {
     const key = element.attr("data-i18n");
-    debugger;
     if (key == 'report-issue' || key == 'request') { return; }
 
     const translation = TRANSLATIONS[key];
@@ -855,7 +854,6 @@
       queryParams['item_name']        = assetName;
       queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
       queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
-      debugger;
 
       // Card footer
       const url              = `/hc/requests/new?${$.param(queryParams)}`;
