@@ -141,7 +141,6 @@ class ServiceCatalogItemBuilder {
     queryParams['item_name']        = assetName;
     queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
     queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
-    debugger;
 
     // Card footer
     const url              = `/hc/requests/new?${$.param(queryParams)}`;

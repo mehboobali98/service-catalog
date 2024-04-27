@@ -2,16 +2,12 @@ import {
   TRANSLATIONS
 } from './constant.js';
 
-// The active locale
-let locale;
-
 // Load translations for the given locale and translate the page to this locale
 function setLocale(newLocale) {
   if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
 
   fetchTranslationsFor(newLocale)
     .done(function(newTranslations) {
-      locale        = newLocale;
       $.extend(TRANSLATIONS, newTranslations);
       translatePage();
     })
@@ -37,7 +33,6 @@ function translatePage() {
 // with the translation in the active locale, corresponding to the element's data-i18n
 function translateElement(element) {
   const key = element.attr("data-i18n");
-  debugger;
   if (key == 'report-issue' || key == 'request') { return; }
 
   const translation = TRANSLATIONS[key];
@@ -67,7 +62,6 @@ function generateI18nKey(columnLabel) {
 }
 
 export {
-  locale,
   setLocale,
   generateI18nKey
 };
