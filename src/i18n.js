@@ -73,6 +73,7 @@ function generateI18nKey(columnLabel) {
 
 function t(key, defaultString) {
   const translation = TRANSLATIONS[key];
+  debugger;
   if (translation !== undefined) {
     return translation;
   } else {
