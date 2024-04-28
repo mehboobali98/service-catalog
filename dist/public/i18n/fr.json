@@ -43,7 +43,7 @@
   "vendor": "Vendeur",
   "quantity": "Quantité",
   "last-service-date": "Date du dernier service",
-  "upcoming-service_date": "Prochaine date de service",
+  "upcoming-service-date": "Prochaine date de service",
   "age": "Âge",
   "cost-price": "Coût d'achat",
   "operating-system": "Système d'exploitation",
