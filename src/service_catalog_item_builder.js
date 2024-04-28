@@ -1,4 +1,5 @@
 import {
+  t,
   generateI18nKey
 } from './i18n.js';
 
@@ -104,8 +105,9 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-    const card        = $('<div>').addClass('row service-item-card');
-    const queryParams = {};
+    const card                 = $('<div>').addClass('row service-item-card');
+    const queryParams          = {};
+    const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card image
     const cardImageContainer    = $('<div>').addClass('col-4');
@@ -143,7 +145,7 @@ class ServiceCatalogItemBuilder {
     queryParams['item_id']          = serviceCategoryItem.sequence_num;
     queryParams['item_name']        = assetName;
     queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-    queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
+    queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
 
     // Card footer
     const url              = `/hc/requests/new?${$.param(queryParams)}`;

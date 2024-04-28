@@ -541,6 +541,15 @@
     }
   }
 
+  function t(key, defaultString) {
+    const translation = TRANSLATIONS[key];
+    if (translation !== undefined) {
+      return translation;
+    } else {
+      return defaultString || '';
+    }
+  }
+
   function serviceCatalogDisabled(ezoSubdomain) {
     const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
     const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/assets/images/svg/no_access_image.svg`)
@@ -829,8 +838,9 @@
     }
 
     buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-      const card        = $('<div>').addClass('row service-item-card');
-      const queryParams = {};
+      const card                 = $('<div>').addClass('row service-item-card');
+      const queryParams          = {};
+      const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
       // Card image
       const cardImageContainer    = $('<div>').addClass('col-4');
@@ -868,7 +878,7 @@
       queryParams['item_id']          = serviceCategoryItem.sequence_num;
       queryParams['item_name']        = assetName;
       queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-      queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
+      queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
 
       // Card footer
       const url              = `/hc/requests/new?${$.param(queryParams)}`;
