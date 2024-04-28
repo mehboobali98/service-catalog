@@ -33,12 +33,22 @@ function translatePage() {
 // with the translation in the active locale, corresponding to the element's data-i18n
 function translateElement(element) {
   const key = element.attr("data-i18n");
-  if (key == 'report-issue' || key == 'request') { return; }
 
   const translation = TRANSLATIONS[key];
   if (translation !== undefined) {
     if (element.attr("placeholder") !== undefined) {
       element.attr("placeholder", translation);
+    } else if (key == 'report-issue' || key == 'request') {
+      var originalString = element.text();
+      var stringToReplaceMapping = {
+        'request':      'Request',
+        'report-issue': 'Report Issue',
+      };
+      // Perform the string replacement for the key
+      if (stringToReplaceMapping[key] !== undefined) {
+        originalString = originalString.replace(stringToReplaceMapping[key], translation);
+        element.text(originalString);
+      }
     } else {
       element.text(translation);
     }
