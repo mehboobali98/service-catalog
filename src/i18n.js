@@ -3,13 +3,13 @@ import {
 } from './constant.js';
 
 // Load translations for the given locale and translate the page to this locale
-function setLocale(newLocale, translatePage) {
-  if (Object.keys(TRANSLATIONS).length !== 0 && translatePage) { return translatePage(); }
+function setLocale(newLocale, shouldTranslatePage) {
+  if (Object.keys(TRANSLATIONS).length !== 0 && shouldTranslatePage) { return translatePage(); }
 
   fetchTranslationsFor(newLocale)
     .done(function(newTranslations) {
       $.extend(TRANSLATIONS, newTranslations);
-      if (translatePage) { return translatePage(); }
+      if (shouldTranslatePage) { return translatePage(); }
     })
     .fail(function() {
       console.error("Failed to load translations.");
