@@ -878,6 +878,7 @@
       queryParams['item_id']          = serviceCategoryItem.sequence_num;
       queryParams['item_name']        = assetName;
       queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
+      debugger;
       queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
 
       // Card footer
