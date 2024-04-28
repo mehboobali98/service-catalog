@@ -144,7 +144,7 @@ main {
 }
 
 .service-item-card .card-body {
-  position: relative;
+  /*position: relative;*/
 }
 
 .service-item-card .card-body .card-title {
@@ -161,7 +161,7 @@ main {
 
 .service-item-card .card-body .card-content-container {
   padding-top:    10px;
-  padding-bottom: 10px;
+/*  padding-bottom: 10px;*/
 }
 
 .service-item-card .card-body .card-content-table {
@@ -214,11 +214,11 @@ main {
 
 .service-item-card .it-asset-card-footer {
   color:        var(--ez_brand_color, var(--primarycolor));
-  bottom:       0;
-  position:     absolute;
+/*  bottom:       0;*/
+/*  position:     absolute;*/
   font-size:    12px;
   font-weight:  700;
-  padding-top:  10px;
+/*  padding-top:  10px;*/
 }
 
 .service-item-card .card-footer .footer-arrow {
