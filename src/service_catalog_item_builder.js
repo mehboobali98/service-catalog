@@ -53,9 +53,12 @@ class ServiceCatalogItemBuilder {
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-    const serviceCategoryLabel       = $('<p>').text(serviceCategoryItems.title)
+    const serviceCategoryTitle       = serviceCategoryItems.title;
+    const serviceCategoryLabel       = $('<p>').attr('data-i18n', generateI18nKey(serviceCategoryTitle))
+                                               .text(serviceCategoryTitle)
                                                .addClass('service-category-label');
-    const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description)
+    const serviceCategoryDescription = $('<p>').attr('data-i18n', generateI18nKey(`${serviceCategoryTitle} Description`))
+                                               .text(serviceCategoryItems.description)
                                                .addClass('service-category-description');
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);

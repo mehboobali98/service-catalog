@@ -80,7 +80,9 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData.label).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
+          let sectionHeader   = $('<p>').attr('data-i18n', 'service-item-details')
+                                        .text(fieldData.label)
+                                        .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);

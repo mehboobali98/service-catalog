@@ -67,7 +67,7 @@ function generateI18nKey(columnLabel) {
   } else if (columnLabel == 'License Identification Number') {
     return 'software-license-identifier';
   } else {
-    return columnLabel.replace(/\s+/g, '-').toLowerCase()
+    return columnLabel.replace(/\s+/g, '-').toLowerCase();
   }
 }
 

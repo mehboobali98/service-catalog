@@ -24,7 +24,7 @@
   "service-catalog-description": "Explorez le catalogue pour trouver un ensemble de services adaptés à vos besoins",
   "go-to-service-catalog-builder": "Aller au créateur de catalogue de services",
   "create-and-enable-service-categories": "Veuillez activer les catégories de services pour commencer à utiliser le Catalogue de Services.",
-  "asset_sequence_num": "N° Actif",
+  "asset-sequence-num": "N° Actif",
   "identifier": "ID Actif",
   "location": "Emplacement",
   "description": "Description",
@@ -71,5 +71,8 @@
   "license-option": "Option de licence",
   "purchase-order": "Bon de commande",
   "total-seats": "Nb total de licences",
-  "payment-frequency": "Féquence Paiement"
+  "payment-frequency": "Féquence Paiement",
+  "my-assigned-assets": "Mes actifs",
+  "my-assigned-assets-description": "Pour chaque utilisateur final, cette catégorie contient les équipements et les licences logiciels dont il dispose pour faciliter la visibilité et l'assistance.",
+  "service-item-details": "Détails"
 }

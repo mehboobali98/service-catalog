@@ -1,3 +1,4 @@
+import { generateI18nKey }                  from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
          serviceCatalogDataPresent }        from './utility.js';
@@ -111,7 +112,7 @@ class ServiceCatalogBuilder {
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
-                              .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
+                              .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank', 'data-i18n': generateI18nKey(serviceCategoryData.title) })
                               .text(serviceCategoryData.title));
       if (!activeClassAdded) {
         activeClassAdded = true;

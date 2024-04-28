@@ -472,6 +472,75 @@
     }
   }
 
+  // Load translations for the given locale and translate the page to this locale
+  function setLocale(newLocale) {
+    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
+
+    fetchTranslationsFor(newLocale)
+      .done(function(newTranslations) {
+        $.extend(TRANSLATIONS, newTranslations);
+        translatePage();
+      })
+      .fail(function() {
+        console.error("Failed to load translations.");
+      });
+  }
+
+  // Retrieve translations JSON object for the given locale over the network
+  function fetchTranslationsFor(newLocale) {
+    return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/i18n/${newLocale}.json`);
+  }
+
+  // Replace the inner text of each element that has a
+  // data-i18n attribute with the translation corresponding to its data-i18n
+  function translatePage() {
+    $("[data-i18n]").each(function() {
+      translateElement($(this));
+    });
+  }
+
+  // Replace the inner text of the given HTML element
+  // with the translation in the active locale, corresponding to the element's data-i18n
+  function translateElement(element) {
+    const key = element.attr("data-i18n");
+
+    const translation = TRANSLATIONS[key];
+    if (translation !== undefined) {
+      if (element.attr("placeholder") !== undefined) {
+        element.attr("placeholder", translation);
+      } else if (key == 'report-issue' || key == 'request') {
+        var originalString = element.text();
+        var stringToReplaceMapping = {
+          'request':      'Request',
+          'report-issue': 'Report Issue',
+        };
+        // Perform the string replacement for the key
+        if (stringToReplaceMapping[key] !== undefined) {
+          originalString = originalString.replace(stringToReplaceMapping[key], translation);
+          element.text(originalString);
+        }
+      } else {
+        element.text(translation);
+      }
+    } else {
+      console.warn(`Translation for key '${key}' not found.`);
+    }
+  }
+
+  function generateI18nKey(columnLabel) {
+    if (columnLabel == 'Asset #') {
+      return 'asset-sequence-num';
+    } else if (columnLabel == 'AIN') {
+      return 'identifier';
+    } else if (columnLabel == 'Software License #') {
+      return 'software-license-sequence-num';
+    } else if (columnLabel == 'License Identification Number') {
+      return 'software-license-identifier';
+    } else {
+      return columnLabel.replace(/\s+/g, '-').toLowerCase();
+    }
+  }
+
   function serviceCatalogDisabled(ezoSubdomain) {
     const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
     const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/assets/images/svg/no_access_image.svg`)
@@ -544,75 +613,6 @@
 
     noResultsContainer.append(noResultsImage, noResultsLabel);
     return noResultsContainer;
-  }
-
-  // Load translations for the given locale and translate the page to this locale
-  function setLocale(newLocale) {
-    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
-
-    fetchTranslationsFor(newLocale)
-      .done(function(newTranslations) {
-        $.extend(TRANSLATIONS, newTranslations);
-        translatePage();
-      })
-      .fail(function() {
-        console.error("Failed to load translations.");
-      });
-  }
-
-  // Retrieve translations JSON object for the given locale over the network
-  function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/i18n/${newLocale}.json`);
-  }
-
-  // Replace the inner text of each element that has a
-  // data-i18n attribute with the translation corresponding to its data-i18n
-  function translatePage() {
-    $("[data-i18n]").each(function() {
-      translateElement($(this));
-    });
-  }
-
-  // Replace the inner text of the given HTML element
-  // with the translation in the active locale, corresponding to the element's data-i18n
-  function translateElement(element) {
-    const key = element.attr("data-i18n");
-
-    const translation = TRANSLATIONS[key];
-    if (translation !== undefined) {
-      if (element.attr("placeholder") !== undefined) {
-        element.attr("placeholder", translation);
-      } else if (key == 'report-issue' || key == 'request') {
-        var originalString = element.text();
-        var stringToReplaceMapping = {
-          'request':      'Request',
-          'report-issue': 'Report Issue',
-        };
-        // Perform the string replacement for the key
-        if (stringToReplaceMapping[key] !== undefined) {
-          originalString = originalString.replace(stringToReplaceMapping[key], translation);
-          element.text(originalString);
-        }
-      } else {
-        element.text(translation);
-      }
-    } else {
-      console.warn(`Translation for key '${key}' not found.`);
-    }
-  }
-
-  function generateI18nKey(columnLabel) {
-    if (columnLabel == 'Asset #') {
-      return 'asset-sequence-num';
-    } else if (columnLabel == 'AIN') {
-      return 'identifier';
-    } else if (columnLabel == 'Software License #') {
-      return 'software-license-sequence-num';
-    } else if (columnLabel == 'License Identification Number') {
-      return 'software-license-identifier';
-    } else {
-      return columnLabel.replace(/\s+/g, '-').toLowerCase()
-    }
   }
 
   class ServiceCatalogItemDetailBuilder {
@@ -692,7 +692,9 @@
           // Only showing description field for now.
           if (fieldName == 'description') {
             let section         = $('<section>');
-            let sectionHeader   = $('<p>').text(fieldData.label).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
+            let sectionHeader   = $('<p>').attr('data-i18n', 'service-item-details')
+                                          .text(fieldData.label)
+                                          .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
             let sectionContent  = this.prepareSectionContent(fieldData);
             section.append(sectionHeader, sectionContent);
             detailPageBody.append(section);
@@ -777,9 +779,12 @@
 
       if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-      const serviceCategoryLabel       = $('<p>').text(serviceCategoryItems.title)
+      const serviceCategoryTitle       = serviceCategoryItems.title;
+      const serviceCategoryLabel       = $('<p>').attr('data-i18n', generateI18nKey(serviceCategoryTitle))
+                                                 .text(serviceCategoryTitle)
                                                  .addClass('service-category-label');
-      const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description)
+      const serviceCategoryDescription = $('<p>').attr('data-i18n', generateI18nKey(`${serviceCategoryTitle} Description`))
+                                                 .text(serviceCategoryItems.description)
                                                  .addClass('service-category-description');
 
       serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
@@ -1252,7 +1257,7 @@
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
-                                .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
+                                .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank', 'data-i18n': generateI18nKey(serviceCategoryData.title) })
                                 .text(serviceCategoryData.title));
         if (!activeClassAdded) {
           activeClassAdded = true;
