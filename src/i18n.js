@@ -3,13 +3,13 @@ import {
 } from './constant.js';
 
 // Load translations for the given locale and translate the page to this locale
-function setLocale(newLocale) {
-  if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
+function setLocale(newLocale, translatePage) {
+  if (Object.keys(TRANSLATIONS).length !== 0 && translatePage) { return translatePage(); }
 
   fetchTranslationsFor(newLocale)
     .done(function(newTranslations) {
       $.extend(TRANSLATIONS, newTranslations);
-      translatePage();
+      if (translatePage) { return translatePage(); }
     })
     .fail(function() {
       console.error("Failed to load translations.");
@@ -73,7 +73,6 @@ function generateI18nKey(columnLabel) {
 
 function t(key, defaultString) {
   const translation = TRANSLATIONS[key];
-  debugger;
   if (translation !== undefined) {
     return translation;
   } else {

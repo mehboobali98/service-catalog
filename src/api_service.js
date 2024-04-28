@@ -56,7 +56,7 @@ class ApiService {
               } else {
                 callback(data, options);
               }
-              setLocale(this.locale);
+              setLocale(this.locale, true);
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -92,7 +92,7 @@ class ApiService {
           })
           .then(data => {
             callback(data, callBackOptions.serviceItemsContainerId);
-            setLocale(this.locale);
+            setLocale(this.locale, true);
           })
           .catch(error => {
             console.error('An error occurred while fetching service categories and items: ' + error.message);

@@ -473,13 +473,13 @@
   }
 
   // Load translations for the given locale and translate the page to this locale
-  function setLocale(newLocale) {
-    if (Object.keys(TRANSLATIONS).length !== 0) { return translatePage(); }
+  function setLocale(newLocale, translatePage) {
+    if (Object.keys(TRANSLATIONS).length !== 0 && translatePage) { return translatePage(); }
 
     fetchTranslationsFor(newLocale)
       .done(function(newTranslations) {
         $.extend(TRANSLATIONS, newTranslations);
-        translatePage();
+        if (translatePage) { return translatePage(); }
       })
       .fail(function() {
         console.error("Failed to load translations.");
@@ -489,42 +489,6 @@
   // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
     return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/i18n/${newLocale}.json`);
-  }
-
-  // Replace the inner text of each element that has a
-  // data-i18n attribute with the translation corresponding to its data-i18n
-  function translatePage() {
-    $("[data-i18n]").each(function() {
-      translateElement($(this));
-    });
-  }
-
-  // Replace the inner text of the given HTML element
-  // with the translation in the active locale, corresponding to the element's data-i18n
-  function translateElement(element) {
-    const key = element.attr("data-i18n");
-
-    const translation = TRANSLATIONS[key];
-    if (translation !== undefined) {
-      if (element.attr("placeholder") !== undefined) {
-        element.attr("placeholder", translation);
-      } else if (key == 'report-issue' || key == 'request') {
-        var originalString = element.text();
-        var stringToReplaceMapping = {
-          'request':      'Request',
-          'report-issue': 'Report Issue',
-        };
-        // Perform the string replacement for the key
-        if (stringToReplaceMapping[key] !== undefined) {
-          originalString = originalString.replace(stringToReplaceMapping[key], translation);
-          element.text(originalString);
-        }
-      } else {
-        element.text(translation);
-      }
-    } else {
-      console.warn(`Translation for key '${key}' not found.`);
-    }
   }
 
   function generateI18nKey(columnLabel) {
@@ -543,7 +507,6 @@
 
   function t(key, defaultString) {
     const translation = TRANSLATIONS[key];
-    debugger;
     if (translation !== undefined) {
       return translation;
     } else {
@@ -879,7 +842,6 @@
       queryParams['item_id']          = serviceCategoryItem.sequence_num;
       queryParams['item_name']        = assetName;
       queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-      debugger;
       queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
 
       // Card footer
@@ -1115,7 +1077,7 @@
                 } else {
                   callback(data, options);
                 }
-                setLocale(this.locale);
+                setLocale(this.locale, true);
               })
               .catch(error => {
                 console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -1151,7 +1113,7 @@
             })
             .then(data => {
               callback(data, callBackOptions.serviceItemsContainerId);
-              setLocale(this.locale);
+              setLocale(this.locale, true);
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -1191,6 +1153,7 @@
     }
 
     buildServiceCatalog() {
+      setLocale(this.locale, false);
       this.buildServiceCatalogHeaderSection();
       $('main').append(loadingIcon('mt-5'));
       this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
