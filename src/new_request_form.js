@@ -1,4 +1,6 @@
-import { loadExternalFiles } from './utility.js';
+import {
+  loadExternalFiles
+} from './utility.js';
 
 class NewRequestForm {
   constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
@@ -191,4 +193,6 @@ class NewRequestForm {
   }
 }
 
-export { NewRequestForm };
+export {
+  NewRequestForm
+};

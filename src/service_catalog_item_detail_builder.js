@@ -1,8 +1,11 @@
-import {  isMyAssignedAssets,
-          placeholderImagePath } from './utility.js';
+import {
+  isMyAssignedAssets,
+  placeholderImagePath
+} from './utility.js';
 
 class ServiceCatalogItemDetailBuilder {
-  constructor() {
+  constructor(locale) {
+    this.locale                 = locale;
     this.currency               = null;
     this.serviceCategoriesItems = null;
   }
@@ -64,6 +67,7 @@ class ServiceCatalogItemDetailBuilder {
 
     const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
     const requestServiceBtn = $('<a>').attr('href', url)
+                                      .attr('data-i18n', 'request-service')
                                       .text('Request Service')
                                       .addClass('btn btn-outline-primary request-service-btn');
     requestServiceBtnContainer.append(requestServiceBtn);
@@ -76,7 +80,9 @@ class ServiceCatalogItemDetailBuilder {
         // Only showing description field for now.
         if (fieldName == 'description') {
           let section         = $('<section>');
-          let sectionHeader   = $('<p>').text(fieldData.label).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
+          let sectionHeader   = $('<p>').attr('data-i18n', 'service-item-details')
+                                        .text(fieldData.label)
+                                        .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
           let sectionContent  = this.prepareSectionContent(fieldData);
           section.append(sectionHeader, sectionContent);
           detailPageBody.append(section);
@@ -131,4 +137,6 @@ class ServiceCatalogItemDetailBuilder {
   }
 }
 
-export { ServiceCatalogItemDetailBuilder };
+export {
+  ServiceCatalogItemDetailBuilder
+};

@@ -4,10 +4,12 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ServiceCatalog = global.ServiceCatalog || {}, global.ServiceCatalog.js = {})));
 })(this, (function (exports) { 'use strict';
 
-  const STAGING_CDN_URL            = 'https://cdn.inventoryontrack.com';
-  const PRODUCTION_CDN_URL         = 'https://cdn.ezassets.com';
-  const DEFAULT_FIELD_VALUE        = '--';
-  const DEFAULT_TRUNCATE_LENGTH    = 30;
+  const TRANSLATIONS                      = {};
+  const STAGING_CDN_URL                   = 'https://cdn.inventoryontrack.com';
+  const PRODUCTION_CDN_URL$1                = 'https://cdn.ezassets.com';
+  const DEFAULT_FIELD_VALUE               = '--';
+  const DEFAULT_TRUNCATE_LENGTH           = 30;
+  const CARD_FIELD_VALUE_TRUNCATE_LENGTH  = 15;
 
   const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
     'service_item':                'service_item_placeholder',
@@ -133,6 +135,10 @@
     let assetServiceItems           = serviceCategoryItems.service_items['assets'] || [];
     let softwareLicenseServiceItems = serviceCategoryItems.service_items['software_entitlements'] || [];
     return assetServiceItems.concat(softwareLicenseServiceItems);
+  }
+
+  function getLocale() {
+    return window.HelpCenter.user.locale.split('-')[0];
   }
 
   class RequestForm {
@@ -467,18 +473,98 @@
     }
   }
 
+  // Load translations for the given locale and translate the page to this locale
+  function setLocale(newLocale, shouldTranslatePage) {
+    if (Object.keys(TRANSLATIONS).length !== 0 && shouldTranslatePage) { return translatePage(); }
+
+    fetchTranslationsFor(newLocale)
+      .done(function(newTranslations) {
+        $.extend(TRANSLATIONS, newTranslations);
+        if (shouldTranslatePage) { return translatePage(); }
+      })
+      .fail(function() {
+        console.error("Failed to load translations.");
+      });
+  }
+
+  // Retrieve translations JSON object for the given locale over the network
+  function fetchTranslationsFor(newLocale) {
+    return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/i18n/${newLocale}.json`);
+  }
+
+  // Replace the inner text of each element that has a
+  // data-i18n attribute with the translation corresponding to its data-i18n
+  function translatePage() {
+    $("[data-i18n]").each(function() {
+      translateElement($(this));
+    });
+  }
+
+  // Replace the inner text of the given HTML element
+  // with the translation in the active locale, corresponding to the element's data-i18n
+  function translateElement(element) {
+    const key = element.attr("data-i18n");
+
+    const translation = TRANSLATIONS[key];
+    if (translation !== undefined) {
+      if (element.attr("placeholder") !== undefined) {
+        element.attr("placeholder", translation);
+      } else if (key == 'report-issue' || key == 'request') {
+        var originalString = element.text();
+        var stringToReplaceMapping = {
+          'request':      'Request',
+          'report-issue': 'Report Issue',
+        };
+        // Perform the string replacement for the key
+        if (stringToReplaceMapping[key] !== undefined) {
+          originalString = originalString.replace(stringToReplaceMapping[key], translation);
+          element.text(originalString);
+        }
+      } else {
+        element.text(translation);
+      }
+    } else {
+      console.warn(`Translation for key '${key}' not found.`);
+    }
+  }
+
+  function generateI18nKey(columnLabel) {
+    if (columnLabel == 'Asset #') {
+      return 'asset-sequence-num';
+    } else if (columnLabel == 'AIN') {
+      return 'identifier';
+    } else if (columnLabel == 'Software License #') {
+      return 'software-license-sequence-num';
+    } else if (columnLabel == 'License Identification Number') {
+      return 'software-license-identifier';
+    } else {
+      return columnLabel.replace(/\s+/g, '-').toLowerCase();
+    }
+  }
+
+  function t(key, defaultString) {
+    const translation = TRANSLATIONS[key];
+    if (translation !== undefined) {
+      return translation;
+    } else {
+      return defaultString || '';
+    }
+  }
+
   function serviceCatalogDisabled(ezoSubdomain) {
     const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
-    const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`)
+    const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/assets/images/svg/no_access_image.svg`)
                                                       .addClass('no-access-image');
 
-    const nextStepsMessage                = $('<p>').text('Please enable Service Catalog Builder in Asset Sonar to start using Service Catalog.')
+    const nextStepsMessage                = $('<p>').attr('data-i18n', 'enable-service-catalog')
+                                                    .text('Please enable Service Catalog Builder in Asset Sonar to start using Service Catalog.')
                                                     .addClass('next-steps-message');
 
     // button
     const buttonsContainer                = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
     const companySettingsUrl              = `https://${ezoSubdomain}/companies/settings`;
     const companySettingsBtn              = $('<a>').attr('href', companySettingsUrl)
+                                                    .attr('data-i18n', 'go-to-assetsonar')
                                                     .text('Go to AssetSonar')
                                                     .addClass('btn btn-outline-primary go-back-btn');
     buttonsContainer.append(companySettingsBtn);
@@ -489,16 +575,18 @@
 
   function serviceCatalogEmpty(ezoSubdomain) {
     const serviceCatalogEmptyContainer    = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-empty-container');
-    const serviceCategoryImage            = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/service_category.svg`)
+    const serviceCategoryImage            = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/assets/images/svg/service_category.svg`)
                                                       .addClass('no-access-image');
 
-    const nextStepsMessage                = $('<p>').text('Please create and enable service categories in the builder to start using Service Catalog.')
+    const nextStepsMessage                = $('<p>').attr('data-i18n', 'create-and-enable-service-categories')
+                                                    .text('Please create and enable service categories in the builder to start using Service Catalog.')
                                                     .addClass('next-steps-message');
 
     // button
     const buttonsContainer                = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
     const serviceCatalogBuilderUrl        = `https://${ezoSubdomain}/service_catalog/builder`;
     const serviceCatalogBtn               = $('<a>').attr('href', serviceCatalogBuilderUrl)
+                                                    .attr('data-i18n', 'go-to-service-catalog-builder')
                                                     .text('Go to Service Catalog Builder')
                                                     .addClass('btn btn-outline-primary go-back-btn');
     buttonsContainer.append(serviceCatalogBtn);
@@ -508,29 +596,38 @@
   }
 
   function noResultsFound() {
-    const noResultsContainer = $('<div>').attr('id', 'no_results_container')
-                                         .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage  = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/no_results_found.svg`)
-                                      .addClass('no-results-image');
-    const noResultsLabel  = $('<p>').text('No Result Found')
-                                    .addClass('no-results-message');
+    const noResultsContainer  = $('<div>').attr('id', 'no_results_container')
+                                          .addClass('d-flex flex-column align-items-center no-results-container');
+
+    const noResultsImage      = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/assets/images/svg/no_results_found.svg`)
+                                          .addClass('no-results-image');
+
+    const noResultsLabel      = $('<p>').attr('data-i18n', 'no-results-found')
+                                        .text('No Result Found')
+                                        .addClass('no-results-message');
+
     noResultsContainer.append(noResultsImage, noResultsLabel);
     return noResultsContainer;
   }
 
-  function noServiceItems(notFoundMessage) {
-    const noResultsContainer = $('<div>').attr('id', 'no_service_items_found_container')
+  function noServiceItems(notFoundMessageKey) {
+    const noResultsContainer  = $('<div>').attr('id', 'no_service_items_found_container')
                                          .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage  = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/assets/images/svg/service_asset.svg`)
-                                      .addClass('no-results-image');
-    const noResultsLabel  = $('<p>').text(notFoundMessage)
-                                    .addClass('no-results-message');
+
+    const noResultsImage      = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/assets/images/svg/service_asset.svg`)
+                                          .addClass('no-results-image');
+
+    const noResultsLabel      = $('<p>').attr('data-i18n', notFoundMessageKey)
+                                        .text(notFoundMessage)
+                                        .addClass('no-results-message');
+
     noResultsContainer.append(noResultsImage, noResultsLabel);
     return noResultsContainer;
   }
 
   class ServiceCatalogItemDetailBuilder {
-    constructor() {
+    constructor(locale) {
+      this.locale                 = locale;
       this.currency               = null;
       this.serviceCategoriesItems = null;
     }
@@ -592,6 +689,7 @@
 
       const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
       const requestServiceBtn = $('<a>').attr('href', url)
+                                        .attr('data-i18n', 'request-service')
                                         .text('Request Service')
                                         .addClass('btn btn-outline-primary request-service-btn');
       requestServiceBtnContainer.append(requestServiceBtn);
@@ -604,7 +702,9 @@
           // Only showing description field for now.
           if (fieldName == 'description') {
             let section         = $('<section>');
-            let sectionHeader   = $('<p>').text(fieldData.label).css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
+            let sectionHeader   = $('<p>').attr('data-i18n', 'service-item-details')
+                                          .text(fieldData.label)
+                                          .css({ 'color': textColor, 'line-height': '17px', 'font-style': headingFont, 'font-weight': '600', 'font-size': '16px' });
             let sectionContent  = this.prepareSectionContent(fieldData);
             section.append(sectionHeader, sectionContent);
             detailPageBody.append(section);
@@ -660,7 +760,8 @@
   }
 
   class ServiceCatalogItemBuilder {
-    constructor() {
+    constructor(locale) {
+      this.locale                 = locale;
       this.currency               = null;
       this.zendeskFormData        = null;
       this.serviceCategoriesItems = null;
@@ -688,9 +789,12 @@
 
       if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-      const serviceCategoryLabel       = $('<p>').text(serviceCategoryItems.title)
+      const serviceCategoryTitle       = serviceCategoryItems.title;
+      const serviceCategoryLabel       = $('<p>').attr('data-i18n', generateI18nKey(serviceCategoryTitle))
+                                                 .text(serviceCategoryTitle)
                                                  .addClass('service-category-label');
-      const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description)
+      const serviceCategoryDescription = $('<p>').attr('data-i18n', generateI18nKey(`${serviceCategoryTitle} Description`))
+                                                 .text(serviceCategoryItems.description)
                                                  .addClass('service-category-description');
 
       serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
@@ -735,8 +839,9 @@
     }
 
     buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-      const card        = $('<div>').addClass('row service-item-card');
-      const queryParams = {};
+      const card                 = $('<div>').addClass('row service-item-card');
+      const queryParams          = {};
+      const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
       // Card image
       const cardImageContainer    = $('<div>').addClass('col-4');
@@ -766,31 +871,21 @@
       const cardContentContainer = $('<div>').addClass('card-content-container');
       const cardContent          = $('<table>').addClass('card-content-table');
 
-      const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+      this.populateCardContent(cardContent, serviceCategoryItem);
 
-      if (Object.keys(fields).length) {
-        $.each(fields, (label, value) => {
-          let newRow = $('<tr>');
-          newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
-          newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-          cardContent.append(newRow);
-        });
-      } else {
-        const noAttributesText = 'No attributes configured';
-        cardContent.append($('<tr>').append(this.fieldValueElement(noAttributesText, 'th', noAttributesText.length)));
-      }
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);
 
       queryParams['item_id']          = serviceCategoryItem.sequence_num;
       queryParams['item_name']        = assetName;
       queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-      queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
+      queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
 
       // Card footer
       const url              = `/hc/requests/new?${$.param(queryParams)}`;
       const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
       const submitRequestBtn = $('<a>').attr('href', url)
+                                       .attr('data-i18n', 'report-issue')
                                        .text('Report Issue')
                                        .addClass('float-end footer-text');
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
@@ -853,6 +948,7 @@
       }
 
       const arrowContainer = $('<a>').attr('href', '#_')
+                                     .attr('data-i18n', 'request')
                                      .text('Request')
                                      .addClass('float-end footer-text');
       const arrow          = $('<span>').html('&#8594;')
@@ -868,6 +964,31 @@
       card.append(cardImageContainer, cardBody);
 
       return card;
+    }
+
+    populateCardContent(cardContentElement, serviceCategoryItem) {
+      const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+
+      if (Object.keys(fields).length === 0) {
+        const noAttributesText = 'No attributes configured';
+        cardContentElement.append($('<tr>').append(
+          this.fieldValueElement(noAttributesText, 'th', noAttributesText.length).attr('data-i18n', 'no-attributes-configured')
+        ));
+        return;
+      }
+
+      // 'en' is already translated from rails side.
+      $.each(fields, (label, value) => {
+        let newRow        = $('<tr>');
+        let columnLabelEle = this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH);
+        if (this.locale == 'fr') {
+          columnLabelEle.attr('data-i18n', generateI18nKey(label));
+        }
+        newRow.append(columnLabelEle);
+
+        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', CARD_FIELD_VALUE_TRUNCATE_LENGTH));
+        cardContentElement.append(newRow);
+      });
     }
 
     fieldValueElement(value, eleType, maxLength) {
@@ -948,7 +1069,8 @@
   }
 
   class ApiService {
-    constructor(ezoSubdomain) {
+    constructor(locale, ezoSubdomain) {
+      this.locale       = locale;
       this.ezoSubdomain = ezoSubdomain;
     }
 
@@ -992,6 +1114,7 @@
                 } else {
                   callback(data, options);
                 }
+                setLocale(this.locale, true);
               })
               .catch(error => {
                 console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -1027,6 +1150,7 @@
             })
             .then(data => {
               callback(data, callBackOptions.serviceItemsContainerId);
+              setLocale(this.locale, true);
             })
             .catch(error => {
               console.error('An error occurred while fetching service categories and items: ' + error.message);
@@ -1041,11 +1165,12 @@
   }
 
   class ServiceCatalogBuilder {
-    constructor(ezoSubdomain) {
-      this.apiService                      = new ApiService(ezoSubdomain);
+    constructor(locale, ezoSubdomain) {
+      this.locale                          = locale;
+      this.apiService                      = new ApiService(locale, ezoSubdomain);
       this.ezoSubdomain                    = ezoSubdomain;
-      this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
-      this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
+      this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
+      this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
       this.search                          = new Search();
     }
 
@@ -1054,7 +1179,8 @@
       const serviceCatalogNavItem = $('<a>', {
                                       href: url,
                                       text: name
-                                    }).addClass('service-catalog-nav-item nav-link');
+                                    }).addClass('service-catalog-nav-item nav-link')
+                                      .attr('data-i18n', 'service-catalog');
       const firstChildElement = parentElement.children(':first');
       if (firstChildElement.is('ul')) {
         firstChildElement.prepend($('<li>').append(serviceCatalogNavItem));
@@ -1064,6 +1190,7 @@
     }
 
     buildServiceCatalog() {
+      setLocale(this.locale, false);
       this.buildServiceCatalogHeaderSection();
       $('main').append(loadingIcon('mt-5'));
       this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
@@ -1073,8 +1200,10 @@
       const headerSection     = $('<section>');
       const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
       const headerEle         = $('<h2>').addClass('service-catalog-header-label')
+                                         .attr('data-i18n', 'service-catalog')
                                          .text('Service Catalog');
       const headerDescription = $('<p>').addClass('service-catalog-description')
+                                        .attr('data-i18n', 'service-catalog-description')
                                         .text('Explore the Service Catalog to find a curated range of solutions to your needs');
       headerContainer.append(headerEle, headerDescription);
       headerSection.append(headerContainer);
@@ -1089,10 +1218,13 @@
 
       const serviceCatalogContainer   = $('<div>').addClass('row');
       const searchAndNavContainer     = $('<div>').addClass('col-2');
-      const searchAndNavContainerText = $('<p>').text('Categories').addClass('service-categories-heading');
+      const searchAndNavContainerText = $('<p>').addClass('service-categories-heading')
+                                                .attr('data-i18n', 'categories')
+                                                .text('Categories');
 
       const searchField = $('<input>').attr('id', 'search_input')
                                       .attr('type', 'text')
+                                      .attr('data-i18n', 'search')
                                       .attr('placeholder', 'search...');
       const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
       searchAndNavContainer.append(searchAndNavContainerText, searchBar);
@@ -1137,7 +1269,7 @@
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
-                                .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
+                                .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank', 'data-i18n': generateI18nKey(serviceCategoryData.title) })
                                 .text(serviceCategoryData.title));
         if (!activeClassAdded) {
           activeClassAdded = true;
@@ -1251,17 +1383,19 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`    )
-
+      const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/dist/public/assets/images/svg/no_access_image.svg`)
                                               .addClass('no-access-image');
 
-      const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
-      const nextStepsMessage      = $('<p>').text('Please contact your administrator to get access')
+      const warningMessage        = $('<h4>').attr('data-i18n', 'unauthorized-label')
+                                             .text('You do not have permission to access this page!');
+      const nextStepsMessage      = $('<p>').attr('data-i18n', 'contact-administrator-label')
+                                            .text('Please contact your administrator to get access')
                                             .addClass('next-steps-message');
 
       // buttons
       const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
       const goBackButton          = $('<a>').attr('href', '#_')
+                                            .attr('data-i18n', 'go-back')
                                             .text('Go Back')
                                             .addClass('btn btn-outline-primary go-back-btn')
                                             .click(function() { window.history.back(); });
@@ -1276,6 +1410,7 @@
 
   class ServiceCatalogManager {
     constructor(initializationData) {
+      this.locale                 = getLocale();
       this.timeStamp              = initializationData.timeStamp;
       this.ezoFieldId             = initializationData.ezoFieldId;
       this.ezoSubdomain           = initializationData.ezoSubdomain;
@@ -1288,7 +1423,7 @@
     }
 
     initialize() {
-      this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.ezoSubdomain);
+      this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
       this.addServiceCatalogMenuItem();
       this.initServiceCatalog();
     }
@@ -1318,7 +1453,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}`},
+                { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/dist/public/stylesheets/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }

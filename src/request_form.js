@@ -139,4 +139,6 @@ class RequestForm {
   }
 }
 
-export { RequestForm };
+export {
+  RequestForm
+};

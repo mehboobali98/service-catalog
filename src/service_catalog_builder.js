@@ -1,3 +1,4 @@
+import { generateI18nKey, setLocale }       from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
          serviceCatalogDataPresent }        from './utility.js';
@@ -8,11 +9,12 @@ import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
-  constructor(ezoSubdomain) {
-    this.apiService                      = new ApiService(ezoSubdomain);
+  constructor(locale, ezoSubdomain) {
+    this.locale                          = locale;
+    this.apiService                      = new ApiService(locale, ezoSubdomain);
     this.ezoSubdomain                    = ezoSubdomain;
-    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder();
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder();
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
     this.search                          = new Search();
   }
 
@@ -21,7 +23,8 @@ class ServiceCatalogBuilder {
     const serviceCatalogNavItem = $('<a>', {
                                     href: url,
                                     text: name
-                                  }).addClass('service-catalog-nav-item nav-link');
+                                  }).addClass('service-catalog-nav-item nav-link')
+                                    .attr('data-i18n', 'service-catalog');
     const firstChildElement = parentElement.children(':first');
     if (firstChildElement.is('ul')) {
       firstChildElement.prepend($('<li>').append(serviceCatalogNavItem));
@@ -31,6 +34,7 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog() {
+    setLocale(this.locale, false);
     this.buildServiceCatalogHeaderSection();
     $('main').append(loadingIcon('mt-5'));
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
@@ -40,8 +44,10 @@ class ServiceCatalogBuilder {
     const headerSection     = $('<section>');
     const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
     const headerEle         = $('<h2>').addClass('service-catalog-header-label')
+                                       .attr('data-i18n', 'service-catalog')
                                        .text('Service Catalog');
     const headerDescription = $('<p>').addClass('service-catalog-description')
+                                      .attr('data-i18n', 'service-catalog-description')
                                       .text('Explore the Service Catalog to find a curated range of solutions to your needs');
     headerContainer.append(headerEle, headerDescription);
     headerSection.append(headerContainer);
@@ -56,10 +62,13 @@ class ServiceCatalogBuilder {
 
     const serviceCatalogContainer   = $('<div>').addClass('row');
     const searchAndNavContainer     = $('<div>').addClass('col-2');
-    const searchAndNavContainerText = $('<p>').text('Categories').addClass('service-categories-heading');
+    const searchAndNavContainerText = $('<p>').addClass('service-categories-heading')
+                                              .attr('data-i18n', 'categories')
+                                              .text('Categories');
 
     const searchField = $('<input>').attr('id', 'search_input')
                                     .attr('type', 'text')
+                                    .attr('data-i18n', 'search')
                                     .attr('placeholder', 'search...');
     const searchBar = $('<div>').append(searchField).addClass('service-catalog-search');
     searchAndNavContainer.append(searchAndNavContainerText, searchBar);
@@ -104,7 +113,7 @@ class ServiceCatalogBuilder {
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
-                              .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank' })
+                              .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank', 'data-i18n': generateI18nKey(serviceCategoryData.title) })
                               .text(serviceCategoryData.title));
       if (!activeClassAdded) {
         activeClassAdded = true;
@@ -220,17 +229,19 @@ class ServiceCatalogBuilder {
                                               .addClass('no-access-page-section');
 
     const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-    const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/no_access_image.svg`    )
-
+    const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/dist/public/assets/images/svg/no_access_image.svg`)
                                             .addClass('no-access-image');
 
-    const warningMessage        = $('<h4>').text('You do not have permission to access this page!');
-    const nextStepsMessage      = $('<p>').text('Please contact your administrator to get access')
+    const warningMessage        = $('<h4>').attr('data-i18n', 'unauthorized-label')
+                                           .text('You do not have permission to access this page!');
+    const nextStepsMessage      = $('<p>').attr('data-i18n', 'contact-administrator-label')
+                                          .text('Please contact your administrator to get access')
                                           .addClass('next-steps-message');
 
     // buttons
     const buttonsContainer      = $('<div>').addClass('d-flex mt-3 gap-3 justify-content-end');
     const goBackButton          = $('<a>').attr('href', '#_')
+                                          .attr('data-i18n', 'go-back')
                                           .text('Go Back')
                                           .addClass('btn btn-outline-primary go-back-btn')
                                           .click(function() { window.history.back(); });

@@ -1,17 +1,33 @@
-import { isSignedIn,
-         signInPath,
-         isRequestPage,
-         isNewRequestPage,
-         loadExternalFiles,
-         isServiceCatalogPage   } from './utility.js';
-import { RequestForm            } from './request_form.js';
-import { NewRequestForm         } from './new_request_form.js';
-import { STAGING_CDN_URL,
-         PRODUCTION_CDN_URL     } from './constant.js';       
-import { ServiceCatalogBuilder  } from './service_catalog_builder.js';
+import {
+  getLocale,
+  isSignedIn,
+  signInPath,
+  isRequestPage,
+  isNewRequestPage,
+  loadExternalFiles,
+  isServiceCatalogPage
+} from './utility.js';
+
+import {
+  STAGING_CDN_URL,
+  PRODUCTION_CDN_URL
+} from './constant.js';
+
+import {
+  RequestForm
+} from './request_form.js';
+
+import {
+  NewRequestForm
+} from './new_request_form.js';
+
+import {
+  ServiceCatalogBuilder
+} from './service_catalog_builder.js';
 
 class ServiceCatalogManager {
   constructor(initializationData) {
+    this.locale                 = getLocale();
     this.timeStamp              = initializationData.timeStamp;
     this.ezoFieldId             = initializationData.ezoFieldId;
     this.ezoSubdomain           = initializationData.ezoSubdomain;
@@ -24,7 +40,7 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.ezoSubdomain);
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }
@@ -56,7 +72,7 @@ class ServiceCatalogManager {
   filesToLoad() {
     return [
               { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-              { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/assets/stylesheets/service_catalog.css?${this.timeStamp}`},
+              { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/dist/public/stylesheets/service_catalog.css?${this.timeStamp}`},
               { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
            ];
   }

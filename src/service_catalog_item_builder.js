@@ -1,19 +1,32 @@
-import { DEFAULT_FIELD_VALUE,
-         DEFAULT_TRUNCATE_LENGTH,
-         CARD_TITLE_TRUNCATE_LENGTH }      from './constant.js';
-import { loadingIcon,
-         isMyAssignedAssets,
-         placeholderImagePath,
-         getMyAssignedAssetsServiceItems } from './utility.js';
+import {
+  t,
+  generateI18nKey
+} from './i18n.js';
+
+import {
+  DEFAULT_FIELD_VALUE,
+  DEFAULT_TRUNCATE_LENGTH,
+  CARD_FIELD_VALUE_TRUNCATE_LENGTH
+} from './constant.js';
+
+import {
+  loadingIcon,
+  isMyAssignedAssets,
+  placeholderImagePath,
+  getMyAssignedAssetsServiceItems
+} from './utility.js';
 
 import {
   noServiceItems
-} from './view_helper.js'
+} from './view_helper.js';
 
-import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
+import {
+  ServiceCatalogItemDetailBuilder
+} from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
-  constructor() {
+  constructor(locale) {
+    this.locale                 = locale;
     this.currency               = null;
     this.zendeskFormData        = null;
     this.serviceCategoriesItems = null;
@@ -41,9 +54,12 @@ class ServiceCatalogItemBuilder {
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
-    const serviceCategoryLabel       = $('<p>').text(serviceCategoryItems.title)
+    const serviceCategoryTitle       = serviceCategoryItems.title;
+    const serviceCategoryLabel       = $('<p>').attr('data-i18n', generateI18nKey(serviceCategoryTitle))
+                                               .text(serviceCategoryTitle)
                                                .addClass('service-category-label');
-    const serviceCategoryDescription = $('<p>').text(serviceCategoryItems.description)
+    const serviceCategoryDescription = $('<p>').attr('data-i18n', generateI18nKey(`${serviceCategoryTitle} Description`))
+                                               .text(serviceCategoryItems.description)
                                                .addClass('service-category-description');
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
@@ -89,8 +105,9 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-    const card        = $('<div>').addClass('row service-item-card');
-    const queryParams = {};
+    const card                 = $('<div>').addClass('row service-item-card');
+    const queryParams          = {};
+    const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card image
     const cardImageContainer    = $('<div>').addClass('col-4');
@@ -120,31 +137,21 @@ class ServiceCatalogItemBuilder {
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
 
-    const fields = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+    this.populateCardContent(cardContent, serviceCategoryItem);
 
-    if (Object.keys(fields).length) {
-      $.each(fields, (label, value) => {
-        let newRow = $('<tr>');
-        newRow.append(this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH));
-        newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', DEFAULT_TRUNCATE_LENGTH));
-        cardContent.append(newRow);
-      });
-    } else {
-      const noAttributesText = 'No attributes configured';
-      cardContent.append($('<tr>').append(this.fieldValueElement(noAttributesText, 'th', noAttributesText.length)))
-    }
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
     queryParams['item_id']          = serviceCategoryItem.sequence_num;
     queryParams['item_name']        = assetName;
     queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-    queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
+    queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
 
     // Card footer
     const url              = `/hc/requests/new?${$.param(queryParams)}`;
     const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
     const submitRequestBtn = $('<a>').attr('href', url)
+                                     .attr('data-i18n', 'report-issue')
                                      .text('Report Issue')
                                      .addClass('float-end footer-text');
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
@@ -207,6 +214,7 @@ class ServiceCatalogItemBuilder {
     }
 
     const arrowContainer = $('<a>').attr('href', '#_')
+                                   .attr('data-i18n', 'request')
                                    .text('Request')
                                    .addClass('float-end footer-text');
     const arrow          = $('<span>').html('&#8594;')
@@ -222,6 +230,31 @@ class ServiceCatalogItemBuilder {
     card.append(cardImageContainer, cardBody);
 
     return card;
+  }
+
+  populateCardContent(cardContentElement, serviceCategoryItem) {
+    const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+
+    if (Object.keys(fields).length === 0) {
+      const noAttributesText = 'No attributes configured';
+      cardContentElement.append($('<tr>').append(
+        this.fieldValueElement(noAttributesText, 'th', noAttributesText.length).attr('data-i18n', 'no-attributes-configured')
+      ))
+      return;
+    }
+
+    // 'en' is already translated from rails side.
+    $.each(fields, (label, value) => {
+      let newRow        = $('<tr>');
+      let columnLabelEle = this.fieldValueElement(label || DEFAULT_FIELD_VALUE, 'th', DEFAULT_TRUNCATE_LENGTH);
+      if (this.locale == 'fr') {
+        columnLabelEle.attr('data-i18n', generateI18nKey(label));
+      }
+      newRow.append(columnLabelEle);
+
+      newRow.append(this.fieldValueElement(value || DEFAULT_FIELD_VALUE, 'td', CARD_FIELD_VALUE_TRUNCATE_LENGTH));
+      cardContentElement.append(newRow);
+    });
   }
 
   fieldValueElement(value, eleType, maxLength) {
@@ -270,4 +303,6 @@ class ServiceCatalogItemBuilder {
   }
 }
 
-export { ServiceCatalogItemBuilder };
+export {
+  ServiceCatalogItemBuilder
+};
