@@ -1,5 +1,6 @@
 import {
-  TRANSLATIONS
+  TRANSLATIONS,
+  STAGING_CDN_URL
 } from './constant.js';
 
 // Load translations for the given locale and translate the page to this locale
