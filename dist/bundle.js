@@ -191,7 +191,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `${STAGING_CDN_URL}/shared/service_catalog/assets/images/svg/${imageName}.svg`;
+    return `${STAGING_CDN_URL}/shared/service_catalog/dist/public/images/svg/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
