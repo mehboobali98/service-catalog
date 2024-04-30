@@ -1,6 +1,5 @@
-import {
-  loadExternalFiles
-} from './utility.js';
+import { t } from './i18n.js';
+import { loadExternalFiles } from './utility.js';
 
 class NewRequestForm {
   constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
@@ -130,7 +129,7 @@ class NewRequestForm {
 
     if (itemName == null || serviceCategory == null) { return null; }
 
-    return `Report Issue on ${serviceCategory} - ${itemName}`;
+    return `${t('report-issue', 'Report Issue')} on ${serviceCategory} - ${itemName}`;
   }
 
   prepareServiceItemFieldValue(searchParams) {

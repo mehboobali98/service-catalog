@@ -1,3 +1,5 @@
+import { setLocale } from './i18n.js';
+
 import {
   getLocale,
   isSignedIn,
@@ -50,6 +52,7 @@ class ServiceCatalogManager {
   }
 
   initServiceCatalog() {
+    setLocale(this.locale, false);
     if (isServiceCatalogPage()) {
       this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
