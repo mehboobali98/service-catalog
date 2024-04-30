@@ -488,7 +488,8 @@
 
   // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/i18n/${newLocale}.json`);
+    //return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/i18n/${newLocale}.json`);
+    return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/i18n/${newLocale}.json`);
   }
 
   // Replace the inner text of each element that has a
@@ -1453,7 +1454,8 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/stylesheets/service_catalog.css?${this.timeStamp}`},
+                // { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/stylesheets/service_catalog.css?${this.timeStamp}`},
+                { type: 'link',   url: `https://mehboobali98.github.io/service-catalog/dist/public/stylesheets/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
