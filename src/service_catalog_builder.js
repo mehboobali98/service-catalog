@@ -1,4 +1,4 @@
-import { generateI18nKey, setLocale }       from './i18n.js';
+import { generateI18nKey }       from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
          serviceCatalogDataPresent }        from './utility.js';
@@ -34,7 +34,6 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalog() {
-    setLocale(this.locale, false);
     this.buildServiceCatalogHeaderSection();
     $('main').append(loadingIcon('mt-5'));
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
