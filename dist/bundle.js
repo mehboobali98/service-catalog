@@ -32,7 +32,7 @@
 
   // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/i18n/${newLocale}.json`);
+    return $.getJSON(`${STAGING_CDN_URL}/shared/service_catalog/dist/public/i18n/${newLocale}.json`);
   }
 
   // Replace the inner text of each element that has a
