@@ -228,8 +228,7 @@ class ServiceCatalogBuilder {
                                               .addClass('no-access-page-section');
 
     const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-    const noAccessImage         = $('<img>').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/images/svg/no_access_image.svg`)
-
+    const noAccessImage         = $('<img>').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/no_access_image.svg`)
                                             .addClass('no-access-image');
 
     const warningMessage        = $('<h4>').attr('data-i18n', 'unauthorized-label')
