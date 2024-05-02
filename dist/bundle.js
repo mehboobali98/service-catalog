@@ -5,7 +5,6 @@
 })(this, (function (exports) { 'use strict';
 
   const TRANSLATIONS                      = {};
-  const PRODUCTION_CDN_URL                = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE               = '--';
   const DEFAULT_TRUNCATE_LENGTH           = 30;
   const CARD_FIELD_VALUE_TRUNCATE_LENGTH  = 15;
@@ -192,7 +191,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/images/svg/${imageName}.svg`;
+    return `https://mehboobali98.github.io/service-catalog/dist/public/images/svg/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
