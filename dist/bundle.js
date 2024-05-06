@@ -450,11 +450,11 @@
 
 
       // comment section
-      const commentContainer  = $('<div>').addClass('comment-container');
-      const commentLabel      = $('<label>').addClass('col-form-label')
+      const commentContainer  = $('<div>').addClass('comment-container mt-5');
+      const commentLabel      = $('<label>').addClass('col-form-label my-2 fw-bold')
                                             .attr('for', 'comment')
                                             .text('Write your comment (Optional)');
-      const commentTextarea   = $('<textarea>').addClass('form-control')
+      const commentTextarea   = $('<textarea>').addClass('form-control comment-section')
                                                .attr('id', 'comment')
                                                .attr('rows', '4')
                                                .attr('placeholder', 'Describe your experience here');
