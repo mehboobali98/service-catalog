@@ -1,5 +1,8 @@
+import { CustomerEffortSurvery } from './customer_effort_survey.js';
+
 class RequestForm {
-  constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+  constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    this.locale                 = locale;
     this.ezoFieldId             = ezoFieldId;
     this.ezoSubdomain           = ezoSubdomain;
     this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
@@ -37,7 +40,6 @@ class RequestForm {
           if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
           if (parsedEzoFieldValue.linked != 'true') {
-
             self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
           }
 
@@ -86,10 +88,22 @@ class RequestForm {
     const headers = options.headers || {};
 
     $.ajax({
-      url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
-      type:    'POST',
+      url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
+      type:     'POST',
       data:     { 'ticket': queryParams },
-      headers:  headers
+      headers:  headers,
+      success: function(response) {
+        debugger;
+        // Handle successful response
+        console.log('AJAX request successful', response);
+        // You can perform further actions based on the response here
+      },
+      error: function(xhr, status, error) {
+        debugger;
+        // Handle error
+        console.error('AJAX request error:', error);
+        // You can display an error message or perform other actions based on the error here
+      }
     });
   }
 

@@ -85,6 +85,7 @@ class CustomerEffortSurvery {
         // Handle error
       }
     });
+  }
 }
 
 export {
