@@ -461,8 +461,8 @@
       commentContainer.append(commentLabel, commentTextarea);
 
       // modal-footer
-      const modalFooter = $('<div>').addClass('modal-footer');
-      const submitBtn   = $('<button>').addClass('btn btn-primary')
+      const modalFooter = $('<div>').addClass('modal-footer border-top-0');
+      const submitBtn   = $('<button>').addClass('btn btn-primary mt-2')
                                        .attr('id', 'submit_ces_survery_btn')
                                        .attr('disabled', 'disabled')
                                        .text('Send Feedback');
