@@ -120,12 +120,14 @@ class CustomerEffortSurvery {
     const score       = this.emojisMapping[$('#selected_emoji').val()];
     const comment     = $('#comment').val();
     const headers     = {};
+    debugger;
     const queryParams = {
       score:      score || 0,
       comment:    comment,
       ticket_id:  this.requestId,
     };
 
+    debugger;
     this.withToken(token => {
       debugger;
       headers['Authorization'] = 'Bearer ' + token;
