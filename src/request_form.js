@@ -163,7 +163,8 @@ class RequestForm {
 
   filesToLoad() {
     return  [
-              { type: 'script', url: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js'},
+              { type: 'link'  , url: `https://mehboobali98.github.io/service-catalog/dist/public/customer_effort_survey.css` },
+              { type: 'script', url: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js' },
             ];
   }
 }

@@ -16,13 +16,18 @@ class CustomerEffortSurvery {
   render() {
     const cesModal = this.build();
     $('body').append(cesModal);
+    $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(event) {
+      debugger;
+      $(this).find('svg rect').addClass('emoji-on-select');
+    })
+
     // Show the modal
     $('#customer_effort_survey_modal').modal('show');
   }
 
   build() {
     const modal         = $('<div>').addClass('modal fade').attr('id', 'customer_effort_survey_modal').attr('role', 'dialog');
-    const modalDialog   = $('<div>').addClass('modal-dialog');
+    const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position');
 
     // modal-content
     const modalContent  = $('<div>').addClass('modal-content');
@@ -37,11 +42,10 @@ class CustomerEffortSurvery {
     const modalBody       = $('<div>').addClass('modal-body');
     const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
 
-    debugger;
     Object.keys(this.emojisMapping).forEach(function(key) {
       let emoji = key;
-      debugger;
-      let img = $('<img>').addClass('emoji').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
+      let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
+                          .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
       emojisContainer.append(img);
     });
 

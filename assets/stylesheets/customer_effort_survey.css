@@ -1,0 +1,13 @@
+.customer-effort-survery-dialog-position {
+  width:      100%;
+  right:      2%;
+  bottom:     2%;
+  margin:     0px;
+  position:   absolute;
+  max-width:  326px !important;
+  min-width:  auto;
+}
+
+.emoji-on-select {
+  fill: #107DD8;
+}

@@ -234,13 +234,18 @@
     render() {
       const cesModal = this.build();
       $('body').append(cesModal);
+      $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(event) {
+        debugger;
+        $(this).find('svg rect').addClass('emoji-on-select');
+      });
+
       // Show the modal
       $('#customer_effort_survey_modal').modal('show');
     }
 
     build() {
       const modal         = $('<div>').addClass('modal fade').attr('id', 'customer_effort_survey_modal').attr('role', 'dialog');
-      const modalDialog   = $('<div>').addClass('modal-dialog');
+      const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position');
 
       // modal-content
       const modalContent  = $('<div>').addClass('modal-content');
@@ -255,11 +260,10 @@
       const modalBody       = $('<div>').addClass('modal-body');
       const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
 
-      debugger;
       Object.keys(this.emojisMapping).forEach(function(key) {
         let emoji = key;
-        debugger;
-        let img = $('<img>').addClass('emoji').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
+        let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
+                            .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
         emojisContainer.append(img);
       });
 
@@ -471,7 +475,8 @@
 
     filesToLoad() {
       return  [
-                { type: 'script', url: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js'},
+                { type: 'link'  , url: `https://mehboobali98.github.io/service-catalog/dist/public/customer_effort_survey.css` },
+                { type: 'script', url: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js' },
               ];
     }
   }
@@ -1570,7 +1575,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `https://mehboobali98.github.io/service-catalog/dist/public/service_catalog.css?${this.timeStamp}`},
+                { type: 'link',   url: `https://mehboobali98.github.io/service-catalog/dist/public/service_catalog.css?${this.timeStamp}` },
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
