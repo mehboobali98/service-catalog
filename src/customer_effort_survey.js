@@ -1,8 +1,10 @@
+import { SvgBuilder }                          from './svg_builder.js';
 import { STAGING_CDN_URL, PRODUCTION_CDN_URL } from './constant.js';
 
 class CustomerEffortSurvery {
   constructor(locale) {
     this.localte        = locale;
+    this.SvgBuilder     = new SvgBuilder();
     // order is important
     this.emojisMapping  = {
       'anger': 1,
@@ -53,6 +55,9 @@ class CustomerEffortSurvery {
 
     Object.keys(this.emojisMapping).forEach(function(key) {
       let emoji = key;
+      debugger;
+      let svg = this.SvgBuilder.build(emoji);
+      debugger;
       let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
                           .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
                           .attr('id', emoji);

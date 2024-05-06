@@ -218,9 +218,57 @@
     return window.HelpCenter.user.locale.split('-')[0];
   }
 
+  class SvgBuilder {
+    constructor() {
+      this.containerClass = 'kb-svg-icon';
+    }
+
+    build(svgType, container, containerClass) {
+      getSvgCode(svgType);
+      return
+    }
+
+    getSvgCode(svgType) {
+      debugger;
+      eval(`${svgType}Svg`);
+      // switch(svgType) {
+      //   case 'anger':
+      //     break;
+      //   case 'happy':
+      //     break;
+      //   case 'loving':
+      //     break;
+      //   case 'satisfied':
+      //     break;
+      //   case 'disappointed':
+      // }
+    }
+
+    angerSvg() {
+      return
+    }
+
+    happySvg() {
+      return
+    }
+
+    lovingSvg() {
+      return
+    }
+
+    satisfiedSvg() {
+      return
+    }
+
+    disappointedSvg() {
+      return
+    }
+  }
+
   class CustomerEffortSurvery {
     constructor(locale) {
       this.localte        = locale;
+      this.SvgBuilder     = new SvgBuilder();
       // order is important
       this.emojisMapping  = {
         'anger': 1,
@@ -271,6 +319,9 @@
 
       Object.keys(this.emojisMapping).forEach(function(key) {
         let emoji = key;
+        debugger;
+        this.SvgBuilder.build(emoji);
+        debugger;
         let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
                             .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
                             .attr('id', emoji);
