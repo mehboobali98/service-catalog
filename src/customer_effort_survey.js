@@ -2,8 +2,10 @@ import { SvgBuilder }                          from './svg_builder.js';
 import { STAGING_CDN_URL, PRODUCTION_CDN_URL } from './constant.js';
 
 class CustomerEffortSurvery {
-  constructor(locale) {
-    this.localte        = locale;
+  constructor(locale, requestId, subdomain) {
+    this.locale         = locale;
+    this.subdomain      = subdomain;
+    this.requestId      = requestId;
     this.svgBuilder     = new SvgBuilder();
     // order is important
     this.emojisMapping  = {
@@ -21,15 +23,6 @@ class CustomerEffortSurvery {
 
     $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
       e.preventDefault();
-
-      if ($(this).attr('src').indexOf('filled') !== -1) { return; }
-
-      debugger;
-      $('.js-customer-effort-survery-emoji-reaction').each(() => {
-        debugger;
-        let src = $(this).attr('src');
-        $(this).attr('src', 'new_image_url.jpg');
-      });
     });
 
     // Show the modal
@@ -51,6 +44,11 @@ class CustomerEffortSurvery {
 
     //modal-body
     const modalBody       = $('<div>').addClass('modal-body');
+    const hiddenField     = $('<input>').attr('id',   'selected_emoji')
+                                        .attr('type', 'hidden')
+                                        .attr('name', 'selectedEmoji');
+    modalBody.append(hiddenField);
+
     const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
 
     Object.keys(this.emojisMapping).forEach(key => {
@@ -61,6 +59,9 @@ class CustomerEffortSurvery {
       let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
                           .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
                           .attr('id', emoji);
+      img.click(function() {
+        $('#selected_emoji').val(emoji);
+      });
       emojisContainer.append(img);
     });
 
@@ -80,29 +81,35 @@ class CustomerEffortSurvery {
     modalContent.append(modalHeader, modalBody, modalFooter);
     modalDialog.append(modalContent);
     modal.append(modalDialog);
+
     return modal;
   }
 
   // Function to handle form submission
   submitFeedback() {
-    const comment = $('#comment').val(); // Get comment from textarea
+    const comment = $('#comment').val();
     const emojis = $('.emojis-container .emoji').toArray().map(function(el) {
       return $(el).attr('src');
     }); // Get emoji SVG URLs from emojis container
 
+    const queryParams = {
+      score:      score,
+      comment:    comment,
+      ticket_id:  this.requestId,
+    };
+
     // AJAX request
     $.ajax({
-      url: 'your_api_endpoint',
-      method: 'POST',
-      data: {
-        comment: comment,
-        emojis: emojis
-      },
+      url:     `https://${this.ezoSubdomain}/customer_effort_scores`,
+      data:     queryParams,
+      method:  'POST',
       success: function(response) {
+        debugger;
         console.log('AJAX request successful', response);
         // Handle success response
       },
       error: function(xhr, status, error) {
+        debugger;
         console.error('AJAX request error:', error);
         // Handle error
       }

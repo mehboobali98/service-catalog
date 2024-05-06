@@ -11,19 +11,21 @@ class SvgBuilder {
   }
 
   getSvgCode(svgType) {
-    debugger;
-    eval(`${svgType}Svg`);
-    // switch(svgType) {
-    //   case 'anger':
-    //     break;
-    //   case 'happy':
-    //     break;
-    //   case 'loving':
-    //     break;
-    //   case 'satisfied':
-    //     break;
-    //   case 'disappointed':
-    // }
+    switch(svgType) {
+      case 'anger':
+        return this.angerSvg();
+      case 'happy':
+        return this.happySvg();
+      case 'loving':
+        return this.lovingSvg();
+      case 'satisfied':
+        return this.satisfiedSvg();
+      case 'disappointed':
+        return this.disappointedSvg();
+      default:
+        // Handle invalid svgType
+        return '';
+    }
   }
 
   angerSvg() {

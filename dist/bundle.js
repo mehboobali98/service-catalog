@@ -229,19 +229,21 @@
     }
 
     getSvgCode(svgType) {
-      debugger;
-      eval(`${svgType}Svg`);
-      // switch(svgType) {
-      //   case 'anger':
-      //     break;
-      //   case 'happy':
-      //     break;
-      //   case 'loving':
-      //     break;
-      //   case 'satisfied':
-      //     break;
-      //   case 'disappointed':
-      // }
+      switch(svgType) {
+        case 'anger':
+          return this.angerSvg();
+        case 'happy':
+          return this.happySvg();
+        case 'loving':
+          return this.lovingSvg();
+        case 'satisfied':
+          return this.satisfiedSvg();
+        case 'disappointed':
+          return this.disappointedSvg();
+        default:
+          // Handle invalid svgType
+          return '';
+      }
     }
 
     angerSvg() {
@@ -266,8 +268,10 @@
   }
 
   class CustomerEffortSurvery {
-    constructor(locale) {
-      this.localte        = locale;
+    constructor(locale, requestId, subdomain) {
+      this.locale         = locale;
+      this.subdomain      = subdomain;
+      this.requestId      = requestId;
       this.svgBuilder     = new SvgBuilder();
       // order is important
       this.emojisMapping  = {
@@ -285,15 +289,6 @@
 
       $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
         e.preventDefault();
-
-        if ($(this).attr('src').indexOf('filled') !== -1) { return; }
-
-        debugger;
-        $('.js-customer-effort-survery-emoji-reaction').each(() => {
-          debugger;
-          $(this).attr('src');
-          $(this).attr('src', 'new_image_url.jpg');
-        });
       });
 
       // Show the modal
@@ -315,6 +310,11 @@
 
       //modal-body
       const modalBody       = $('<div>').addClass('modal-body');
+      const hiddenField     = $('<input>').attr('id',   'selected_emoji')
+                                          .attr('type', 'hidden')
+                                          .attr('name', 'selectedEmoji');
+      modalBody.append(hiddenField);
+
       const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
 
       Object.keys(this.emojisMapping).forEach(key => {
@@ -325,6 +325,9 @@
         let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
                             .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
                             .attr('id', emoji);
+        img.click(function() {
+          $('#selected_emoji').val(emoji);
+        });
         emojisContainer.append(img);
       });
 
@@ -344,29 +347,35 @@
       modalContent.append(modalHeader, modalBody, modalFooter);
       modalDialog.append(modalContent);
       modal.append(modalDialog);
+
       return modal;
     }
 
     // Function to handle form submission
     submitFeedback() {
-      const comment = $('#comment').val(); // Get comment from textarea
-      const emojis = $('.emojis-container .emoji').toArray().map(function(el) {
+      const comment = $('#comment').val();
+      $('.emojis-container .emoji').toArray().map(function(el) {
         return $(el).attr('src');
       }); // Get emoji SVG URLs from emojis container
 
+      const queryParams = {
+        score:      score,
+        comment:    comment,
+        ticket_id:  this.requestId,
+      };
+
       // AJAX request
       $.ajax({
-        url: 'your_api_endpoint',
-        method: 'POST',
-        data: {
-          comment: comment,
-          emojis: emojis
-        },
+        url:     `https://${this.ezoSubdomain}/customer_effort_scores`,
+        data:     queryParams,
+        method:  'POST',
         success: function(response) {
+          debugger;
           console.log('AJAX request successful', response);
           // Handle success response
         },
         error: function(xhr, status, error) {
+          debugger;
           console.error('AJAX request error:', error);
           // Handle error
         }
@@ -475,7 +484,7 @@
         headers:  headers,
         success: function(response) {
           debugger;
-          new CustomerEffortSurvery(this.locale).render();
+          new CustomerEffortSurvery(this.locale, requestId, this.ezoSubdomain).render();
           // Handle successful response
           console.log('AJAX request successful', response);
           // You can perform further actions based on the response here
