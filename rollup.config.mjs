@@ -26,8 +26,8 @@ export default {
     }),
     copy({
       targets: [
-        { src: 'i18n',    dest: 'dist/public' },
-        { src: 'assets/*',  dest: 'dist/public' }
+        { src: 'i18n/*',    dest: 'dist/public' },
+        { src: ['assets/images/*/*', 'assets/stylesheets/*'],  dest: 'dist/public' }
       ]
     })
   ]
