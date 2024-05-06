@@ -14,7 +14,7 @@ class CustomerEffortSurvery {
   }
 
   render() {
-    const cesModal = build();
+    const cesModal = this.build();
     $('body').append(cesModal);
     // Show the modal
     $('#customer_effort_survey_modal').modal('show');
@@ -50,7 +50,7 @@ class CustomerEffortSurvery {
     const submitBtn = $('<button>').addClass('btn btn-primary').attr('id', 'submit').text('Send Feedback');
 
     // Assign submit logic to submit button
-    submitBtn.click(submitFeedback);
+    submitBtn.click(this.submitFeedback);
     modalFooter.append(submitBtn);
 
     // Assemble modal content
