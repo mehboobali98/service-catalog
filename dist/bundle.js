@@ -457,7 +457,8 @@
                                             .text('Write your comment (Optional)');
       const commentTextarea   = $('<textarea>').addClass('form-control')
                                                .attr('id', 'comment')
-                                               .attr('rows', '4');
+                                               .attr('rows', '4')
+                                               .attr('placeholder', 'Describe your experience here');
       commentContainer.append(commentLabel, commentTextarea);
 
       // modal-footer
@@ -465,7 +466,6 @@
       const submitBtn   = $('<button>').addClass('btn btn-primary')
                                        .attr('id', 'submit_ces_survery_btn')
                                        .attr('disabled', 'disabled')
-                                       .attr('placeholder', 'Describe your experience here')
                                        .text('Send Feedback');
 
       // Assign submit logic to submit button
