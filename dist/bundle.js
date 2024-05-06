@@ -289,6 +289,8 @@
 
       $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
         e.preventDefault();
+
+        debugger;
       });
 
       // Show the modal
