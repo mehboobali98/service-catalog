@@ -374,6 +374,7 @@
       this.subdomain      = subdomain;
       this.requestId      = requestId;
       this.svgBuilder     = new SvgBuilder();
+
       // order is important
       this.emojisMapping  = {
         'anger': 1,
@@ -391,8 +392,10 @@
       $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
         e.preventDefault();
 
-        $(this).find('svg rect').addClass('selected-emoji-background');
         debugger;
+        $('.js-customer-effort-survery-emoji-reaction svg rect.selected-emoji-background').removeClass('selected-emoji-background');
+        $(this).find('svg rect').addClass('selected-emoji-background');
+        $('#submit_ces_survery_btn').prop('disabled', false);
       });
 
       // Show the modal
@@ -432,19 +435,29 @@
         emojisContainer.append(svg);
       });
 
-      const commentLabel    = $('<label>').addClass('col-form-label').attr('for', 'comment').text('Comments:');
-      const commentTextarea = $('<textarea>').addClass('form-control').attr('id', 'comment').attr('rows', '4');
+      const commentContainer  = $('<div>').addClass('comment-container');
+      const commentLabel      = $('<label>').addClass('col-form-label')
+                                            .attr('for', 'comment')
+                                            .text('Write your comment (Optional)');
+      const commentTextarea   = $('<textarea>').addClass('form-control')
+                                               .attr('id', 'comment')
+                                               .attr('rows', '4');
+      commentContainer.append(commentLabel, commentTextarea);
 
       // modal-footer
       const modalFooter = $('<div>').addClass('modal-footer');
-      const submitBtn = $('<button>').addClass('btn btn-primary').attr('id', 'submit').text('Send Feedback');
+      const submitBtn   = $('<button>').addClass('btn btn-primary')
+                                       .attr('id', 'submit_ces_survery_btn')
+                                       .attr('disabled', 'disabled')
+                                       .attr('placeholder', 'Describe your experience here')
+                                       .text('Send Feedback');
 
       // Assign submit logic to submit button
       submitBtn.click(this.submitFeedback);
       modalFooter.append(submitBtn);
 
       // Assemble modal content
-      modalBody.append(emojisContainer, commentLabel, commentTextarea);
+      modalBody.append(emojisContainer, commentContainer);
       modalContent.append(modalHeader, modalBody, modalFooter);
       modalDialog.append(modalContent);
       modal.append(modalDialog);
@@ -454,19 +467,17 @@
 
     // Function to handle form submission
     submitFeedback = () => {
-      const score   = this.emojisMapping[$('#selected_emoji').val()];
-      const comment = $('#comment').val();
-      debugger;
+      const score       = this.emojisMapping[$('#selected_emoji').val()];
+      const comment     = $('#comment').val();
       const queryParams = {
         score:      score || 0,
         comment:    comment,
         ticket_id:  this.requestId,
       };
-      debugger;
 
       // AJAX request
       $.ajax({
-        url:     `https://${this.ezoSubdomain}/customer_effort_scores`,
+        url:     `https://${this.subdomain}/customer_effort_scores`,
         data:     queryParams,
         method:  'POST',
         success: function(response) {
