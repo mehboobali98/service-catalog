@@ -244,7 +244,7 @@
     }
 
     build() {
-      const modal         = $('<div>').addClass('modal fade').attr('id', 'customer_effort_survey_modal').attr('role', 'dialog');
+      const modal         = $('<div>').addClass('modal').attr('id', 'customer_effort_survey_modal').attr('role', 'dialog');
       const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position');
 
       // modal-content
@@ -262,9 +262,15 @@
 
       Object.keys(this.emojisMapping).forEach(function(key) {
         let emoji = key;
-        let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
-                            .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
-        emojisContainer.append(img);
+        // <object data="happy.svg" width="300" height="300"> </object>
+        let obj = $('<obj>').addClass('js-customer-effort-survery-emoji-reaction')
+                            .attr({
+                              'data': `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`,
+                              'type': 'image/svg+xml'
+                            });
+        // let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
+        //                     .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
+        emojisContainer.append(obj);
       });
 
       const commentLabel    = $('<label>').addClass('col-form-label').attr('for', 'comment').text('Comments:');
