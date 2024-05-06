@@ -56,14 +56,8 @@ class CustomerEffortSurvery {
 
     Object.keys(this.emojisMapping).forEach(key => {
       let emoji = key;
-      debugger;
-      let svg = this.svgBuilder.build(emoji);
-      debugger;
+      let svg   = this.svgBuilder.build(emoji);
       svg.addClass('js-customer-effort-survery-emoji-reaction');
-      debugger;
-      // let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
-      //                     .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
-      //                     .attr('id', emoji);
       svg.click(function() {
         $('#selected_emoji').val(emoji);
       });
@@ -91,17 +85,16 @@ class CustomerEffortSurvery {
   }
 
   // Function to handle form submission
-  submitFeedback() {
+  submitFeedback = () => {
+    const score   = this.emojisMapping[$('#selected_emoji').val()];
     const comment = $('#comment').val();
-    const emojis = $('.emojis-container .emoji').toArray().map(function(el) {
-      return $(el).attr('src');
-    }); // Get emoji SVG URLs from emojis container
-
+    debugger;
     const queryParams = {
-      score:      score,
+      score:      score || 0,
       comment:    comment,
       ticket_id:  this.requestId,
     };
+    debugger;
 
     // AJAX request
     $.ajax({
