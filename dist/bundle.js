@@ -391,7 +391,6 @@
       $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
         e.preventDefault();
 
-        debugger;
         $('.js-customer-effort-survery-emoji-reaction svg rect.selected-emoji-background').removeClass('selected-emoji-background');
         $(this).find('svg rect').addClass('selected-emoji-background');
         $('#submit_ces_survery_btn').prop('disabled', false);
@@ -408,7 +407,7 @@
     }
 
     build() {
-      const modal         = $('<div>').addClass('modal fade')
+      const modal         = $('<div>').addClass('modal fade hide')
                                       .attr('id', 'customer_effort_survey_modal')
                                       .attr('role', 'modal');
       const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position');
@@ -483,50 +482,43 @@
 
     // Function to handle form submission
     submitFeedback = () => {
+      const self        = this;
       const score       = this.emojisMapping[$('#selected_emoji').val()];
       const comment     = $('#comment').val();
       const headers     = {};
-      debugger;
       const queryParams = {
         score:      score || 0,
         comment:    comment,
         ticket_id:  this.requestId,
       };
 
-      debugger;
       this.withToken(token => {
-        debugger;
         headers['Authorization'] = 'Bearer ' + token;
         headers['ngrok-skip-browser-warning'] = true;
-        debugger;
 
         $.ajax({
           url:      `https://${this.subdomain}/customer_effort_scores.json`,
           data:     queryParams,
           method:   'POST',
           headers:  headers,
-          success: function(response) {
-            debugger;
-            console.log('AJAX request successful', response);
-            // Handle success response
+          success:  function(response) {
+            self.closeModal();
           },
           error: function(xhr, status, error) {
-            debugger;
-            console.error('AJAX request error:', error);
-            // Handle error
+            console.error('Request error:', error);
           }
         });
       });
+    }
+
+    closeModal = () => {
+      $('#customer_effort_survey_modal').modal('hide');
     }
 
     withToken(callback) {
       return $.getJSON('/hc/api/v2/integration/token').then(data => {
         return callback(data.token);
       })
-    }
-
-    closeModal = () => {
-      $('#customer_effort_survey_modal').modal('hide');
     }
   }
 
