@@ -42,6 +42,7 @@ class CustomerEffortSurvery {
       let emoji = key;
       debugger;
       let img = $('<img>').addClass('emoji').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
+      emojisContainer.append(img);
     });
 
     const commentLabel    = $('<label>').addClass('col-form-label').attr('for', 'comment').text('Comments:');
