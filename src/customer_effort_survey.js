@@ -37,9 +37,11 @@ class CustomerEffortSurvery {
     const modalBody       = $('<div>').addClass('modal-body');
     const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
 
+    debugger;
     Object.keys(this.emojisMapping).forEach(function(key) {
       let emoji = key;
-      let img = $('<img>').addClass('emoji').attr('src', `${PRODUCTION_CDN_URL}/service_catalog/shared/dist/public/images/svg/${emoji}.svg`);
+      debugger;
+      let img = $('<img>').addClass('emoji').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
     });
 
     const commentLabel    = $('<label>').addClass('col-form-label').attr('for', 'comment').text('Comments:');

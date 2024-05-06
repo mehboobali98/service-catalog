@@ -191,7 +191,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/images/svg/${imageName}.svg`;
+    return `https://mehboobali98.github.io/service-catalog/dist/public/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
@@ -255,9 +255,11 @@
       const modalBody       = $('<div>').addClass('modal-body');
       const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
 
+      debugger;
       Object.keys(this.emojisMapping).forEach(function(key) {
         let emoji = key;
-        $('<img>').addClass('emoji').attr('src', `${PRODUCTION_CDN_URL}/service_catalog/shared/dist/public/images/svg/${emoji}.svg`);
+        debugger;
+        $('<img>').addClass('emoji').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
       });
 
       const commentLabel    = $('<label>').addClass('col-form-label').attr('for', 'comment').text('Comments:');
@@ -1482,7 +1484,7 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/images/svg/no_access_image.svg`)
+      const noAccessImage         = $('<img>').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/no_access_image.svg`)
 
                                               .addClass('no-access-image');
 
@@ -1554,7 +1556,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/stylesheets/service_catalog.css?${this.timeStamp}`},
+                { type: 'link',   url: `https://mehboobali98.github.io/service-catalog/dist/public/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
