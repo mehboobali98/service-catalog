@@ -4,7 +4,7 @@ import { STAGING_CDN_URL, PRODUCTION_CDN_URL } from './constant.js';
 class CustomerEffortSurvery {
   constructor(locale) {
     this.localte        = locale;
-    this.SvgBuilder     = new SvgBuilder();
+    this.svgBuilder     = new SvgBuilder();
     // order is important
     this.emojisMapping  = {
       'anger': 1,
@@ -53,10 +53,10 @@ class CustomerEffortSurvery {
     const modalBody       = $('<div>').addClass('modal-body');
     const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
 
-    Object.keys(this.emojisMapping).forEach(function(key) {
+    Object.keys(this.emojisMapping).forEach(key => {
       let emoji = key;
       debugger;
-      let svg = this.SvgBuilder.build(emoji);
+      let svg = this.svgBuilder.build(emoji);
       debugger;
       let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
                           .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
