@@ -31,12 +31,20 @@ class CustomerEffortSurvery {
       $('#submit_ces_survery_btn').prop('disabled', false);
     });
 
+    $('body').on('click', 'ces_survery_modal_close_btn', function(e) {
+      e.preventDefault();
+
+      $('#customer_effort_survey_modal').modal('hide');
+    })
+
     // Show the modal
     $('#customer_effort_survey_modal').modal('show');
   }
 
   build() {
-    const modal         = $('<div>').addClass('modal fade').attr('id', 'customer_effort_survey_modal').attr('role', 'document');
+    const modal         = $('<div>').addClass('modal fade')
+                                    .attr('id', 'customer_effort_survey_modal')
+                                    .attr('role', 'modal');
     const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position');
 
     // modal-content

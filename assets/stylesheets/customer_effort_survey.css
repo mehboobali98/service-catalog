@@ -16,3 +16,13 @@
   width:  48px;
   height: 48px;
 }
+
+.comment-section {
+  width:          100%;
+  border:         1px solid #D9D9D9;
+  resize:         vertical;
+  padding:        8px;
+  margin-top:     4%;
+  box-sizing:     border-box;
+  border-radius:  8px;
+}
