@@ -409,7 +409,8 @@
       //modal-header
       const modalHeader = $('<div>').addClass('modal-header').append(
         $('<h5>').addClass('modal-title').text('Feedback'),
-        $('<button>').addClass('btn-close').attr('type', 'button').attr('data-bs-dismiss', 'modal').attr('aria-label', 'Close')
+        $('<button>').addClass('btn-close').attr('id', 'modal_close_btn').attr('type', 'button').attr('data-bs-dismiss', 'modal').attr('aria-label', 'Close')
+                     .click(this.closeModal)
       );
 
       //modal-body
@@ -479,6 +480,10 @@
           // Handle error
         }
       });
+    }
+
+    closeModal = () => {
+      $('#customer_effort_survey_modal').modal('hide');
     }
   }
 
