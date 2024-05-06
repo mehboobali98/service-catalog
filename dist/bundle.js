@@ -224,7 +224,7 @@
     }
 
     build(svgType, container, containerClass) {
-      getSvgCode(svgType);
+      this.getSvgCode(svgType);
       return
     }
 

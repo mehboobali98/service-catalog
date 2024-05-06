@@ -4,7 +4,7 @@ class SvgBuilder {
   }
 
   build(svgType, container, containerClass) {
-    let svgCode = getSvgCode(svgType);
+    let svgCode = this.getSvgCode(svgType);
     return
       $('<span>').addClass(this.containerClass)
                  .append(svgCode);
