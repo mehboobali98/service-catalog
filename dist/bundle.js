@@ -485,6 +485,7 @@
     submitFeedback = () => {
       const score       = this.emojisMapping[$('#selected_emoji').val()];
       const comment     = $('#comment').val();
+      const headers     = {};
       const queryParams = {
         score:      score || 0,
         comment:    comment,
@@ -493,13 +494,15 @@
 
       this.withToken(token => {
         debugger;
+        headers['Authorization'] = 'Bearer ' + token;
+        headers['ngrok-skip-browser-warning'] = true;
+        debugger;
+
         $.ajax({
-          url: `https://${this.subdomain}/customer_effort_scores`,
-          data: queryParams,
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
+          url:      `https://${this.subdomain}/customer_effort_scores.json`,
+          data:     queryParams,
+          method:   'POST',
+          headers:  headers,
           success: function(response) {
             debugger;
             console.log('AJAX request successful', response);
