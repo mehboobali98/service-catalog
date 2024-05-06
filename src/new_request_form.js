@@ -1,5 +1,5 @@
-import { t } from './i18n.js';
-import { loadExternalFiles } from './utility.js';
+import { t }                  from './i18n.js';
+import { loadExternalFiles }  from './utility.js';
 
 class NewRequestForm {
   constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {

@@ -1,4 +1,5 @@
-import { CustomerEffortSurvery } from './customer_effort_survey.js';
+import { loadExternalFiles }      from './utility.js';
+import { CustomerEffortSurvery }  from './customer_effort_survey.js';
 
 class RequestForm {
   constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
@@ -9,6 +10,13 @@ class RequestForm {
   }
 
   updateRequestForm() {
+    const files = this.filesToLoad();
+    loadExternalFiles(files, () => {
+      this.updateForm();
+    })
+  }
+
+  updateForm() {
     const self        = this;
     const requestId   = this.extractRequestId();
     const requestUrl  = '/api/v2/requests/' + requestId;
@@ -151,6 +159,12 @@ class RequestForm {
 
   fieldDataPresent(fieldData) {
    return fieldData && fieldData.value
+  }
+
+  filesToLoad() {
+    return  [
+              { type: 'script', url: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js'},
+            ];
   }
 }
 
