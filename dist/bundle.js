@@ -225,7 +225,6 @@
 
     build(svgType, container, containerClass) {
       let svgCode = this.getSvgCode(svgType);
-      debugger;
       return $('<span>').addClass(this.containerClass)
                         .append(svgCode);
     }
@@ -423,8 +422,15 @@
                                           .attr('name', 'selectedEmoji');
       modalBody.append(hiddenField);
 
-      const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
+      // modal-body description
+      const descriptionContainer = $('<div>').addClass('my-2');
+      const modalDescription     = $('<span>').addClass('fw-bold')
+                                              .text('How easy was it to submit the request?');
+      descriptionContainer.append(modalDescription);
+      modalBody.append(descriptionContainer);
 
+      // emojis section
+      const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
       Object.keys(this.emojisMapping).forEach(key => {
         let emoji = key;
         let svg   = this.svgBuilder.build(emoji);
@@ -435,6 +441,8 @@
         emojisContainer.append(svg);
       });
 
+
+      // comment section
       const commentContainer  = $('<div>').addClass('comment-container');
       const commentLabel      = $('<label>').addClass('col-form-label')
                                             .attr('for', 'comment')
@@ -475,22 +483,33 @@
         ticket_id:  this.requestId,
       };
 
-      // AJAX request
-      $.ajax({
-        url:     `https://${this.subdomain}/customer_effort_scores`,
-        data:     queryParams,
-        method:  'POST',
-        success: function(response) {
-          debugger;
-          console.log('AJAX request successful', response);
-          // Handle success response
-        },
-        error: function(xhr, status, error) {
-          debugger;
-          console.error('AJAX request error:', error);
-          // Handle error
-        }
+      this.withToken(token => {
+        debugger;
+        $.ajax({
+          url: `https://${this.subdomain}/customer_effort_scores`,
+          data: queryParams,
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          success: function(response) {
+            debugger;
+            console.log('AJAX request successful', response);
+            // Handle success response
+          },
+          error: function(xhr, status, error) {
+            debugger;
+            console.error('AJAX request error:', error);
+            // Handle error
+          }
+        });
       });
+    }
+
+    withToken(callback) {
+      return $.getJSON('/hc/api/v2/integration/token').then(data => {
+        return callback(data.token);
+      })
     }
 
     closeModal = () => {
