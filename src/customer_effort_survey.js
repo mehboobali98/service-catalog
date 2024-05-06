@@ -44,15 +44,9 @@ class CustomerEffortSurvery {
 
     Object.keys(this.emojisMapping).forEach(function(key) {
       let emoji = key;
-      // <object data="happy.svg" width="300" height="300"> </object>
-      let obj = $('<obj>').addClass('js-customer-effort-survery-emoji-reaction')
-                          .attr({
-                            'data': `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`,
-                            'type': 'image/svg+xml'
-                          });
-      // let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
-      //                     .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
-      emojisContainer.append(obj);
+      let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
+                          .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
+      emojisContainer.append(img);
     });
 
     const commentLabel    = $('<label>').addClass('col-form-label').attr('for', 'comment').text('Comments:');
