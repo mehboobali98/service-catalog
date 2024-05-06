@@ -96,24 +96,16 @@ class RequestForm {
 
     const headers = options.headers || {};
 
-    debugger;
     $.ajax({
       url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
       type:     'POST',
       data:     { 'ticket': queryParams },
       headers:  headers,
       success: function(response) {
-        debugger;
         new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
-        // Handle successful response
-        console.log('AJAX request successful', response);
-        // You can perform further actions based on the response here
       },
       error: function(xhr, status, error) {
-        debugger;
-        // Handle error
-        console.error('AJAX request error:', error);
-        // You can display an error message or perform other actions based on the error here
+        console.error('Request error:', error);
       }
     });
   }
