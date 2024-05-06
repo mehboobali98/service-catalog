@@ -400,7 +400,7 @@
     }
 
     build() {
-      const modal         = $('<div>').addClass('modal').attr('id', 'customer_effort_survey_modal').attr('role', 'dialog');
+      const modal         = $('<div>').addClass('modal fade').attr('id', 'customer_effort_survey_modal').attr('role', 'document');
       const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position');
 
       // modal-content
