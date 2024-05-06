@@ -24,6 +24,7 @@ class CustomerEffortSurvery {
     $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
       e.preventDefault();
 
+      $(this).find('svg rect').addClass('selected-emoji-background');
       debugger;
     });
 
