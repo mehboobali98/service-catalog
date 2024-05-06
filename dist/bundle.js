@@ -323,15 +323,16 @@
       Object.keys(this.emojisMapping).forEach(key => {
         let emoji = key;
         debugger;
-        this.svgBuilder.build(emoji);
+        let svg = this.svgBuilder.build(emoji);
+        svg.addClass('js-customer-effort-survery-emoji-reaction');
         debugger;
-        let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
-                            .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
-                            .attr('id', emoji);
-        img.click(function() {
+        // let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
+        //                     .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
+        //                     .attr('id', emoji);
+        svg.click(function() {
           $('#selected_emoji').val(emoji);
         });
-        emojisContainer.append(img);
+        emojisContainer.append(svg);
       });
 
       const commentLabel    = $('<label>').addClass('col-form-label').attr('for', 'comment').text('Comments:');
@@ -468,6 +469,7 @@
     }
 
     linkResources(requestId, options) {
+      const self               = this;
       const assetsFieldId      = options.ezoFieldId;
       const serviceItemFieldId = options.serviceItemFieldId;
 
@@ -480,6 +482,7 @@
 
       const headers = options.headers || {};
 
+      debugger;
       $.ajax({
         url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
         type:     'POST',
@@ -487,7 +490,7 @@
         headers:  headers,
         success: function(response) {
           debugger;
-          new CustomerEffortSurvery(this.locale, requestId, this.ezoSubdomain).render();
+          new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
           // Handle successful response
           console.log('AJAX request successful', response);
           // You can perform further actions based on the response here

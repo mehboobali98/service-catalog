@@ -83,6 +83,7 @@ class RequestForm {
   }
 
   linkResources(requestId, options) {
+    const self               = this;
     const assetsFieldId      = options.ezoFieldId;
     const serviceItemFieldId = options.serviceItemFieldId;
 
@@ -95,6 +96,7 @@ class RequestForm {
 
     const headers = options.headers || {};
 
+    debugger;
     $.ajax({
       url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
       type:     'POST',
@@ -102,7 +104,7 @@ class RequestForm {
       headers:  headers,
       success: function(response) {
         debugger;
-        new CustomerEffortSurvery(this.locale, requestId, this.ezoSubdomain).render();
+        new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
         // Handle successful response
         console.log('AJAX request successful', response);
         // You can perform further actions based on the response here
