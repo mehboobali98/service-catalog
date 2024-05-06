@@ -94,6 +94,7 @@ class RequestForm {
       headers:  headers,
       success: function(response) {
         debugger;
+        new CustomerEffortSurvery(this.locale).render();
         // Handle successful response
         console.log('AJAX request successful', response);
         // You can perform further actions based on the response here
