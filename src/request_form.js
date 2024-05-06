@@ -158,7 +158,7 @@ class RequestForm {
   filesToLoad() {
     return  [
               { type: 'link'  , url: `https://mehboobali98.github.io/service-catalog/dist/public/customer_effort_survey.css` },
-              { type: 'script', url: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js' },
+              { type: 'script', url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js' },
             ];
   }
 }
