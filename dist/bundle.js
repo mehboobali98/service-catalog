@@ -234,9 +234,18 @@
     render() {
       const cesModal = this.build();
       $('body').append(cesModal);
-      $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(event) {
+
+      $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
+        e.preventDefault();
+
+        if ($(this).attr('src').indexOf('filled') !== -1) { return; }
+
         debugger;
-        $(this).find('svg rect').addClass('emoji-on-select');
+        $('.js-customer-effort-survery-emoji-reaction').each(() => {
+          debugger;
+          $(this).attr('src');
+          $(this).attr('src', 'new_image_url.jpg');
+        });
       });
 
       // Show the modal
@@ -263,7 +272,8 @@
       Object.keys(this.emojisMapping).forEach(function(key) {
         let emoji = key;
         let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
-                            .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`);
+                            .attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/${emoji}.svg`)
+                            .attr('id', emoji);
         emojisContainer.append(img);
       });
 
