@@ -14,8 +14,8 @@ class CustomerEffortSurvery {
   }
 
   render() {
-    build();
-
+    const cesModal = build();
+    $('body').append(cesModal);
     // Show the modal
     $('#customer_effort_survey_modal').modal('show');
   }
