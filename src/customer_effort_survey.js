@@ -58,6 +58,7 @@ class CustomerEffortSurvery {
       let emoji = key;
       debugger;
       let svg = this.svgBuilder.build(emoji);
+      debugger;
       svg.addClass('js-customer-effort-survery-emoji-reaction');
       debugger;
       // let img = $('<img>').addClass('js-customer-effort-survery-emoji-reaction')
