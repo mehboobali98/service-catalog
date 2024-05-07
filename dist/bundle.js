@@ -394,6 +394,7 @@
         $('.js-customer-effort-survery-emoji-reaction svg rect.selected-emoji-background').removeClass('selected-emoji-background');
         $(this).find('svg rect').addClass('selected-emoji-background');
         $('#submit_ces_survery_btn').prop('disabled', false);
+        $('#selected_emoji').val($(this).data('emoji'));
       });
 
       $('body').on('click', 'ces_survery_modal_close_btn', function(e) {
@@ -441,10 +442,11 @@
       Object.keys(this.emojisMapping).forEach(key => {
         let emoji = key;
         let svg   = this.svgBuilder.build(emoji);
-        svg.addClass('js-customer-effort-survery-emoji-reaction');
-        svg.click(function() {
-          $('#selected_emoji').val(emoji);
-        });
+        svg.addClass('js-customer-effort-survery-emoji-reaction')
+           .data('emoji', emoji);
+        // svg.click(function() {
+        //   $('#selected_emoji').val(emoji);
+        // });
         emojisContainer.append(svg);
       });
 
