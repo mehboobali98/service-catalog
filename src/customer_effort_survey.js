@@ -71,7 +71,7 @@ class CustomerEffortSurvery {
     modalBody.append(descriptionContainer);
 
     // emojis section
-    const emojisContainer = $('<div>').addClass('d-flex justify-content-between');
+    const emojisContainer = $('<div>').addClass('d-flex justify-content-between mt-4 px-4');
     Object.keys(this.emojisMapping).forEach(key => {
       let emoji = key;
       let svg   = this.svgBuilder.build(emoji);
@@ -96,7 +96,7 @@ class CustomerEffortSurvery {
 
     // modal-footer
     const modalFooter = $('<div>').addClass('modal-footer border-top-0');
-    const submitBtn   = $('<button>').addClass('btn btn-primary mt-2')
+    const submitBtn   = $('<button>').addClass('btn btn-primary mt-2 ces-survery-submit-btn')
                                      .attr('id', 'submit_ces_survery_btn')
                                      .attr('disabled', 'disabled')
                                      .text('Send Feedback');

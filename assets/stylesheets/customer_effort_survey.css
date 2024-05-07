@@ -26,3 +26,9 @@
   box-sizing:     border-box;
   border-radius:  8px;
 }
+
+.ces-survery-submit-btn {
+  padding:           10px;
+  border-radius:     12px;
+  background-color:  #107DD8;
+}
