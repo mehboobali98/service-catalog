@@ -1,0 +1,72 @@
+.customer-effort-survery-dialog-title-font-style {
+  font-size:    12px;
+  line-height:  20px;
+  font-weight:  600;
+}
+
+.customer-effort-survery-dialog-font-style {
+  font-size:    14px;
+  line-height:  20px;
+}
+
+.customer-effort-survery-dialog-shadow {
+  box-shadow: 0 20px 25px rgba(28, 28, 34, 0.15);
+}
+
+.customer-effort-survery-dialog-position {
+  width:      100%;
+  right:      2%;
+  bottom:     2%;
+  margin:     0px;
+  position:   absolute;
+  max-width:  340px !important;
+  min-width:  auto;
+}
+
+.selected-emoji-background {
+  fill: #107DD8;
+}
+
+.emoji-description-font-style {
+  color:        rgba(31, 36, 41, 1);
+  weight:       500;
+  font-size:    12px;
+  font-weight:  500;
+  line-height:  16px;
+}
+
+.emoji-description-okay {
+  margin-right: 1rem;
+}
+
+.kb-svg-icon {
+  width:  48px;
+  height: 48px;
+}
+
+.comment-section {
+  width:          100%;
+  border:         1px solid #D9D9D9;
+  resize:         vertical;
+  padding:        8px;
+  margin-top:     4%;
+  box-sizing:     border-box;
+  border-radius:  8px;
+}
+
+.ces-survery-submit-btn {
+  border-radius:     12px;
+  background-color:  #107DD8;
+}
+
+.ces-survery-submit-btn:disabled {
+  border-radius:     12px;
+  background-color:  #107DD8;
+}
+
+.ces-survery-submit-btn-font-style {
+  padding:      10px;
+  font-size:    14px;
+  font-weight:  600;
+  line-height:  20px;
+}

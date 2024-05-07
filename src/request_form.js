@@ -1,11 +1,22 @@
+import { loadExternalFiles }      from './utility.js';
+import { CustomerEffortSurvery }  from './customer_effort_survey.js';
+
 class RequestForm {
-  constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+  constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    this.locale                 = locale;
     this.ezoFieldId             = ezoFieldId;
     this.ezoSubdomain           = ezoSubdomain;
     this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
   }
 
   updateRequestForm() {
+    const files = this.filesToLoad();
+    loadExternalFiles(files, () => {
+      this.updateForm();
+    })
+  }
+
+  updateForm() {
     const self        = this;
     const requestId   = this.extractRequestId();
     const requestUrl  = '/api/v2/requests/' + requestId;
@@ -37,7 +48,6 @@ class RequestForm {
           if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
           if (parsedEzoFieldValue.linked != 'true') {
-
             self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
           }
 
@@ -73,6 +83,7 @@ class RequestForm {
   }
 
   linkResources(requestId, options) {
+    const self               = this;
     const assetsFieldId      = options.ezoFieldId;
     const serviceItemFieldId = options.serviceItemFieldId;
 
@@ -86,10 +97,18 @@ class RequestForm {
     const headers = options.headers || {};
 
     $.ajax({
-      url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
-      type:    'POST',
+      url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
+      type:     'POST',
       data:     { 'ticket': queryParams },
-      headers:  headers
+      headers:  headers,
+      success: function(response) {
+        if (response['show_ces_survey']) {
+          new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('Request error:', error);
+      }
     });
   }
 
@@ -136,6 +155,13 @@ class RequestForm {
 
   fieldDataPresent(fieldData) {
    return fieldData && fieldData.value
+  }
+
+  filesToLoad() {
+    return  [
+              { type: 'link'  , url: `https://mehboobali98.github.io/service-catalog/dist/public/customer_effort_survey.css` },
+              { type: 'script', url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js' },
+            ];
   }
 }
 
