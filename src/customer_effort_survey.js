@@ -44,7 +44,7 @@ class CustomerEffortSurvery {
     const modal         = $('<div>').addClass('modal fade hide')
                                     .attr('id', 'customer_effort_survey_modal')
                                     .attr('role', 'modal');
-    const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position');
+    const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position customer-effort-survery-dialog-shadow');
 
     // modal-content
     const modalContent  = $('<div>').addClass('modal-content');
@@ -65,7 +65,7 @@ class CustomerEffortSurvery {
 
     // modal-body description
     const descriptionContainer = $('<div>').addClass('my-2');
-    const modalDescription     = $('<span>').addClass('fw-bold')
+    const modalDescription     = $('<span>').addClass('fw-bold customer-effort-survery-dialog-font-style')
                                             .text('How easy was it to submit the request?');
     descriptionContainer.append(modalDescription);
     modalBody.append(descriptionContainer);
@@ -84,7 +84,7 @@ class CustomerEffortSurvery {
 
 
     // comment section
-    const commentContainer  = $('<div>').addClass('comment-container mt-5');
+    const commentContainer  = $('<div>').addClass('comment-container mt-5 customer-effort-survery-dialog-font-style');
     const commentLabel      = $('<label>').addClass('col-form-label my-2 fw-bold')
                                           .attr('for', 'comment')
                                           .text('Write your comment (Optional)');
@@ -96,7 +96,7 @@ class CustomerEffortSurvery {
 
     // modal-footer
     const modalFooter = $('<div>').addClass('modal-footer border-top-0');
-    const submitBtn   = $('<button>').addClass('btn btn-primary mt-2 ces-survery-submit-btn')
+    const submitBtn   = $('<button>').addClass('btn btn-primary mt-2 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
                                      .attr('id', 'submit_ces_survery_btn')
                                      .attr('disabled', 'disabled')
                                      .text('Send Feedback');

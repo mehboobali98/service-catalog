@@ -1,3 +1,12 @@
+.customer-effort-survery-dialog-font-style {
+  font-size:    14px;
+  line-height:  20px;
+}
+
+.customer-effort-survery-dialog-shadow {
+  box-shadow: 0 20px 25px rgba(28, 28, 34, 0.15);
+}
+
 .customer-effort-survery-dialog-position {
   width:      100%;
   right:      2%;
@@ -28,7 +37,18 @@
 }
 
 .ces-survery-submit-btn {
-  padding:           10px;
   border-radius:     12px;
   background-color:  #107DD8;
+}
+
+.ces-survery-submit-btn:disabled {
+  border-radius:     12px;
+  background-color:  #107DD8;
+}
+
+.ces-survery-submit-btn-font-style {
+  padding:      10px;
+  font-size:    14px;
+  font-weight:  600;
+  line-height:  20px;
 }
