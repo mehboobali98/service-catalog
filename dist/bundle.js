@@ -418,8 +418,13 @@
 
       //modal-header
       const modalHeader = $('<div>').addClass('modal-header').append(
-        $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style').text('Feedback'),
-        $('<button>').addClass('btn-close').attr('id', 'modal_close_btn').attr('type', 'button').attr('data-bs-dismiss', 'modal').attr('aria-label', 'Close')
+        $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
+                .text(t('customer-effort-survey-title', 'Feedback')),
+        $('<button>').addClass('btn-close')
+                     .attr('id', 'modal_close_btn')
+                     .attr('type', 'button')
+                     .attr('data-bs-dismiss', 'modal')
+                     .attr('aria-label', 'Close')
                      .click(this.closeModal)
       );
 
@@ -433,7 +438,7 @@
       // modal-body description
       const descriptionContainer = $('<div>').addClass('my-2');
       const modalDescription     = $('<span>').addClass('fw-bold customer-effort-survery-dialog-font-style')
-                                              .text('How easy was it to submit the request?');
+                                              .text(t('customer-effort-survey-feedback-question', 'How easy was it to submit the request?'));
       descriptionContainer.append(modalDescription);
       modalBody.append(descriptionContainer);
 
@@ -450,21 +455,21 @@
       // emoji description
       const emojiDescription = $('<div>').addClass('d-flex justify-content-between mt-2 px-2 emoji-description-font-style');
       emojiDescription.append(
-        $('<span>').text('Terrible'),
-        $('<span>').addClass('emoji-description-okay').text('Ok'),
-        $('<span>').text('Great')
+        $('<span>').text(t('emoji-description-terrible', 'Terrible')),
+        $('<span>').addClass('emoji-description-okay').text(t('emoji-description-okay', 'Ok')),
+        $('<span>').text(t('emoji-description-great', 'Great'))
       );
 
       // comment section
       const commentContainer  = $('<div>').addClass('comment-container mt-3 customer-effort-survery-dialog-font-style');
       const commentLabel      = $('<label>').addClass('col-form-label my-2 fw-bold')
                                             .attr('for', 'comment')
-                                            .text('Write your comment (Optional)');
+                                            .text(t('optional-comment', 'Write your comment (Optional)'));
       const commentTextarea   = $('<textarea>').addClass('form-control comment-section')
                                                .attr('id', 'comment')
                                                .attr('rows', '4')
                                                .attr('maxlength', CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH)
-                                               .attr('placeholder', 'Describe your experience here');
+                                               .attr('placeholder', t('experience-description', 'Describe your experience here'));
       commentContainer.append(commentLabel, commentTextarea);
 
       // modal-footer
@@ -472,7 +477,7 @@
       const submitBtn   = $('<button>').addClass('btn btn-primary mt-2 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
                                        .attr('id', 'submit_ces_survery_btn')
                                        .attr('disabled', 'disabled')
-                                       .text('Send Feedback');
+                                       .text(t('send-feedback', 'Send Feedback'));
 
       // Assign submit logic to submit button
       submitBtn.click(this.submitFeedback);
