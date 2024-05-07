@@ -1,6 +1,6 @@
 import {
   TRANSLATIONS,
-  PRODUCTION_CDN_URL
+  STAGING_CDN_URL
 } from './constant.js';
 
 // Load translations for the given locale and translate the page to this locale
@@ -19,7 +19,7 @@ function setLocale(newLocale, shouldTranslatePage) {
 
 // Retrieve translations JSON object for the given locale over the network
 function fetchTranslationsFor(newLocale) {
-  return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/${newLocale}.json`);
+  return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${newLocale}.json`);
 }
 
 // Replace the inner text of each element that has a
