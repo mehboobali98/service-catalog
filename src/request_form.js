@@ -102,6 +102,7 @@ class RequestForm {
       data:     { 'ticket': queryParams },
       headers:  headers,
       success: function(response) {
+        debugger;
         new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
       },
       error: function(xhr, status, error) {
