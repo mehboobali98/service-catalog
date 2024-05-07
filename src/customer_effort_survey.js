@@ -56,7 +56,7 @@ class CustomerEffortSurvery {
 
     //modal-header
     const modalHeader = $('<div>').addClass('modal-header').append(
-      $('<h5>').addClass('modal-title').text('Feedback'),
+      $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style').text('Feedback'),
       $('<button>').addClass('btn-close').attr('id', 'modal_close_btn').attr('type', 'button').attr('data-bs-dismiss', 'modal').attr('aria-label', 'Close')
                    .click(this.closeModal)
     );

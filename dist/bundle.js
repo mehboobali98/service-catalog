@@ -418,7 +418,7 @@
 
       //modal-header
       const modalHeader = $('<div>').addClass('modal-header').append(
-        $('<h5>').addClass('modal-title').text('Feedback'),
+        $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style').text('Feedback'),
         $('<button>').addClass('btn-close').attr('id', 'modal_close_btn').attr('type', 'button').attr('data-bs-dismiss', 'modal').attr('aria-label', 'Close')
                      .click(this.closeModal)
       );
@@ -444,9 +444,6 @@
         let svg   = this.svgBuilder.build(emoji);
         svg.addClass('js-customer-effort-survery-emoji-reaction')
            .data('emoji', emoji);
-        // svg.click(function() {
-        //   $('#selected_emoji').val(emoji);
-        // });
         emojisContainer.append(svg);
       });
 
@@ -501,6 +498,8 @@
         comment:    comment,
         ticket_id:  this.requestId,
       };
+
+      $('#submit_ces_survery_btn').prop('disabled', true).text('Please Wait...');
 
       this.withToken(token => {
         headers['Authorization'] = 'Bearer ' + token;
