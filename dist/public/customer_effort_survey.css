@@ -21,6 +21,18 @@
   fill: #107DD8;
 }
 
+.emoji-description-font-style {
+  color:        rgba(31, 36, 41, 1);
+  weight:       500;
+  font-size:    12px;
+  font-weight:  500;
+  line-height:  16px;
+}
+
+.emoji-description-okay {
+  margin-right: 1rem;
+}
+
 .kb-svg-icon {
   width:  48px;
   height: 48px;

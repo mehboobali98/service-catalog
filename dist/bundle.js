@@ -448,9 +448,16 @@
         emojisContainer.append(svg);
       });
 
+      // emoji description
+      const emojiDescription = $('<div>').addClass('d-flex justify-content-between mt-2 px-2 emoji-description-font-style');
+      emojiDescription.append(
+        $('<span>').text('Terrible'),
+        $('<span>').addClass('emoji-description-okay').text('Ok'),
+        $('<span>').text('Great')
+      );
 
       // comment section
-      const commentContainer  = $('<div>').addClass('comment-container mt-5 customer-effort-survery-dialog-font-style');
+      const commentContainer  = $('<div>').addClass('comment-container mt-3 customer-effort-survery-dialog-font-style');
       const commentLabel      = $('<label>').addClass('col-form-label my-2 fw-bold')
                                             .attr('for', 'comment')
                                             .text('Write your comment (Optional)');
@@ -472,7 +479,7 @@
       modalFooter.append(submitBtn);
 
       // Assemble modal content
-      modalBody.append(emojisContainer, commentContainer);
+      modalBody.append(emojisContainer, emojiDescription, commentContainer);
       modalContent.append(modalHeader, modalBody, modalFooter);
       modalDialog.append(modalContent);
       modal.append(modalDialog);
