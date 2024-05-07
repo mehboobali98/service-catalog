@@ -102,8 +102,9 @@ class RequestForm {
       data:     { 'ticket': queryParams },
       headers:  headers,
       success: function(response) {
-        debugger;
-        new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
+        if (response['show_ces_survey']) {
+          new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
+        }
       },
       error: function(xhr, status, error) {
         console.error('Request error:', error);

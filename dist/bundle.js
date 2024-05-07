@@ -4,13 +4,13 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ServiceCatalog = global.ServiceCatalog || {}, global.ServiceCatalog.js = {})));
 })(this, (function (exports) { 'use strict';
 
-  const TRANSLATIONS                      = {};
-  const PRODUCTION_CDN_URL                = 'https://cdn.ezassets.com';
-  const DEFAULT_FIELD_VALUE               = '--';
-  const DEFAULT_TRUNCATE_LENGTH           = 30;
-  const CARD_FIELD_VALUE_TRUNCATE_LENGTH  = 15;
-
-  const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
+  const TRANSLATIONS                            = {};
+  const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
+  const DEFAULT_FIELD_VALUE                     = '--';
+  const DEFAULT_TRUNCATE_LENGTH                 = 30;
+  const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
+  const CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH   = 1000;
+  const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING  = {
     'service_item':                'service_item_placeholder',
     'assigned_asset':              'asset_placeholder',
     'assigned_software_license':   'software_license_placeholder'
@@ -399,11 +399,11 @@
       $('body').on('click', 'ces_survery_modal_close_btn', function(e) {
         e.preventDefault();
 
-        $('#customer_effort_survey_modal').modal('hide');
+        $('#customer_effort_survey_modal').modal('hide').remove();
       });
 
       // Show the modal
-      $('#customer_effort_survey_modal').modal('show');
+      $('#customer_effort_survey_modal').modal({ backdrop: 'static' });
     }
 
     build() {
@@ -464,6 +464,7 @@
       const commentTextarea   = $('<textarea>').addClass('form-control comment-section')
                                                .attr('id', 'comment')
                                                .attr('rows', '4')
+                                               .attr('maxlength', CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH)
                                                .attr('placeholder', 'Describe your experience here');
       commentContainer.append(commentLabel, commentTextarea);
 
@@ -519,7 +520,7 @@
     }
 
     closeModal = () => {
-      $('#customer_effort_survey_modal').modal('hide');
+      $('#customer_effort_survey_modal').modal('hide').remove();
     }
 
     withToken(callback) {
@@ -630,8 +631,9 @@
         data:     { 'ticket': queryParams },
         headers:  headers,
         success: function(response) {
-          debugger;
-          new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
+          if (response['show_ces_survey']) {
+            new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
+          }
         },
         error: function(xhr, status, error) {
           console.error('Request error:', error);

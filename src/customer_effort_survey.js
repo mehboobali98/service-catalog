@@ -1,5 +1,9 @@
-import { SvgBuilder }                          from './svg_builder.js';
-import { STAGING_CDN_URL, PRODUCTION_CDN_URL } from './constant.js';
+import { SvgBuilder } from './svg_builder.js';
+import {
+  STAGING_CDN_URL,
+  PRODUCTION_CDN_URL,
+  CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH
+} from './constant.js';
 
 class CustomerEffortSurvery {
   constructor(locale, requestId, subdomain) {
@@ -33,11 +37,11 @@ class CustomerEffortSurvery {
     $('body').on('click', 'ces_survery_modal_close_btn', function(e) {
       e.preventDefault();
 
-      $('#customer_effort_survey_modal').modal('hide');
+      $('#customer_effort_survey_modal').modal('hide').remove();
     })
 
     // Show the modal
-    $('#customer_effort_survey_modal').modal('show');
+    $('#customer_effort_survey_modal').modal({ backdrop: 'static' });
   }
 
   build() {
@@ -98,6 +102,7 @@ class CustomerEffortSurvery {
     const commentTextarea   = $('<textarea>').addClass('form-control comment-section')
                                              .attr('id', 'comment')
                                              .attr('rows', '4')
+                                             .attr('maxlength', CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH)
                                              .attr('placeholder', 'Describe your experience here');
     commentContainer.append(commentLabel, commentTextarea);
 
@@ -153,7 +158,7 @@ class CustomerEffortSurvery {
   }
 
   closeModal = () => {
-    $('#customer_effort_survey_modal').modal('hide');
+    $('#customer_effort_survey_modal').modal('hide').remove();
   }
 
   withToken(callback) {
