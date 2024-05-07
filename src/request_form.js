@@ -159,7 +159,7 @@ class RequestForm {
 
   filesToLoad() {
     return  [
-              { type: 'link'  , url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/customer_effort_survey.css` },
+              { type: 'link'  , url: `${STAGING_CDN_URL}/shared/service_catalog/dist/public/customer_effort_survey.css` },
               { type: 'script', url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js' },
             ];
   }

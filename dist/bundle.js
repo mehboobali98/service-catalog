@@ -5,7 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const TRANSLATIONS                            = {};
-  const PRODUCTION_CDN_URL$1                      = 'https://cdn.ezassets.com';
+  const STAGING_CDN_URL$1                         = 'https://cdn.inventoryontrack.com';
   const DEFAULT_FIELD_VALUE                     = '--';
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
   const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
@@ -32,7 +32,7 @@
 
   // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${newLocale}.json`);
+    return $.getJSON(`${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/${newLocale}.json`);
   }
 
   // Replace the inner text of each element that has a
@@ -191,7 +191,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/${imageName}.svg`;
+    return `${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
@@ -694,7 +694,7 @@
 
     filesToLoad() {
       return  [
-                { type: 'link'  , url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/customer_effort_survey.css` },
+                { type: 'link'  , url: `${STAGING_CDN_URL}/shared/service_catalog/dist/public/customer_effort_survey.css` },
                 { type: 'script', url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js' },
               ];
     }
@@ -893,7 +893,7 @@
 
   function serviceCatalogDisabled(ezoSubdomain) {
     const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
-    const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/no_access_image.svg`)
+    const noAccessImage                   = $('<img>').attr('src', `${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/no_access_image.svg`)
                                                       .addClass('no-access-image');
 
     const nextStepsMessage                = $('<p>').attr('data-i18n', 'enable-service-catalog')
@@ -915,7 +915,7 @@
 
   function serviceCatalogEmpty(ezoSubdomain) {
     const serviceCatalogEmptyContainer    = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-empty-container');
-    const serviceCategoryImage            = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/service_category.svg`)
+    const serviceCategoryImage            = $('<img>').attr('src', `${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/service_category.svg`)
                                                       .addClass('no-access-image');
 
     const nextStepsMessage                = $('<p>').attr('data-i18n', 'create-and-enable-service-categories')
@@ -938,7 +938,7 @@
   function noResultsFound() {
     const noResultsContainer  = $('<div>').attr('id', 'no_results_container')
                                           .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage      = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/no_results_found.svg`)
+    const noResultsImage      = $('<img>').attr('src', `${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/no_results_found.svg`)
                                           .addClass('no-results-image');
 
     const noResultsLabel      = $('<p>').attr('data-i18n', 'no-results-found')
@@ -952,7 +952,7 @@
   function noServiceItems(notFoundMessageKey) {
     const noResultsContainer  = $('<div>').attr('id', 'no_service_items_found_container')
                                          .addClass('d-flex flex-column align-items-center no-results-container');
-    const noResultsImage      = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/service_asset.svg`)
+    const noResultsImage      = $('<img>').attr('src', `${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/service_asset.svg`)
                                           .addClass('no-results-image');
 
     const noResultsLabel      = $('<p>').attr('data-i18n', notFoundMessageKey)
@@ -1720,7 +1720,7 @@
                                                 .addClass('no-access-page-section');
 
       const noAccessPageContainer = $('<div>').addClass('d-flex flex-column align-items-center');
-      const noAccessImage         = $('<img>').attr('src', `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/no_access_image.svg`)
+      const noAccessImage         = $('<img>').attr('src', `${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/no_access_image.svg`)
                                               .addClass('no-access-image');
 
       const warningMessage        = $('<h4>').attr('data-i18n', 'unauthorized-label')
@@ -1791,7 +1791,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
+                { type: 'link',   url: `${STAGING_CDN_URL$1}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
