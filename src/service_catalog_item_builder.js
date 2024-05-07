@@ -113,6 +113,7 @@ class ServiceCatalogItemBuilder {
     const cardImageContainer    = $('<div>').addClass('col-4');
     const cardImageFlex         = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
     const placeholderPath       = placeholderImagePath(serviceCategoryItem);
+    debugger;
     const cardImage             = $('<img>').attr('src', serviceCategoryItem.display_picture_url)
                                             .attr('alt', 'IT Asset')
                                             .addClass('w-100')
