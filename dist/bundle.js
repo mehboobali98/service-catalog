@@ -403,7 +403,7 @@
       });
 
       // Show the modal
-      $('#customer_effort_survey_modal').modal({ backdrop: 'static' });
+      $('#customer_effort_survey_modal').modal('show');
     }
 
     build() {
