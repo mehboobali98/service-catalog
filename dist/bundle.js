@@ -435,7 +435,7 @@
       modalBody.append(hiddenField);
 
       // modal-body description
-      const descriptionContainer = $('<div>').addClass('my-2');
+      const descriptionContainer = $('<div>').addClass('mb-2 mt-0');
       const modalDescription     = $('<span>').addClass('fw-bold customer-effort-survery-dialog-font-style')
                                               .text(t('customer-effort-survey-feedback-question', 'How easy was it to submit the request?'));
       descriptionContainer.append(modalDescription);
@@ -473,7 +473,7 @@
 
       // modal-footer
       const modalFooter = $('<div>').addClass('modal-footer border-top-0');
-      const submitBtn   = $('<button>').addClass('btn btn-primary mt-2 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
+      const submitBtn   = $('<button>').addClass('btn btn-primary mt-0 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
                                        .attr('id', 'submit_ces_survery_btn')
                                        .attr('disabled', 'disabled')
                                        .text(t('send-feedback', 'Send Feedback'));
