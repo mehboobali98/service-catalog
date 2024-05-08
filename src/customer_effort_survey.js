@@ -143,7 +143,7 @@ class CustomerEffortSurvery {
       ticket_id:  this.requestId,
     };
 
-    $('#submit_ces_survery_btn').prop('disabled', true).text('Please Wait...');
+    $('#submit_ces_survery_btn').prop('disabled', true).text(self.t('please-wait', 'Please Wait...'));
 
     this.withToken(token => {
       headers['Authorization'] = 'Bearer ' + token;
