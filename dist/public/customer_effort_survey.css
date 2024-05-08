@@ -60,7 +60,10 @@
 }
 
 .ces-survery-submit-btn:disabled {
-  border-radius:     12px;
+  background-color:  #107DD8;
+}
+
+.ces-survery-submit-btn:hover {
   background-color:  #107DD8;
 }
 
