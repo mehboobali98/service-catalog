@@ -503,6 +503,8 @@
         ticket_id:  this.requestId,
       };
 
+      debugger;
+
       $('#submit_ces_survery_btn').prop('disabled', true).text(self.t('please-wait', 'Please Wait...'));
 
       this.withToken(token => {
