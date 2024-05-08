@@ -145,7 +145,7 @@ class CustomerEffortSurvery {
 
     debugger;
 
-    $('#submit_ces_survery_btn').prop('disabled', true).text(self.t('please-wait', 'Please Wait...'));
+    $('#submit_ces_survery_btn').prop('disabled', true).text(t('please-wait', 'Please Wait...'));
 
     this.withToken(token => {
       headers['Authorization'] = 'Bearer ' + token;
