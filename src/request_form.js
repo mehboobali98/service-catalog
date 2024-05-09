@@ -104,6 +104,7 @@ class RequestForm {
       data:     { 'ticket': queryParams },
       headers:  headers,
       success: function(response) {
+        debugger;
         if (response['show_ces_survey']) {
           new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
         }
