@@ -152,7 +152,7 @@ class ServiceCatalogItemBuilder {
     const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .attr('data-i18n', 'report-issue')
-                                     .text('Report Issue')
+                                     .text('Report Issue ')
                                      .addClass('float-end footer-text');
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
     cardFooter.append(submitRequestBtn);
@@ -208,6 +208,7 @@ class ServiceCatalogItemBuilder {
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
 
+    debugger;
     if (displayFields.cost_price) {
       const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
       cardFooter.append(price);
