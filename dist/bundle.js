@@ -1178,7 +1178,7 @@
     }
 
     buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-      const card                 = $('<div>').addClass('row service-item-card');
+      const card                 = $('<div>').addClass('row service-item-card h-100');
       const queryParams          = {};
       const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
