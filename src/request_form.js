@@ -41,21 +41,23 @@ class RequestForm {
 
           if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
-          const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-          const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
-          const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
+          if (ezoFieldDataPresent) {
+            const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
+            const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
+            const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
-          if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
+            if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
-          if (parsedEzoFieldValue.linked != 'true') {
-            self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
-          }
+            if (parsedEzoFieldValue.linked != 'true') {
+              self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
+            }
 
-          if (assetNames) {
-            self.addEZOContainer();
-            assetNames.map(name => {
-              self.showLinkedAsset(name);
-            });
+            if (assetNames) {
+              self.addEZOContainer();
+              assetNames.map(name => {
+                self.showLinkedAsset(name);
+              });
+            }
           }
         }
       });
