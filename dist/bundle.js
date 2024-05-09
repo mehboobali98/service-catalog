@@ -4,13 +4,13 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ServiceCatalog = global.ServiceCatalog || {}, global.ServiceCatalog.js = {})));
 })(this, (function (exports) { 'use strict';
 
-  const TRANSLATIONS                            = {};
-  const PRODUCTION_CDN_URL$1                      = 'https://cdn.ezassets.com';
-  const DEFAULT_FIELD_VALUE                     = '--';
-  const DEFAULT_TRUNCATE_LENGTH                 = 30;
-  const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
-  const CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH   = 1000;
-  const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING  = {
+  const TRANSLATIONS                      = {};
+  const PRODUCTION_CDN_URL$1                = 'https://cdn.ezassets.com';
+  const DEFAULT_FIELD_VALUE               = '--';
+  const DEFAULT_TRUNCATE_LENGTH           = 30;
+  const CARD_FIELD_VALUE_TRUNCATE_LENGTH  = 15;
+
+  const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING = {
     'service_item':                'service_item_placeholder',
     'assigned_asset':              'asset_placeholder',
     'assigned_software_license':   'software_license_placeholder'
@@ -32,7 +32,7 @@
 
   // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${newLocale}.json`);
+    return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/${newLocale}.json`);
   }
 
   // Replace the inner text of each element that has a
@@ -218,340 +218,14 @@
     return window.HelpCenter.user.locale.split('-')[0];
   }
 
-  class SvgBuilder {
-    constructor() {
-      this.containerClass = 'kb-svg-icon';
-    }
-
-    build(svgType, container, containerClass) {
-      let svgCode = this.getSvgCode(svgType);
-      return $('<span>').addClass(this.containerClass)
-                        .append(svgCode);
-    }
-
-    getSvgCode(svgType) {
-      switch(svgType) {
-        case 'anger':
-          return this.angerSvg();
-        case 'happy':
-          return this.happySvg();
-        case 'loving':
-          return this.lovingSvg();
-        case 'satisfied':
-          return this.satisfiedSvg();
-        case 'disappointed':
-          return this.disappointedSvg();
-        default:
-          // Handle invalid svgType
-          return '';
-      }
-    }
-
-    angerSvg() {
-      return `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#EDEDED" fill-opacity="0.4" />
-              <path d="M24 38C31.732 38 38 31.732 38 24C38 16.268 31.732 10 24 10C16.268 10 10 16.268 10 24C10 31.732 16.268 38 24 38Z" fill="url(#paint0_linear_4523_4191)" />
-              <path d="M24 38C31.732 38 38 31.732 38 24C38 16.268 31.732 10 24 10C16.268 10 10 16.268 10 24C10 31.732 16.268 38 24 38Z" fill="url(#paint1_linear_4523_4191)" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M30.8671 23.2996C31.1312 23.1177 31.1978 22.7561 31.0159 22.492C30.834 22.2279 30.4724 22.1613 30.2083 22.3433L26.8114 24.6834C26.5473 24.8653 26.4807 25.2269 26.6626 25.491C26.8445 25.7551 27.2061 25.8217 27.4702 25.6397L27.9855 25.2847C27.9465 25.4914 27.9255 25.7114 27.9255 25.9398C27.9255 27.1417 28.5062 28.1173 29.2524 28.1173C29.9985 28.1173 30.5792 27.1417 30.5792 25.9398C30.5792 25.0917 30.2888 24.3555 29.8547 23.9971L30.8671 23.2996ZM17.4199 22.3434C17.1558 22.1614 16.7942 22.2281 16.6123 22.4922C16.4304 22.7562 16.497 23.1178 16.7611 23.2998L17.9962 24.1506C17.6504 24.5431 17.4238 25.1981 17.4238 25.9398C17.4238 27.1408 18.0179 28.1144 18.7507 28.1144C19.4835 28.1144 20.0775 27.1408 20.0775 25.9398C20.0775 25.8142 20.071 25.6911 20.0585 25.5713L20.158 25.6399C20.4221 25.8218 20.7837 25.7552 20.9656 25.4911C21.1475 25.227 21.0809 24.8654 20.8168 24.6835L17.4199 22.3434ZM20.5041 33.1124C20.2981 32.8667 20.3303 32.5004 20.5761 32.2944L20.944 32.7333C20.5761 32.2944 20.5763 32.2942 20.5766 32.294L20.5772 32.2935L20.5786 32.2923L20.5821 32.2894L20.5919 32.2814C20.5998 32.275 20.6102 32.2668 20.6231 32.2568C20.649 32.2367 20.6849 32.2097 20.7305 32.1774C20.8216 32.1128 20.952 32.0266 21.1184 31.932C21.4506 31.7433 21.931 31.5188 22.5337 31.3691C23.7539 31.0661 25.4394 31.0803 27.3483 32.2436C27.6222 32.4104 27.7089 32.7677 27.542 33.0416C27.3751 33.3154 27.0178 33.4022 26.744 33.2353C25.1224 32.2471 23.7593 32.2614 22.8136 32.4962C22.3334 32.6155 21.9516 32.7943 21.6922 32.9417C21.5628 33.0152 21.465 33.0803 21.402 33.1249C21.3706 33.1472 21.3479 33.1644 21.3344 33.1748L21.3212 33.1852L21.3201 33.1861C21.0743 33.3903 20.7095 33.3575 20.5041 33.1124Z" fill="black" />
-              <defs>
-                <linearGradient id="paint0_linear_4523_4191" x1="11.8727" y1="31.0029" x2="36.1273" y2="17" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#EBB34D" />
-                  <stop offset="0.03" stop-color="#ECB64D" />
-                  <stop offset="0.18" stop-color="#EEC04F" />
-                  <stop offset="0.55" stop-color="#F1CC51" />
-                  <stop offset="1" stop-color="#F3D652" />
-                </linearGradient>
-                <linearGradient id="paint1_linear_4523_4191" x1="24" y1="10" x2="24" y2="38.0029" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#DD5F70" />
-                  <stop offset="0.16" stop-color="#DD636F" stop-opacity="0.97" />
-                  <stop offset="0.45" stop-color="#E48965" stop-opacity="0.64" />
-                  <stop offset="1" stop-color="#F3D652" stop-opacity="0" />
-                </linearGradient>
-              </defs>
-            </svg>`;
-    }
-
-    happySvg() {
-      return `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#EDEDED" fill-opacity="0.4" />
-              <path d="M37.7739 26.2261C39.0033 18.619 33.8332 11.4555 26.2261 10.2261C18.619 8.99668 11.4555 14.1668 10.2261 21.7739C8.99665 29.3811 14.1668 36.5445 21.7739 37.7739C29.381 39.0034 36.5445 33.8332 37.7739 26.2261Z" fill="url(#paint0_linear_4523_4216)" />
-              <path d="M18.9167 25.5733C22.2154 24.8636 25.6273 24.8636 28.9259 25.5733C28.9259 25.5733 29.099 32.0105 23.9199 32.0105C18.7407 32.0105 18.9167 25.5733 18.9167 25.5733Z" fill="#5B0600" />
-              <mask id="mask0_4523_4216" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="18" y="25" width="11" height="8">
-                <path d="M18.9109 25.5723C22.2095 24.8626 25.6214 24.8626 28.9201 25.5723C28.9201 25.5723 29.0932 32.0095 23.914 32.0095C18.7349 32.0095 18.9109 25.5723 18.9109 25.5723Z" fill="white" />
-              </mask>
-              <g mask="url(#mask0_4523_4216)">
-                <path d="M25.2235 35.7819C26.9879 35.0571 27.8307 33.0393 27.106 31.2749C26.3813 29.5105 24.3634 28.6677 22.599 29.3924C20.8346 30.1171 19.9918 32.1349 20.7165 33.8993C21.4412 35.6637 23.4591 36.5066 25.2235 35.7819Z" fill="#8E1112" />
-              </g>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M18.3637 18.0719C19.4288 18.0734 20.1308 18.5111 20.557 18.9914C20.7628 19.2234 20.8958 19.4549 20.9782 19.6304C21.0197 19.7187 21.0493 19.7947 21.0695 19.8523C21.0796 19.8812 21.0875 19.9057 21.0933 19.925C21.0962 19.9347 21.0987 19.9431 21.1006 19.9501L21.1033 19.9596L21.1043 19.9636L21.1048 19.9654L21.105 19.9663C21.1052 19.9667 21.1053 19.9671 20.4073 20.1493L21.1053 19.9671C21.2059 20.3525 20.975 20.7466 20.5896 20.8473C20.2076 20.947 19.8171 20.7212 19.7122 20.3419C19.7116 20.3399 19.7102 20.3357 19.708 20.3296C19.7022 20.3129 19.6908 20.2828 19.6724 20.2437C19.6352 20.1645 19.5732 20.0564 19.4779 19.949C19.3034 19.7523 18.9819 19.5135 18.3542 19.5146C18.346 19.5146 18.3379 19.5145 18.3297 19.5142C18.0377 19.5048 17.7499 19.5861 17.506 19.7469C17.2621 19.9077 17.0739 20.1401 16.9675 20.4122C16.8223 20.7832 16.4039 20.9662 16.0329 20.8211C15.6619 20.6759 15.4788 20.2575 15.624 19.8865C15.8391 19.3368 16.2192 18.8672 16.712 18.5423C17.2014 18.2198 17.778 18.0556 18.3637 18.0719ZM28.6151 18.072C29.6804 18.0733 30.3826 18.5111 30.8089 18.9915C31.0147 19.2235 31.1476 19.4549 31.2301 19.6304C31.2716 19.7187 31.3011 19.7948 31.3213 19.8524C31.3315 19.8813 31.3393 19.9057 31.3452 19.9251C31.3481 19.9347 31.3505 19.9431 31.3525 19.9502L31.3551 19.9597L31.3562 19.9637L31.3567 19.9655L31.3569 19.9663C31.357 19.9667 31.3571 19.9671 30.6592 20.1494L31.3571 19.9671C31.4578 20.3526 31.2269 20.7467 30.8415 20.8473C30.4594 20.9471 30.069 20.7212 29.964 20.3419C29.9634 20.3399 29.962 20.3358 29.9599 20.3296C29.954 20.3129 29.9426 20.2828 29.9243 20.2438C29.8871 20.1646 29.8251 20.0564 29.7298 19.949C29.5553 19.7524 29.2337 19.5136 28.6061 19.5146C28.5982 19.5146 28.5904 19.5145 28.5825 19.5143C28.2908 19.5053 28.0035 19.5867 27.76 19.7475C27.5164 19.9083 27.3286 20.1405 27.2222 20.4122C27.0771 20.7832 26.6586 20.9663 26.2876 20.8211C25.9167 20.676 25.7336 20.2575 25.8787 19.8866C26.0936 19.3375 26.4731 18.8683 26.9652 18.5435C27.4539 18.2209 28.0299 18.0563 28.6151 18.072Z" fill="black" />
-              <defs>
-                <linearGradient id="paint0_linear_4523_4216" x1="11.9006" y1="30.9566" x2="36.0976" y2="17.0436" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#EBB34D" />
-                  <stop offset="0.03" stop-color="#ECB64D" />
-                  <stop offset="0.18" stop-color="#EEC04F" />
-                  <stop offset="0.55" stop-color="#F1CC51" />
-                  <stop offset="1" stop-color="#F3D652" />
-                </linearGradient>
-              </defs>
-            </svg>`;
-    }
-
-    lovingSvg() {
-      return `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#EDEDED" fill-opacity="0.4" />
-              <path d="M34 34C39.5228 28.4772 39.5228 19.5228 34 14C28.4772 8.47715 19.5228 8.47715 14 14C8.47715 19.5228 8.47715 28.4772 14 34C19.5228 39.5228 28.4772 39.5228 34 34Z" fill="url(#paint0_linear_4523_4227)" />
-              <path d="M15.9876 24.9903C21.3039 24.2682 26.6934 24.2682 32.0097 24.9903C32.0097 24.9903 32.3029 32.12 24.0001 32.12C15.6972 32.12 15.9876 24.9903 15.9876 24.9903Z" fill="#5B0600" />
-              <mask id="mask0_4523_4227" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="15" y="24" width="18" height="9">
-                <path d="M15.9876 24.9903C21.3039 24.2682 26.6934 24.2682 32.0097 24.9903C32.0097 24.9903 32.3029 32.12 24.0001 32.12C15.6972 32.12 15.9876 24.9903 15.9876 24.9903Z" fill="white" />
-              </mask>
-              <g mask="url(#mask0_4523_4227)">
-                <path d="M23.9975 35.6306C27.7521 35.6306 30.7958 34.0588 30.7958 32.12C30.7958 30.1811 27.7521 28.6094 23.9975 28.6094C20.2429 28.6094 17.1992 30.1811 17.1992 32.12C17.1992 34.0588 20.2429 35.6306 23.9975 35.6306Z" fill="#8E1112" />
-              </g>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M19.0636 15.3406C18.6874 15.4428 18.3487 15.6517 18.0885 15.9421C17.8283 16.2325 17.6577 16.592 17.5972 16.9771C17.3585 16.668 17.0354 16.4346 16.6669 16.305C16.2985 16.1754 15.9004 16.1552 15.5207 16.2469C15.2856 16.3027 15.0642 16.4055 14.8697 16.5489C14.6752 16.6923 14.5115 16.8734 14.3886 17.0815C14.2657 17.2895 14.186 17.5203 14.1542 17.7598C14.1225 17.9994 14.1394 18.2429 14.2039 18.4758C14.5558 19.8542 16.3361 20.5728 18.8964 22.0979C20.4215 19.5258 21.6357 18.0388 21.2838 16.6575C21.2279 16.4223 21.1252 16.2009 20.9818 16.0064C20.8384 15.8119 20.6572 15.6483 20.4491 15.5253C20.2411 15.4024 20.0104 15.3227 19.7708 15.291C19.5312 15.2592 19.2877 15.2761 19.0548 15.3406H19.0636Z" fill="url(#paint1_linear_4523_4227)" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M28.7521 15.3406C28.5194 15.2761 28.2761 15.2592 28.0367 15.291C27.7973 15.3228 27.5668 15.4025 27.359 15.5255C27.1511 15.6484 26.9702 15.812 26.8271 16.0065C26.684 16.201 26.5816 16.4224 26.5261 16.6574C26.1741 18.0388 27.3883 19.5257 28.9105 22.0978C31.4855 20.5727 33.2657 19.8542 33.6177 18.4758C33.6817 18.2427 33.6982 17.9991 33.666 17.7595C33.6339 17.5199 33.5539 17.2892 33.4308 17.0812C33.3076 16.8732 33.1438 16.6922 32.9492 16.5488C32.7546 16.4054 32.5331 16.3027 32.2979 16.2468C31.9187 16.155 31.521 16.1752 31.153 16.3048C30.7849 16.4344 30.4624 16.6679 30.2244 16.9771C30.1639 16.5919 29.9933 16.2324 29.7331 15.9421C29.4729 15.6517 29.1342 15.4428 28.758 15.3406H28.7521Z" fill="url(#paint2_linear_4523_4227)" />
-              <defs>
-                <linearGradient id="paint0_linear_4523_4227" x1="11.7505" y1="31.0726" x2="36.2514" y2="16.9276" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#EBB34D" />
-                  <stop offset="0.03" stop-color="#ECB64D" />
-                  <stop offset="0.18" stop-color="#EEC04F" />
-                  <stop offset="0.55" stop-color="#F1CC51" />
-                  <stop offset="1" stop-color="#F3D652" />
-                </linearGradient>
-                <linearGradient id="paint1_linear_4523_4227" x1="14.5667" y1="19.8443" x2="21.658" y2="18.0275" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#D2254D" />
-                  <stop offset="1" stop-color="#D65C4E" />
-                </linearGradient>
-                <linearGradient id="paint2_linear_4523_4227" x1="34.6808" y1="21.4478" x2="27.5801" y2="19.6177" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#D2254D" />
-                  <stop offset="1" stop-color="#D65C4E" />
-                </linearGradient>
-              </defs>
-            </svg>`;
-    }
-
-    satisfiedSvg() {
-      return `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#EDEDED" fill-opacity="0.4" />
-              <path d="M24 38C31.732 38 38 31.732 38 24C38 16.268 31.732 10 24 10C16.268 10 10 16.268 10 24C10 31.732 16.268 38 24 38Z" fill="url(#paint0_linear_4523_4209)" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M18.4071 18.0044C19.479 18.0058 20.1859 18.4463 20.6154 18.9291C20.8229 19.1623 20.957 19.395 21.0403 19.5715C21.0822 19.6603 21.1121 19.7368 21.1326 19.7947C21.1428 19.8238 21.1507 19.8484 21.1566 19.8678C21.1596 19.8775 21.1621 19.8859 21.1641 19.893L21.1668 19.9026L21.1678 19.9066L21.1683 19.9084L21.1685 19.9093C21.1687 19.9097 21.1688 19.9101 20.4668 20.0949L21.1688 19.9101C21.2708 20.2977 21.0393 20.6947 20.6516 20.7968C20.2674 20.8979 19.874 20.6714 19.7677 20.29C19.7671 20.288 19.7657 20.2837 19.7635 20.2775C19.7576 20.2607 19.746 20.2303 19.7274 20.191C19.6898 20.1111 19.627 20.0022 19.5307 19.8939C19.3542 19.6954 19.0297 19.4551 18.398 19.4561C18.3901 19.4561 18.3822 19.456 18.3743 19.4558C18.0808 19.4467 17.7917 19.5287 17.5466 19.6905C17.3015 19.8522 17.1125 20.0859 17.0055 20.3594C16.8594 20.7327 16.4384 20.9169 16.0651 20.7708C15.6918 20.6247 15.5075 20.2037 15.6536 19.8304C15.8698 19.2779 16.2517 18.8058 16.7468 18.4789C17.2386 18.1543 17.8182 17.9887 18.4071 18.0044Z" fill="black" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M28.7269 18.004C29.7986 18.0055 30.505 18.446 30.9338 18.9293C31.141 19.1628 31.2747 19.3956 31.3577 19.5722C31.3994 19.6611 31.4292 19.7376 31.4495 19.7956C31.4597 19.8247 31.4676 19.8493 31.4735 19.8687C31.4764 19.8784 31.4789 19.8869 31.4809 19.894L31.4835 19.9036L31.4846 19.9076L31.4851 19.9094L31.4853 19.9102C31.4854 19.9107 31.4855 19.9111 30.7832 20.0945L31.4855 19.9111C31.5868 20.2989 31.3545 20.6955 30.9666 20.7968C30.5823 20.8971 30.1893 20.6699 30.0837 20.2882C30.0831 20.2862 30.0818 20.282 30.0796 20.2758C30.0737 20.259 30.0622 20.2287 30.0438 20.1894C30.0063 20.1097 29.9439 20.0009 29.848 19.8928C29.6724 19.6949 29.3489 19.4547 28.7173 19.4557C28.7091 19.4557 28.7008 19.4556 28.6926 19.4554C28.3988 19.4459 28.1092 19.5277 27.8638 19.6895C27.6183 19.8513 27.429 20.0851 27.3219 20.3589C27.1758 20.7322 26.7548 20.9165 26.3815 20.7704C26.0082 20.6244 25.824 20.2033 25.97 19.83C26.1864 19.2769 26.5689 18.8043 27.0648 18.4774C27.5572 18.1528 28.1375 17.9876 28.7269 18.004Z" fill="black" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M19.8711 26.9844C19.8711 26.4232 20.3217 25.9683 20.8776 25.9683H26.4133C26.9692 25.9683 27.4198 26.4232 27.4198 26.9844C27.4198 27.5457 26.9692 28.0006 26.4133 28.0006H20.8776C20.3217 28.0006 19.8711 27.5457 19.8711 26.9844Z" fill="#35220B" />
-              <defs>
-                <linearGradient id="paint0_linear_4523_4209" x1="11.8727" y1="31.0029" x2="36.1273" y2="17" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#EBB34D" />
-                  <stop offset="0.03" stop-color="#ECB64D" />
-                  <stop offset="0.18" stop-color="#EEC04F" />
-                  <stop offset="0.55" stop-color="#F1CC51" />
-                  <stop offset="1" stop-color="#F3D652" />
-                </linearGradient>
-              </defs>
-            </svg>`;
-    }
-
-    disappointedSvg() {
-      return `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#EDEDED" fill-opacity="0.4" />
-              <path d="M24 38C31.732 38 38 31.732 38 24C38 16.268 31.732 10 24 10C16.268 10 10 16.268 10 24C10 31.732 16.268 38 24 38Z" fill="url(#paint0_linear_4523_4202)" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M31.4907 23.6144C31.8641 23.7603 32.0485 24.1812 31.9027 24.5546C31.6865 25.108 31.3043 25.5809 30.8086 25.9083C30.3162 26.2336 29.7359 26.3995 29.1462 26.3838C28.0736 26.3825 27.3669 25.9407 26.9382 25.4565C26.7311 25.2227 26.5975 24.9894 26.5146 24.8126C26.4729 24.7237 26.4431 24.647 26.4228 24.589C26.4127 24.5599 26.4048 24.5353 26.3989 24.5159C26.396 24.5061 26.3935 24.4977 26.3915 24.4906L26.3889 24.481L26.3878 24.477L26.3874 24.4752L26.3871 24.4743C26.387 24.4739 26.3869 24.4735 27.0893 24.2905L26.3869 24.4735C26.2858 24.0856 26.5183 23.6892 26.9063 23.5881C27.2907 23.4879 27.6836 23.7154 27.7889 24.0972C27.7896 24.0992 27.7909 24.1034 27.7931 24.1097C27.799 24.1266 27.8105 24.1571 27.829 24.1965C27.8666 24.2766 27.929 24.3857 28.025 24.4941C28.2008 24.6927 28.5242 24.9332 29.1553 24.9321C29.1631 24.9321 29.171 24.9322 29.1788 24.9325C29.473 24.9415 29.7628 24.8593 30.0084 24.6971C30.254 24.5348 30.4434 24.3005 30.5505 24.0264C30.6964 23.653 31.1173 23.4685 31.4907 23.6144Z" fill="black" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1727 23.6142C21.5463 23.7597 21.7311 24.1805 21.5855 24.554C21.37 25.1072 20.9884 25.5802 20.4932 25.9077C20.0013 26.2331 19.4213 26.3993 18.8319 26.3838C17.7592 26.3825 17.0525 25.9407 16.6237 25.4565C16.4167 25.2227 16.283 24.9894 16.2001 24.8126C16.1584 24.7237 16.1287 24.647 16.1084 24.589C16.0982 24.5599 16.0903 24.5353 16.0845 24.5159C16.0815 24.5061 16.0791 24.4977 16.0771 24.4906L16.0745 24.481L16.0734 24.477L16.0729 24.4752L16.0727 24.4743C16.0726 24.4739 16.0725 24.4735 16.7748 24.2905L16.0725 24.4735C15.9714 24.0856 16.2039 23.6892 16.5918 23.5881C16.9763 23.4879 17.3691 23.7154 17.4745 24.0972C17.4751 24.0992 17.4765 24.1034 17.4787 24.1097C17.4846 24.1266 17.4961 24.1571 17.5146 24.1965C17.5521 24.2766 17.6146 24.3857 17.7106 24.4941C17.8864 24.6927 18.2098 24.9332 18.8408 24.9321C18.8486 24.9321 18.8563 24.9322 18.8641 24.9325C19.1578 24.9414 19.4471 24.8591 19.6922 24.697C19.9373 24.5349 20.1262 24.3008 20.2329 24.027C20.3784 23.6535 20.7992 23.4686 21.1727 23.6142Z" fill="black" />
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M21.3169 32.3116C21.0712 32.5157 20.7064 32.483 20.5009 32.2379C20.2949 31.9922 20.3271 31.6259 20.5729 31.4199L20.9408 31.8588C20.5729 31.4199 20.5732 31.4197 20.5734 31.4194L20.574 31.4189L20.5754 31.4178L20.5789 31.4149L20.5888 31.4069C20.5966 31.4005 20.607 31.3923 20.62 31.3822C20.6458 31.3622 20.6817 31.3352 20.7273 31.3029C20.8185 31.2383 20.9488 31.1521 21.1152 31.0575C21.4474 30.8688 21.9279 30.6442 22.5306 30.4946C23.7508 30.1916 25.4363 30.2058 27.3451 31.369C27.619 31.5359 27.7057 31.8932 27.5388 32.1671C27.372 32.4409 27.0147 32.5276 26.7408 32.3608C25.1192 31.3726 23.7562 31.3868 22.8105 31.6217C22.3302 31.7409 21.9484 31.9198 21.689 32.0672C21.5596 32.1407 21.4619 32.2058 21.3989 32.2504C21.3674 32.2727 21.3447 32.2898 21.3312 32.3003C21.3245 32.3055 21.3201 32.309 21.318 32.3107C21.3175 32.3111 21.3171 32.3114 21.3169 32.3116Z" fill="#5B0600" />
-              <defs>
-                <linearGradient id="paint0_linear_4523_4202" x1="11.8727" y1="31" x2="36.1273" y2="16.9971" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#EBB34D" />
-                  <stop offset="0.03" stop-color="#ECB64D" />
-                  <stop offset="0.18" stop-color="#EEC04F" />
-                  <stop offset="0.55" stop-color="#F1CC51" />
-                  <stop offset="1" stop-color="#F3D652" />
-                </linearGradient>
-              </defs>
-            </svg>`;
-    }
-  }
-
-  class CustomerEffortSurvery {
-    constructor(locale, requestId, subdomain) {
-      this.locale         = locale;
-      this.subdomain      = subdomain;
-      this.requestId      = requestId;
-      this.svgBuilder     = new SvgBuilder();
-
-      // order is important
-      this.emojisMapping  = {
-        'anger': 1,
-        'disappointed': 2,
-        'satisfied': 3,
-        'happy': 4,
-        'loving': 5
-      };
-    }
-
-    render() {
-      const cesModal = this.build();
-      $('body').append(cesModal);
-
-      $('body').on('click', '.js-customer-effort-survery-emoji-reaction', function(e) {
-        e.preventDefault();
-
-        $('.js-customer-effort-survery-emoji-reaction svg rect.selected-emoji-background').removeClass('selected-emoji-background');
-        $(this).find('svg rect').addClass('selected-emoji-background');
-        $('#submit_ces_survery_btn').prop('disabled', false);
-        $('#selected_emoji').val($(this).data('emoji'));
-      });
-
-      $('body').on('click', 'ces_survery_modal_close_btn', function(e) {
-        e.preventDefault();
-
-        $('#customer_effort_survey_modal').modal('hide').remove();
-      });
-
-      // Show the modal
-      $('#customer_effort_survey_modal').modal('show');
-    }
-
-    build() {
-      const modal         = $('<div>').addClass('modal fade hide')
-                                      .attr('id', 'customer_effort_survey_modal')
-                                      .attr('role', 'modal');
-      const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position customer-effort-survery-dialog-shadow');
-
-      // modal-content
-      const modalContent  = $('<div>').addClass('modal-content');
-
-      //modal-header
-      const modalHeader = $('<div>').addClass('modal-header').append(
-        $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
-                .text(t('customer-effort-survey-title', 'Feedback')),
-        $('<button>').addClass('btn-close')
-                     .attr('id', 'modal_close_btn')
-                     .attr('type', 'button')
-                     .attr('data-bs-dismiss', 'modal')
-                     .attr('aria-label', 'Close')
-                     .click(this.closeModal)
-      );
-
-      //modal-body
-      const modalBody       = $('<div>').addClass('modal-body');
-      const hiddenField     = $('<input>').attr('id',   'selected_emoji')
-                                          .attr('type', 'hidden')
-                                          .attr('name', 'selectedEmoji');
-      modalBody.append(hiddenField);
-
-      // modal-body description
-      const descriptionContainer = $('<div>').addClass('mb-2 mt-0');
-      const modalDescription     = $('<span>').addClass('fw-bold customer-effort-survery-dialog-font-style')
-                                              .text(t('customer-effort-survey-feedback-question', 'How easy was it to submit the request?'));
-      descriptionContainer.append(modalDescription);
-      modalBody.append(descriptionContainer);
-
-      // emojis section
-      const emojisContainer = $('<div>').addClass('d-flex justify-content-between mt-4 px-4');
-      Object.keys(this.emojisMapping).forEach(key => {
-        let emoji = key;
-        let svg   = this.svgBuilder.build(emoji);
-        svg.addClass('js-customer-effort-survery-emoji-reaction')
-           .data('emoji', emoji);
-        emojisContainer.append(svg);
-      });
-
-      // emoji description
-      const emojiDescription = $('<div>').addClass('d-flex justify-content-between mt-2 px-2 emoji-description-font-style');
-      emojiDescription.append(
-        $('<span>').text(t('emoji-description-terrible', 'Terrible')),
-        $('<span>').addClass('emoji-description-okay').text(t('emoji-description-okay', 'Ok')),
-        $('<span>').text(t('emoji-description-great', 'Great'))
-      );
-
-      // comment section
-      const commentContainer  = $('<div>').addClass('comment-container mt-3 customer-effort-survery-dialog-font-style');
-      const commentLabel      = $('<label>').addClass('col-form-label my-2 fw-bold')
-                                            .attr('for', 'comment')
-                                            .text(t('optional-comment', 'Write your comment (Optional)'));
-      const commentTextarea   = $('<textarea>').addClass('form-control comment-section')
-                                               .attr('id', 'comment')
-                                               .attr('rows', '4')
-                                               .attr('maxlength', CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH)
-                                               .attr('placeholder', t('experience-description', 'Describe your experience here'));
-      commentContainer.append(commentLabel, commentTextarea);
-
-      // modal-footer
-      const modalFooter = $('<div>').addClass('modal-footer border-top-0');
-      const submitBtn   = $('<button>').addClass('btn btn-primary mt-0 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
-                                       .attr('id', 'submit_ces_survery_btn')
-                                       .attr('disabled', 'disabled')
-                                       .text(t('send-feedback', 'Send Feedback'));
-
-      // Assign submit logic to submit button
-      submitBtn.click(this.submitFeedback);
-      modalFooter.append(submitBtn);
-
-      // Assemble modal content
-      modalBody.append(emojisContainer, emojiDescription, commentContainer);
-      modalContent.append(modalHeader, modalBody, modalFooter);
-      modalDialog.append(modalContent);
-      modal.append(modalDialog);
-
-      return modal;
-    }
-
-    // Function to handle form submission
-    submitFeedback = () => {
-      const self        = this;
-      const score       = this.emojisMapping[$('#selected_emoji').val()];
-      const comment     = $('#comment').val();
-      const headers     = {};
-      const queryParams = {
-        score:      score || 0,
-        comment:    comment,
-        ticket_id:  this.requestId,
-      };
-
-      $('#submit_ces_survery_btn').prop('disabled', true).text(t('please-wait', 'Please Wait...'));
-
-      this.withToken(token => {
-        headers['Authorization'] = 'Bearer ' + token;
-        headers['ngrok-skip-browser-warning'] = true;
-
-        $.ajax({
-          url:      `https://${this.subdomain}/customer_effort_scores.json`,
-          data:     queryParams,
-          method:   'POST',
-          headers:  headers,
-          success:  function(response) {
-            self.closeModal();
-          },
-          error: function(xhr, status, error) {
-            console.error('Request error:', error);
-          }
-        });
-      });
-    }
-
-    closeModal = () => {
-      $('#customer_effort_survey_modal').modal('hide').remove();
-    }
-
-    withToken(callback) {
-      return $.getJSON('/hc/api/v2/integration/token').then(data => {
-        return callback(data.token);
-      })
-    }
-  }
-
   class RequestForm {
-    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
-      this.locale                 = locale;
+    constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
       this.ezoFieldId             = ezoFieldId;
       this.ezoSubdomain           = ezoSubdomain;
       this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
     }
 
     updateRequestForm() {
-      const files = this.filesToLoad();
-      loadExternalFiles(files, () => {
-        this.updateForm();
-      });
-    }
-
-    updateForm() {
       const self        = this;
       const requestId   = this.extractRequestId();
       const requestUrl  = '/api/v2/requests/' + requestId;
@@ -576,23 +250,22 @@
 
             if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
-            if (ezoFieldDataPresent) {
-              const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-              const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
-              const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
+            const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
+            const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
+            const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
-              if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
+            if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
-              if (parsedEzoFieldValue.linked != 'true') {
-                self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
-              }
+            if (parsedEzoFieldValue.linked != 'true') {
 
-              if (assetNames) {
-                self.addEZOContainer();
-                assetNames.map(name => {
-                  self.showLinkedAsset(name);
-                });
-              }
+              self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
+            }
+
+            if (assetNames) {
+              self.addEZOContainer();
+              assetNames.map(name => {
+                self.showLinkedAsset(name);
+              });
             }
           }
         });
@@ -620,7 +293,6 @@
     }
 
     linkResources(requestId, options) {
-      const self               = this;
       const assetsFieldId      = options.ezoFieldId;
       const serviceItemFieldId = options.serviceItemFieldId;
 
@@ -634,18 +306,10 @@
       const headers = options.headers || {};
 
       $.ajax({
-        url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
-        type:     'POST',
+        url:     'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
+        type:    'POST',
         data:     { 'ticket': queryParams },
-        headers:  headers,
-        success: function(response) {
-          if (response['show_ces_survey']) {
-            new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('Request error:', error);
-        }
+        headers:  headers
       });
     }
 
@@ -692,13 +356,6 @@
 
     fieldDataPresent(fieldData) {
      return fieldData && fieldData.value
-    }
-
-    filesToLoad() {
-      return  [
-                { type: 'link'  , url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/customer_effort_survey.css` },
-                { type: 'script', url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js' },
-              ];
     }
   }
 
@@ -1179,7 +836,7 @@
     }
 
     buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-      const card                 = $('<div>').addClass('row service-item-card h-100');
+      const card                 = $('<div>').addClass('row service-item-card');
       const queryParams          = {};
       const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
@@ -1226,7 +883,7 @@
       const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
       const submitRequestBtn = $('<a>').attr('href', url)
                                        .attr('data-i18n', 'report-issue')
-                                       .text('Report Issue ')
+                                       .text('Report Issue')
                                        .addClass('float-end footer-text');
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
       cardFooter.append(submitRequestBtn);
@@ -1265,7 +922,7 @@
       cardImageContainer.append(cardImageFlex);
 
       // Create the card body
-      const cardBody = $('<div>').addClass('col-8 card-body service-item-card-body');
+      const cardBody = $('<div>').addClass('col-8 card-body');
 
       // card title
       const itemName   = displayFields.title.value;
@@ -1282,7 +939,7 @@
       //card footer (price and arrow)
       const cardFooter = $('<div>').addClass('card-footer w-100');
 
-      if (displayFields.cost_price.value > 0) {
+      if (displayFields.cost_price) {
         const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
         cardFooter.append(price);
       }
@@ -1778,7 +1435,7 @@
       } else if (isNewRequestPage()) {
         new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else if (isRequestPage()) {
-        new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+        new RequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else ;
     }
 
@@ -1793,7 +1450,7 @@
     filesToLoad() {
       return [
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
-                { type: 'link',   url: `https://mehboobali98.github.io/service-catalog/dist/public/service_catalog.css?${this.timeStamp}`},
+                { type: 'link',   url: `${PRODUCTION_CDN_URL$1}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
