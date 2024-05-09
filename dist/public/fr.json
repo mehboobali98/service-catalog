@@ -74,5 +74,14 @@
   "payment-frequency": "Féquence Paiement",
   "my-assigned-assets": "Mes actifs",
   "my-assigned-assets-description": "Pour chaque utilisateur final, cette catégorie contient les équipements et les licences logiciels dont il dispose pour faciliter la visibilité et l'assistance.",
-  "service-item-details": "Détails"
+  "service-item-details": "Détails",
+  "customer-effort-survey-title": "Retour d'information",
+  "customer-effort-survey-feedback-question": "À quel point était-il facile de soumettre la demande?",
+  "emoji-description-okay": "Ok",
+  "emoji-description-terrible": "Terrible",
+  "emoji-description-great": "Génial",
+  "optional-comment": "Écrivez votre commentaire (Optionnel)",
+  "experience-description": "Décrivez votre expérience ici",
+  "send-feedback": "Envoyer un retour d'information",
+  "please-wait": "S'il vous plaît, attendez..."
 }
