@@ -5,7 +5,7 @@ import {
 
 function serviceCatalogDisabled(ezoSubdomain) {
   const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
-  const noAccessImage                   = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/no_access_image.svg`)
+  const noAccessImage                   = $('<img>').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/no_access_image.svg`)
                                                     .addClass('no-access-image');
 
   const nextStepsMessage                = $('<p>').attr('data-i18n', 'enable-service-catalog')
@@ -27,7 +27,7 @@ function serviceCatalogDisabled(ezoSubdomain) {
 
 function serviceCatalogEmpty(ezoSubdomain) {
   const serviceCatalogEmptyContainer    = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-empty-container');
-  const serviceCategoryImage            = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_category.svg`)
+  const serviceCategoryImage            = $('<img>').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/service_category.svg`)
                                                     .addClass('no-access-image');
 
   const nextStepsMessage                = $('<p>').attr('data-i18n', 'create-and-enable-service-categories')
@@ -50,7 +50,7 @@ function serviceCatalogEmpty(ezoSubdomain) {
 function noResultsFound() {
   const noResultsContainer  = $('<div>').attr('id', 'no_results_container')
                                         .addClass('d-flex flex-column align-items-center no-results-container');
-  const noResultsImage      = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/no_results_found.svg`)
+  const noResultsImage      = $('<img>').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/no_results_found.svg`)
                                         .addClass('no-results-image');
 
   const noResultsLabel      = $('<p>').attr('data-i18n', 'no-results-found')
@@ -64,7 +64,7 @@ function noResultsFound() {
 function noServiceItems(notFoundMessageKey) {
   const noResultsContainer  = $('<div>').attr('id', 'no_service_items_found_container')
                                        .addClass('d-flex flex-column align-items-center no-results-container');
-  const noResultsImage      = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_asset.svg`)
+  const noResultsImage      = $('<img>').attr('src', `https://mehboobali98.github.io/service-catalog/dist/public/service_asset.svg`)
                                         .addClass('no-results-image');
 
   const noResultsLabel      = $('<p>').attr('data-i18n', notFoundMessageKey)
