@@ -105,7 +105,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-    const card                 = $('<div>').addClass('row service-item-card');
+    const card                 = $('<div>').addClass('row service-item-card h-100');
     const queryParams          = {};
     const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
@@ -152,7 +152,7 @@ class ServiceCatalogItemBuilder {
     const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .attr('data-i18n', 'report-issue')
-                                     .text('Report Issue')
+                                     .text('Report Issue ')
                                      .addClass('float-end footer-text');
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
     cardFooter.append(submitRequestBtn);
@@ -191,7 +191,7 @@ class ServiceCatalogItemBuilder {
     cardImageContainer.append(cardImageFlex);
 
     // Create the card body
-    const cardBody = $('<div>').addClass('col-8 card-body');
+    const cardBody = $('<div>').addClass('col-8 card-body service-item-card-body');
 
     // card title
     const itemName   = displayFields.title.value;
@@ -208,7 +208,7 @@ class ServiceCatalogItemBuilder {
     //card footer (price and arrow)
     const cardFooter = $('<div>').addClass('card-footer w-100');
 
-    if (displayFields.cost_price) {
+    if (displayFields.cost_price.value > 0) {
       const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
       cardFooter.append(price);
     }

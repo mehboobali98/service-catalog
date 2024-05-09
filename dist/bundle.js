@@ -436,7 +436,7 @@
       modalBody.append(hiddenField);
 
       // modal-body description
-      const descriptionContainer = $('<div>').addClass('my-2');
+      const descriptionContainer = $('<div>').addClass('mb-2 mt-0');
       const modalDescription     = $('<span>').addClass('fw-bold customer-effort-survery-dialog-font-style')
                                               .text(t('customer-effort-survey-feedback-question', 'How easy was it to submit the request?'));
       descriptionContainer.append(modalDescription);
@@ -474,7 +474,7 @@
 
       // modal-footer
       const modalFooter = $('<div>').addClass('modal-footer border-top-0');
-      const submitBtn   = $('<button>').addClass('btn btn-primary mt-2 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
+      const submitBtn   = $('<button>').addClass('btn btn-primary mt-0 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
                                        .attr('id', 'submit_ces_survery_btn')
                                        .attr('disabled', 'disabled')
                                        .text(t('send-feedback', 'Send Feedback'));
@@ -504,7 +504,7 @@
         ticket_id:  this.requestId,
       };
 
-      $('#submit_ces_survery_btn').prop('disabled', true).text('Please Wait...');
+      $('#submit_ces_survery_btn').prop('disabled', true).text(t('please-wait', 'Please Wait...'));
 
       this.withToken(token => {
         headers['Authorization'] = 'Bearer ' + token;
@@ -576,21 +576,23 @@
 
             if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
-            const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-            const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
-            const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
+            if (ezoFieldDataPresent) {
+              const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
+              const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
+              const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
-            if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
+              if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
-            if (parsedEzoFieldValue.linked != 'true') {
-              self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
-            }
+              if (parsedEzoFieldValue.linked != 'true') {
+                self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
+              }
 
-            if (assetNames) {
-              self.addEZOContainer();
-              assetNames.map(name => {
-                self.showLinkedAsset(name);
-              });
+              if (assetNames) {
+                self.addEZOContainer();
+                assetNames.map(name => {
+                  self.showLinkedAsset(name);
+                });
+              }
             }
           }
         });
@@ -1177,7 +1179,7 @@
     }
 
     buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-      const card                 = $('<div>').addClass('row service-item-card');
+      const card                 = $('<div>').addClass('row service-item-card h-100');
       const queryParams          = {};
       const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
@@ -1224,7 +1226,7 @@
       const cardFooter       = $('<div>').addClass('it-asset-card-footer w-100');
       const submitRequestBtn = $('<a>').attr('href', url)
                                        .attr('data-i18n', 'report-issue')
-                                       .text('Report Issue')
+                                       .text('Report Issue ')
                                        .addClass('float-end footer-text');
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
       cardFooter.append(submitRequestBtn);
@@ -1263,7 +1265,7 @@
       cardImageContainer.append(cardImageFlex);
 
       // Create the card body
-      const cardBody = $('<div>').addClass('col-8 card-body');
+      const cardBody = $('<div>').addClass('col-8 card-body service-item-card-body');
 
       // card title
       const itemName   = displayFields.title.value;
@@ -1280,7 +1282,7 @@
       //card footer (price and arrow)
       const cardFooter = $('<div>').addClass('card-footer w-100');
 
-      if (displayFields.cost_price) {
+      if (displayFields.cost_price.value > 0) {
         const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
         cardFooter.append(price);
       }
