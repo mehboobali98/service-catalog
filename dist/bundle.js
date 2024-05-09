@@ -1264,7 +1264,7 @@
       cardImageContainer.append(cardImageFlex);
 
       // Create the card body
-      const cardBody = $('<div>').addClass('col-8 card-body');
+      const cardBody = $('<div>').addClass('col-8 card-body service-item-card-body');
 
       // card title
       const itemName   = displayFields.title.value;
