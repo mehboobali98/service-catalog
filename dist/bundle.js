@@ -951,13 +951,13 @@
     return noResultsContainer;
   }
 
-  function noServiceItems(notFoundMessageKey) {
+  function noServiceItems(notFoundMessage) {
     const noResultsContainer  = $('<div>').attr('id', 'no_service_items_found_container')
                                          .addClass('d-flex flex-column align-items-center no-results-container');
     const noResultsImage      = $('<img>').attr('src', `${STAGING_CDN_URL}/shared/service_catalog/dist/public/service_asset.svg`)
                                           .addClass('no-results-image');
 
-    const noResultsLabel      = $('<p>').attr('data-i18n', notFoundMessageKey)
+    const noResultsLabel      = $('<p>').attr('data-i18n', 'no-assigned-items')
                                         .text(notFoundMessage)
                                         .addClass('no-results-message');
 
@@ -1160,7 +1160,7 @@
       } else {
         if (isMyAssignedAssets(serviceCategory)) {
           // render empty screen
-          serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
+          serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
         }
       }
 

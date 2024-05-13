@@ -16,7 +16,7 @@
   "service-catalog": "Service Catalog",
   "go-to-assetsonar": "Go to AssetSonar",
   "no-results-found": "No Results Found",
-  "no-assigned-items": "",
+  "no-assigned-items": "There are no assigned assets for you in the system.",
   "unauthorized-label": "You do not have permission to access this page!",
   "enable-service-catalog": "Please enable Service Catalog Builder in Asset Sonar to start using Service Catalog.",
   "no-attributes-configured": "No attributes configured",

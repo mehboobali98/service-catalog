@@ -86,7 +86,7 @@ class ServiceCatalogItemBuilder {
     } else {
       if (isMyAssignedAssets(serviceCategory)) {
         // render empty screen
-        serviceCategoryItemsFlexContainer.append(noServiceItems('There are no assigned items for you in the system.'));
+        serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
       }
     }
 
