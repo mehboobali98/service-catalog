@@ -61,14 +61,13 @@ function noResultsFound() {
   return noResultsContainer;
 }
 
-function noServiceItems(notFoundMessageKey) {
+function noServiceItems(notFoundMessage) {
   const noResultsContainer  = $('<div>').attr('id', 'no_service_items_found_container')
-                                       .addClass('d-flex flex-column align-items-center no-results-container');
+                                        .addClass('d-flex flex-column align-items-center no-results-container');
   const noResultsImage      = $('<img>').attr('src', `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_asset.svg`)
                                         .addClass('no-results-image');
 
-  const noResultsLabel      = $('<p>').attr('data-i18n', notFoundMessageKey)
-                                      .text(notFoundMessage)
+  const noResultsLabel      = $('<p>').text(notFoundMessage)
                                       .addClass('no-results-message');
 
   noResultsContainer.append(noResultsImage, noResultsLabel);
