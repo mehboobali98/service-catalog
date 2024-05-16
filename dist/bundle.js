@@ -1015,7 +1015,7 @@
       const detailPageHeader  = $('<div>').addClass('d-flex justify-content-between');
       const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
                                                       .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-weight': '600', 'font-size': '16px' }));
-      if (displayFields.cost_price) {
+      if (displayFields.cost_price.value > 0) {
         headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
       }
