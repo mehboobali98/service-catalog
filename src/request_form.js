@@ -1,5 +1,6 @@
-import { loadExternalFiles }      from './utility.js';
-import { CustomerEffortSurvery }  from './customer_effort_survey.js';
+import { loadExternalFiles }                    from './utility.js';
+import { CustomerEffortSurvery }                from './customer_effort_survey.js';
+import { STAGING_CDN_URL, PRODUCTION_CDN_URL }  from './constant.js';
 
 class RequestForm {
   constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
