@@ -130,12 +130,15 @@
     }
 
     filesToLoad.forEach((file) => {
-      loadFile(file.url, file.type, onFileLoaded);
+      loadFile(file, onFileLoaded);
     });
   }
 
-  function loadFile(url, fileType, callback) {
-    const element = document.createElement(fileType);
+  function loadFile(file, callback) {
+    const url        = file.url;
+    const fileType   = file.type;
+    const element    = document.createElement(fileType);
+    const placement  = file.placement || 'append';
 
     if (fileType === 'link') {
       element.rel   = 'stylesheet';
@@ -147,7 +150,11 @@
       element.onload  = callback; // Execute the callback when the script is loaded
     }
 
-    document.head.appendChild(element);
+    if (placement == 'append') {
+      document.head.appendChild(element);
+    } else if (placement == 'prepend') {
+      document.head.insertBefore(element, document.head.firstChild);
+    }
   }
 
   function serviceCatalogDataPresent(data) {
@@ -703,7 +710,8 @@
   }
 
   class NewRequestForm {
-    constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+      this.locale                 = locale;
       this.ezoFieldId             = ezoFieldId;
       this.ezoSubdomain           = ezoSubdomain;
       this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
@@ -825,12 +833,36 @@
     }
 
     prepareSubject(searchParams) {
-      const itemName        = searchParams.get('item_name');
-      const serviceCategory = searchParams.get('service_category');
+      const itemName            = searchParams.get('item_name');
+      const serviceCategory     = searchParams.get('service_category');
+      const subjectPlaceholder  = searchParams.get('subject-placeholder');
 
       if (itemName == null || serviceCategory == null) { return null; }
 
-      return `${t('report-issue', 'Report Issue')} on ${serviceCategory} - ${itemName}`;
+      let serviceCategoryLabel    = serviceCategory;
+      let subjectPlaceholderLabel = subjectPlaceholder;
+
+      if (this.locale == 'en') {
+        if (serviceCategory === 'Mes actifs') {
+          serviceCategoryLabel = 'My Assigned Assets';
+        }
+        if (subjectPlaceholder === 'Signaler un problème') {
+          subjectPlaceholderLabel = 'Report Issue';
+        } else if (subjectPlaceholder === 'Demander un service') {
+          subjectPlaceholderLabel = 'Request Service';
+        }
+      } else if(this.locale == 'fr') {
+        if (serviceCategory === 'My Assigned Assets') {
+          serviceCategoryLabel = 'Mes actifs';
+        }
+        if (subjectPlaceholder === 'Report Issue') {
+          subjectPlaceholderLabel = 'Signaler un problème';
+        } else if (subjectPlaceholder === 'Request Service') {
+          subjectPlaceholderLabel = 'Demander un service';
+        }
+      }
+
+      return `${subjectPlaceholderLabel} on ${serviceCategoryLabel} - ${itemName}`;
     }
 
     prepareServiceItemFieldValue(searchParams) {
@@ -1020,10 +1052,11 @@
                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
       }
 
-      queryParams['item_name']        = displayFields.title.value;
-      queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
-      queryParams['service_item_id']  = serviceCategoryItem.id;
-      queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
+      queryParams['item_name']            = displayFields.title.value;
+      queryParams['ticket_form_id']       = serviceCategoryItem.zendesk_form_id;
+      queryParams['service_item_id']      = serviceCategoryItem.id;
+      queryParams['service_category']     = this.serviceCategoriesItems[serviceCategory].title;
+      queryParams['subject-placeholder']  = t('request-service', 'Request Service');
       const url = `/hc/requests/new?${$.param(queryParams)}`;
 
       const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
@@ -1215,10 +1248,11 @@
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);
 
-      queryParams['item_id']          = serviceCategoryItem.sequence_num;
-      queryParams['item_name']        = assetName;
-      queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-      queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
+      queryParams['item_id']              = serviceCategoryItem.sequence_num;
+      queryParams['item_name']            = assetName;
+      queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
+      queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
+      queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
 
       // Card footer
       const url              = `/hc/requests/new?${$.param(queryParams)}`;
@@ -1775,7 +1809,7 @@
       if (isServiceCatalogPage()) {
         this.handleServiceCatalogRequest();
       } else if (isNewRequestPage()) {
-        new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+        new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else if (isRequestPage()) {
         new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else ;
@@ -1791,7 +1825,7 @@
 
     filesToLoad() {
       return [
-                { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
+                { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', placement: 'prepend' },
                 { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];

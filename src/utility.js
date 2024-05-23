@@ -40,12 +40,15 @@ function loadExternalFiles(filesToLoad, callback) {
   }
 
   filesToLoad.forEach((file) => {
-    loadFile(file.url, file.type, onFileLoaded);
+    loadFile(file, onFileLoaded);
   });
 }
 
-function loadFile(url, fileType, callback) {
-  const element = document.createElement(fileType);
+function loadFile(file, callback) {
+  const url        = file.url;
+  const fileType   = file.type;
+  const element    = document.createElement(fileType);
+  const placement  = file.placement || 'append';
 
   if (fileType === 'link') {
     element.rel   = 'stylesheet';
@@ -57,7 +60,11 @@ function loadFile(url, fileType, callback) {
     element.onload  = callback; // Execute the callback when the script is loaded
   }
 
-  document.head.appendChild(element);
+  if (placement == 'append') {
+    document.head.appendChild(element);
+  } else if (placement == 'prepend') {
+    document.head.insertBefore(element, document.head.firstChild);
+  }
 }
 
 function serviceCatalogDataPresent(data) {

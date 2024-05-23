@@ -56,7 +56,7 @@ class ServiceCatalogManager {
     if (isServiceCatalogPage()) {
       this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
-      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+      new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else if (isRequestPage()) {
       new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else {
@@ -74,7 +74,7 @@ class ServiceCatalogManager {
 
   filesToLoad() {
     return [
-              { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
+              { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', placement: 'prepend' },
               { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
               { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
            ];

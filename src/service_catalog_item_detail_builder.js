@@ -1,4 +1,9 @@
 import {
+  t,
+  generateI18nKey
+} from './i18n.js';
+
+import {
   isMyAssignedAssets,
   placeholderImagePath
 } from './utility.js';
@@ -59,10 +64,11 @@ class ServiceCatalogItemDetailBuilder {
                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
     }
 
-    queryParams['item_name']        = displayFields.title.value;
-    queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
-    queryParams['service_item_id']  = serviceCategoryItem.id;
-    queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
+    queryParams['item_name']            = displayFields.title.value;
+    queryParams['ticket_form_id']       = serviceCategoryItem.zendesk_form_id;
+    queryParams['service_item_id']      = serviceCategoryItem.id;
+    queryParams['service_category']     = this.serviceCategoriesItems[serviceCategory].title;
+    queryParams['subject-placeholder']  = t('request-service', 'Request Service');
     const url = `/hc/requests/new?${$.param(queryParams)}`;
 
     const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
