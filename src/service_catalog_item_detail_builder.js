@@ -1,4 +1,9 @@
 import {
+  t,
+  generateI18nKey
+} from './i18n.js';
+
+import {
   isMyAssignedAssets,
   placeholderImagePath
 } from './utility.js';
