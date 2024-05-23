@@ -73,7 +73,7 @@ function generateI18nKey(columnLabel) {
   }
 }
 
-function t(key, locale, defaultString) {
+function t(key, defaultString) {
   const translation = TRANSLATIONS[key];
   if (translation !== undefined) {
     return translation;
