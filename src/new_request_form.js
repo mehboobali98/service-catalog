@@ -131,8 +131,8 @@ class NewRequestForm {
 
     if (itemName == null || serviceCategory == null) { return null; }
 
-    const serviceCategoryLabel    = null;
-    const subjectPlaceholderLabel = null;
+    const serviceCategoryLabel    = serviceCategory;
+    const subjectPlaceholderLabel = subjectPlaceholder;
 
     debugger;
 
