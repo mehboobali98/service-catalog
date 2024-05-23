@@ -46,7 +46,7 @@ function loadExternalFiles(filesToLoad, callback) {
 
 function loadFile(file, callback) {
   const url        = file.url;
-  const type       = file.type;
+  const fileType   = file.type;
   const element    = document.createElement(fileType);
   const placement  = file.placement || 'append';
 
