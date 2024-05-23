@@ -839,10 +839,8 @@
 
       if (itemName == null || serviceCategory == null) { return null; }
 
-      const serviceCategoryLabel    = serviceCategory;
-      const subjectPlaceholderLabel = subjectPlaceholder;
-
-      debugger;
+      let serviceCategoryLabel    = serviceCategory;
+      let subjectPlaceholderLabel = subjectPlaceholder;
 
       if (this.locale == 'en') {
         if (serviceCategory === 'Mes actifs') {
