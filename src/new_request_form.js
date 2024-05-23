@@ -1,4 +1,3 @@
-import { t }                  from './i18n.js';
 import { loadExternalFiles }  from './utility.js';
 
 class NewRequestForm {
@@ -124,12 +123,13 @@ class NewRequestForm {
   }
 
   prepareSubject(searchParams) {
-    const itemName        = searchParams.get('item_name');
-    const serviceCategory = searchParams.get('service_category');
+    const itemName            = searchParams.get('item_name');
+    const serviceCategory     = searchParams.get('service_category');
+    const subjectPlaceholder  = searchParams.get('subject-placeholder');
 
     if (itemName == null || serviceCategory == null) { return null; }
 
-    return `${t('report-issue', 'Report Issue')} on ${serviceCategory} - ${itemName}`;
+    return `${subjectPlaceholder} on ${serviceCategory} - ${itemName}`;
   }
 
   prepareServiceItemFieldValue(searchParams) {

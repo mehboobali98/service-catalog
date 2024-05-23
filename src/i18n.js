@@ -8,11 +8,9 @@ import {
 function setLocale(newLocale, shouldTranslatePage) {
   if (Object.keys(TRANSLATIONS).length !== 0 && shouldTranslatePage) { return translatePage(); }
 
-  debugger;
   fetchTranslationsFor(newLocale)
     .done(function(newTranslations) {
       $.extend(TRANSLATIONS, newTranslations);
-      debugger;
       if (shouldTranslatePage) { return translatePage(); }
     })
     .fail(function() {
@@ -75,9 +73,8 @@ function generateI18nKey(columnLabel) {
   }
 }
 
-function t(key, defaultString) {
+function t(key, locale, defaultString) {
   const translation = TRANSLATIONS[key];
-  debugger;
   if (translation !== undefined) {
     return translation;
   } else {

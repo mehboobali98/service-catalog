@@ -20,11 +20,9 @@
   function setLocale(newLocale, shouldTranslatePage) {
     if (Object.keys(TRANSLATIONS).length !== 0 && shouldTranslatePage) { return translatePage(); }
 
-    debugger;
     fetchTranslationsFor(newLocale)
       .done(function(newTranslations) {
         $.extend(TRANSLATIONS, newTranslations);
-        debugger;
         if (shouldTranslatePage) { return translatePage(); }
       })
       .fail(function() {
@@ -87,9 +85,8 @@
     }
   }
 
-  function t(key, defaultString) {
+  function t$1(key, locale, defaultString) {
     const translation = TRANSLATIONS[key];
-    debugger;
     if (translation !== undefined) {
       return translation;
     } else {
@@ -429,7 +426,7 @@
       //modal-header
       const modalHeader = $('<div>').addClass('modal-header').append(
         $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
-                .text(t('customer-effort-survey-title', 'Feedback')),
+                .text(t$1('customer-effort-survey-title')),
         $('<button>').addClass('btn-close')
                      .attr('id', 'modal_close_btn')
                      .attr('type', 'button')
@@ -448,7 +445,7 @@
       // modal-body description
       const descriptionContainer = $('<div>').addClass('mb-2 mt-0');
       const modalDescription     = $('<span>').addClass('fw-bold customer-effort-survery-dialog-font-style')
-                                              .text(t('customer-effort-survey-feedback-question', 'How easy was it to submit the request?'));
+                                              .text(t$1('customer-effort-survey-feedback-question'));
       descriptionContainer.append(modalDescription);
       modalBody.append(descriptionContainer);
 
@@ -465,21 +462,21 @@
       // emoji description
       const emojiDescription = $('<div>').addClass('d-flex justify-content-between mt-2 px-2 emoji-description-font-style');
       emojiDescription.append(
-        $('<span>').text(t('emoji-description-terrible', 'Terrible')),
-        $('<span>').addClass('emoji-description-okay').text(t('emoji-description-okay', 'Ok')),
-        $('<span>').text(t('emoji-description-great', 'Great'))
+        $('<span>').text(t$1('emoji-description-terrible')),
+        $('<span>').addClass('emoji-description-okay').text(t$1('emoji-description-okay')),
+        $('<span>').text(t$1('emoji-description-great'))
       );
 
       // comment section
       const commentContainer  = $('<div>').addClass('comment-container mt-3 customer-effort-survery-dialog-font-style');
       const commentLabel      = $('<label>').addClass('col-form-label my-2 fw-bold')
                                             .attr('for', 'comment')
-                                            .text(t('optional-comment', 'Write your comment (Optional)'));
+                                            .text(t$1('optional-comment'));
       const commentTextarea   = $('<textarea>').addClass('form-control comment-section')
                                                .attr('id', 'comment')
                                                .attr('rows', '4')
                                                .attr('maxlength', CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH)
-                                               .attr('placeholder', t('experience-description', 'Describe your experience here'));
+                                               .attr('placeholder', t$1('experience-description'));
       commentContainer.append(commentLabel, commentTextarea);
 
       // modal-footer
@@ -487,7 +484,7 @@
       const submitBtn   = $('<button>').addClass('btn btn-primary mt-0 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
                                        .attr('id', 'submit_ces_survery_btn')
                                        .attr('disabled', 'disabled')
-                                       .text(t('send-feedback', 'Send Feedback'));
+                                       .text(t$1('send-feedback'));
 
       // Assign submit logic to submit button
       submitBtn.click(this.submitFeedback);
@@ -514,7 +511,7 @@
         ticket_id:  this.requestId,
       };
 
-      $('#submit_ces_survery_btn').prop('disabled', true).text(t('please-wait', 'Please Wait...'));
+      $('#submit_ces_survery_btn').prop('disabled', true).text(t$1('please-wait'));
 
       this.withToken(token => {
         headers['Authorization'] = 'Bearer ' + token;
@@ -835,12 +832,13 @@
     }
 
     prepareSubject(searchParams) {
-      const itemName        = searchParams.get('item_name');
-      const serviceCategory = searchParams.get('service_category');
+      const itemName            = searchParams.get('item_name');
+      const serviceCategory     = searchParams.get('service_category');
+      const subjectPlaceholder  = searchParams.get('subject-placeholder');
 
       if (itemName == null || serviceCategory == null) { return null; }
 
-      return `${t('report-issue', 'Report Issue')} on ${serviceCategory} - ${itemName}`;
+      return `${subjectPlaceholder} on ${serviceCategory} - ${itemName}`;
     }
 
     prepareServiceItemFieldValue(searchParams) {
@@ -1030,10 +1028,11 @@
                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
       }
 
-      queryParams['item_name']        = displayFields.title.value;
-      queryParams['ticket_form_id']   = serviceCategoryItem.zendesk_form_id;
-      queryParams['service_item_id']  = serviceCategoryItem.id;
-      queryParams['service_category'] = this.serviceCategoriesItems[serviceCategory].title;
+      queryParams['item_name']            = displayFields.title.value;
+      queryParams['ticket_form_id']       = serviceCategoryItem.zendesk_form_id;
+      queryParams['service_item_id']      = serviceCategoryItem.id;
+      queryParams['service_category']     = this.serviceCategoriesItems[serviceCategory].title;
+      queryParams['subject-placeholder']  = t('request-service', 'Request Service');
       const url = `/hc/requests/new?${$.param(queryParams)}`;
 
       const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
@@ -1169,7 +1168,7 @@
       } else {
         if (isMyAssignedAssets(serviceCategory)) {
           // render empty screen
-          serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
+          serviceCategoryItemsFlexContainer.append(noServiceItems(t$1('no-assigned-items')));
         }
       }
 
@@ -1225,10 +1224,11 @@
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);
 
-      queryParams['item_id']          = serviceCategoryItem.sequence_num;
-      queryParams['item_name']        = assetName;
-      queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-      queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
+      queryParams['item_id']              = serviceCategoryItem.sequence_num;
+      queryParams['item_name']            = assetName;
+      queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
+      queryParams['service_category']     = t$1(generateI18nKey(serviceCategoryTitle));
+      queryParams['subject-placeholder']  = t$1('report-issue');
 
       // Card footer
       const url              = `/hc/requests/new?${$.param(queryParams)}`;

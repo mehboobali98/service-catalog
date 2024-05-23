@@ -142,10 +142,11 @@ class ServiceCatalogItemBuilder {
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
-    queryParams['item_id']          = serviceCategoryItem.sequence_num;
-    queryParams['item_name']        = assetName;
-    queryParams['ticket_form_id']   = this.zendeskFormId(serviceCategoryItem);
-    queryParams['service_category'] = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
+    queryParams['item_id']              = serviceCategoryItem.sequence_num;
+    queryParams['item_name']            = assetName;
+    queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
+    queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
+    queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
 
     // Card footer
     const url              = `/hc/requests/new?${$.param(queryParams)}`;
