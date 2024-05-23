@@ -44,8 +44,11 @@ function loadExternalFiles(filesToLoad, callback) {
   });
 }
 
-function loadFile(url, fileType, callback) {
-  const element = document.createElement(fileType);
+function loadFile(file, callback) {
+  const url        = file.url;
+  const type       = file.type;
+  const element    = document.createElement(fileType);
+  const placement  = file.position || 'append';
 
   if (fileType === 'link') {
     element.rel   = 'stylesheet';
@@ -57,7 +60,11 @@ function loadFile(url, fileType, callback) {
     element.onload  = callback; // Execute the callback when the script is loaded
   }
 
-  document.head.appendChild(element);
+  if (placement == 'append') {
+    document.head.appendChild(element);
+  } else if (placement == 'prepend') {
+    document.head.insertBefore(element, document.head.firstChild);
+  }
 }
 
 function serviceCatalogDataPresent(data) {
@@ -101,7 +108,7 @@ function placeholderImagePath(serviceItem) {
   } else {
     imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
   }
-  return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${imageName}.svg`;
+  return `https://mehboobali98.github.io/service-catalog/dist/public/${imageName}.svg`;
 }
 
 function getCssVariableValue(variable) {

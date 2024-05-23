@@ -32,7 +32,7 @@
 
   // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${newLocale}.json`);
+    return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/${newLocale}.json`);
   }
 
   // Replace the inner text of each element that has a
@@ -118,24 +118,17 @@
   }
 
   function loadExternalFiles(filesToLoad, callback) {
-    let loadedFiles = 0;
-
-    function onFileLoaded() {
-      loadedFiles++;
-
-      if (loadedFiles === filesToLoad.filter(file => file.type === 'script').length) {
-        // All files are loaded; execute the callback
-        callback();
-      }
-    }
 
     filesToLoad.forEach((file) => {
-      loadFile(file.url, file.type, onFileLoaded);
+      loadFile(file.url, file.type);
     });
   }
 
-  function loadFile(url, fileType, callback) {
-    const element = document.createElement(fileType);
+  function loadFile(file, callback) {
+    const url        = file.url;
+    file.type;
+    const element    = document.createElement(fileType);
+    const placement  = file.position || 'append';
 
     if (fileType === 'link') {
       element.rel   = 'stylesheet';
@@ -147,7 +140,11 @@
       element.onload  = callback; // Execute the callback when the script is loaded
     }
 
-    document.head.appendChild(element);
+    if (placement == 'append') {
+      document.head.appendChild(element);
+    } else if (placement == 'prepend') {
+      document.head.insertBefore(element, document.head.firstChild);
+    }
   }
 
   function serviceCatalogDataPresent(data) {
@@ -191,7 +188,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${imageName}.svg`;
+    return `https://mehboobali98.github.io/service-catalog/dist/public/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
@@ -546,9 +543,7 @@
 
     updateRequestForm() {
       const files = this.filesToLoad();
-      loadExternalFiles(files, () => {
-        this.updateForm();
-      });
+      loadExternalFiles(files);
     }
 
     updateForm() {
@@ -711,9 +706,7 @@
 
     updateRequestForm() {
       const files = this.filesToLoad();
-      loadExternalFiles(files, () => {
-        this.updateForm();
-      });
+      loadExternalFiles(files);
     }
 
     updateForm() {
@@ -1755,9 +1748,7 @@
       this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
       const files = this.filesToLoad();
-      loadExternalFiles(files, () => {
-        this.initialize();
-      });
+      loadExternalFiles(files);
     }
 
     initialize() {
@@ -1791,7 +1782,7 @@
 
     filesToLoad() {
       return [
-                { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
+                { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', placement: 'prepend' },
                 { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
                 { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
