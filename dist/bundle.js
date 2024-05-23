@@ -118,9 +118,19 @@
   }
 
   function loadExternalFiles(filesToLoad, callback) {
+    let loadedFiles = 0;
+
+    function onFileLoaded() {
+      loadedFiles++;
+
+      if (loadedFiles === filesToLoad.filter(file => file.type === 'script').length) {
+        // All files are loaded; execute the callback
+        callback();
+      }
+    }
 
     filesToLoad.forEach((file) => {
-      loadFile(file.url, file.type);
+      loadFile(file, onFileLoaded);
     });
   }
 
@@ -543,7 +553,9 @@
 
     updateRequestForm() {
       const files = this.filesToLoad();
-      loadExternalFiles(files);
+      loadExternalFiles(files, () => {
+        this.updateForm();
+      });
     }
 
     updateForm() {
@@ -706,7 +718,9 @@
 
     updateRequestForm() {
       const files = this.filesToLoad();
-      loadExternalFiles(files);
+      loadExternalFiles(files, () => {
+        this.updateForm();
+      });
     }
 
     updateForm() {
@@ -1748,7 +1762,9 @@
       this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
       const files = this.filesToLoad();
-      loadExternalFiles(files);
+      loadExternalFiles(files, () => {
+        this.initialize();
+      });
     }
 
     initialize() {

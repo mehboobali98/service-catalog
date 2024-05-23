@@ -40,7 +40,7 @@ function loadExternalFiles(filesToLoad, callback) {
   }
 
   filesToLoad.forEach((file) => {
-    loadFile(file.url, file.type, onFileLoaded);
+    loadFile(file, onFileLoaded);
   });
 }
 
