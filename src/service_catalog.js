@@ -56,7 +56,7 @@ class ServiceCatalogManager {
     if (isServiceCatalogPage()) {
       this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
-      new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+      new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else if (isRequestPage()) {
       new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
     } else {

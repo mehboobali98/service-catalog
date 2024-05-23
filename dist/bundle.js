@@ -710,7 +710,8 @@
   }
 
   class NewRequestForm {
-    constructor(ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+      this.locale                 = locale;
       this.ezoFieldId             = ezoFieldId;
       this.ezoSubdomain           = ezoSubdomain;
       this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
@@ -838,7 +839,29 @@
 
       if (itemName == null || serviceCategory == null) { return null; }
 
-      return `${subjectPlaceholder} on ${serviceCategory} - ${itemName}`;
+      const serviceCategoryLabel    = null;
+      const subjectPlaceholderLabel = null;
+      if (this.locale == 'en') {
+        if (serviceCategory === 'Mes actifs') {
+          serviceCategoryLabel = 'My Assigned Assets';
+        }
+        if (subjectPlaceholder === 'Signaler un problème') {
+          subjectPlaceholderLabel = 'Report Issue';
+        } else if (subjectPlaceholder === 'Demander un service') {
+          subjectPlaceholderLabel = 'Request Service';
+        }
+      } else if(this.locale == 'fr') {
+        if (serviceCategory === 'My Assigned Assets') {
+          serviceCategoryLabel = 'Mes actifs';
+        }
+        if (subjectPlaceholder === 'Report Issue') {
+          subjectPlaceholderLabel = 'Signaler un problème';
+        } else if (subjectPlaceholder === 'Request Service') {
+          subjectPlaceholderLabel = 'Demander un service';
+        }
+      }
+
+      return `${subjectPlaceholderLabel} on ${serviceCategoryLabel} - ${itemName}`;
     }
 
     prepareServiceItemFieldValue(searchParams) {
@@ -1785,7 +1808,7 @@
       if (isServiceCatalogPage()) {
         this.handleServiceCatalogRequest();
       } else if (isNewRequestPage()) {
-        new NewRequestForm(this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+        new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else if (isRequestPage()) {
         new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
       } else ;
