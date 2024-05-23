@@ -48,7 +48,7 @@ function loadFile(file, callback) {
   const url        = file.url;
   const type       = file.type;
   const element    = document.createElement(fileType);
-  const placement  = file.position || 'append';
+  const placement  = file.placement || 'append';
 
   if (fileType === 'link') {
     element.rel   = 'stylesheet';
