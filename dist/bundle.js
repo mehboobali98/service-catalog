@@ -32,7 +32,7 @@
 
   // Retrieve translations JSON object for the given locale over the network
   function fetchTranslationsFor(newLocale) {
-    return $.getJSON(`https://mehboobali98.github.io/service-catalog/dist/public/${newLocale}.json`);
+    return $.getJSON(`${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${newLocale}.json`);
   }
 
   // Replace the inner text of each element that has a
@@ -198,7 +198,7 @@
     } else {
       imageName = SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING['service_item'];
     }
-    return `https://mehboobali98.github.io/service-catalog/dist/public/${imageName}.svg`;
+    return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${imageName}.svg`;
   }
 
   function loadingIcon(containerClass) {
