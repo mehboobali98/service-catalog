@@ -133,6 +133,9 @@ class NewRequestForm {
 
     const serviceCategoryLabel    = null;
     const subjectPlaceholderLabel = null;
+
+    debugger;
+
     if (this.locale == 'en') {
       if (serviceCategory === 'Mes actifs') {
         serviceCategoryLabel = 'My Assigned Assets';
