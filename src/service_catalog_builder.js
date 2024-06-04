@@ -214,6 +214,7 @@ class ServiceCatalogBuilder {
     });
 
     $('body').on('click', '.js-service-item-card, .js-service-item-request-btn', function(e) {
+      e.stopImmediatePropagation();
       e.preventDefault();
       debugger;
       if (userRole() == 'agent') {
