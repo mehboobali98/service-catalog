@@ -85,7 +85,7 @@
     }
   }
 
-  function t$1(key, defaultString) {
+  function t(key, defaultString) {
     const translation = TRANSLATIONS[key];
     if (translation !== undefined) {
       return translation;
@@ -447,7 +447,7 @@
       //modal-header
       const modalHeader = $('<div>').addClass('modal-header').append(
         $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
-                .text(t$1('customer-effort-survey-title', 'Feedback')),
+                .text(t('customer-effort-survey-title', 'Feedback')),
         $('<button>').addClass('btn-close')
                      .attr('id', 'modal_close_btn')
                      .attr('type', 'button')
@@ -466,7 +466,7 @@
       // modal-body description
       const descriptionContainer = $('<div>').addClass('mb-2 mt-0');
       const modalDescription     = $('<span>').addClass('fw-bold customer-effort-survery-dialog-font-style')
-                                              .text(t$1('customer-effort-survey-feedback-question', 'How easy was it to submit the request?'));
+                                              .text(t('customer-effort-survey-feedback-question', 'How easy was it to submit the request?'));
       descriptionContainer.append(modalDescription);
       modalBody.append(descriptionContainer);
 
@@ -483,21 +483,21 @@
       // emoji description
       const emojiDescription = $('<div>').addClass('d-flex justify-content-between mt-2 px-2 emoji-description-font-style');
       emojiDescription.append(
-        $('<span>').text(t$1('emoji-description-terrible', 'Terrible')),
-        $('<span>').addClass('emoji-description-okay').text(t$1('emoji-description-okay', 'Ok')),
-        $('<span>').text(t$1('emoji-description-great', 'Great'))
+        $('<span>').text(t('emoji-description-terrible', 'Terrible')),
+        $('<span>').addClass('emoji-description-okay').text(t('emoji-description-okay', 'Ok')),
+        $('<span>').text(t('emoji-description-great', 'Great'))
       );
 
       // comment section
       const commentContainer  = $('<div>').addClass('comment-container mt-3 customer-effort-survery-dialog-font-style');
       const commentLabel      = $('<label>').addClass('col-form-label my-2 fw-bold')
                                             .attr('for', 'comment')
-                                            .text(t$1('optional-comment', 'Write your comment (Optional)'));
+                                            .text(t('optional-comment', 'Write your comment (Optional)'));
       const commentTextarea   = $('<textarea>').addClass('form-control comment-section')
                                                .attr('id', 'comment')
                                                .attr('rows', '4')
                                                .attr('maxlength', CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH)
-                                               .attr('placeholder', t$1('experience-description', 'Describe your experience here'));
+                                               .attr('placeholder', t('experience-description', 'Describe your experience here'));
       commentContainer.append(commentLabel, commentTextarea);
 
       // modal-footer
@@ -505,7 +505,7 @@
       const submitBtn   = $('<button>').addClass('btn btn-primary mt-0 mb-3 ces-survery-submit-btn ces-survery-submit-btn-font-style')
                                        .attr('id', 'submit_ces_survery_btn')
                                        .attr('disabled', 'disabled')
-                                       .text(t$1('send-feedback', 'Send Feedback'));
+                                       .text(t('send-feedback', 'Send Feedback'));
 
       // Assign submit logic to submit button
       submitBtn.click(this.submitFeedback);
@@ -532,7 +532,7 @@
         ticket_id:  this.requestId,
       };
 
-      $('#submit_ces_survery_btn').prop('disabled', true).text(t$1('please-wait', 'Please Wait...'));
+      $('#submit_ces_survery_btn').prop('disabled', true).text(t('please-wait', 'Please Wait...'));
 
       this.withToken(token => {
         headers['Authorization'] = 'Bearer ' + token;
@@ -1053,7 +1053,7 @@
     //modal-header
     const modalHeader = $('<div>').addClass('modal-header').append(
       $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
-              .text(t('customer-effort-survey-title', 'Feedback')),
+              .text('Feedback'),
       $('<button>').addClass('btn-close')
                    .attr('id', 'modal_close_btn')
                    .attr('type', 'button')
@@ -1134,7 +1134,7 @@
       queryParams['ticket_form_id']       = serviceCategoryItem.zendesk_form_id;
       queryParams['service_item_id']      = serviceCategoryItem.id;
       queryParams['service_category']     = this.serviceCategoriesItems[serviceCategory].title;
-      queryParams['subject-placeholder']  = t$1('request-service', 'Request Service');
+      queryParams['subject-placeholder']  = t('request-service', 'Request Service');
       const url = `/hc/requests/new?${$.param(queryParams)}`;
 
       const requestServiceBtnContainer = $('<div>').addClass('request-service-btn-container');
@@ -1278,7 +1278,7 @@
       } else {
         if (isMyAssignedAssets(serviceCategory)) {
           // render empty screen
-          serviceCategoryItemsFlexContainer.append(noServiceItems(t$1('no-assigned-items')));
+          serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
         }
       }
 
@@ -1337,8 +1337,8 @@
       queryParams['item_id']              = serviceCategoryItem.sequence_num;
       queryParams['item_name']            = assetName;
       queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
-      queryParams['service_category']     = t$1(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
-      queryParams['subject-placeholder']  = t$1('report-issue', 'Report Issue');
+      queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
+      queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
 
       // Card footer
       const url              = `/hc/requests/new?${$.param(queryParams)}`;

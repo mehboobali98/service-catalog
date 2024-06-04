@@ -108,7 +108,7 @@ function renderFlashMessages(type, message) {
   //modal-header
   const modalHeader = $('<div>').addClass('modal-header').append(
     $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
-            .text(t('customer-effort-survey-title', 'Feedback')),
+            .text('Feedback'),
     $('<button>').addClass('btn-close')
                  .attr('id', 'modal_close_btn')
                  .attr('type', 'button')
