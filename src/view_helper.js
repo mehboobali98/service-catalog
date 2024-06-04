@@ -89,7 +89,7 @@ function renderFlashMessages(type, message) {
                                                   .append($('<p>').text(message));
   const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
 
-  flashMessagesContainer.append(flashMessage);
+  flashMessageContainer.append(flashMessage);
   flashMessageContentContainer.append(flashMessageContainer, flashMessageCloseBtnContainer);
 
   flashType.append(flashSvgContainer, flashMessageContentContainer);
