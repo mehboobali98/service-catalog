@@ -1814,6 +1814,10 @@
         }
         return false;
       });
+
+      $('body').on('click', '.js-service-item-card', function(e) {
+        debugger;
+      });
     }
 
     addTooltipsForTruncatedText() {
