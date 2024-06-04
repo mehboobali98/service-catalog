@@ -94,7 +94,7 @@ function renderFlashMessages(type, message) {
 
   flashType.append(flashSvgContainer, flashMessageContentContainer);
   flashMessagesContainer.append(flashType);
-  flashMessagesOuterContainer.append(flashMessagesOuterContainer);
+  flashMessagesOuterContainer.append(flashMessagesContainer);
 
   return flashMessagesOuterContainer;
 }
