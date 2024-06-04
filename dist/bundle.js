@@ -1693,7 +1693,6 @@
 
       $('main').append(newSection);
       this.serviceCatalogItemDetailBuilder.build(this.data);
-      debugger;
       this.bindEventListeners();
       this.addTooltipsForTruncatedText();
     }
@@ -1819,12 +1818,12 @@
 
       $('.js-service-item-request-btn').click(function(e) {
         debugger;
+        e.preventDefault();
       });
 
-
-
-      $('body').on('click', '.js-service-item-request-btn', function(e) {
+      $('.js-service-item-card').click(function(e) {
         debugger;
+        e.preventDefault();
       });
     }
 
