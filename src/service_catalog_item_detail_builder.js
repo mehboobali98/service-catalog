@@ -150,6 +150,7 @@ class ServiceCatalogItemDetailBuilder {
       if (userRole !== 'agent') { return true; }
 
       debugger;
+      renderFlashMessages('test');
       // show the dialog
     });
   }

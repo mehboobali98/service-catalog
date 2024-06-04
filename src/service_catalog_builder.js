@@ -216,6 +216,7 @@ class ServiceCatalogBuilder {
     $('body').on('click', '.js-service-item-request-btn', function(e) {
       if (userRole() == 'agent') {
         // show modal
+        renderFlashMessages('test');
         debugger;
       }
     });
