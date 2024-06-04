@@ -171,7 +171,7 @@ class ServiceCatalogItemBuilder {
         debugger;
         let flashModal = renderFlashMessages(null, 'test');
         debugger;
-        flashModal('show');
+        flashModal.modal('show');
       } else {
         window.location.href = url;
       }

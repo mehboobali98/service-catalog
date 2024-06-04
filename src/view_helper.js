@@ -85,7 +85,7 @@ function renderFlashMessages(type, message) {
   // // flash message container
   // const flashMessageContentContainer  = $('<div>').addClass('d-flex justify-content-center w-100');
   // const flashMessageContainer         = $('<div>').addClass('row no-gutters');
-  // const flashMessage                  = $('<div>').add('col-11')
+  // const flashMessage                  = $('<div>').addClass('col-11')
   //                                                 .append($('<p>').text(message));
   // const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
 
@@ -115,6 +115,14 @@ function renderFlashMessages(type, message) {
                  .attr('data-bs-dismiss', 'modal')
                  .attr('aria-label', 'Close')
   );
+  // const flashMessageContentContainer = $('<div>').addClass('row no-gutters');
+
+  // // svg
+  // const flashMessageSvg              = $('<div>').addClass('col-2');
+  // const flashSvg                     = new SvgBuilder().build('flashErrorSvg');
+  // flashMessageSvg.append(flashSvg);
+
+
 
   modalContent.append(modalHeader);
   modalDialog.append(modalContent);
