@@ -213,18 +213,19 @@ class ServiceCatalogBuilder {
       }
     });
 
-    // $('.js-service-item-card').on('click', function(e) {
-    //   e.stopImmediatePropagation();
-    //   e.preventDefault();
-    //   debugger;
-    //   if (userRole() == 'agent') {
-    //     // show modal
-    //     e.preventDefault();
-    //     debugger;
-    //     renderFlashMessages('test');
-    //   }
-    //   return false;
-    // });
+    $('body').on('click', '.js-service-item-request-btn', function(e) {
+      debugger;
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      debugger;
+      if (userRole() == 'agent') {
+        // show modal
+        e.preventDefault();
+        debugger;
+        renderFlashMessages('test');
+      }
+      return false;
+    });
   }
 
   addTooltipsForTruncatedText() {
