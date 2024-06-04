@@ -158,6 +158,7 @@ class ServiceCatalogItemBuilder {
                                      .on('click', function(e) {
                                         debugger;
                                         e.preventDefault();
+                                        return false;
                                      });
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
     cardFooter.append(submitRequestBtn);

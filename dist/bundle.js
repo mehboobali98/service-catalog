@@ -1322,6 +1322,7 @@
                                        .on('click', function(e) {
                                           debugger;
                                           e.preventDefault();
+                                          return false;
                                        });
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
       cardFooter.append(submitRequestBtn);
@@ -1800,18 +1801,18 @@
         }
       });
 
-      $('.js-service-item-card').on('click', function(e) {
-        e.stopImmediatePropagation();
-        e.preventDefault();
-        debugger;
-        if (userRole() == 'agent') {
-          // show modal
-          e.preventDefault();
-          debugger;
-          renderFlashMessages();
-        }
-        return false;
-      });
+      // $('.js-service-item-card').on('click', function(e) {
+      //   e.stopImmediatePropagation();
+      //   e.preventDefault();
+      //   debugger;
+      //   if (userRole() == 'agent') {
+      //     // show modal
+      //     e.preventDefault();
+      //     debugger;
+      //     renderFlashMessages('test');
+      //   }
+      //   return false;
+      // });
     }
 
     addTooltipsForTruncatedText() {
