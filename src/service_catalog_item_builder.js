@@ -169,6 +169,7 @@ class ServiceCatalogItemBuilder {
     card.click(function(e) {
       e.preventDefault();
 
+      debugger;
       window.location.href = url;
     });
 
