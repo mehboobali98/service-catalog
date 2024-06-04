@@ -168,7 +168,10 @@ class ServiceCatalogItemBuilder {
 
       debugger;
       if (userRole() == 'agent') {
-        renderFlashMessages('test');
+        debugger;
+        let flashContainer = renderFlashMessages('test');
+                debugger;
+        $('body').append(flashContainer);
       } else {
         window.location.href = url;
       }
