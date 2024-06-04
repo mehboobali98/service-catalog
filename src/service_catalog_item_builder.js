@@ -10,6 +10,7 @@ import {
 } from './constant.js';
 
 import {
+  userRole,
   loadingIcon,
   isMyAssignedAssets,
   placeholderImagePath,
@@ -17,7 +18,8 @@ import {
 } from './utility.js';
 
 import {
-  noServiceItems
+  noServiceItems,
+  renderFlashMessages
 } from './view_helper.js';
 
 import {
@@ -155,11 +157,6 @@ class ServiceCatalogItemBuilder {
                                      .attr('data-i18n', 'report-issue')
                                      .text('Report Issue ')
                                      .addClass('float-end footer-text js-service-item-request-btn');
-                                     // .on('click', function(e) {
-                                     //    debugger;
-                                     //    e.preventDefault();
-                                     //    return false;
-                                     // });
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
     cardFooter.append(submitRequestBtn);
 
@@ -170,7 +167,11 @@ class ServiceCatalogItemBuilder {
       e.preventDefault();
 
       debugger;
-      window.location.href = url;
+      if (userRole() == 'agent') {
+        renderFlashMessages('test');
+      } else {
+        window.location.href = url;
+      }
     });
 
     return card;

@@ -1319,11 +1319,6 @@
                                        .attr('data-i18n', 'report-issue')
                                        .text('Report Issue ')
                                        .addClass('float-end footer-text js-service-item-request-btn');
-                                       // .on('click', function(e) {
-                                       //    debugger;
-                                       //    e.preventDefault();
-                                       //    return false;
-                                       // });
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
       cardFooter.append(submitRequestBtn);
 
@@ -1334,7 +1329,11 @@
         e.preventDefault();
 
         debugger;
-        window.location.href = url;
+        if (userRole() == 'agent') {
+          renderFlashMessages();
+        } else {
+          window.location.href = url;
+        }
       });
 
       return card;
@@ -1604,7 +1603,6 @@
   class ServiceCatalogBuilder {
     constructor(locale, ezoSubdomain) {
       this.locale                          = locale;
-      this.userRole                        = userRole();
       this.apiService                      = new ApiService(locale, ezoSubdomain);
       this.ezoSubdomain                    = ezoSubdomain;
       this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
@@ -1801,30 +1799,6 @@
             500
           );
         }
-      });
-
-      $('body').on('click', '.js-service-item-request-btn', function(e) {
-        debugger;
-        e.stopImmediatePropagation();
-        e.preventDefault();
-        debugger;
-        if (userRole() == 'agent') {
-          // show modal
-          e.preventDefault();
-          debugger;
-          renderFlashMessages();
-        }
-        return false;
-      });
-
-      $('.js-service-item-request-btn').click(function(e) {
-        debugger;
-        e.preventDefault();
-      });
-
-      $('.js-service-item-card').click(function(e) {
-        debugger;
-        e.preventDefault();
       });
     }
 
