@@ -1051,23 +1051,31 @@
     const modalContent  = $('<div>').addClass('modal-content');
 
     //modal-header
-    const modalHeader = $('<div>').addClass('modal-header').append(
-      $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
-              .text('Feedback'),
-      $('<button>').addClass('btn-close')
-                   .attr('id', 'modal_close_btn')
-                   .attr('type', 'button')
-                   .attr('data-bs-dismiss', 'modal')
-                   .attr('aria-label', 'Close')
-    );
-    // const flashMessageContentContainer = $('<div>').addClass('row no-gutters');
+    const modalHeader = $('<div>').addClass('modal-header');
+    // .append(
+    //   $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
+    //           .text('Feedback'),
+    //   $('<button>').addClass('btn-close')
+    //                .attr('id', 'modal_close_btn')
+    //                .attr('type', 'button')
+    //                .attr('data-bs-dismiss', 'modal')
+    //                .attr('aria-label', 'Close')
+    // );
+    const flashMessageContentContainer = $('<div>').addClass('row no-gutters');
 
-    // // svg
-    // const flashMessageSvg              = $('<div>').addClass('col-2');
-    // const flashSvg                     = new SvgBuilder().build('flashErrorSvg');
-    // flashMessageSvg.append(flashSvg);
+    // svg
+    const flashMessageSvg              = $('<div>').addClass('col-2');
+    const flashSvg                     = new SvgBuilder().build('flashErrorSvg');
+    debugger;
+    flashMessageSvg.append(flashSvg);
 
+    // content
+    const flashMessageContent          = $('<div>').addClass('col-10')
+                                                   .append($('<p>').text(message));
 
+    flashMessageContentContainer.append(flashMessageSvg, flashMessageContent);
+
+    modalHeader.append(flashMessageContentContainer);
 
     modalContent.append(modalHeader);
     modalDialog.append(modalContent);
@@ -1367,7 +1375,7 @@
         debugger;
         if (userRole() == 'agent') {
           debugger;
-          let flashModal = renderFlashMessages();
+          let flashModal = renderFlashMessages(null, 'test');
           debugger;
           flashModal.modal('show');
         } else {
