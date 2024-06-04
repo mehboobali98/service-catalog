@@ -1805,6 +1805,7 @@
           debugger;
           renderFlashMessages();
         }
+        return false;
       });
     }
 

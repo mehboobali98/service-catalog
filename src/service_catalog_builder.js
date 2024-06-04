@@ -222,6 +222,7 @@ class ServiceCatalogBuilder {
         debugger;
         renderFlashMessages('test');
       }
+      return false;
     });
   }
 
