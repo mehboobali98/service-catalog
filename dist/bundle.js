@@ -1797,6 +1797,7 @@
       });
 
       $('body').on('click', '.js-service-item-request-btn', function(e) {
+        e.preventDefault();
         debugger;
         if (userRole() == 'agent') {
           // show modal
