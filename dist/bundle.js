@@ -1318,7 +1318,11 @@
       const submitRequestBtn = $('<a>').attr('href', url)
                                        .attr('data-i18n', 'report-issue')
                                        .text('Report Issue ')
-                                       .addClass('float-end footer-text js-service-item-request-btn');
+                                       .addClass('float-end footer-text js-service-item-request-btn')
+                                       .on('click', function(e) {
+                                          debugger;
+                                          e.preventDefault();
+                                       });
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
       cardFooter.append(submitRequestBtn);
 
@@ -1796,7 +1800,7 @@
         }
       });
 
-      $('body').on('click', '.js-service-item-card, .js-service-item-request-btn', function(e) {
+      $('.js-service-item-card').on('click', function(e) {
         e.stopImmediatePropagation();
         e.preventDefault();
         debugger;

@@ -213,7 +213,7 @@ class ServiceCatalogBuilder {
       }
     });
 
-    $('body').on('click', '.js-service-item-card, .js-service-item-request-btn', function(e) {
+    $('.js-service-item-card').on('click', function(e) {
       e.stopImmediatePropagation();
       e.preventDefault();
       debugger;
