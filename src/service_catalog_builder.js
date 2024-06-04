@@ -214,10 +214,12 @@ class ServiceCatalogBuilder {
     });
 
     $('body').on('click', '.js-service-item-request-btn', function(e) {
+      debugger;
       if (userRole() == 'agent') {
         // show modal
-        renderFlashMessages('test');
+        e.preventDefault();
         debugger;
+        renderFlashMessages('test');
       }
     });
   }
