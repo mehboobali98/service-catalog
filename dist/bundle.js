@@ -1685,6 +1685,7 @@
 
       searchAndNavContainer.append(navbarContainer);
       const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
+      debugger;
       const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                                 .addClass('col-10 collapse service-catalog-search-results-container');
       serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
@@ -1692,6 +1693,7 @@
 
       $('main').append(newSection);
       this.serviceCatalogItemDetailBuilder.build(this.data);
+      debugger;
       this.bindEventListeners();
       this.addTooltipsForTruncatedText();
     }
@@ -1815,7 +1817,13 @@
         return false;
       });
 
-      $('body').on('click', '.js-service-item-card', function(e) {
+      $('.js-service-item-request-btn').click(function(e) {
+        debugger;
+      });
+
+
+
+      $('body').on('click', '.js-service-item-request-btn', function(e) {
         debugger;
       });
     }
