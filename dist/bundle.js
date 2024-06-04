@@ -1330,7 +1330,10 @@
 
         debugger;
         if (userRole() == 'agent') {
-          renderFlashMessages();
+          debugger;
+          let flashContainer = renderFlashMessages();
+                  debugger;
+          $('body').append(flashContainer);
         } else {
           window.location.href = url;
         }
@@ -1684,7 +1687,6 @@
 
       searchAndNavContainer.append(navbarContainer);
       const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
-      debugger;
       const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                                 .addClass('col-10 collapse service-catalog-search-results-container');
       serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
