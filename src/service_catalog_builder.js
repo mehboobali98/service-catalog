@@ -1,16 +1,19 @@
-import { generateI18nKey }       from './i18n.js';
+import { generateI18nKey }                  from './i18n.js';
 import { Search }                           from './search.js';
-import { loadingIcon,
+import { userRole,
+         loadingIcon,
          serviceCatalogDataPresent }        from './utility.js';
 import { STAGING_CDN_URL,
          PRODUCTION_CDN_URL }               from './constant.js';
 import { ApiService }                       from './api_service.js';
+import { renderFlashMessages }              from './view_helper.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
   constructor(locale, ezoSubdomain) {
     this.locale                          = locale;
+    this.userRole                        = userRole();
     this.apiService                      = new ApiService(locale, ezoSubdomain);
     this.ezoSubdomain                    = ezoSubdomain;
     this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
@@ -207,6 +210,13 @@ class ServiceCatalogBuilder {
           },
           500
         );
+      }
+    });
+
+    $('body').on('click', '.js-service-item-request-btn', function(e) {
+      if (userRole() == 'agent') {
+        // show modal
+        debugger;
       }
     });
   }

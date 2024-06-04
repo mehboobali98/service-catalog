@@ -81,7 +81,11 @@ function isSignedIn() {
 }
 
 function notSignedIn() {
-  return window.HelpCenter.user.role === 'anonymous';
+  return userRole() === 'anonymous';
+}
+
+function userRole() {
+  return window.HelpCenter.user.role;
 }
 
 function returnToPath() {
@@ -140,6 +144,7 @@ function getLocale() {
 }
 
 export {
+  userRole,
   getLocale,
   isSignedIn,
   signInPath,

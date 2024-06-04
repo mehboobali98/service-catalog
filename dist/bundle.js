@@ -171,7 +171,11 @@
   }
 
   function notSignedIn() {
-    return window.HelpCenter.user.role === 'anonymous';
+    return userRole() === 'anonymous';
+  }
+
+  function userRole() {
+    return window.HelpCenter.user.role;
   }
 
   function returnToPath() {
@@ -248,6 +252,8 @@
           return this.satisfiedSvg();
         case 'disappointed':
           return this.disappointedSvg();
+        case 'flashErrorSvg':
+          return this.flashErrorSvg();
         default:
           // Handle invalid svgType
           return '';
@@ -370,6 +376,21 @@
                   <stop offset="1" stop-color="#F3D652" />
                 </linearGradient>
               </defs>
+            </svg>`;
+    }
+
+    flashErrorSvg() {
+      return `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 26.537' width="48" height="48">
+              <defs>
+                <style>.a{fill:#fff;}.st0{fill:#dcaf45;}</style>
+              </defs>
+              <g transform='translate(-10.5 -11.5)'>
+                <g transform='translate(-1.249 0)'>
+                  <path class='a' d='M15.316,2.629a2,2,0,0,1,3.368,0L32.028,23.458a2,2,0,0,1-1.684,3.079H3.656a2,2,0,0,1-1.684-3.079Z' transform='translate(11.749 11.5)'/>
+                  <circle class='st0' cx='2' cy='2' r='2' transform='translate(26.75 31.666)'/>
+                  <path class='st0' d='M10.7,4.8l-.471,10H7.171L6.7,4.8Z' transform='translate(20.05 15.2)'/>
+                </g>
+              </g>
             </svg>`;
     }
   }
@@ -999,11 +1020,13 @@
   class ServiceCatalogItemDetailBuilder {
     constructor(locale) {
       this.locale                 = locale;
+      this.userRole               = null;
       this.currency               = null;
       this.serviceCategoriesItems = null;
     }
 
     build(data) {
+      this.userRole               = userRole();
       this.currency               = data.currency;
       this.serviceCategoriesItems = data.service_catalog_data;
 
@@ -1014,7 +1037,7 @@
           let serviceItems = JSON.parse(data.service_items);
           $.each(serviceItems, (index, serviceCategoryItem) => {
             container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
-            this.bindItemDetailEventListener(serviceCategory, serviceCategoryItem);
+            this.bindItemDetailEventListener(this.userRole, serviceCategory, serviceCategoryItem);
           });
         }
       });
@@ -1063,7 +1086,7 @@
       const requestServiceBtn = $('<a>').attr('href', url)
                                         .attr('data-i18n', 'request-service')
                                         .text('Request Service')
-                                        .addClass('btn btn-outline-primary request-service-btn');
+                                        .addClass('btn btn-outline-primary request-service-btn js-request-service-btn');
       requestServiceBtnContainer.append(requestServiceBtn);
 
       detailPageHeader.append(headerContent, requestServiceBtnContainer);
@@ -1111,7 +1134,7 @@
       }
     }
 
-    bindItemDetailEventListener(serviceCategory, serviceCategoryItem) {
+    bindItemDetailEventListener(userRole, serviceCategory, serviceCategoryItem) {
       $('body').on('click', '.js-service-item-detail-page-btn, .js-default-service-item', function(e) {
         e.preventDefault();
 
@@ -1127,6 +1150,13 @@
         $("[id*='_service_items_container']").hide();
         $('#service_items_container').show();
         detailPageEle.show();
+      });
+
+      $('body').on('click', '.js-request-service-btn', function(e) {
+        if (userRole !== 'agent') { return true; }
+
+        debugger;
+        // show the dialog
       });
     }
   }
@@ -1260,7 +1290,7 @@
       const submitRequestBtn = $('<a>').attr('href', url)
                                        .attr('data-i18n', 'report-issue')
                                        .text('Report Issue ')
-                                       .addClass('float-end footer-text');
+                                       .addClass('float-end footer-text js-service-item-request-btn');
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
       cardFooter.append(submitRequestBtn);
 
@@ -1540,6 +1570,7 @@
   class ServiceCatalogBuilder {
     constructor(locale, ezoSubdomain) {
       this.locale                          = locale;
+      this.userRole                        = userRole();
       this.apiService                      = new ApiService(locale, ezoSubdomain);
       this.ezoSubdomain                    = ezoSubdomain;
       this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
@@ -1734,6 +1765,13 @@
             },
             500
           );
+        }
+      });
+
+      $('body').on('click', '.js-service-item-request-btn', function(e) {
+        if (userRole() == 'agent') {
+          // show modal
+          debugger;
         }
       });
     }

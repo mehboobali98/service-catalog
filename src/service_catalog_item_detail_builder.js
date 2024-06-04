@@ -4,18 +4,23 @@ import {
 } from './i18n.js';
 
 import {
+  userRole,
   isMyAssignedAssets,
   placeholderImagePath
 } from './utility.js';
 
+import { renderFlashMessages } from './view_helper.js';
+
 class ServiceCatalogItemDetailBuilder {
   constructor(locale) {
     this.locale                 = locale;
+    this.userRole               = null;
     this.currency               = null;
     this.serviceCategoriesItems = null;
   }
 
   build(data) {
+    this.userRole               = userRole();
     this.currency               = data.currency;
     this.serviceCategoriesItems = data.service_catalog_data;
 
@@ -26,7 +31,7 @@ class ServiceCatalogItemDetailBuilder {
         let serviceItems = JSON.parse(data.service_items);
         $.each(serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
-          this.bindItemDetailEventListener(serviceCategory, serviceCategoryItem);
+          this.bindItemDetailEventListener(this.userRole, serviceCategory, serviceCategoryItem);
         });
       }
     });
@@ -75,7 +80,7 @@ class ServiceCatalogItemDetailBuilder {
     const requestServiceBtn = $('<a>').attr('href', url)
                                       .attr('data-i18n', 'request-service')
                                       .text('Request Service')
-                                      .addClass('btn btn-outline-primary request-service-btn');
+                                      .addClass('btn btn-outline-primary request-service-btn js-request-service-btn');
     requestServiceBtnContainer.append(requestServiceBtn);
 
     detailPageHeader.append(headerContent, requestServiceBtnContainer);
@@ -123,7 +128,7 @@ class ServiceCatalogItemDetailBuilder {
     }
   }
 
-  bindItemDetailEventListener(serviceCategory, serviceCategoryItem) {
+  bindItemDetailEventListener(userRole, serviceCategory, serviceCategoryItem) {
     $('body').on('click', '.js-service-item-detail-page-btn, .js-default-service-item', function(e) {
       e.preventDefault();
 
@@ -139,6 +144,13 @@ class ServiceCatalogItemDetailBuilder {
       $("[id*='_service_items_container']").hide();
       $('#service_items_container').show();
       detailPageEle.show();
+    });
+
+    $('body').on('click', '.js-request-service-btn', function(e) {
+      if (userRole !== 'agent') { return true; }
+
+      debugger;
+      // show the dialog
     });
   }
 }

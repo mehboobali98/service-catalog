@@ -1,7 +1,5 @@
-import {
-  STAGING_CDN_URL,
-  PRODUCTION_CDN_URL
-} from './constant.js';
+import { SvgBuilder }                           from './svg_builder.js';
+import { STAGING_CDN_URL, PRODUCTION_CDN_URL }  from './constant.js';
 
 function serviceCatalogDisabled(ezoSubdomain) {
   const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
@@ -74,9 +72,37 @@ function noServiceItems(notFoundMessage) {
   return noResultsContainer;
 }
 
+function renderFlashMessages(type, message) {
+  const flashMessagesOuterContainer = $('<div>').addClass('flash-messages-outer-container');
+  const flashMessagesContainer      = $('<div>').addClass('flash-messages-container');
+  const flashType                   = $('<div>').addClass('flash-type');
+
+  // svg
+  const flashSvgContainer           = $('<div>').addClass('d-flex justify-content-center align-items-center');
+  const flashSvg                    = new SvgBuilder().build('flashErrorSvg');
+  flashSvgContainer.append(flashSvg);
+
+  // flash message container
+  const flashMessageContentContainer  = $('<div>').addClass('d-flex justify-content-center w-100');
+  const flashMessageContainer         = $('<div>').addClass('row no-gutters');
+  const flashMessage                  = $('<div>').add('col-11')
+                                                  .append($('<p>').text(message));
+  const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
+
+  flashMessagesContainer.append(flashMessage);
+  flashMessageContentContainer.append(flashMessageContainer, flashMessageCloseBtnContainer);
+
+  flashType.append(flashSvgContainer, flashMessageContentContainer);
+  flashMessagesContainer.append(flashType);
+  flashMessagesOuterContainer.append(flashMessagesOuterContainer);
+
+  return flashMessagesOuterContainer;
+}
+
 export {
   noServiceItems,
   noResultsFound,
   serviceCatalogEmpty,
+  renderFlashMessages,
   serviceCatalogDisabled
 };

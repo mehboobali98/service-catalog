@@ -328,3 +328,14 @@ a.go-back-btn:hover {
 .service-catalog-empty-container {
   margin-top: 6rem;
 }
+
+.flash-messages-outer-container {
+  margin:           0 auto;
+  z-index:          1035;
+  position:         fixed;
+  background-color: transparent;
+}
+
+.flash-messages-outer-container .flash-type {
+  box-shadow: 0 4px 5px 0px rgba(#808B96, 0.2), 0 6px 20px 2px rgba(#808B96, 0.19);
+}
