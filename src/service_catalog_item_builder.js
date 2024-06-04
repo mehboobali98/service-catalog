@@ -154,7 +154,11 @@ class ServiceCatalogItemBuilder {
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .attr('data-i18n', 'report-issue')
                                      .text('Report Issue ')
-                                     .addClass('float-end footer-text js-service-item-request-btn');
+                                     .addClass('float-end footer-text js-service-item-request-btn')
+                                     .on('click', function(e) {
+                                        debugger;
+                                        e.preventDefault();
+                                     });
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
     cardFooter.append(submitRequestBtn);
 
