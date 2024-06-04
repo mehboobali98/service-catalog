@@ -1037,15 +1037,11 @@
     flashMessageContainer.append(flashMessage);
     flashMessageContentContainer.append(flashMessageContainer, flashMessageCloseBtnContainer);
 
-    debugger;
     flashType.append(flashSvgContainer, flashMessageContentContainer);
 
-    debugger;
     flashMessagesContainer.append(flashType);
-    debugger;
     flashMessagesOuterContainer.append(flashMessagesContainer);
 
-    debugger;
     return flashMessagesOuterContainer;
   }
 
@@ -1338,7 +1334,7 @@
           debugger;
           let flashContainer = renderFlashMessages(null, 'test');
           debugger;
-          $('body').append(flashContainer);
+          $('body').prepend(flashContainer);
         } else {
           window.location.href = url;
         }

@@ -171,7 +171,7 @@ class ServiceCatalogItemBuilder {
         debugger;
         let flashContainer = renderFlashMessages(null, 'test');
         debugger;
-        $('body').append(flashContainer);
+        $('body').prepend(flashContainer);
       } else {
         window.location.href = url;
       }
