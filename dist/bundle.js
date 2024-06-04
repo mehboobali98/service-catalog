@@ -1041,6 +1041,7 @@
     flashMessagesContainer.append(flashType);
     flashMessagesOuterContainer.append(flashMessagesContainer);
 
+    debugger;
     return flashMessagesOuterContainer;
   }
 
@@ -1331,7 +1332,7 @@
         debugger;
         if (userRole() == 'agent') {
           debugger;
-          let flashContainer = renderFlashMessages();
+          let flashContainer = renderFlashMessages(null, 'test');
           debugger;
           $('body').append(flashContainer);
         } else {

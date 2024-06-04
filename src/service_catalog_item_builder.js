@@ -169,7 +169,7 @@ class ServiceCatalogItemBuilder {
       debugger;
       if (userRole() == 'agent') {
         debugger;
-        let flashContainer = renderFlashMessages('test');
+        let flashContainer = renderFlashMessages(null, 'test');
         debugger;
         $('body').append(flashContainer);
       } else {
