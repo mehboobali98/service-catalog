@@ -1,6 +1,7 @@
 import {
   STAGING_CDN_URL,
   PRODUCTION_CDN_URL,
+  AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
   SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
 } from './constant.js';
 
@@ -81,7 +82,11 @@ function isSignedIn() {
 }
 
 function notSignedIn() {
-  return window.HelpCenter.user.role === 'anonymous';
+  return userRole() === 'anonymous';
+}
+
+function userRole() {
+  return window.HelpCenter.user.role;
 }
 
 function returnToPath() {
@@ -139,7 +144,31 @@ function getLocale() {
   return window.HelpCenter.user.locale.split('-')[0];
 }
 
+function requestSubmissionSettingMessageForAgent() {
+  return `Please enable access to request forms via Guide Admin > Guide Settings. Read the guide <a href='${AGENT_REQUEST_SUBMISSION_SETTING_BLOG}' target='_blank'>here</a>.`;
+}
+
+function setCookieForXHours(noOfHours, elementId) {
+  let date = new Date();
+  date.setTime(date.getTime() + (noOfHours * 60 * 60 * 1000));
+  let expires = "; expires=" + date.toUTCString();
+  document.cookie = elementId + '=true' + expires + "; path=/";
+}
+
+function getCookie(name) {
+  let nameEQ = name + "=";
+  let ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
 export {
+  userRole,
+  getCookie,
   getLocale,
   isSignedIn,
   signInPath,
@@ -148,10 +177,12 @@ export {
   isRequestPage,
   isNewRequestPage,
   loadExternalFiles,
+  setCookieForXHours,
   isMyAssignedAssets,
   getCssVariableValue,
   placeholderImagePath,
   isServiceCatalogPage,
   serviceCatalogDataPresent,
-  getMyAssignedAssetsServiceItems
+  getMyAssignedAssetsServiceItems,
+  requestSubmissionSettingMessageForAgent
 };
