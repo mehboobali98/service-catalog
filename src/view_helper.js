@@ -73,9 +73,10 @@ function noServiceItems(notFoundMessage) {
 }
 
 function renderFlashMessages(type, message) {
-  const flashMessagesOuterContainer = $('<div>').addClass('flash-messages-outer-container');
+  const flashMessagesOuterContainer = $('<div>').attr('id', 'flash_messages_outer_container')
+                                                .addClass('flash-messages-outer-container');
   const flashMessagesContainer      = $('<div>').addClass('flash-messages-container');
-  const flashType                   = $('<div>').addClass('flash-type js-flash-error');
+  const flashType                   = $('<div>').addClass('flash-type');
 
   // svg
   const flashSvgContainer           = $('<div>').addClass('d-flex flash-error-svg-container justify-content-center align-items-center');
@@ -92,9 +93,11 @@ function renderFlashMessages(type, message) {
   const flashMessageCloseBtn          = $('<div>').addClass('flash-message-close-btn')
                                                   .append(
                                                       $('<a>').attr('href', '#_')
-                                                              .attr('data-target', '.js-flash-error')
-                                                              .data('target', '.js-flash-error')
                                                               .text('x')
+                                                              .click(function(e) {
+                                                                debugger;
+                                                                $('#flash_messages_outer_container').hide();
+                                                              })
                                                   );
   flashMessageCloseBtnFlex.append(flashMessageCloseBtn);
   flashMessageCloseBtnContainer.append(flashMessageCloseBtnFlex);
