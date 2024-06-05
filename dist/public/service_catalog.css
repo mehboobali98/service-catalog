@@ -340,7 +340,7 @@ a.go-back-btn:hover {
 }
 
 .flash-messages-outer-container .flash-type {
-  box-shadow: 0 4px 5px 0px rgba(#808B96, 0.2), 0 6px 20px 2px rgba(#808B96, 0.19);
+  box-shadow: 0 4px 5px 0px rgba(128, 139, 150, 0.2), 0 6px 20px 2px rgba(128, 139, 150, 0.19);
   border: 1px solid #D73B3B;
   display: flex;
   margin-bottom: 20px;
