@@ -166,6 +166,7 @@ class ServiceCatalogItemBuilder {
     card.click(function(e) {
       e.preventDefault();
 
+      debugger;
       if (userRole() == 'agent') {
         let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
         $('body').append(flashModal);
