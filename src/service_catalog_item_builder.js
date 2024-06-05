@@ -11,8 +11,10 @@ import {
 
 import {
   userRole,
+  getCookie,
   loadingIcon,
   isMyAssignedAssets,
+  setCookieForXHours,
   placeholderImagePath,
   getMyAssignedAssetsServiceItems
 } from './utility.js';
@@ -167,8 +169,10 @@ class ServiceCatalogItemBuilder {
       e.preventDefault();
 
       if (userRole() == 'agent') {
-        if ($('#flash_messages_outer_container').length == 0) {
+        debugger;
+        if ($('#flash_messages_outer_container').length == 0 && !getCookie('agent_ticket_submission_shown')) {
           let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
+          setCookieForXHours(1, 'agent_ticket_submission_shown');
           $('body').append(flashModal);
         }
       } else {

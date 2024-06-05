@@ -143,8 +143,28 @@ function getLocale() {
   return window.HelpCenter.user.locale.split('-')[0];
 }
 
+function setCookieForXHours(noOfHours, elementId) {
+  let date = new Date();
+  date.setTime(date.getTime() + (noOfHours * 60 * 60 * 1000));
+  let expires = "; expires=" + date.toUTCString();
+  document.cookie = elementId + '=true' + expires + "; path=/";
+}
+
+function getCookie(name) {
+  let nameEQ = name + "=";
+  let ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+
 export {
   userRole,
+  getCookie,
   getLocale,
   isSignedIn,
   signInPath,
@@ -153,6 +173,7 @@ export {
   isRequestPage,
   isNewRequestPage,
   loadExternalFiles,
+  setCookieForXHours,
   isMyAssignedAssets,
   getCssVariableValue,
   placeholderImagePath,

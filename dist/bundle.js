@@ -229,6 +229,24 @@
     return window.HelpCenter.user.locale.split('-')[0];
   }
 
+  function setCookieForXHours(noOfHours, elementId) {
+    let date = new Date();
+    date.setTime(date.getTime() + (noOfHours * 60 * 60 * 1000));
+    let expires = "; expires=" + date.toUTCString();
+    document.cookie = elementId + '=true' + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
   class SvgBuilder {
     constructor() {
       this.containerClass = 'kb-svg-icon';
@@ -1340,8 +1358,10 @@
         e.preventDefault();
 
         if (userRole() == 'agent') {
-          if ($('#flash_messages_outer_container').length == 0) {
+          debugger;
+          if ($('#flash_messages_outer_container').length == 0 && !getCookie('agent_ticket_submission_shown')) {
             let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
+            setCookieForXHours(1, 'agent_ticket_submission_shown');
             $('body').append(flashModal);
           }
         } else {
