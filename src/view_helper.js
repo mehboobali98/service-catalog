@@ -84,12 +84,12 @@ function renderFlashMessages(type, message) {
 
   // flash message container
   const flashMessageContentContainer  = $('<div>').addClass('d-flex justify-content-center w-100');
-  const flashMessageContainer         = $('<div>').addClass('row no-gutters');
-  const flashMessage                  = $('<div>').addClass('col-11')
+  const flashMessageContainer         = $('<div>').addClass('row no-gutters w-100');
+  const flashMessage                  = $('<div>').addClass('col-11 flash-message-content')
                                                   .append($('<p>').text(message));
   const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
-  const flashMessageCloseBtnFlex      = $('<div>').addClass('d-flex justify-content-end');
-  const flashMessageCloseBtn          = $('<div>').addClass('dismiss-icon')
+  const flashMessageCloseBtnFlex      = $('<div>').addClass('d-flex justify-content-end flash-message-close-btn-flex');
+  const flashMessageCloseBtn          = $('<div>').addClass('flash-message-close-btn')
                                                   .append($('<a>').attr('href', '#_').text('x'));
   flashMessageCloseBtnFlex.append(flashMessageCloseBtn);
   flashMessageCloseBtnContainer.append(flashMessageCloseBtnFlex);

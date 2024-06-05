@@ -353,9 +353,41 @@ a.go-back-btn:hover {
 }
 
 .flash-messages-outer-container .flash-type .flash-error-svg-container {
-  color: #FFFFFF;
-  width: 50px;
-  padding: 8px;
-  border: 1px solid #D73B3B;
+  color:            #FFFFFF;
+  width:            50px;
+  border:           1px solid #D73B3B;
+  padding:          8px;
   background-color: #D73B3B;
+}
+
+.flash-messages-outer-container .flash-type .flash-error-svg-container .kb-svg-icon {
+  color:    #FFFFFF;
+  width:    50px;
+  padding:  8px;
+}
+
+.flash-message-content {
+  padding: 16px 16px 16px 20px;
+}
+
+.flash-message-close-btn-flex {
+  padding: 16px 16px 16px 0px;
+}
+
+.flash-message-close-btn {
+  width:        16px;
+  height:       18px;
+  outline:      none;
+  text-align:   center;
+  line-height:  18px;
+}
+
+.flash-message-close-btn a {
+  height: 18px;
+  line-height: 18px;
+  color: #A1A1A1;
+  display: block;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
 }
