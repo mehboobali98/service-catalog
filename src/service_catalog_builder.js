@@ -1,4 +1,4 @@
-import { generateI18nKey }       from './i18n.js';
+import { generateI18nKey }                  from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
          serviceCatalogDataPresent }        from './utility.js';

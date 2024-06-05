@@ -10,14 +10,19 @@ import {
 } from './constant.js';
 
 import {
+  userRole,
+  getCookie,
   loadingIcon,
   isMyAssignedAssets,
+  setCookieForXHours,
   placeholderImagePath,
-  getMyAssignedAssetsServiceItems
+  getMyAssignedAssetsServiceItems,
+  requestSubmissionSettingMessageForAgent
 } from './utility.js';
 
 import {
-  noServiceItems
+  noServiceItems,
+  renderFlashMessages
 } from './view_helper.js';
 
 import {
@@ -105,7 +110,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-    const card                 = $('<div>').addClass('row service-item-card h-100');
+    const card                 = $('<div>').addClass('row service-item-card js-service-item-card h-100');
     const queryParams          = {};
     const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
@@ -154,7 +159,7 @@ class ServiceCatalogItemBuilder {
     const submitRequestBtn = $('<a>').attr('href', url)
                                      .attr('data-i18n', 'report-issue')
                                      .text('Report Issue ')
-                                     .addClass('float-end footer-text');
+                                     .addClass('float-end footer-text js-service-item-request-btn');
     submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
     cardFooter.append(submitRequestBtn);
 
@@ -164,7 +169,18 @@ class ServiceCatalogItemBuilder {
     card.click(function(e) {
       e.preventDefault();
 
-      window.location.href = url;
+      if (userRole() == 'agent') {
+        if ($('#flash_messages_outer_container').length == 0 && !getCookie('agent_ticket_submission_flash_message_shown')) {
+          let flashModal = renderFlashMessages(
+            null,
+            requestSubmissionSettingMessageForAgent()
+          );
+          setCookieForXHours(0.10, 'agent_ticket_submission_flash_message_shown');
+          $(flashModal).hide().appendTo('body').fadeIn('slow');
+        }
+      } else {
+        window.location.href = url;
+      }
     });
 
     return card;

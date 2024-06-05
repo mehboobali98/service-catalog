@@ -10,6 +10,7 @@
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
   const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
   const CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH   = 1000;
+  const AGENT_REQUEST_SUBMISSION_SETTING_BLOG   = 'https://support.zendesk.com/hc/en-us/articles/4408828251930-Enabling-agents-to-access-request-forms';
   const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING  = {
     'service_item':                'service_item_placeholder',
     'assigned_asset':              'asset_placeholder',
@@ -171,7 +172,11 @@
   }
 
   function notSignedIn() {
-    return window.HelpCenter.user.role === 'anonymous';
+    return userRole() === 'anonymous';
+  }
+
+  function userRole() {
+    return window.HelpCenter.user.role;
   }
 
   function returnToPath() {
@@ -225,6 +230,28 @@
     return window.HelpCenter.user.locale.split('-')[0];
   }
 
+  function requestSubmissionSettingMessageForAgent() {
+    return `Please enable access to request forms via Guide Admin > Guide Settings. Read the guide <a href='${AGENT_REQUEST_SUBMISSION_SETTING_BLOG}' target='_blank'>here</a>.`;
+  }
+
+  function setCookieForXHours(noOfHours, elementId) {
+    let date = new Date();
+    date.setTime(date.getTime() + (noOfHours * 60 * 60 * 1000));
+    let expires = "; expires=" + date.toUTCString();
+    document.cookie = elementId + '=true' + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
   class SvgBuilder {
     constructor() {
       this.containerClass = 'kb-svg-icon';
@@ -248,6 +275,8 @@
           return this.satisfiedSvg();
         case 'disappointed':
           return this.disappointedSvg();
+        case 'flashErrorSvg':
+          return this.flashErrorSvg();
         default:
           // Handle invalid svgType
           return '';
@@ -370,6 +399,17 @@
                   <stop offset="1" stop-color="#F3D652" />
                 </linearGradient>
               </defs>
+            </svg>`;
+    }
+
+    flashErrorSvg() {
+      return `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+              <defs><style>.a{fill:#fff;}.st0{fill:#d73b3b;}</style></defs>
+              <g transform='translate(-619 -294.5)'>
+                <path class='a' d='M16.971,0,24,7.029v9.941L16.971,24H7.029L0,16.971V7.029L7.029,0Z' transform='translate(619 294.5)'/>
+                <circle class='st0' cx='1.543' cy='1.543' r='1.543' transform='translate(629.416 309.672)'/>
+                <path class='st0' d='M9.786,4.8l-.363,7.714H7.063L6.7,4.8Z' transform='translate(622.715 295.872)'/>
+              </g>
             </svg>`;
     }
   }
@@ -996,14 +1036,58 @@
     return noResultsContainer;
   }
 
+  function renderFlashMessages(type, message) {
+    const flashMessagesOuterContainer = $('<div>').attr('id', 'flash_messages_outer_container')
+                                                  .addClass('flash-messages-outer-container');
+    const flashMessagesContainer      = $('<div>').addClass('flash-messages-container');
+    const flashType                   = $('<div>').addClass('flash-type');
+
+    // svg
+    const flashSvgContainer           = $('<div>').addClass('d-flex flash-error-svg-container justify-content-center align-items-center');
+    const flashSvg                    = new SvgBuilder().build('flashErrorSvg');
+    flashSvgContainer.append(flashSvg);
+
+    // flash message container
+    const flashMessageContentContainer  = $('<div>').addClass('d-flex justify-content-center w-100');
+    const flashMessageContainer         = $('<div>').addClass('row no-gutters w-100');
+    const flashMessage                  = $('<div>').addClass('col-11 flash-message-content')
+                                                    .append($('<p>').html(message));
+    const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
+    const flashMessageCloseBtnFlex      = $('<div>').addClass('d-flex justify-content-end flash-message-close-btn-flex');
+    const flashMessageCloseBtn          = $('<div>').addClass('flash-message-close-btn')
+                                                    .append(
+                                                        $('<a>').attr('href', '#_')
+                                                                .text('x')
+                                                                .click(function(e) {
+                                                                  $('#flash_messages_outer_container').fadeOut("slow", function(){
+                                                                    $('#flash_messages_outer_container').remove();
+                                                                  });
+                                                                })
+                                                    );
+    flashMessageCloseBtnFlex.append(flashMessageCloseBtn);
+    flashMessageCloseBtnContainer.append(flashMessageCloseBtnFlex);
+
+    flashMessageContainer.append(flashMessage, flashMessageCloseBtnContainer);
+    flashMessageContentContainer.append(flashMessageContainer);
+
+    flashType.append(flashSvgContainer, flashMessageContentContainer);
+
+    flashMessagesContainer.append(flashType);
+    flashMessagesOuterContainer.append(flashMessagesContainer);
+
+    return flashMessagesOuterContainer;
+  }
+
   class ServiceCatalogItemDetailBuilder {
     constructor(locale) {
       this.locale                 = locale;
+      this.userRole               = null;
       this.currency               = null;
       this.serviceCategoriesItems = null;
     }
 
     build(data) {
+      this.userRole               = userRole();
       this.currency               = data.currency;
       this.serviceCategoriesItems = data.service_catalog_data;
 
@@ -1014,7 +1098,7 @@
           let serviceItems = JSON.parse(data.service_items);
           $.each(serviceItems, (index, serviceCategoryItem) => {
             container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
-            this.bindItemDetailEventListener(serviceCategory, serviceCategoryItem);
+            this.bindItemDetailEventListener(this.userRole, serviceCategory, serviceCategoryItem);
           });
         }
       });
@@ -1063,7 +1147,7 @@
       const requestServiceBtn = $('<a>').attr('href', url)
                                         .attr('data-i18n', 'request-service')
                                         .text('Request Service')
-                                        .addClass('btn btn-outline-primary request-service-btn');
+                                        .addClass('btn btn-outline-primary request-service-btn js-request-service-btn');
       requestServiceBtnContainer.append(requestServiceBtn);
 
       detailPageHeader.append(headerContent, requestServiceBtnContainer);
@@ -1111,7 +1195,7 @@
       }
     }
 
-    bindItemDetailEventListener(serviceCategory, serviceCategoryItem) {
+    bindItemDetailEventListener(userRole, serviceCategory, serviceCategoryItem) {
       $('body').on('click', '.js-service-item-detail-page-btn, .js-default-service-item', function(e) {
         e.preventDefault();
 
@@ -1127,6 +1211,22 @@
         $("[id*='_service_items_container']").hide();
         $('#service_items_container').show();
         detailPageEle.show();
+      });
+
+      $('body').on('click', '.js-request-service-btn', function(e) {
+        if (userRole == 'agent') {
+          if ($('#flash_messages_outer_container').length == 0 && !getCookie('agent_ticket_submission_flash_message_shown_from_detail_page')) {
+            let flashModal = renderFlashMessages(
+              null,
+              requestSubmissionSettingMessageForAgent()
+            );
+            setCookieForXHours(0.10, 'agent_ticket_submission_flash_message_shown_from_detail_page');
+            $(flashModal).hide().appendTo('body').fadeIn('slow');
+          }
+          return false;
+        } else {
+          return true;
+        }
       });
     }
   }
@@ -1211,7 +1311,7 @@
     }
 
     buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
-      const card                 = $('<div>').addClass('row service-item-card h-100');
+      const card                 = $('<div>').addClass('row service-item-card js-service-item-card h-100');
       const queryParams          = {};
       const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
@@ -1260,7 +1360,7 @@
       const submitRequestBtn = $('<a>').attr('href', url)
                                        .attr('data-i18n', 'report-issue')
                                        .text('Report Issue ')
-                                       .addClass('float-end footer-text');
+                                       .addClass('float-end footer-text js-service-item-request-btn');
       submitRequestBtn.append($('<span>').html('&#8594;').addClass('footer-arrow'));
       cardFooter.append(submitRequestBtn);
 
@@ -1270,7 +1370,18 @@
       card.click(function(e) {
         e.preventDefault();
 
-        window.location.href = url;
+        if (userRole() == 'agent') {
+          if ($('#flash_messages_outer_container').length == 0 && !getCookie('agent_ticket_submission_flash_message_shown')) {
+            let flashModal = renderFlashMessages(
+              null,
+              requestSubmissionSettingMessageForAgent()
+            );
+            setCookieForXHours(0.10, 'agent_ticket_submission_flash_message_shown');
+            $(flashModal).hide().appendTo('body').fadeIn('slow');
+          }
+        } else {
+          window.location.href = url;
+        }
       });
 
       return card;

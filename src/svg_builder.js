@@ -21,6 +21,8 @@ class SvgBuilder {
         return this.satisfiedSvg();
       case 'disappointed':
         return this.disappointedSvg();
+      case 'flashErrorSvg':
+        return this.flashErrorSvg();
       default:
         // Handle invalid svgType
         return '';
@@ -143,6 +145,17 @@ class SvgBuilder {
                   <stop offset="1" stop-color="#F3D652" />
                 </linearGradient>
               </defs>
+            </svg>`;
+  }
+
+  flashErrorSvg() {
+    return `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+              <defs><style>.a{fill:#fff;}.st0{fill:#d73b3b;}</style></defs>
+              <g transform='translate(-619 -294.5)'>
+                <path class='a' d='M16.971,0,24,7.029v9.941L16.971,24H7.029L0,16.971V7.029L7.029,0Z' transform='translate(619 294.5)'/>
+                <circle class='st0' cx='1.543' cy='1.543' r='1.543' transform='translate(629.416 309.672)'/>
+                <path class='st0' d='M9.786,4.8l-.363,7.714H7.063L6.7,4.8Z' transform='translate(622.715 295.872)'/>
+              </g>
             </svg>`;
   }
 }
