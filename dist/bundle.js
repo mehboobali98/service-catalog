@@ -231,7 +231,7 @@
   }
 
   function requestSubmissionSettingMessageForAgent() {
-    return `Please enable access to request forms via Guide Admin > Guide Settings. Read the guide <a href=${AGENT_REQUEST_SUBMISSION_SETTING_BLOG}>here</a>.`;
+    return `Please enable access to request forms via Guide Admin > Guide Settings. Read the guide <a href='${AGENT_REQUEST_SUBMISSION_SETTING_BLOG}' target='_blank'>here</a>.`;
   }
 
   function setCookieForXHours(noOfHours, elementId) {
