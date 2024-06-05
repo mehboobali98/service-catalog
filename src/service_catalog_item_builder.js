@@ -170,9 +170,11 @@ class ServiceCatalogItemBuilder {
 
       if (userRole() == 'agent') {
         if ($('#flash_messages_outer_container').length == 0 && !getCookie('agent_ticket_submission_flash_message_shown')) {
-          let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
-          setCookieForXHours(1, 'agent_ticket_submission_flash_message_shown');
-          // $('body').append(flashModal);
+          let flashModal = renderFlashMessages(
+            null,
+            'Please enable access to request forms via Guide Admin > Guide Settings. Read the guide here.'
+          );
+          setCookieForXHours(0.10, 'agent_ticket_submission_flash_message_shown');
           $(flashModal).hide().appendTo('body').fadeIn('slow');
         }
       } else {

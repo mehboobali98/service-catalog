@@ -149,15 +149,16 @@ class ServiceCatalogItemDetailBuilder {
     });
 
     $('body').on('click', '.js-request-service-btn', function(e) {
-      debugger;
       if (userRole == 'agent') {
-        debugger;
         if ($('#flash_messages_outer_container').length == 0 && !getCookie('agent_ticket_submission_flash_message_shown_from_detail_page')) {
-          let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
-          setCookieForXHours(1, 'agent_ticket_submission_flash_message_shown_from_detail_page');
+          let flashModal = renderFlashMessages(
+            null,
+            'Please enable access to request forms via Guide Admin > Guide Settings. Read the guide here.'
+          );
+          setCookieForXHours(0.10, 'agent_ticket_submission_flash_message_shown_from_detail_page');
           $(flashModal).hide().appendTo('body').fadeIn('slow');
-          return false;
         }
+        return false;
       } else {
         return true;
       }
