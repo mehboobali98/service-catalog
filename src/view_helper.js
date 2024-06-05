@@ -94,8 +94,8 @@ function renderFlashMessages(type, message) {
   flashMessageCloseBtnFlex.append(flashMessageCloseBtn);
   flashMessageCloseBtnContainer.append(flashMessageCloseBtnFlex);
 
-  flashMessageContainer.append(flashMessage);
-  flashMessageContentContainer.append(flashMessageContainer, flashMessageCloseBtnContainer);
+  flashMessageContainer.append(flashMessage, flashMessageCloseBtnContainer);
+  flashMessageContentContainer.append(flashMessageContainer);
 
   flashType.append(flashSvgContainer, flashMessageContentContainer);
 
