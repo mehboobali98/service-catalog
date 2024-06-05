@@ -95,7 +95,9 @@ function renderFlashMessages(type, message) {
                                                       $('<a>').attr('href', '#_')
                                                               .text('x')
                                                               .click(function(e) {
-                                                                $('#flash_messages_outer_container').remove();
+                                                                $('#flash_messages_outer_container').fadeOut("slow", function(){
+                                                                  $('#flash_messages_outer_container').remove();
+                                                                });
                                                               })
                                                   );
   flashMessageCloseBtnFlex.append(flashMessageCloseBtn);
