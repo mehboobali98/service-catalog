@@ -166,9 +166,7 @@ class ServiceCatalogItemBuilder {
     card.click(function(e) {
       e.preventDefault();
 
-      debugger;
       if (userRole() == 'agent') {
-        debugger;
         let flashModal = renderFlashMessages(null, 'test');
         $('body').append(flashModal);
       } else {
