@@ -95,8 +95,7 @@ function renderFlashMessages(type, message) {
                                                       $('<a>').attr('href', '#_')
                                                               .text('x')
                                                               .click(function(e) {
-                                                                debugger;
-                                                                $('#flash_messages_outer_container').hide();
+                                                                $('#flash_messages_outer_container').remove();
                                                               })
                                                   );
   flashMessageCloseBtnFlex.append(flashMessageCloseBtn);

@@ -167,7 +167,7 @@ class ServiceCatalogItemBuilder {
       e.preventDefault();
 
       if (userRole() == 'agent') {
-        let flashModal = renderFlashMessages(null, 'test');
+        let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
         $('body').append(flashModal);
       } else {
         window.location.href = url;

@@ -1036,8 +1036,7 @@
                                                         $('<a>').attr('href', '#_')
                                                                 .text('x')
                                                                 .click(function(e) {
-                                                                  debugger;
-                                                                  $('#flash_messages_outer_container').hide();
+                                                                  $('#flash_messages_outer_container').remove();
                                                                 })
                                                     );
     flashMessageCloseBtnFlex.append(flashMessageCloseBtn);
@@ -1339,7 +1338,7 @@
         e.preventDefault();
 
         if (userRole() == 'agent') {
-          let flashModal = renderFlashMessages(null, 'test');
+          let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
           $('body').append(flashModal);
         } else {
           window.location.href = url;
