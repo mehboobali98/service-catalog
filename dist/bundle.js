@@ -1339,8 +1339,7 @@
       card.click(function(e) {
         e.preventDefault();
 
-        debugger;
-        if (userRole() == 'agent') {
+        if (userRole() == 'agent' && $('#flash_messages_outer_container').length == 0) {
           let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
           $('body').append(flashModal);
         } else {
