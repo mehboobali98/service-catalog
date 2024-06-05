@@ -1339,9 +1339,11 @@
       card.click(function(e) {
         e.preventDefault();
 
-        if (userRole() == 'agent' && $('#flash_messages_outer_container').length == 0) {
-          let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
-          $('body').append(flashModal);
+        if (userRole() == 'agent') {
+          if ($('#flash_messages_outer_container').length == 0) {
+            let flashModal = renderFlashMessages(null, 'Please enable access to request forms via Guide Admin > Guide Settings.');
+            $('body').append(flashModal);
+          }
         } else {
           window.location.href = url;
         }
