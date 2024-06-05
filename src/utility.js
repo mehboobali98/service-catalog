@@ -1,6 +1,7 @@
 import {
   STAGING_CDN_URL,
   PRODUCTION_CDN_URL,
+  AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
   SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
 } from './constant.js';
 
@@ -143,6 +144,10 @@ function getLocale() {
   return window.HelpCenter.user.locale.split('-')[0];
 }
 
+function requestSubmissionSettingMessageForAgent() {
+  return `Please enable access to request forms via Guide Admin > Guide Settings. Read the guide <a href=${AGENT_REQUEST_SUBMISSION_SETTING_BLOG}>here</a>.`;
+}
+
 function setCookieForXHours(noOfHours, elementId) {
   let date = new Date();
   date.setTime(date.getTime() + (noOfHours * 60 * 60 * 1000));
@@ -161,7 +166,6 @@ function getCookie(name) {
   return null;
 }
 
-
 export {
   userRole,
   getCookie,
@@ -179,5 +183,6 @@ export {
   placeholderImagePath,
   isServiceCatalogPage,
   serviceCatalogDataPresent,
-  getMyAssignedAssetsServiceItems
+  getMyAssignedAssetsServiceItems,
+  requestSubmissionSettingMessageForAgent
 };

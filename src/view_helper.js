@@ -1,5 +1,8 @@
-import { SvgBuilder }                           from './svg_builder.js';
-import { STAGING_CDN_URL, PRODUCTION_CDN_URL }  from './constant.js';
+import { SvgBuilder } from './svg_builder.js';
+import {
+  STAGING_CDN_URL,
+  PRODUCTION_CDN_URL
+}  from './constant.js';
 
 function serviceCatalogDisabled(ezoSubdomain) {
   const serviceCatalogDisabledContainer = $('<div>').addClass('d-flex flex-column align-items-center service-catalog-disabled-container');
