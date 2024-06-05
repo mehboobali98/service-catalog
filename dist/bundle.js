@@ -1051,7 +1051,7 @@
     const flashMessageContentContainer  = $('<div>').addClass('d-flex justify-content-center w-100');
     const flashMessageContainer         = $('<div>').addClass('row no-gutters w-100');
     const flashMessage                  = $('<div>').addClass('col-11 flash-message-content')
-                                                    .append($('<p>').text(message));
+                                                    .append($('<p>').html(message));
     const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
     const flashMessageCloseBtnFlex      = $('<div>').addClass('d-flex justify-content-end flash-message-close-btn-flex');
     const flashMessageCloseBtn          = $('<div>').addClass('flash-message-close-btn')
