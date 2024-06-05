@@ -330,6 +330,9 @@ a.go-back-btn:hover {
 }
 
 .flash-messages-outer-container {
+  top:              11%;
+  left:             20%;
+  width:            60%;
   margin:           0 auto;
   z-index:          1035;
   position:         fixed;
@@ -338,4 +341,21 @@ a.go-back-btn:hover {
 
 .flash-messages-outer-container .flash-type {
   box-shadow: 0 4px 5px 0px rgba(#808B96, 0.2), 0 6px 20px 2px rgba(#808B96, 0.19);
+  border: 1px solid #D73B3B;
+  display: flex;
+  margin-bottom: 20px;
+  padding: 0;
+  background-color: #FFFFFF;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.flash-messages-outer-container .flash-type .flash-error-svg-container {
+  color: #FFFFFF;
+  width: 50px;
+  padding: 8px;
+  border: 1px solid #D73B3B;
+  background-color: #D73B3B;
 }
