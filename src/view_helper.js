@@ -73,74 +73,75 @@ function noServiceItems(notFoundMessage) {
 }
 
 function renderFlashMessages(type, message) {
-  // const flashMessagesOuterContainer = $('<div>').addClass('flash-messages-outer-container');
-  // const flashMessagesContainer      = $('<div>').addClass('flash-messages-container');
-  // const flashType                   = $('<div>').addClass('flash-type');
-
-  // // svg
-  // const flashSvgContainer           = $('<div>').addClass('d-flex justify-content-center align-items-center');
-  // const flashSvg                    = new SvgBuilder().build('flashErrorSvg');
-  // flashSvgContainer.append(flashSvg);
-
-  // // flash message container
-  // const flashMessageContentContainer  = $('<div>').addClass('d-flex justify-content-center w-100');
-  // const flashMessageContainer         = $('<div>').addClass('row no-gutters');
-  // const flashMessage                  = $('<div>').addClass('col-11')
-  //                                                 .append($('<p>').text(message));
-  // const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
-
-  // flashMessageContainer.append(flashMessage);
-  // flashMessageContentContainer.append(flashMessageContainer, flashMessageCloseBtnContainer);
-
-  // flashType.append(flashSvgContainer, flashMessageContentContainer);
-
-  // flashMessagesContainer.append(flashType);
-  // flashMessagesOuterContainer.append(flashMessagesContainer);
-  
-  const modal         = $('<div>').addClass('modal fade hide')
-                                    .attr('id', 'flash_message_modal')
-                                    .attr('role', 'modal');
-  const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position customer-effort-survery-dialog-shadow');
-
-  // modal-content
-  const modalContent  = $('<div>').addClass('modal-content');
-
-  //modal-header
-  const modalHeader = $('<div>').addClass('modal-header');
-  // .append(
-  //   $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
-  //           .text('Feedback'),
-  //   $('<button>').addClass('btn-close')
-  //                .attr('id', 'modal_close_btn')
-  //                .attr('type', 'button')
-  //                .attr('data-bs-dismiss', 'modal')
-  //                .attr('aria-label', 'Close')
-  // );
-  const flashMessageContentContainer = $('<div>').addClass('row no-gutters');
+  const flashMessagesOuterContainer = $('<div>').addClass('flash-messages-outer-container');
+  const flashMessagesContainer      = $('<div>').addClass('flash-messages-container');
+  const flashType                   = $('<div>').addClass('flash-type');
 
   // svg
-  const flashMessageSvg              = $('<div>').addClass('col-2');
-  const flashSvg                     = new SvgBuilder().build('flashErrorSvg');
-  debugger;
-  flashMessageSvg.append(flashSvg);
+  const flashSvgContainer           = $('<div>').addClass('d-flex justify-content-center align-items-center');
+  const flashSvg                    = new SvgBuilder().build('flashErrorSvg');
+  flashSvgContainer.append(flashSvg);
 
-  // content
-  const flashMessageContent          = $('<div>').addClass('col-10')
-                                                 .append($('<p>').text(message));
+  // flash message container
+  const flashMessageContentContainer  = $('<div>').addClass('d-flex justify-content-center w-100');
+  const flashMessageContainer         = $('<div>').addClass('row no-gutters');
+  const flashMessage                  = $('<div>').addClass('col-11')
+                                                  .append($('<p>').text(message));
+  const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
 
-  flashMessageContentContainer.append(flashMessageSvg, flashMessageContent);
+  flashMessageContainer.append(flashMessage);
+  flashMessageContentContainer.append(flashMessageContainer, flashMessageCloseBtnContainer);
 
-  modalHeader.append(flashMessageContentContainer)
+  flashType.append(flashSvgContainer, flashMessageContentContainer);
 
-  modalContent.append(modalHeader);
-  modalDialog.append(modalContent);
-  modal.append(modalDialog);
+  flashMessagesContainer.append(flashType);
+  flashMessagesOuterContainer.append(flashMessagesContainer);
+  
+  // const modal         = $('<div>').addClass('modal fade hide')
+  //                                   .attr('id', 'flash_message_modal')
+  //                                   .attr('role', 'modal');
+  // const modalDialog   = $('<div>').addClass('modal-dialog customer-effort-survery-dialog-position customer-effort-survery-dialog-shadow');
 
-  debugger;
+  // // modal-content
+  // const modalContent  = $('<div>').addClass('modal-content');
 
-  $('body').append(modal);
+  // //modal-header
+  // const modalHeader = $('<div>').addClass('modal-header');
+  // // .append(
+  // //   $('<h5>').addClass('modal-title customer-effort-survery-dialog-title-font-style')
+  // //           .text('Feedback'),
+  // //   $('<button>').addClass('btn-close')
+  // //                .attr('id', 'modal_close_btn')
+  // //                .attr('type', 'button')
+  // //                .attr('data-bs-dismiss', 'modal')
+  // //                .attr('aria-label', 'Close')
+  // // );
+  // const flashMessageContentContainer = $('<div>').addClass('row no-gutters');
 
-  return modal;
+  // // svg
+  // const flashMessageSvg              = $('<div>').addClass('col-2');
+  // const flashSvg                     = new SvgBuilder().build('flashErrorSvg');
+  // debugger;
+  // flashMessageSvg.append(flashSvg);
+
+  // // content
+  // const flashMessageContent          = $('<div>').addClass('col-10')
+  //                                                .append($('<p>').text(message));
+
+  // flashMessageContentContainer.append(flashMessageSvg, flashMessageContent);
+
+  // modalHeader.append(flashMessageContentContainer)
+
+  // modalContent.append(modalHeader);
+  // modalDialog.append(modalContent);
+  // modal.append(modalDialog);
+
+  // debugger;
+
+  // $('body').append(modal);
+
+  // return modal;
+  return flashMessagesOuterContainer;
 }
 
 export {
