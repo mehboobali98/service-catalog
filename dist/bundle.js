@@ -1016,7 +1016,7 @@
   function renderFlashMessages(type, message) {
     const flashMessagesOuterContainer = $('<div>').addClass('flash-messages-outer-container');
     const flashMessagesContainer      = $('<div>').addClass('flash-messages-container');
-    const flashType                   = $('<div>').addClass('flash-type');
+    const flashType                   = $('<div>').addClass('flash-type js-flash-error');
 
     // svg
     const flashSvgContainer           = $('<div>').addClass('d-flex flash-error-svg-container justify-content-center align-items-center');
@@ -1031,7 +1031,12 @@
     const flashMessageCloseBtnContainer = $('<div>').addClass('col-1');
     const flashMessageCloseBtnFlex      = $('<div>').addClass('d-flex justify-content-end flash-message-close-btn-flex');
     const flashMessageCloseBtn          = $('<div>').addClass('flash-message-close-btn')
-                                                    .append($('<a>').attr('href', '#_').text('x'));
+                                                    .append(
+                                                        $('<a>').attr('href', '#_')
+                                                                .attr('data-target', '.js-flash-error')
+                                                                .data('target', '.js-flash-error')
+                                                                .text('x')
+                                                    );
     flashMessageCloseBtnFlex.append(flashMessageCloseBtn);
     flashMessageCloseBtnContainer.append(flashMessageCloseBtnFlex);
 
