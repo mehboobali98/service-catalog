@@ -819,7 +819,7 @@
           this.preselectAssetsCustomField(this.extractQueryParams(window.location));
 
           debugger;
-          $('#ezo-asset-select').on('select2:select, select2:unselect', function() {
+          $('#ezo-asset-select').on('select2:select select2:unselect', function() {
             debugger;
             var selectedIds = $('#ezo-asset-select').val();
             if (selectedIds.length > 0) {
