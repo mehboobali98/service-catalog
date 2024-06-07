@@ -817,7 +817,7 @@
 
           this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
 
-          $('#ezo-asset-select').on('select2:select select2:unselect', function() {
+          $('#ezo-asset-select').on('change', function() {
             var selectedIds = $('#ezo-asset-select').val();
             debugger;
             if (selectedIds.length > 0) {
