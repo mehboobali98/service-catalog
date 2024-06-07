@@ -819,7 +819,6 @@
 
           $('#ezo-asset-select').on('change', function() {
             var selectedIds = $('#ezo-asset-select').val();
-            debugger;
             if (selectedIds.length > 0) {
               let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
               data = data.map((asset) => {
