@@ -816,10 +816,10 @@
           ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
           this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
-          this.preselectAssetsCustomField(this.extractQueryParams(window.location));
 
           $('#ezo-asset-select').on('select2:select select2:unselect', function() {
             var selectedIds = $('#ezo-asset-select').val();
+            debugger;
             if (selectedIds.length > 0) {
               let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
               data = data.map((asset) => {
@@ -830,6 +830,8 @@
               ezoCustomFieldEle.val(JSON.stringify({ assets: data }));
             }
           });
+
+          this.preselectAssetsCustomField(this.extractQueryParams(window.location));
         });
     }
 
