@@ -818,7 +818,9 @@
           this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
           this.preselectAssetsCustomField(this.extractQueryParams(window.location));
 
-          $('form.request-form').on('submit', function() {
+          debugger;
+          $('#ezo-asset-select').on('select2:select', function() {
+            debugger;
             var selectedIds = $('#ezo-asset-select').val();
             if (selectedIds.length > 0) {
               let data = assetsData.data.filter(asset => selectedIds.includes(asset.id.toString()));
