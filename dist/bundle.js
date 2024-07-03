@@ -606,11 +606,10 @@
       this.hideAssetsCustomField();
 
       $.getJSON(requestUrl).done((data) => {
-        const ezoFieldData            = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
-        const ezoServiceItemFieldData = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
-
-        const ezoFieldDataPresent            = self.fieldDataPresent(ezoFieldData);
-        const ezoServiceItemFieldDataPresent = self.fieldDataPresent(ezoServiceItemFieldData); 
+        const ezoFieldData                    = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoFieldId });
+        const ezoServiceItemFieldData         = data.request.custom_fields.find(function (customField) { return customField.id == self.ezoServiceItemFieldId });
+        const ezoFieldDataPresent             = self.fieldDataPresent(ezoFieldData);
+        const ezoServiceItemFieldDataPresent  = self.fieldDataPresent(ezoServiceItemFieldData);
 
         if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
 
@@ -619,16 +618,15 @@
         return self.withToken(token => {
           if (token) {
             options.headers['Authorization']              = 'Bearer ' + token;
-            options.headers['ngrok-skip-browser-warning'] = true;
 
             if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
             if (ezoFieldDataPresent) {
               const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-              const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
               const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
+              const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
 
-              if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
+              if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
 
               if (parsedEzoFieldValue.linked != 'true') {
                 self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
