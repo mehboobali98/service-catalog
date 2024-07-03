@@ -611,7 +611,6 @@
         const ezoFieldDataPresent             = self.fieldDataPresent(ezoFieldData);
         const ezoServiceItemFieldDataPresent  = self.fieldDataPresent(ezoServiceItemFieldData);
 
-        debugger;
         if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
 
         const options = { headers: { } };
@@ -622,7 +621,6 @@
 
             if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
 
-            debugger;
             if (ezoFieldDataPresent) {
               const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
               const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
