@@ -51,6 +51,7 @@ class RequestForm {
             const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
             const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
 
+            debugger;
             if (!assetSequenceNums || assetSequenceNums.length == 0 || !ezoServiceItemFieldData) { return true; }
 
             debugger;
