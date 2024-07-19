@@ -391,3 +391,7 @@ a.go-back-btn:hover {
   font-weight: 600;
   cursor: pointer;
 }
+
+.dropdown-toggle::after { 
+  content: none;
+}
