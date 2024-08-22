@@ -1915,7 +1915,7 @@
     }
 
     initServiceCatalog() {
-      setLocale(this.locale, false);
+      setLocale(this.locale, true);
       if (isServiceCatalogPage()) {
         this.handleServiceCatalogRequest();
       } else if (isNewRequestPage()) {
