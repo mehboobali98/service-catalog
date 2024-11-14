@@ -963,6 +963,7 @@
     }
 
     isRequestFormSelected() {
+      debugger;
       const oldTemplateSelector = $('.nesty-input');
       const newTemplateSelector = $('#downshift-0-input');
 
@@ -975,12 +976,14 @@
     }
 
     subjectFieldElement() {
+      debugger;
       return $('#request_subject').length 
         ? $('#request_subject') 
         : $("[name='request[subject]']");
     }
 
     customFieldElement(customFieldId) {
+      debugger;
       const idSelector    = `#request_custom_fields_${customFieldId}`;
       const nameSelector  = `[name='request[custom_fields][${customFieldId}]']`;
 
