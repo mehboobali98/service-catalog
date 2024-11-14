@@ -805,7 +805,8 @@
         .then(data => {
 
           const assetsData = { data: [] };
-          const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
+          debugger;
+          const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
           this.processData(data.assets, assetsData, 'Asset');
           this.processData(data.software_entitlements, assetsData, 'Software License');
