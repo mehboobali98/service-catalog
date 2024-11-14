@@ -770,7 +770,7 @@
       const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
       debugger;
-      if (formSubject) { this.subjectFieldElement.val(formSubject); }
+      if (formSubject) { this.subjectFieldElement().val(formSubject); }
       if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
       this.getTokenAndFetchAssignedAssets();
