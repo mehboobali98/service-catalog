@@ -23,7 +23,6 @@ class NewRequestForm {
     const formSubject           = this.prepareSubject(searchParams);
     const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
-    debugger;
     if (formSubject) { this.subjectFieldElement().val(formSubject); }
     if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
@@ -59,7 +58,6 @@ class NewRequestForm {
       .then(data => {
 
         const assetsData = { data: [] };
-        debugger;
         const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
         this.processData(data.assets, assetsData, 'Asset');
@@ -219,7 +217,6 @@ class NewRequestForm {
   }
 
   isRequestFormSelected() {
-    debugger;
     const oldTemplateSelector = $('.nesty-input');
     const newTemplateSelector = $('#downshift-0-input');
 
@@ -228,19 +225,16 @@ class NewRequestForm {
     } else if (newTemplateSelector.length) {
       return newTemplateSelector.val().trim().length > 0;
     }
-    debugger;
     return false;
   }
 
   subjectFieldElement() {
-    debugger;
     return $('#request_subject').length 
       ? $('#request_subject') 
       : $("[name='request[subject]']");
   }
 
   customFieldElement(customFieldId) {
-    debugger;
     const idSelector    = `#request_custom_fields_${customFieldId}`;
     const nameSelector  = `[name='request[custom_fields][${customFieldId}]']`;
 
