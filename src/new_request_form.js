@@ -17,14 +17,14 @@ class NewRequestForm {
   }
 
   updateForm() {
-    if ($('.nesty-input')[0].text === "-") { return; }
+    if (!isRequestFormSelected()) { return; }
 
     const searchParams          = this.extractQueryParams(window.location);
     const formSubject           = this.prepareSubject(searchParams);
     const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
-    if (formSubject) { $('#request_subject').val(formSubject); }
-    if (serviceItemFieldValue) { $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
+    if (formSubject) { subjectFieldElement.val(formSubject); }
+    if (serviceItemFieldValue) { customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
     this.getTokenAndFetchAssignedAssets();
   }
@@ -39,8 +39,7 @@ class NewRequestForm {
         const options = {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + token,
-            'ngrok-skip-browser-warning': true
+            'Authorization': 'Bearer ' + token
           }
         };
 
@@ -172,7 +171,7 @@ class NewRequestForm {
   }
 
   preselectAssetsCustomField(searchParams) {
-    let ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
+    let ezoCustomFieldEle = customFieldElement(this.ezoFieldId);
     if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
     let assetId   = searchParams.get('item_id');
@@ -215,6 +214,33 @@ class NewRequestForm {
         dataContainer.data[sequenceNum] = { id: sequenceNum, text: `${textPrefix} # ${sequenceNum} - ${record.name}` };
       });
     }
+  }
+
+  isRequestFormSelected() {
+    const oldTemplateSelector = $('.nesty-input');
+    const newTemplateSelector = $('#downshift-0-input');
+
+    if (oldTemplateSelector.length) {
+      return oldTemplateSelector.text() !== '-';
+    } else if (newTemplateSelector.length) {
+      return newTemplateSelector.text().trim().length > 0;
+    }
+    return false;
+  }
+
+  subjectFieldElement() {
+    return $('#request_subject').length 
+      ? $('#request_subject') 
+      : $("[name='request[subject]']");
+  }
+
+  customFieldElement(customFieldId) {
+    const idSelector    = `#request_custom_fields_${customFieldId}`;
+    const nameSelector  = `[name='request[custom_fields][${customFieldId}]']`;
+
+    return $(idSelector).length 
+      ? $(idSelector) 
+      : $(nameSelector);
   }
 }
 
