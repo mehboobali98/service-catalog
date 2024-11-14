@@ -17,14 +17,14 @@ class NewRequestForm {
   }
 
   updateForm() {
-    if (!isRequestFormSelected()) { return; }
+    if (!this.isRequestFormSelected()) { return; }
 
     const searchParams          = this.extractQueryParams(window.location);
     const formSubject           = this.prepareSubject(searchParams);
     const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
-    if (formSubject) { subjectFieldElement.val(formSubject); }
-    if (serviceItemFieldValue) { customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
+    if (formSubject) { this.subjectFieldElement.val(formSubject); }
+    if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
     this.getTokenAndFetchAssignedAssets();
   }
@@ -171,7 +171,7 @@ class NewRequestForm {
   }
 
   preselectAssetsCustomField(searchParams) {
-    let ezoCustomFieldEle = customFieldElement(this.ezoFieldId);
+    let ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
     if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
     let assetId   = searchParams.get('item_id');
