@@ -769,6 +769,7 @@
       const formSubject           = this.prepareSubject(searchParams);
       const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
+      debugger;
       if (formSubject) { this.subjectFieldElement.val(formSubject); }
       if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
@@ -970,8 +971,9 @@
       if (oldTemplateSelector.length) {
         return oldTemplateSelector.text() !== '-';
       } else if (newTemplateSelector.length) {
-        return newTemplateSelector.text().trim().length > 0;
+        return newTemplateSelector.val().trim().length > 0;
       }
+      debugger;
       return false;
     }
 
