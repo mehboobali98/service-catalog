@@ -17,14 +17,14 @@ class NewRequestForm {
   }
 
   updateForm() {
-    if ($('.nesty-input')[0].text === "-") { return; }
+    if (!this.isRequestFormSelected()) { return; }
 
     const searchParams          = this.extractQueryParams(window.location);
     const formSubject           = this.prepareSubject(searchParams);
     const serviceItemFieldValue = this.prepareServiceItemFieldValue(searchParams);
 
-    if (formSubject) { $('#request_subject').val(formSubject); }
-    if (serviceItemFieldValue) { $('#request_custom_fields_' + this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
+    if (formSubject) { this.subjectFieldElement().val(formSubject); }
+    if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
     this.getTokenAndFetchAssignedAssets();
   }
@@ -39,8 +39,7 @@ class NewRequestForm {
         const options = {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + token,
-            'ngrok-skip-browser-warning': true
+            'Authorization': 'Bearer ' + token
           }
         };
 
@@ -59,7 +58,7 @@ class NewRequestForm {
       .then(data => {
 
         const assetsData = { data: [] };
-        const ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
+        const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
         this.processData(data.assets, assetsData, 'Asset');
         this.processData(data.software_entitlements, assetsData, 'Software License');
@@ -68,6 +67,8 @@ class NewRequestForm {
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
         this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
+        // handle it using css classes
+        $('#ezo-asset-select').next().css('font-size', '15px');
 
         $('#ezo-asset-select').on('change', function() {
           var selectedIds = $('#ezo-asset-select').val();
@@ -172,7 +173,7 @@ class NewRequestForm {
   }
 
   preselectAssetsCustomField(searchParams) {
-    let ezoCustomFieldEle = $('#request_custom_fields_' + this.ezoFieldId);
+    let ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
     if (!this.assetsCustomFieldPresent(ezoCustomFieldEle)) { return; }
 
     let assetId   = searchParams.get('item_id');
@@ -203,8 +204,8 @@ class NewRequestForm {
 
   filesToLoad() {
     return  [
-              { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css'},
-              { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js'  }
+              { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css' },
+              { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js'  }
             ];
   }
 
@@ -215,6 +216,33 @@ class NewRequestForm {
         dataContainer.data[sequenceNum] = { id: sequenceNum, text: `${textPrefix} # ${sequenceNum} - ${record.name}` };
       });
     }
+  }
+
+  isRequestFormSelected() {
+    const oldTemplateSelector = $('.nesty-input');
+    const newTemplateSelector = $('#downshift-0-input');
+
+    if (oldTemplateSelector.length) {
+      return oldTemplateSelector.text() !== '-';
+    } else if (newTemplateSelector.length) {
+      return newTemplateSelector.val().trim().length > 0;
+    }
+    return false;
+  }
+
+  subjectFieldElement() {
+    return $('#request_subject').length 
+      ? $('#request_subject') 
+      : $("[name='request[subject]']");
+  }
+
+  customFieldElement(customFieldId) {
+    const idSelector    = `#request_custom_fields_${customFieldId}`;
+    const nameSelector  = `[name='request[custom_fields][${customFieldId}]']`;
+
+    return $(idSelector).length 
+      ? $(idSelector) 
+      : $(nameSelector);
   }
 }
 
