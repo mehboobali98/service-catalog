@@ -183,12 +183,12 @@ class NewRequestForm {
     if (ezoSelectEle.length === 0) { this.renderEzoSelect2Field(ezoCustomFieldEle); }
 
     //Set the value, creating a new option if necessary
-    if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
-      ezoSelectEle.val(assetId).trigger('change');
-    } else {
-      var newOption = new Option(assetName, assetId, true, true);
-      ezoSelectEle.append(newOption).trigger('change');
-    }
+    // if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
+    //   ezoSelectEle.val(assetId).trigger('change');
+    // } else {
+    //   var newOption = new Option(assetName, assetId, true, true);
+    //   ezoSelectEle.append(newOption).trigger('change');
+    // }
   }
 
   assetsCustomFieldPresent(ezoCustomFieldEle) {
