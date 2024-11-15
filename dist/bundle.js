@@ -813,6 +813,8 @@
           ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
           this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
+          // handle it using css classes
+          $('#ezo-asset-select').next().css('font-size', $('#ezo-asset-select').css('font-size'));
 
           $('#ezo-asset-select').on('change', function() {
             var selectedIds = $('#ezo-asset-select').val();
@@ -928,13 +930,13 @@
       let ezoSelectEle = $('#ezo-asset-select');
       if (ezoSelectEle.length === 0) { this.renderEzoSelect2Field(ezoCustomFieldEle); }
 
-      //Set the value, creating a new option if necessary
-      // if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
-      //   ezoSelectEle.val(assetId).trigger('change');
-      // } else {
-      //   var newOption = new Option(assetName, assetId, true, true);
-      //   ezoSelectEle.append(newOption).trigger('change');
-      // }
+      // Set the value, creating a new option if necessary
+      if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
+        ezoSelectEle.val(assetId).trigger('change');
+      } else {
+        var newOption = new Option(assetName, assetId, true, true);
+        ezoSelectEle.append(newOption).trigger('change');
+      }
     }
 
     assetsCustomFieldPresent(ezoCustomFieldEle) {
@@ -948,8 +950,8 @@
 
     filesToLoad() {
       return  [
-                // { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' },
-                // { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js'  }
+                { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css' },
+                { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js'  }
               ];
     }
 
@@ -1961,11 +1963,9 @@
 
     filesToLoad() {
       return [
-                              { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' },
-                { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' },
-                { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js'  },
                 { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', placement: 'prepend' },
-                { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`}
+                { type: 'link',   url: `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
+                { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
              ];
     }
   }

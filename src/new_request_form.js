@@ -67,6 +67,8 @@ class NewRequestForm {
         ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
 
         this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
+        // handle it using css classes
+        $('#ezo-asset-select').next().css('font-size', $('#ezo-asset-select').css('font-size'));
 
         $('#ezo-asset-select').on('change', function() {
           var selectedIds = $('#ezo-asset-select').val();
@@ -182,13 +184,13 @@ class NewRequestForm {
     let ezoSelectEle = $('#ezo-asset-select');
     if (ezoSelectEle.length === 0) { this.renderEzoSelect2Field(ezoCustomFieldEle); }
 
-    //Set the value, creating a new option if necessary
-    // if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
-    //   ezoSelectEle.val(assetId).trigger('change');
-    // } else {
-    //   var newOption = new Option(assetName, assetId, true, true);
-    //   ezoSelectEle.append(newOption).trigger('change');
-    // }
+    // Set the value, creating a new option if necessary
+    if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
+      ezoSelectEle.val(assetId).trigger('change');
+    } else {
+      var newOption = new Option(assetName, assetId, true, true);
+      ezoSelectEle.append(newOption).trigger('change');
+    }
   }
 
   assetsCustomFieldPresent(ezoCustomFieldEle) {
@@ -202,8 +204,8 @@ class NewRequestForm {
 
   filesToLoad() {
     return  [
-              // { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' },
-              // { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js'  }
+              { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css' },
+              { type: 'script', url: 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js'  }
             ];
   }
 
