@@ -68,7 +68,7 @@ class NewRequestForm {
 
         this.renderSelect2PaginationForUsers($('#ezo-asset-select'), url, options);
         // handle it using css classes
-        $('#ezo-asset-select').next().css('font-size', $('#ezo-asset-select').css('font-size'));
+        $('#ezo-asset-select').next().css('font-size', '15px');
 
         $('#ezo-asset-select').on('change', function() {
           var selectedIds = $('#ezo-asset-select').val();
