@@ -45,6 +45,7 @@ class ServiceCatalogItemBuilder {
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
 
+    debugger;
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
       serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, 0 === index));
@@ -56,6 +57,7 @@ class ServiceCatalogItemBuilder {
   buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
     const serviceCategoryItemsContainer = $('<div>');
     serviceCategoryItemsContainer.attr('id', `${serviceCategory}_container`);
+    debugger;
 
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
@@ -74,9 +76,11 @@ class ServiceCatalogItemBuilder {
 
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
+    debugger;
     if (serviceCategoryItems.service_items) {
       let serviceItems = [];
       if (isMyAssignedAssets(serviceCategory)) {
+        debugger;
         serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
         this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
       } else {

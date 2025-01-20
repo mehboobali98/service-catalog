@@ -27,6 +27,7 @@ class ApiService {
             queryParams.search_query = options.searchQuery; 
           }
 
+          debugger;
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
           fetch(url, requestOptions)
             .then(response => {
@@ -49,6 +50,7 @@ class ApiService {
             })
             .then(data => {
               $('#loading_icon_container').empty();
+              debugger;
               if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                 $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
               } else if (!serviceCatalogDataPresent(data) && !data.search_results) {

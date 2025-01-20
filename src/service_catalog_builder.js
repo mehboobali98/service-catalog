@@ -36,6 +36,7 @@ class ServiceCatalogBuilder {
   buildServiceCatalog() {
     this.buildServiceCatalogHeaderSection();
     $('main').append(loadingIcon('mt-5'));
+    debugger;
     this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
   }
 
@@ -91,13 +92,16 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
     searchAndNavContainer.append(navbarContainer);
+    debugger;
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
+    debugger;
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
+    debugger;
     this.serviceCatalogItemDetailBuilder.build(this.data);
     this.bindEventListeners();
     this.addTooltipsForTruncatedText();
@@ -109,6 +113,7 @@ class ServiceCatalogBuilder {
     let activeClassAdded         = false;
     const serviceCategoriesItems = this.data.service_catalog_data;
 
+    debugger;
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')

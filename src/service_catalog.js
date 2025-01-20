@@ -33,6 +33,7 @@ class ServiceCatalogManager {
     this.timeStamp              = initializationData.timeStamp;
     this.ezoFieldId             = initializationData.ezoFieldId;
     this.ezoSubdomain           = initializationData.ezoSubdomain;
+    this.integrationMode        = initializationData.integrationMode || 'JWT';
     this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
     const files = this.filesToLoad();

@@ -1274,6 +1274,7 @@
       const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                               .addClass('col-10 service-items-container');
 
+      debugger;
       serviceCategories.forEach((serviceCategory, index) => {
         const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
         serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, 0 === index));
@@ -1285,6 +1286,7 @@
     buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
       const serviceCategoryItemsContainer = $('<div>');
       serviceCategoryItemsContainer.attr('id', `${serviceCategory}_container`);
+      debugger;
 
       if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
@@ -1303,9 +1305,11 @@
 
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
 
+      debugger;
       if (serviceCategoryItems.service_items) {
         let serviceItems = [];
         if (isMyAssignedAssets(serviceCategory)) {
+          debugger;
           serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
           this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
         } else {
@@ -1596,6 +1600,7 @@
               queryParams.search_query = options.searchQuery; 
             }
 
+            debugger;
             const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
             fetch(url, requestOptions)
               .then(response => {
@@ -1618,6 +1623,7 @@
               })
               .then(data => {
                 $('#loading_icon_container').empty();
+                debugger;
                 if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                   $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                 } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
@@ -1703,6 +1709,7 @@
     buildServiceCatalog() {
       this.buildServiceCatalogHeaderSection();
       $('main').append(loadingIcon('mt-5'));
+      debugger;
       this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
     }
 
@@ -1758,13 +1765,16 @@
       const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
       searchAndNavContainer.append(navbarContainer);
+      debugger;
       const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
+      debugger;
       const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                                 .addClass('col-10 collapse service-catalog-search-results-container');
       serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
       newSection.append(serviceCatalogContainer);
 
       $('main').append(newSection);
+      debugger;
       this.serviceCatalogItemDetailBuilder.build(this.data);
       this.bindEventListeners();
       this.addTooltipsForTruncatedText();
@@ -1776,6 +1786,7 @@
       let activeClassAdded         = false;
       const serviceCategoriesItems = this.data.service_catalog_data;
 
+      debugger;
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
@@ -1924,6 +1935,7 @@
       this.timeStamp              = initializationData.timeStamp;
       this.ezoFieldId             = initializationData.ezoFieldId;
       this.ezoSubdomain           = initializationData.ezoSubdomain;
+      this.integrationMode        = initializationData.integrationMode || 'JWT';
       this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
       const files = this.filesToLoad();
