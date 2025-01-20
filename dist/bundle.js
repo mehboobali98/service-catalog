@@ -1651,6 +1651,7 @@
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
           $('#loading_icon_container').show();
 
+          debugger;
           fetch(url, options)
             .then(response => {
               if (response.status === 400) {
@@ -1666,6 +1667,7 @@
               return response.json();
             })
             .then(data => {
+              debugger;
               callback(data, callBackOptions.serviceItemsContainerId);
               setLocale(this.locale, true);
             })
