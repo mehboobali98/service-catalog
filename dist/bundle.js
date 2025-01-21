@@ -1642,7 +1642,7 @@
     }
 
     fetchServiceCategoriesAndItemsUsingCustomObjects(callback, noAccessPageCallback, options) {
-      $.getJSON("/api/v2/users/me").then(userData => userData.email).then(userEmail => {
+      $.getJSON("/api/v2/users/me").then(userData => userData.user.email).then(userEmail => {
         debugger;
         if (userEmail) {
           if(options.searchQuery) {
@@ -1688,29 +1688,6 @@
           });
         }
       });
-    }
-
-
-    fetchCustomObjects() {
-      this.fetchUserData()
-        .done((userData) => this.handleUserData(userData))
-        .fail(function(error) {
-          console.error("Failed to fetch user data:", error);
-        });
-    }
-
-    fetchUserData() {
-      return $.getJSON("/api/v2/users/me");
-    }
-
-    handleUserData(userData) {
-      var userId    = userData.user.id;
-      var userEmail = userData.user.email;
-      if (userId) {
-        this.populateAssetFieldUsingCustomObjects(userId, userEmail);
-      } else {
-        console.error("User ID not found in response.");
-      }
     }
 
     fetchServiceCategoryItems(categoryId, callback, callBackOptions) {
