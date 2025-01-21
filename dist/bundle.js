@@ -1660,10 +1660,6 @@
           .then(userData => userData.user.email)
           .then(userEmail => {
               if (userEmail) {
-                if (options.searchQuery) {
-                    queryParams.search_query = options.searchQuery;
-                }
-
                 const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
                 const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
@@ -1693,10 +1689,13 @@
                         ];
 
                         debugger;
-                        const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(
-                          record => record.custom_object_fields.visible === 'true'
-                        );
-
+                        const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(record => {
+                          const isVisible = record.custom_object_fields.visible === 'true';
+                          const matchesSearchQuery = options.searchQuery
+                              ? record.name && record.name.toLowerCase().includes(options.searchQuery.toLowerCase())
+                              : true; // If no search query, include all visible records
+                          return isVisible && matchesSearchQuery;
+                        });
                         const restructuredData = {};
                         debugger;
                         filteredCustomObjectRecords.forEach((record, index) => {
