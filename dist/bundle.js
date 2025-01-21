@@ -1712,6 +1712,10 @@
                           });
                         });
 
+                        Object.keys(restructuredData).forEach(key => {
+                          restructuredData[key].service_items = JSON.stringify(restructuredData[key].service_items);
+                        });
+
                         debugger;
 
                         // Create the final data structure
