@@ -1693,7 +1693,7 @@
 
                         const restructuredData = {};
                         filteredCustomObjectRecords.forEach((record, index) => {
-                          const categoryKey = `${record.custom_object_fields.service_category_title || 'Unknown'}_${index}`;
+                          const categoryKey = `${record.custom_object_fields.service_category_title || 'Unknown'}_${custom_object_fields.service_category_id}`;
                           if (!restructuredData[categoryKey]) {
                             restructuredData[categoryKey] = {
                               title:          record.custom_object_fields.service_category_title || 'Unknown',
@@ -1703,14 +1703,16 @@
                           }
 
                           restructuredData[categoryKey].service_items.push({
+                            id:                               record.custom_object_fields.service_item_id,
                             display_fields: {
                               title:              { value: record.custom_object_fields.title || '' },
                               cost_price:         { value: record.custom_object_fields.cost_price || null },
                               description:        { value: record.custom_object_fields.description || '' },
                               short_description:  { value: record.custom_object_fields.short_description || '' },
                             },
-                            zendesk_form_id:      record.custom_object_fields.zd_form_id || null,
-                            display_picture_url:  record.custom_object_fields.display_picture_url || ''
+                            zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                            display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                            service_category_title_with_id:   categoryKey
                           });
                         });
 
