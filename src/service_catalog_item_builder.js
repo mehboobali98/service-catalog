@@ -45,7 +45,6 @@ class ServiceCatalogItemBuilder {
     const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                             .addClass('col-10 service-items-container');
 
-    debugger;
     serviceCategories.forEach((serviceCategory, index) => {
       const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
       serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, 0 === index));
@@ -57,8 +56,6 @@ class ServiceCatalogItemBuilder {
   buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
     const serviceCategoryItemsContainer = $('<div>');
     serviceCategoryItemsContainer.attr('id', `${serviceCategory}_container`);
-    debugger;
-
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
     const serviceCategoryTitle       = serviceCategoryItems.title;
@@ -71,12 +68,10 @@ class ServiceCatalogItemBuilder {
 
     serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
-    debugger;
     const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
     if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
-
     debugger;
     if (serviceCategoryItems.service_items) {
       let serviceItems = [];

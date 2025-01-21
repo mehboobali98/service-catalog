@@ -100,7 +100,6 @@ class ApiService {
                   .then(([serviceItemsData, assetsData]) => {
                       $('#loading_icon_container').empty();
 
-                      debugger;
                       const combinedCustomObjectRecords = [
                         ...(serviceItemsData.custom_object_records || []),
                         ...(assetsData.custom_object_records || [])
@@ -110,11 +109,9 @@ class ApiService {
                         record => record.custom_object_fields.visible === 'true'
                       );
 
-                      debugger;
-
                       const restructuredData = {};
                       filteredCustomObjectRecords.forEach((record, index) => {
-                        const categoryKey = `${record.custom_object_fields.service_category_title || 'Unknown'}_${record.custom_object_fields.service_category_id}`;
+                        const categoryKey = `${record.custom_object_fields.service_category_id || index}_${record.custom_object_fields.service_category_title || 'Unknown'}`;
                         if (!restructuredData[categoryKey]) {
                           restructuredData[categoryKey] = {
                             title:          record.custom_object_fields.service_category_title || 'Unknown',
@@ -137,19 +134,16 @@ class ApiService {
                         });
                       });
 
-                      debugger;
                       Object.keys(restructuredData).forEach(key => {
                         restructuredData[key].service_items = JSON.stringify(restructuredData[key].service_items);
                       });
-
-                      debugger;
 
                       // Create the final data structure
                       const combinedData = {
                         service_catalog_data:    restructuredData,
                         service_catalog_enabled: serviceItemsData.service_catalog_enabled,
                       };
-                      debugger;
+
                       if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                         $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                       } else if (!serviceCatalogDataPresent(combinedData) && combinedData.custom_object_records.length === 0) {

@@ -1274,7 +1274,6 @@
       const serviceItemsContainer = $('<div>').attr('id', 'service_items_container')
                                               .addClass('col-10 service-items-container');
 
-      debugger;
       serviceCategories.forEach((serviceCategory, index) => {
         const serviceCategoryItems = this.serviceCategoriesItems[serviceCategory];
         serviceItemsContainer.append(this.buildServiceCategoryItems(serviceCategory, serviceCategoryItems, 0 === index));
@@ -1286,8 +1285,6 @@
     buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
       const serviceCategoryItemsContainer = $('<div>');
       serviceCategoryItemsContainer.attr('id', `${serviceCategory}_container`);
-      debugger;
-
       if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
       const serviceCategoryTitle       = serviceCategoryItems.title;
@@ -1300,12 +1297,10 @@
 
       serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
-      debugger;
       const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
       if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
-
       debugger;
       if (serviceCategoryItems.service_items) {
         let serviceItems = [];
@@ -1679,7 +1674,6 @@
                     .then(([serviceItemsData, assetsData]) => {
                         $('#loading_icon_container').empty();
 
-                        debugger;
                         const combinedCustomObjectRecords = [
                           ...(serviceItemsData.custom_object_records || []),
                           ...(assetsData.custom_object_records || [])
@@ -1689,11 +1683,9 @@
                           record => record.custom_object_fields.visible === 'true'
                         );
 
-                        debugger;
-
                         const restructuredData = {};
                         filteredCustomObjectRecords.forEach((record, index) => {
-                          const categoryKey = `${record.custom_object_fields.service_category_title || 'Unknown'}_${record.custom_object_fields.service_category_id}`;
+                          const categoryKey = `${record.custom_object_fields.service_category_id || index}_${record.custom_object_fields.service_category_title || 'Unknown'}`;
                           if (!restructuredData[categoryKey]) {
                             restructuredData[categoryKey] = {
                               title:          record.custom_object_fields.service_category_title || 'Unknown',
@@ -1716,19 +1708,16 @@
                           });
                         });
 
-                        debugger;
                         Object.keys(restructuredData).forEach(key => {
                           restructuredData[key].service_items = JSON.stringify(restructuredData[key].service_items);
                         });
-
-                        debugger;
 
                         // Create the final data structure
                         const combinedData = {
                           service_catalog_data:    restructuredData,
                           service_catalog_enabled: serviceItemsData.service_catalog_enabled,
                         };
-                        debugger;
+
                         if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                           $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                         } else if (!serviceCatalogDataPresent(combinedData) && combinedData.custom_object_records.length === 0) {
@@ -1880,16 +1869,13 @@
       const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
       searchAndNavContainer.append(navbarContainer);
-      debugger;
       const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
-      debugger;
       const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                                 .addClass('col-10 collapse service-catalog-search-results-container');
       serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
       newSection.append(serviceCatalogContainer);
 
       $('main').append(newSection);
-      debugger;
       this.serviceCatalogItemDetailBuilder.build(this.data);
       this.bindEventListeners();
       this.addTooltipsForTruncatedText();
@@ -1901,9 +1887,7 @@
       let activeClassAdded         = false;
       const serviceCategoriesItems = this.data.service_catalog_data;
 
-      debugger;
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
-        debugger;
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
                                 .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank', 'data-i18n': generateI18nKey(serviceCategoryData.title) })
@@ -1912,7 +1896,6 @@
           activeClassAdded = true;
           listItem.addClass('active');
         }
-        debugger;
         navbar.append(listItem);
       });
 

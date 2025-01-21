@@ -98,16 +98,13 @@ class ServiceCatalogBuilder {
     const serviceCatalogContainer = containers['serviceCatalogContainer'];
 
     searchAndNavContainer.append(navbarContainer);
-    debugger;
     const serviceItemsContainer   = this.serviceCatalogItemBuilder.build(this.data);
-    debugger;
     const searchResultsContainer  = $('<div>').attr('id', 'service_catalog_item_search_results_container')
                                               .addClass('col-10 collapse service-catalog-search-results-container');
     serviceCatalogContainer.append(searchAndNavContainer, serviceItemsContainer, searchResultsContainer);
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
-    debugger;
     this.serviceCatalogItemDetailBuilder.build(this.data);
     this.bindEventListeners();
     this.addTooltipsForTruncatedText();
@@ -119,9 +116,7 @@ class ServiceCatalogBuilder {
     let activeClassAdded         = false;
     const serviceCategoriesItems = this.data.service_catalog_data;
 
-    debugger;
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
-      debugger;
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
                               .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank', 'data-i18n': generateI18nKey(serviceCategoryData.title) })
@@ -130,7 +125,6 @@ class ServiceCatalogBuilder {
         activeClassAdded = true;
         listItem.addClass('active');
       }
-      debugger;
       navbar.append(listItem);
     });
 
