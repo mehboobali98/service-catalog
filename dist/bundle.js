@@ -1907,6 +1907,7 @@
       const self                 = this;
       const serviceCategories    = Object.keys(this.data.service_catalog_data);
       const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
+      debugger;
 
       $(serviceCategoriesIds.join(', ')).click(function(e) {
         debugger;
