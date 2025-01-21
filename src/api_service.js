@@ -152,7 +152,7 @@ class ApiService {
                             display_picture_url:              record.custom_object_fields.display_picture_url || '',
                             service_category_title_with_id:   categoryKey
                           };
-                          restructuredData[categoryKey].service_items.push(JSON.stringify(serviceItemHash));
+                          restructuredData[categoryKey].service_items.push(serviceItemHash);
                         }
                       });
 

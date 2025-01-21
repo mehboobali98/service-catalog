@@ -81,7 +81,7 @@ class ServiceCatalogItemBuilder {
         this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
       } else {
         debugger;
-        serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+        serviceItems = Array.isArray(serviceCategoryItems.service_items) ? serviceCategoryItems.service_items : JSON.parse(serviceCategoryItems.service_items);
       }
 
       debugger;

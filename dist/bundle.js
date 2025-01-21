@@ -1311,7 +1311,7 @@
           this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
         } else {
           debugger;
-          serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+          serviceItems = Array.isArray(serviceCategoryItems.service_items) ? serviceCategoryItems.service_items : JSON.parse(serviceCategoryItems.service_items);
         }
 
         debugger;
@@ -1733,7 +1733,7 @@
                               display_picture_url:              record.custom_object_fields.display_picture_url || '',
                               service_category_title_with_id:   categoryKey
                             };
-                            restructuredData[categoryKey].service_items.push(JSON.stringify(serviceItemHash));
+                            restructuredData[categoryKey].service_items.push(serviceItemHash);
                           }
                         });
 
