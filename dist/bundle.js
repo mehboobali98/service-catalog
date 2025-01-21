@@ -1573,6 +1573,7 @@
       // Function to update search results
       updateResults = (data, options) => {
           const searchResultsContainer = options.searchResultsContainer;
+          debugger;
           searchResultsContainer.empty();
           if (!data.search_results.length) {
               searchResultsContainer.append(noResultsFound());
