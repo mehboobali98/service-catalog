@@ -1715,7 +1715,7 @@
                           if (resourceType === 'FixedAsset') {
                             restructuredData[categoryKey].service_items.push({
                               id: record.custom_object_fields.asset_id,
-                              name: record.custom_object_fields.asset_name, 
+                              name: record.custom_object_fields.asset_name || record.name, 
                               display_fields: {
                                 'AIN':       record.custom_object_fields.identifier,
                                 'Asset #':   record.custom_object_fields.sequence_num,
