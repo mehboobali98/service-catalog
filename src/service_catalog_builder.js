@@ -204,6 +204,7 @@ class ServiceCatalogBuilder {
 
         timer = setTimeout(
           function () {
+            debugger;
             self.apiService.fetchServiceCategoriesAndItems(
               self.search.updateResults,
               self.noAccessPage,

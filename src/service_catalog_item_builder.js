@@ -161,7 +161,7 @@ class ServiceCatalogItemBuilder {
     debugger;
     queryParams['item_id']              = serviceCategoryItem.sequence_num;
     queryParams['item_name']            = assetName;
-    queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
+    queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem) || serviceCategoryItem.zendesk_form_id;
     queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
     queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
     debugger;
