@@ -1300,6 +1300,7 @@
 
       serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
+      debugger;
       const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
       if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
@@ -1313,9 +1314,11 @@
           serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
           this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
         } else {
+          debugger;
           serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
         }
 
+        debugger;
         if (serviceItems.length) {
           serviceItems.forEach((serviceCategoryItem, index) => {
             if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)); }        });
@@ -1334,6 +1337,7 @@
     }
 
     buildServiceCategoryItem(serviceCategory, serviceItem) {
+      debugger;
       if (isMyAssignedAssets(serviceCategory)) {
         return this.buildItAssetServiceItem(serviceCategory, serviceItem);
       } else {
@@ -1420,6 +1424,7 @@
 
     buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
       const displayFields = serviceCategoryItem.display_fields;
+      debugger;
       const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item')
                                       .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                       .data('name', displayFields.title.value)
@@ -1537,6 +1542,7 @@
       serviceCategoryItemsFlex.empty();
 
       let serviceCategoryItems = [];
+      debugger;
       if (isMyAssignedAssets(categoryName)) {
         serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
       } else {
