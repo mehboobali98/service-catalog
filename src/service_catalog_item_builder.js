@@ -202,6 +202,7 @@ class ServiceCatalogItemBuilder {
                                     .data('name', displayFields.title.value)
                                     .data('container-id', `${serviceCategory}_service_items_container`);
 
+                                    debugger;
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
     const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
@@ -254,6 +255,7 @@ class ServiceCatalogItemBuilder {
 
     cardBody.append(cardFooter);
     card.append(cardImageContainer, cardBody);
+    debugger;
 
     return card;
   }
