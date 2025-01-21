@@ -114,6 +114,7 @@ class ApiService {
                       debugger;
                       filteredCustomObjectRecords.forEach((record, index) => {
                         const categoryKey = `${record.custom_object_fields.service_category_id || index}_${(record.custom_object_fields.service_category_title || 'Unknown').replace(/\s+/g, '_')}`;
+                        const resourceType = record.custom_object_fields.resource_type;
 
                         if (!restructuredData[categoryKey]) {
                           restructuredData[categoryKey] = {
@@ -124,23 +125,38 @@ class ApiService {
                         }
 
                         debugger;
-                        restructuredData[categoryKey].service_items.push({
-                          id:                               record.custom_object_fields.service_item_id,
-                          display_fields: {
-                            title:              { value: record.custom_object_fields.title || '' },
-                            cost_price:         { value: record.custom_object_fields.cost_price || null },
-                            description:        { value: record.custom_object_fields.description || '' },
-                            short_description:  { value: record.custom_object_fields.short_description || '' },
-                          },
-                          zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
-                          display_picture_url:              record.custom_object_fields.display_picture_url || '',
-                          service_category_title_with_id:   categoryKey
-                        });
+                        if (resourceType === 'FixedAsset') {
+                          restructuredData[categoryKey].service_items.push({
+                            id: record.custom_object_fields.asset_id,
+                            name: record.custom_object_fields.asset_name, 
+                            display_fields: {
+                              'AIN':       record.custom_object_fields.identifier,
+                              'Asset #':   record.custom_object_fields.sequence_num,
+                              'Location':  record.custom_object_fields.location
+                            },
+                            sequence_num:                     record.custom_object_fields.sequence_num,
+                            zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                            display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                            service_category_title_with_id:   categoryKey
+                          });
+                        } else if (resourceType === 'EzPortal::Card') {
+                          var serviceItemHash = {
+                            id: record.custom_object_fields.service_item_id,
+                            display_fields: {
+                              title:              { value: record.custom_object_fields.title || '' },
+                              cost_price:         { value: record.custom_object_fields.cost_price || null },
+                              description:        { value: record.custom_object_fields.description || '' },
+                              short_description:  { value: record.custom_object_fields.short_description || '' },
+                            },
+                            zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                            display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                            service_category_title_with_id:   categoryKey
+                          };
+                          restructuredData[categoryKey].service_items.push(JSON.stringify(serviceItemHash));
+                        }
                       });
 
-                      Object.keys(restructuredData).forEach(key => {
-                        restructuredData[key].service_items = JSON.stringify(restructuredData[key].service_items);
-                      });
+                      debugger;
 
                       // Create the final data structure
                       const combinedData = {
@@ -150,7 +166,7 @@ class ApiService {
 
                       if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                         $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
-                      } else if (!serviceCatalogDataPresent(combinedData) && combinedData.custom_object_records.length === 0) {
+                      } else if (!serviceCatalogDataPresent(combinedData) && Object.keys(combinedData.service_catalog_data).length === 0) {
                         $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
                       } else {
                         callback(combinedData, options);

@@ -153,6 +153,7 @@ class ServiceCatalogItemBuilder {
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
+    debugger;
     queryParams['item_id']              = serviceCategoryItem.sequence_num;
     queryParams['item_name']            = assetName;
     queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
@@ -258,7 +259,7 @@ class ServiceCatalogItemBuilder {
   }
 
   populateCardContent(cardContentElement, serviceCategoryItem) {
-    const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
+    const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns || serviceCategoryItem.display_fields;
 
     debugger;
     if (Object.keys(fields).length === 0) {
