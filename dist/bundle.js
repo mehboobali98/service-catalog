@@ -1888,6 +1888,7 @@
 
       debugger;
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
+        debugger;
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
                                 .attr({ 'id': serviceCategory + '_link' ,'href': link, 'target': '_blank', 'data-i18n': generateI18nKey(serviceCategoryData.title) })
@@ -1896,6 +1897,7 @@
           activeClassAdded = true;
           listItem.addClass('active');
         }
+        debugger;
         navbar.append(listItem);
       });
 
