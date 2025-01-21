@@ -205,16 +205,29 @@ class ServiceCatalogBuilder {
         timer = setTimeout(
           function () {
             debugger;
-            self.apiService.fetchServiceCategoriesAndItems(
-              self.search.updateResults,
-              self.noAccessPage,
-              {
-                searchQuery: query,
-                searchResultsContainer: searchResultsContainer,
-                itemBuilder: self.serviceCatalogItemBuilder,
-                itemDetailBuilder: self.serviceCatalogItemDetailBuilder
-              }
-            );
+            if (self.integrationMode === 'custom_objects') {
+              self.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(
+                self.search.updateResults,
+                self.noAccessPage,
+                {
+                  searchQuery: query,
+                  searchResultsContainer: searchResultsContainer,
+                  itemBuilder: self.serviceCatalogItemBuilder,
+                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                }
+              );
+            } else {
+              self.apiService.fetchServiceCategoriesAndItems(
+                self.search.updateResults,
+                self.noAccessPage,
+                {
+                  searchQuery: query,
+                  searchResultsContainer: searchResultsContainer,
+                  itemBuilder: self.serviceCatalogItemBuilder,
+                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                }
+              );
+            }
           },
           500
         );
