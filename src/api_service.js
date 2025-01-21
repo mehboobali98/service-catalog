@@ -137,7 +137,7 @@ class ApiService {
 
                       // Create the final data structure
                       const combinedData = {
-                        service_catalog_data: filteredCustomObjectRecords,
+                        service_catalog_data:    restructuredData,
                         service_catalog_enabled: serviceItemsData.service_catalog_enabled,
                       };
                       debugger;
