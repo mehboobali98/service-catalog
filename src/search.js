@@ -23,7 +23,7 @@ class Search {
         const searchResultsContainer = options.searchResultsContainer;
         debugger;
         searchResultsContainer.empty();
-        if (!data.search_results.length) {
+        if (!searchResults.length) {
             searchResultsContainer.append(noResultsFound());
             return;
         }

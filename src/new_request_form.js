@@ -28,10 +28,76 @@ class NewRequestForm {
     if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
     if (this.integrationMode === 'custom_objects') {
-
+      this.fetchCustomObjects();
     } else {
       this.getTokenAndFetchAssignedAssets();
     }
+  }
+
+  fetchCustomObjects() {
+    this.fetchUserData()
+      .done((userData) => this.handleUserData(userData))
+      .fail(function(error) {
+        console.error("Failed to fetch user data:", error);
+      });
+  }
+
+  handleUserData(userData) {
+    var userId    = userData.user.id;
+    var userEmail = userData.user.email;
+    if (userId) {
+      this.populateAssetFieldUsingCustomObjects(userId, userEmail);
+    } else {
+      console.error("User ID not found in response.");
+    }
+  }
+
+  populateAssetFieldUsingCustomObjects(userId, userEmail) {
+    $.getJSON(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`).done((data) => {
+      if (!data || !data.custom_object_records) {
+        console.error("No custom object records found");
+        return;
+      }
+
+      const assetsData = { data: [] };
+      const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
+
+      data.custom_object_records.forEach((asset, index) => {
+        assetsData.data[index] = {
+          id: asset.custom_object_fields.asset_id,
+          text: asset.custom_object_fields.name,
+        };
+      });
+
+      ezoCustomFieldEle.hide();
+      ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
+      $("#ezo-asset-select").select2({
+        data: assetsData.data
+      });
+      $("#ezo-asset-select").next().css("font-size", "15px");
+
+      $("#ezo-asset-select").on("change", function () {
+        const selectedIds = $(this).val();
+
+        if (selectedIds && selectedIds.length > 0) {
+          const selectedAssets = assetsData.data.filter((asset) =>
+            selectedIds.includes(asset.id.toString())
+          );
+
+          const mappedAssets = selectedAssets.map((asset) => ({
+            [asset.id]: asset.text,
+          }));
+
+          ezoCustomFieldEle.val(JSON.stringify({ assets: mappedAssets }));
+        } else {
+          ezoCustomFieldEle.val("");
+        }
+      });
+
+      this.preselectAssetsCustomField(this.extractQueryParams(window.location));
+    }).fail((error) => {
+      console.error("Error fetching custom object records:", error);
+    });
   }
 
   extractQueryParams(url) {
