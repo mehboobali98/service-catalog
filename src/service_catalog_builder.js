@@ -9,12 +9,13 @@ import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
-  constructor(locale, ezoSubdomain) {
+  constructor(locale, ezoSubdomain, integrationMode) {
     this.locale                          = locale;
-    this.apiService                      = new ApiService(locale, ezoSubdomain);
+    this.apiService                      = new ApiService(locale, ezoSubdomain, integrationMode);
     this.ezoSubdomain                    = ezoSubdomain;
-    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
+    this.integrationMode                 = integrationMode;
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale, integrationMode);
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale, integrationMode);
     this.search                          = new Search();
   }
 
@@ -37,7 +38,11 @@ class ServiceCatalogBuilder {
     this.buildServiceCatalogHeaderSection();
     $('main').append(loadingIcon('mt-5'));
     debugger;
-    this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+    if (this.integrationMode === 'custom_objects') {
+      this.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(this.buildUI, this.noAccessPage, {});
+    } else {
+      this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+    }
   }
 
   buildServiceCatalogHeaderSection() {
@@ -78,6 +83,7 @@ class ServiceCatalogBuilder {
       searchAndNavContainer: searchAndNavContainer,
       serviceCatalogContainer: serviceCatalogContainer
     };
+    debugger;
     this.createServiceCategoriesView(containers);
   }
 

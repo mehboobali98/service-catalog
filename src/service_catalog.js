@@ -43,7 +43,7 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain, this.integrationMode);
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }
