@@ -77,8 +77,7 @@ class ApiService {
                   queryParams.search_query = options.searchQuery;
               }
 
-              // Fetch data from both endpoints
-              const assetsRequest = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
+              const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
               const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
               debugger;
@@ -107,13 +106,17 @@ class ApiService {
                         ...(assetsData.custom_object_records || [])
                       ];
 
-                      debugger;
-                      // Create a unified structure for the combined data
-                      const combinedData = {
-                          custom_object_records: combinedCustomObjectRecords,
-                          service_catalog_enabled: serviceItemsData.service_catalog_enabled, // Assuming this exists in serviceItemsData
-                      };
+                      const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(
+                        record => record.custom_object_fields.visible === 'true'
+                      );
 
+                      debugger;
+
+                      // Create the final data structure
+                      const combinedData = {
+                          custom_object_records: filteredCustomObjectRecords,
+                          service_catalog_enabled: serviceItemsData.service_catalog_enabled,
+                      };
                       debugger;
                       if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                         $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
