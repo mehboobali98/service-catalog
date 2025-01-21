@@ -111,7 +111,8 @@ class ApiService {
 
                       const restructuredData = {};
                       filteredCustomObjectRecords.forEach((record, index) => {
-                        const categoryKey = `${record.custom_object_fields.service_category_id || index}_${record.custom_object_fields.service_category_title || 'Unknown'}`;
+                        const categoryKey = `${record.custom_object_fields.service_category_id || index}_${(record.custom_object_fields.service_category_title || 'Unknown').replace(/\s+/g, '_')}`;
+
                         if (!restructuredData[categoryKey]) {
                           restructuredData[categoryKey] = {
                             title:          record.custom_object_fields.service_category_title || 'Unknown',
