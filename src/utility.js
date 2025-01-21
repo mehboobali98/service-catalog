@@ -73,7 +73,7 @@ function serviceCatalogDataPresent(data) {
 }
 
 function isMyAssignedAssets(serviceCategory) {
-  const regex = /^\d*_my_assigned_assets$/;
+  const regex = /^\d*_my_assigned_assets$/i;
   return regex.test(serviceCategory);
 }
 
