@@ -749,10 +749,11 @@
   }
 
   class NewRequestForm {
-    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId, integrationMode) {
       this.locale                 = locale;
       this.ezoFieldId             = ezoFieldId;
       this.ezoSubdomain           = ezoSubdomain;
+      this.integrationMode        = integrationMode;
       this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
     }
 
@@ -773,7 +774,9 @@
       if (formSubject) { this.subjectFieldElement().val(formSubject); }
       if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
-      this.getTokenAndFetchAssignedAssets();
+      if (this.integrationMode === 'custom_objects') ; else {
+        this.getTokenAndFetchAssignedAssets();
+      }
     }
 
     extractQueryParams(url) {
@@ -1572,6 +1575,7 @@
 
       // Function to update search results
       updateResults = (data, options) => {
+          const searchResults = data.search_results || Object.values(data.service_catalog_data);
           const searchResultsContainer = options.searchResultsContainer;
           debugger;
           searchResultsContainer.empty();
@@ -1580,12 +1584,13 @@
               return;
           }
 
-          self                    = this;
-          self.itemBuilder        = options.itemBuilder;
-          const searchItemsFlex   = $('<div>').addClass('d-flex flex-wrap gap-3');
-          self.itemDetailBuilder  = options.itemDetailBuilder;       
-          const searchResults     = Array.isArray(data.search_results) ? data.search_results : JSON.parse(data.search_results);
+          self                     = this;
+          self.itemBuilder         = options.itemBuilder;
+          const searchItemsFlex    = $('<div>').addClass('d-flex flex-wrap gap-3');
+          self.itemDetailBuilder   = options.itemDetailBuilder;       
+          Array.isArray(searchResults) ? searchResults : JSON.parse(searchResults);
 
+          debugger;
           $.each(searchResults, function(index, serviceItem) {
               if (serviceItem) {
                   let serviceCategory     = serviceItem.service_category_title_with_id;
@@ -2108,9 +2113,9 @@
       if (isServiceCatalogPage()) {
         this.handleServiceCatalogRequest();
       } else if (isNewRequestPage()) {
-        new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+        new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else if (isRequestPage()) {
-        new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+        new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else ;
     }
 

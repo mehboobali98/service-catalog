@@ -2,10 +2,11 @@ import { t }                  from './i18n.js';
 import { loadExternalFiles }  from './utility.js';
 
 class NewRequestForm {
-  constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+  constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId, integrationMode) {
     this.locale                 = locale;
     this.ezoFieldId             = ezoFieldId;
     this.ezoSubdomain           = ezoSubdomain;
+    this.integrationMode        = integrationMode;
     this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
   }
 
@@ -26,7 +27,11 @@ class NewRequestForm {
     if (formSubject) { this.subjectFieldElement().val(formSubject); }
     if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
-    this.getTokenAndFetchAssignedAssets();
+    if (this.integrationMode === 'custom_objects') {
+
+    } else {
+      this.getTokenAndFetchAssignedAssets();
+    }
   }
 
   extractQueryParams(url) {
