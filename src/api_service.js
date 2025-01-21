@@ -69,52 +69,68 @@ class ApiService {
   }
 
   fetchServiceCategoriesAndItemsUsingCustomObjects(callback, noAccessPageCallback, options) {
-    $.getJSON("/api/v2/users/me").then(userData => userData.user.email).then(userEmail => {
-      debugger;
-      if (userEmail) {
-        if(options.searchQuery) {
-          queryParams.search_query = options.searchQuery; 
-        }
+    $.getJSON("/api/v2/users/me")
+        .then(userData => userData.user.email)
+        .then(userEmail => {
+            if (userEmail) {
+              if (options.searchQuery) {
+                  queryParams.search_query = options.searchQuery;
+              }
 
-        debugger;
-        fetch(`/api/v2/custom_objects/assetsonar_service_items/records/search?query=${userEmail}`).then((response) => {
-          debugger;
-          if (response.status == 400) {
-            throw new Error('Bad Request: There was an issue with the request.');
-          } else if (response.status == 403) {
-            return response.json().catch(() => {
-              // Handle non-JSON response here
-              return noAccessPageCallback();
-            });
-          } else if (response.status == 404) {
-            return noAccessPageCallback();
-          }
+              // Fetch data from both endpoints
+              const assetsRequest = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
+              const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
+              debugger;
+              Promise.all([serviceItemsRequest, assetsRequest])
+                  .then(responses => {
+                      // Check response statuses
+                      responses.forEach(response => {
+                        if (response.status === 400) {
+                          throw new Error('Bad Request: There was an issue with the request.');
+                        } else if (response.status === 403 || response.status === 404) {
+                          throw new Error('Access or resource not found.');
+                        } else if (!response.ok) {
+                          throw new Error('Network response was not ok');
+                        }
+                      });
 
-          debugger;
-          return response.json();
-        })
-        .then(data => {
-          $('#loading_icon_container').empty();
-          debugger;
-          if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
-            $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
-          } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
-            $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
-          } else {
-            debugger;
-            callback(data, options);
-          }
-          setLocale(this.locale, true);
-        })
-        .catch(error => {
-          console.error('An error occurred while fetching service categories and items: ' + error.message);
+                      // Parse JSON responses
+                      return Promise.all(responses.map(response => response.json()));
+                  })
+                  .then(([serviceItemsData, assetsData]) => {
+                      $('#loading_icon_container').empty();
+
+                      debugger;
+                      const combinedCustomObjectRecords = [
+                        ...(serviceItemsData.custom_object_records || []),
+                        ...(assetsData.custom_object_records || [])
+                      ];
+
+                      debugger;
+                      // Create a unified structure for the combined data
+                      const combinedData = {
+                          custom_object_records: combinedCustomObjectRecords,
+                          service_catalog_enabled: serviceItemsData.service_catalog_enabled, // Assuming this exists in serviceItemsData
+                      };
+
+                      debugger;
+                      if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
+                        $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
+                      } else if (!serviceCatalogDataPresent(combinedData) && combinedData.custom_object_records.length === 0) {
+                        $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
+                      } else {
+                        callback(combinedData, options);
+                      }
+
+                      setLocale(this.locale, true);
+                  })
+                  .catch(error => {
+                      console.error('An error occurred while fetching service categories and items: ' + error.message);
+                      noAccessPageCallback();
+                  });
+            }
         });
-      }
-    });
   }
 
   fetchServiceCategoryItems(categoryId, callback, callBackOptions) {
