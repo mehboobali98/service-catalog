@@ -1260,9 +1260,10 @@
   }
 
   class ServiceCatalogItemBuilder {
-    constructor(locale) {
+    constructor(locale, integrationMode) {
       this.locale                 = locale;
       this.currency               = null;
+      this.integrationMode        = integrationMode;
       this.zendeskFormData        = null;
       this.serviceCategoriesItems = null;
     }
@@ -1307,8 +1308,12 @@
         let serviceItems = [];
         if (isMyAssignedAssets(serviceCategory)) {
           debugger;
-          serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
-          this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+          if (this.integrationMode === 'custom_objects') {
+            serviceItems = serviceCategoryItems.service_items;
+          } else {
+            serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
+            this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+          }
         } else {
           debugger;
           serviceItems = Array.isArray(serviceCategoryItems.service_items) ? serviceCategoryItems.service_items : JSON.parse(serviceCategoryItems.service_items);
@@ -1484,7 +1489,6 @@
 
       cardBody.append(cardFooter);
       card.append(cardImageContainer, cardBody);
-      debugger;
 
       return card;
     }
