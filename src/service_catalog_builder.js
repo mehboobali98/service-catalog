@@ -138,6 +138,7 @@ class ServiceCatalogBuilder {
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
+      debugger;
       var categoryLinkId = $(this).attr('id');
       if ($('#' + e.target.id).parent().hasClass('active') ) { return false; }
 
@@ -157,19 +158,23 @@ class ServiceCatalogBuilder {
         }
       });
 
+      debugger;
       $("[id*='detail_page_container']").hide();
       const callbackOptions = {
         serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
       };
       const categoryId = categoryLinkId.split('_')[0];
+      debugger;
       self.apiService.fetchServiceCategoryItems(
         categoryId,
         self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
         callbackOptions
       );
+      debugger;
       $('#service_catalog_item_search_results_container').hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
+      debugger;
       $('#service_items_container').show();
 
     });
