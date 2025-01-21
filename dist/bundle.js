@@ -1690,9 +1690,9 @@
                           const categoryKey = `${record.custom_object_fields.service_category_title || 'Unknown'}_${index}`;
                           if (!restructuredData[categoryKey]) {
                             restructuredData[categoryKey] = {
-                              service_items:        [],
-                              category_title:       record.custom_object_fields.service_category_title || 'Unknown',
-                              category_description: record.custom_object_fields.service_category_description || ''
+                              title:          record.custom_object_fields.service_category_title || 'Unknown',
+                              description:    record.custom_object_fields.service_category_description || '',
+                              service_items:  []
                             };
                           }
 
