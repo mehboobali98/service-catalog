@@ -123,6 +123,7 @@ class ApiService {
                           };
                         }
 
+                        debugger;
                         restructuredData[categoryKey].service_items.push({
                           id:                               record.custom_object_fields.service_item_id,
                           display_fields: {
