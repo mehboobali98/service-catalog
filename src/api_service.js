@@ -105,11 +105,13 @@ class ApiService {
                         ...(serviceItemsData.custom_object_records || [])
                       ];
 
+                      debugger;
                       const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(
                         record => record.custom_object_fields.visible === 'true'
                       );
 
                       const restructuredData = {};
+                      debugger;
                       filteredCustomObjectRecords.forEach((record, index) => {
                         const categoryKey = `${record.custom_object_fields.service_category_id || index}_${(record.custom_object_fields.service_category_title || 'Unknown').replace(/\s+/g, '_')}`;
 
@@ -174,7 +176,6 @@ class ApiService {
         const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
         $('#loading_icon_container').show();
 
-        debugger;
         fetch(url, options)
           .then(response => {
             if (response.status === 400) {
@@ -190,7 +191,6 @@ class ApiService {
             return response.json();
           })
           .then(data => {
-            debugger;
             callback(data, callBackOptions.serviceItemsContainerId);
             setLocale(this.locale, true);
           })

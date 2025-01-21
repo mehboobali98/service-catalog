@@ -179,7 +179,6 @@ class ServiceCatalogBuilder {
       $('#' + containerId.replace('_container', '_service_items_container')).show();
       debugger;
       $('#service_items_container').show();
-
     });
 
     $('#search_input').on('keyup', function(e) {
