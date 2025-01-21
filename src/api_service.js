@@ -116,20 +116,20 @@ class ApiService {
                       filteredCustomObjectRecords.forEach((record, index) => {
                         const categoryKey = `${record.custom_object_fields.service_category_title || 'Unknown'}_${index}`;
                         if (!restructuredData[categoryKey]) {
-                            restructuredData[categoryKey] = {
-                                category_title: record.custom_object_fields.service_category_title || 'Unknown',
-                                category_description: record.custom_object_fields.service_category_description || '',
-                                service_items: []
-                            };
+                          restructuredData[categoryKey] = {
+                            service_items:        [],
+                            category_title:       record.custom_object_fields.service_category_title || 'Unknown',
+                            category_description: record.custom_object_fields.service_category_description || ''
+                          };
                         }
 
                         restructuredData[categoryKey].service_items.push({
-                            cost_price: record.custom_object_fields.cost_price || null,
-                            short_description: record.custom_object_fields.short_description || '',
-                            description: record.custom_object_fields.description || '',
-                            display_picture_url: record.custom_object_fields.display_picture_url || '',
-                            title: record.custom_object_fields.title || '',
-                            zd_form_id: record.custom_object_fields.zd_form_id || null
+                          title:                record.custom_object_fields.title || '',
+                          cost_price:           record.custom_object_fields.cost_price || null,
+                          zd_form_id:           record.custom_object_fields.zd_form_id || null,
+                          description:          record.custom_object_fields.description || '',
+                          short_description:    record.custom_object_fields.short_description || '',
+                          display_picture_url:  record.custom_object_fields.display_picture_url || ''
                         });
                       });
 
