@@ -1675,8 +1675,8 @@
                         $('#loading_icon_container').empty();
 
                         const combinedCustomObjectRecords = [
-                          ...(serviceItemsData.custom_object_records || []),
-                          ...(assetsData.custom_object_records || [])
+                          ...(assetsData.custom_object_records || []),
+                          ...(serviceItemsData.custom_object_records || [])
                         ];
 
                         const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(
@@ -1936,11 +1936,13 @@
         };
         const categoryId = categoryLinkId.split('_')[0];
         debugger;
-        self.apiService.fetchServiceCategoryItems(
-          categoryId,
-          self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
-          callbackOptions
-        );
+        if (self.integrationMode !== undefined && self.integrationMode !== 'custom_objects') {
+          self.apiService.fetchServiceCategoryItems(
+            categoryId,
+            self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
+            callbackOptions
+          );
+        }
         debugger;
         $('#service_catalog_item_search_results_container').hide();
         $('#' + containerId).show();

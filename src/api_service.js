@@ -101,8 +101,8 @@ class ApiService {
                       $('#loading_icon_container').empty();
 
                       const combinedCustomObjectRecords = [
-                        ...(serviceItemsData.custom_object_records || []),
-                        ...(assetsData.custom_object_records || [])
+                        ...(assetsData.custom_object_records || []),
+                        ...(serviceItemsData.custom_object_records || [])
                       ];
 
                       const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(

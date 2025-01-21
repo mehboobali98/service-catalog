@@ -166,11 +166,13 @@ class ServiceCatalogBuilder {
       };
       const categoryId = categoryLinkId.split('_')[0];
       debugger;
-      self.apiService.fetchServiceCategoryItems(
-        categoryId,
-        self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
-        callbackOptions
-      );
+      if (self.integrationMode !== undefined && self.integrationMode !== 'custom_objects') {
+        self.apiService.fetchServiceCategoryItems(
+          categoryId,
+          self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
+          callbackOptions
+        );
+      }
       debugger;
       $('#service_catalog_item_search_results_container').hide();
       $('#' + containerId).show();
