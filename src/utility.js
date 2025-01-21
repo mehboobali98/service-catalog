@@ -135,6 +135,7 @@ function loadingIcon(containerClass) {
 }
 
 function getMyAssignedAssetsServiceItems(serviceCategoryItems) {
+  debugger;
   let assetServiceItems           = serviceCategoryItems.service_items['assets'] || [];
   let softwareLicenseServiceItems = serviceCategoryItems.service_items['software_entitlements'] || [];
   return assetServiceItems.concat(softwareLicenseServiceItems);

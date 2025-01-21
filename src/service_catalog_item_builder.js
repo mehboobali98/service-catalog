@@ -115,6 +115,7 @@ class ServiceCatalogItemBuilder {
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
     const card                 = $('<div>').addClass('row service-item-card js-service-item-card h-100');
     const queryParams          = {};
+    debugger;
     const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card image
@@ -131,6 +132,7 @@ class ServiceCatalogItemBuilder {
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
 
+    debugger;
     // Card body
     const cardBody = $('<div>').addClass('col-8 card-body');
 
@@ -145,6 +147,7 @@ class ServiceCatalogItemBuilder {
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
 
+    debugger;
     this.populateCardContent(cardContent, serviceCategoryItem);
 
     cardContentContainer.append(cardContent);
@@ -155,6 +158,7 @@ class ServiceCatalogItemBuilder {
     queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
     queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
     queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
+    debugger;
 
     // Card footer
     const url              = `/hc/requests/new?${$.param(queryParams)}`;
@@ -168,6 +172,7 @@ class ServiceCatalogItemBuilder {
 
     cardBody.append(cardFooter);
     card.append(cardImageContainer, cardBody);
+    debugger;
 
     card.click(function(e) {
       e.preventDefault();
