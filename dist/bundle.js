@@ -1703,15 +1703,18 @@
                           }
 
                           restructuredData[categoryKey].service_items.push({
-                            title:                record.custom_object_fields.title || '',
-                            cost_price:           record.custom_object_fields.cost_price || null,
-                            zd_form_id:           record.custom_object_fields.zd_form_id || null,
-                            description:          record.custom_object_fields.description || '',
-                            short_description:    record.custom_object_fields.short_description || '',
+                            display_fields: {
+                              title:              { value: record.custom_object_fields.title || '' },
+                              cost_price:         { value: record.custom_object_fields.cost_price || null },
+                              description:        { value: record.custom_object_fields.description || '' },
+                              short_description:  { value: record.custom_object_fields.short_description || '' },
+                            },
+                            zendesk_form_id:      record.custom_object_fields.zd_form_id || null,
                             display_picture_url:  record.custom_object_fields.display_picture_url || ''
                           });
                         });
 
+                        debugger;
                         Object.keys(restructuredData).forEach(key => {
                           restructuredData[key].service_items = JSON.stringify(restructuredData[key].service_items);
                         });
