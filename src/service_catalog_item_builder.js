@@ -196,7 +196,6 @@ class ServiceCatalogItemBuilder {
 
   buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
     const displayFields = serviceCategoryItem.display_fields;
-    debugger;
     const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item')
                                     .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                     .data('name', displayFields.title.value)
@@ -261,6 +260,7 @@ class ServiceCatalogItemBuilder {
   populateCardContent(cardContentElement, serviceCategoryItem) {
     const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
 
+    debugger;
     if (Object.keys(fields).length === 0) {
       const noAttributesText = 'No attributes configured';
       cardContentElement.append($('<tr>').append(
@@ -269,6 +269,7 @@ class ServiceCatalogItemBuilder {
       return;
     }
 
+    debugger;
     // 'en' is already translated from rails side.
     $.each(fields, (label, value) => {
       let newRow        = $('<tr>');
@@ -314,7 +315,6 @@ class ServiceCatalogItemBuilder {
     serviceCategoryItemsFlex.empty();
 
     let serviceCategoryItems = [];
-    debugger;
     if (isMyAssignedAssets(categoryName)) {
       serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
     } else {
