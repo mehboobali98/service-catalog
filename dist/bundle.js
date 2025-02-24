@@ -2067,9 +2067,7 @@
         };
         const categoryId = categoryLinkId.split('_')[0];
         debugger;
-        if (self.integrationMode === 'custom_objects') {
-          $('#loading_icon_container').empty();
-        } else {
+        if (self.integrationMode !== 'custom_objects') {
           self.apiService.fetchServiceCategoryItems(
             categoryId,
             self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
@@ -2081,6 +2079,9 @@
         $('#' + containerId).show();
         $('#' + containerId.replace('_container', '_service_items_container')).show();
         debugger;
+        if (self.integrationMode === 'custom_objects') {
+          $('#loading_icon_container').empty();
+        }
         $('#service_items_container').show();
       });
 
