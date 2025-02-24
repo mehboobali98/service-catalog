@@ -19,14 +19,14 @@ class Search {
 
     // Function to update search results
     updateResults = (data, options) => {
-        const searchResults = data.search_results || Object.values(data.service_catalog_data);
+        const searchResults = data.search_results
         const searchResultsContainer = options.searchResultsContainer;
         debugger;
         searchResultsContainer.empty();
         if (!searchResults.length) {
             searchResultsContainer.append(noResultsFound());
             return;
-        }
+        };
 
         self                     = this;
         self.itemBuilder         = options.itemBuilder;
@@ -39,6 +39,7 @@ class Search {
             if (serviceItem) {
                 let serviceCategory     = serviceItem.service_category_title_with_id;
                 let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
+                debugger;
                 self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                 searchItemsFlex.append(serviceCategoryItem);
             }

@@ -123,7 +123,6 @@ class ApiService {
                           };
                         }
 
-                        debugger;
                         if (resourceType === 'FixedAsset') {
                           restructuredData[categoryKey].service_items.push({
                             id: record.custom_object_fields.asset_id,
@@ -163,6 +162,12 @@ class ApiService {
                         service_catalog_enabled: serviceItemsData.service_catalog_enabled,
                       };
 
+                      debugger;
+                      if (options.search_query.length) {
+                        combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
+                      }
+
+                      debugger;
                       if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                         $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                       } else if (!serviceCatalogDataPresent(combinedData) && Object.keys(combinedData.service_catalog_data).length === 0) {
