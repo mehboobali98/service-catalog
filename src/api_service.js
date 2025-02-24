@@ -1,11 +1,5 @@
-import {
-  setLocale
-} from './i18n.js';
-
-import {
-  serviceCatalogDataPresent
-} from './utility.js';
-
+import { setLocale } from './i18n.js';
+import { serviceCatalogDataPresent } from './utility.js';
 import { 
   noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
 } from './view_helper.js';
@@ -22,13 +16,12 @@ class ApiService {
       if (token) {
         const endPoint        = 'visible_service_categories_and_items';
         const queryParams     = {};
-        const requestOptions  = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+        const requestOptions  = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token }};
 
         if(options.searchQuery) {
           queryParams.search_query = options.searchQuery; 
         }
 
-        debugger;
         const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
         fetch(url, requestOptions)
           .then(response => {
@@ -36,7 +29,6 @@ class ApiService {
               throw new Error('Bad Request: There was an issue with the request.');
             } else if (response.status == 403) {
               return response.json().catch(() => {
-                // Handle non-JSON response here
                 return noAccessPageCallback();
               });
             } else if (response.status == 404) {
@@ -51,7 +43,6 @@ class ApiService {
           })
           .then(data => {
             $('#loading_icon_container').empty();
-            debugger;
             if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
               $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
             } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
@@ -76,7 +67,6 @@ class ApiService {
               const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
               const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
-              debugger;
               Promise.all([serviceItemsRequest, assetsRequest])
                   .then(responses => {
                       // Check response statuses
@@ -96,12 +86,12 @@ class ApiService {
                   .then(([serviceItemsData, assetsData]) => {
                       $('#loading_icon_container').empty();
 
+                      const restructuredData = {};
                       const combinedCustomObjectRecords = [
                         ...(assetsData.custom_object_records || []),
                         ...(serviceItemsData.custom_object_records || [])
                       ];
 
-                      debugger;
                       const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(record => {
                         const isVisible = record.custom_object_fields.visible === 'true';
                         const matchesSearchQuery = options.searchQuery
@@ -109,8 +99,6 @@ class ApiService {
                             : true; // If no search query, include all visible records
                         return isVisible && matchesSearchQuery;
                       });
-                      const restructuredData = {};
-                      debugger;
                       filteredCustomObjectRecords.forEach((record, index) => {
                         const categoryKey = `${record.custom_object_fields.service_category_id || index}_${(record.custom_object_fields.service_category_title || 'Unknown').replace(/\s+/g, '_')}`;
                         const resourceType = record.custom_object_fields.resource_type;
@@ -154,20 +142,16 @@ class ApiService {
                         }
                       });
 
-                      debugger;
-
                       // Create the final data structure
                       const combinedData = {
                         service_catalog_data:    restructuredData,
                         service_catalog_enabled: serviceItemsData.service_catalog_enabled,
                       };
 
-                      debugger;
                       if (options.searchQuery && options.searchQuery.length) {
                         combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
                       }
 
-                      debugger;
                       if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                         $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                       } else if (!serviceCatalogDataPresent(combinedData) && Object.keys(combinedData.service_catalog_data).length === 0) {
@@ -179,7 +163,6 @@ class ApiService {
                       setLocale(this.locale, true);
                   })
                   .catch(error => {
-                      debugger;
                       console.error('An error occurred while fetching service categories and items: ' + error.message);
                       noAccessPageCallback();
                   });
@@ -190,7 +173,7 @@ class ApiService {
   fetchServiceCategoryItems(categoryId, callback, callBackOptions) {
     $.getJSON('/hc/api/v2/integration/token').then(data => data.token).then(token => {
       if (token) {
-        const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+        const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token } };
         const endPoint      = 'visible_service_categories_and_items';
         const queryParams   = {
           service_category_id: categoryId
@@ -205,11 +188,9 @@ class ApiService {
             } else if (response.status === 404) {
               return noAccessPageCallback();
             }
-
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-
             return response.json();
           })
           .then(data => {

@@ -1637,38 +1637,88 @@
 
   class Search {
       constructor() {
-          this.itemBuilder        = null;
-          this.itemDetailBuilder  = null;
+          this.itemBuilder = null;
+          this.itemDetailBuilder = null;
       }
 
-      // Function to update search results
-      updateResults = (data, options) => {
-          const searchResults = data.search_results || [];
-          const searchResultsContainer = options.searchResultsContainer;
-          debugger;
-          searchResultsContainer.empty();
-          if (!searchResults.length) {
-              searchResultsContainer.append(noResultsFound());
-              return;
-          }
-          self                     = this;
-          self.itemBuilder         = options.itemBuilder;
-          const searchItemsFlex    = $('<div>').addClass('d-flex flex-wrap gap-3');
-          self.itemDetailBuilder   = options.itemDetailBuilder;       
-          Array.isArray(searchResults) ? searchResults : JSON.parse(searchResults);
+      /**
+       * Safely parses search results from JSON string or returns array directly.
+       * @param {Array|string} searchResults
+       * @returns {Array}
+       */
+      parseSearchResults = (searchResults) => {
+          if (Array.isArray(searchResults)) return searchResults;
 
-          debugger;
-          $.each(searchResults, function(index, serviceItem) {
-              if (serviceItem) {
-                  let serviceCategory     = serviceItem.service_category_title_with_id;
-                  let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
-                  debugger;
-                  self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+          if (typeof searchResults === 'string') {
+              try {
+                  return JSON.parse(searchResults);
+              } catch (e) {
+                  console.error('Invalid JSON string:', e);
+              }
+          }
+          return [];
+      };
+
+      /**
+       * Clears previous results and displays a no-results message if needed.
+       * @param {Object} container
+       * @param {Array} results
+       * @returns {boolean} - Returns true if no results found.
+       */
+      handleNoResults = (container, results) => {
+          container.empty();
+          if (results.length === 0) {
+              container.append(noResultsFound());
+              return true;
+          }
+          return false;
+      };
+
+      /**
+       * Renders the search results.
+       * @param {Array} results
+       * @param {Object} container
+       */
+      renderResults = (results, container) => {
+          const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
+
+          results.forEach((serviceItem) => {
+              if (serviceItem && serviceItem.service_category_title_with_id) {
+                  const serviceCategory = serviceItem.service_category_title_with_id;
+                  const serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
+
+                  this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                   searchItemsFlex.append(serviceCategoryItem);
               }
           });
-          searchResultsContainer.append(searchItemsFlex);
-      }
+
+          container.append(searchItemsFlex);
+      };
+
+      /**
+       * Updates the search results and renders them in the provided container.
+       * @param {Object} data - The data containing search results.
+       * @param {Object} options - Options including the container and builders.
+       */
+      updateResults = (data, options) => {
+          if (!options || !options.searchResultsContainer) {
+              console.error('Invalid options provided.');
+              return;
+          }
+
+          // Parse and validate search results
+          const searchResults = this.parseSearchResults(data.search_results);
+
+          // Initialize builders
+          this.itemBuilder = options.itemBuilder;
+          this.itemDetailBuilder = options.itemDetailBuilder;
+
+          // Handle no results case
+          if (this.handleNoResults(options.searchResultsContainer, searchResults)) return;
+
+          // Render search results
+          this.renderResults(searchResults, options.searchResultsContainer);
+      };
   }
 
   class ApiService {
@@ -1683,13 +1733,12 @@
         if (token) {
           const endPoint        = 'visible_service_categories_and_items';
           const queryParams     = {};
-          const requestOptions  = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+          const requestOptions  = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token }};
 
           if(options.searchQuery) {
             queryParams.search_query = options.searchQuery; 
           }
 
-          debugger;
           const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
           fetch(url, requestOptions)
             .then(response => {
@@ -1697,7 +1746,6 @@
                 throw new Error('Bad Request: There was an issue with the request.');
               } else if (response.status == 403) {
                 return response.json().catch(() => {
-                  // Handle non-JSON response here
                   return noAccessPageCallback();
                 });
               } else if (response.status == 404) {
@@ -1712,7 +1760,6 @@
             })
             .then(data => {
               $('#loading_icon_container').empty();
-              debugger;
               if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
                 $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
               } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
@@ -1737,7 +1784,6 @@
                 const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
                 const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
-                debugger;
                 Promise.all([serviceItemsRequest, assetsRequest])
                     .then(responses => {
                         // Check response statuses
@@ -1757,12 +1803,12 @@
                     .then(([serviceItemsData, assetsData]) => {
                         $('#loading_icon_container').empty();
 
+                        const restructuredData = {};
                         const combinedCustomObjectRecords = [
                           ...(assetsData.custom_object_records || []),
                           ...(serviceItemsData.custom_object_records || [])
                         ];
 
-                        debugger;
                         const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(record => {
                           const isVisible = record.custom_object_fields.visible === 'true';
                           const matchesSearchQuery = options.searchQuery
@@ -1770,8 +1816,6 @@
                               : true; // If no search query, include all visible records
                           return isVisible && matchesSearchQuery;
                         });
-                        const restructuredData = {};
-                        debugger;
                         filteredCustomObjectRecords.forEach((record, index) => {
                           const categoryKey = `${record.custom_object_fields.service_category_id || index}_${(record.custom_object_fields.service_category_title || 'Unknown').replace(/\s+/g, '_')}`;
                           const resourceType = record.custom_object_fields.resource_type;
@@ -1815,20 +1859,16 @@
                           }
                         });
 
-                        debugger;
-
                         // Create the final data structure
                         const combinedData = {
                           service_catalog_data:    restructuredData,
                           service_catalog_enabled: serviceItemsData.service_catalog_enabled,
                         };
 
-                        debugger;
                         if (options.searchQuery && options.searchQuery.length) {
                           combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
                         }
 
-                        debugger;
                         if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                           $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                         } else if (!serviceCatalogDataPresent(combinedData) && Object.keys(combinedData.service_catalog_data).length === 0) {
@@ -1840,7 +1880,6 @@
                         setLocale(this.locale, true);
                     })
                     .catch(error => {
-                        debugger;
                         console.error('An error occurred while fetching service categories and items: ' + error.message);
                         noAccessPageCallback();
                     });
@@ -1851,7 +1890,7 @@
     fetchServiceCategoryItems(categoryId, callback, callBackOptions) {
       $.getJSON('/hc/api/v2/integration/token').then(data => data.token).then(token => {
         if (token) {
-          const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+          const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token } };
           const endPoint      = 'visible_service_categories_and_items';
           const queryParams   = {
             service_category_id: categoryId
@@ -1866,11 +1905,9 @@
               } else if (response.status === 404) {
                 return noAccessPageCallback();
               }
-
               if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
-
               return response.json();
             })
             .then(data => {
