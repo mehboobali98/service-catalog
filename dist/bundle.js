@@ -1824,7 +1824,7 @@
                         };
 
                         debugger;
-                        if (options.search_query && options.search_query.length) {
+                        if (options.searchQuery && options.searchQuery.length) {
                           combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
                         }
 
