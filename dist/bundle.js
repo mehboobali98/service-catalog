@@ -1777,7 +1777,7 @@
                 const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
                 const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
-                Promise.all([serviceItemsRequest, assetsRequest])
+                Promise.all([assetsRequest, serviceItemsRequest])
                     .then(responses => {
                         // Check response statuses
                         responses.forEach(response => {
@@ -1793,7 +1793,7 @@
                         // Parse JSON responses
                         return Promise.all(responses.map(response => response.json()));
                     })
-                    .then(([serviceItemsData, assetsData]) => {
+                    .then(([assetsData, serviceItemsData]) => {
                         $('#loading_icon_container').empty();
 
                         const restructuredData = {};
@@ -1855,7 +1855,7 @@
                         // Create the final data structure
                         const combinedData = {
                           service_catalog_data:    restructuredData,
-                          service_catalog_enabled: serviceItemsData.service_catalog_enabled,
+                          service_catalog_enabled: true,
                         };
 
                         if (options.searchQuery && options.searchQuery.length) {
