@@ -221,7 +221,6 @@
   }
 
   function getMyAssignedAssetsServiceItems(serviceCategoryItems) {
-    debugger;
     let assetServiceItems           = serviceCategoryItems.service_items['assets'] || [];
     let softwareLicenseServiceItems = serviceCategoryItems.service_items['software_entitlements'] || [];
     return assetServiceItems.concat(softwareLicenseServiceItems);
@@ -1692,7 +1691,6 @@
        * @param {Object} options - Options including the container and builders.
        */
       updateResults = (data, options) => {
-          debugger;
           if (!options || !options.searchResultsContainer) {
               console.error('Invalid options provided.');
               return;
@@ -1705,7 +1703,6 @@
           this.itemBuilder = options.itemBuilder;
           this.itemDetailBuilder = options.itemDetailBuilder;
 
-          debugger;
           // Handle no results case
           if (this.handleNoResults(options.searchResultsContainer, searchResults)) return;
 
@@ -1861,8 +1858,6 @@
                         if (options.searchQuery && options.searchQuery.length) {
                           combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
                         }
-
-                        debugger;
 
                         if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                           $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
