@@ -69,6 +69,7 @@ class Search {
      * @param {Object} options - Options including the container and builders.
      */
     updateResults = (data, options) => {
+        debugger;
         if (!options || !options.searchResultsContainer) {
             console.error('Invalid options provided.');
             return;
@@ -81,6 +82,7 @@ class Search {
         this.itemBuilder = options.itemBuilder;
         this.itemDetailBuilder = options.itemDetailBuilder;
 
+        debugger;
         // Handle no results case
         if (this.handleNoResults(options.searchResultsContainer, searchResults)) return;
 
