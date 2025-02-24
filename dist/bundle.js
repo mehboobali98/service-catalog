@@ -2080,7 +2080,7 @@
         $('#' + containerId.replace('_container', '_service_items_container')).show();
         debugger;
         if (self.integrationMode === 'custom_objects') {
-          const $loadingIcon = $('#' + containerId).find('.loading_icon_container');
+          const $loadingIcon = $('#' + containerId).find('#loading_icon_container');
 
           if ($loadingIcon.length) {
             $loadingIcon.empty();
