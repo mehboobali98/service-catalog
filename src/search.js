@@ -19,7 +19,7 @@ class Search {
 
     // Function to update search results
     updateResults = (data, options) => {
-        const searchResults = data.search_results
+        const searchResults = data.search_results || []
         const searchResultsContainer = options.searchResultsContainer;
         debugger;
         searchResultsContainer.empty();
