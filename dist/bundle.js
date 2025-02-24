@@ -1370,6 +1370,7 @@
       serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
       const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
+      debugger;
       if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
