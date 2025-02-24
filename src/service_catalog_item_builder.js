@@ -150,7 +150,6 @@ class ServiceCatalogItemBuilder {
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
-    debugger;
     queryParams['item_id']              = serviceCategoryItem.sequence_num;
     queryParams['item_name']            = assetName;
     queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem) || serviceCategoryItem.zendesk_form_id;
@@ -169,7 +168,6 @@ class ServiceCatalogItemBuilder {
 
     cardBody.append(cardFooter);
     card.append(cardImageContainer, cardBody);
-    debugger;
 
     card.click(function(e) {
       e.preventDefault();
@@ -197,8 +195,6 @@ class ServiceCatalogItemBuilder {
                                     .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                     .data('name', displayFields.title.value)
                                     .data('container-id', `${serviceCategory}_service_items_container`);
-
-                                    debugger;
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
     const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
@@ -257,8 +253,6 @@ class ServiceCatalogItemBuilder {
 
   populateCardContent(cardContentElement, serviceCategoryItem) {
     const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns || serviceCategoryItem.display_fields;
-
-    debugger;
     if (Object.keys(fields).length === 0) {
       const noAttributesText = 'No attributes configured';
       cardContentElement.append($('<tr>').append(
@@ -267,7 +261,6 @@ class ServiceCatalogItemBuilder {
       return;
     }
 
-    debugger;
     // 'en' is already translated from rails side.
     $.each(fields, (label, value) => {
       let newRow        = $('<tr>');
