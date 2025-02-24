@@ -2066,6 +2066,7 @@
           serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
         };
         const categoryId = categoryLinkId.split('_')[0];
+        debugger;
         if (self.integrationMode === 'custom_objects') {
           $('#loading_icon_container').empty();
         } else {
@@ -2075,9 +2076,11 @@
             callbackOptions
           );
         }
+        debugger;
         $('#service_catalog_item_search_results_container').hide();
         $('#' + containerId).show();
         $('#' + containerId.replace('_container', '_service_items_container')).show();
+        debugger;
         $('#service_items_container').show();
       });
 
