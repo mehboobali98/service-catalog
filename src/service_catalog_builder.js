@@ -174,7 +174,11 @@ class ServiceCatalogBuilder {
       $('#' + containerId.replace('_container', '_service_items_container')).show();
       debugger;
       if (self.integrationMode === 'custom_objects') {
-        $('#loading_icon_container').empty();
+        const $loadingIcon = $('#' + containerId).find('.loading_icon_container');
+
+        if ($loadingIcon.length) {
+          $loadingIcon.empty();
+        }
       }
       $('#service_items_container').show();
     });

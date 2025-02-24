@@ -1370,7 +1370,6 @@
       serviceCategoryItemsContainer.append(serviceCategoryLabel, serviceCategoryDescription);
 
       const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
-      debugger;
       if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
@@ -2081,7 +2080,11 @@
         $('#' + containerId.replace('_container', '_service_items_container')).show();
         debugger;
         if (self.integrationMode === 'custom_objects') {
-          $('#loading_icon_container').empty();
+          const $loadingIcon = $('#' + containerId).find('.loading_icon_container');
+
+          if ($loadingIcon.length) {
+            $loadingIcon.empty();
+          }
         }
         $('#service_items_container').show();
       });
