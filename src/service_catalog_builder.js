@@ -37,7 +37,6 @@ class ServiceCatalogBuilder {
   buildServiceCatalog() {
     this.buildServiceCatalogHeaderSection();
     $('main').append(loadingIcon('mt-5'));
-    debugger;
     if (this.integrationMode === 'custom_objects') {
       this.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(this.buildUI, this.noAccessPage, {});
     } else {
@@ -83,7 +82,6 @@ class ServiceCatalogBuilder {
       searchAndNavContainer: searchAndNavContainer,
       serviceCatalogContainer: serviceCatalogContainer
     };
-    debugger;
     this.createServiceCategoriesView(containers);
   }
 
@@ -204,7 +202,6 @@ class ServiceCatalogBuilder {
 
         timer = setTimeout(
           function () {
-            debugger;
             if (self.integrationMode === 'custom_objects') {
               self.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(
                 self.search.updateResults,

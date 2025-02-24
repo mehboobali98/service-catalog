@@ -73,11 +73,9 @@ class ServiceCatalogItemBuilder {
     if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
-    debugger;
     if (serviceCategoryItems.service_items) {
       let serviceItems = [];
       if (isMyAssignedAssets(serviceCategory)) {
-        debugger;
         if (this.integrationMode === 'custom_objects') {
           serviceItems = serviceCategoryItems.service_items;
         } else {
@@ -85,11 +83,9 @@ class ServiceCatalogItemBuilder {
           this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
         }
       } else {
-        debugger;
         serviceItems = Array.isArray(serviceCategoryItems.service_items) ? serviceCategoryItems.service_items : JSON.parse(serviceCategoryItems.service_items);
       }
 
-      debugger;
       if (serviceItems.length) {
         serviceItems.forEach((serviceCategoryItem, index) => {
           if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)) };
@@ -109,7 +105,6 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceItem) {
-    debugger;
     if (isMyAssignedAssets(serviceCategory)) {
       return this.buildItAssetServiceItem(serviceCategory, serviceItem);
     } else {
@@ -120,7 +115,6 @@ class ServiceCatalogItemBuilder {
   buildItAssetServiceItem = (serviceCategory, serviceCategoryItem) => {
     const card                 = $('<div>').addClass('row service-item-card js-service-item-card h-100');
     const queryParams          = {};
-    debugger;
     const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
 
     // Card image
@@ -137,7 +131,6 @@ class ServiceCatalogItemBuilder {
     cardImageFlex.append(cardImage);
     cardImageContainer.append(cardImageFlex);
 
-    debugger;
     // Card body
     const cardBody = $('<div>').addClass('col-8 card-body');
 
@@ -152,7 +145,6 @@ class ServiceCatalogItemBuilder {
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
 
-    debugger;
     this.populateCardContent(cardContent, serviceCategoryItem);
 
     cardContentContainer.append(cardContent);
@@ -164,7 +156,6 @@ class ServiceCatalogItemBuilder {
     queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem) || serviceCategoryItem.zendesk_form_id;
     queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
     queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
-    debugger;
 
     // Card footer
     const url              = `/hc/requests/new?${$.param(queryParams)}`;
