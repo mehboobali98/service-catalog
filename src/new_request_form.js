@@ -71,6 +71,7 @@ class NewRequestForm {
 
       ezoCustomFieldEle.hide();
       ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
+      debugger;
       $("#ezo-asset-select").select2({
         data: assetsData.data
       });
