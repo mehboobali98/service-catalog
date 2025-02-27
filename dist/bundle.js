@@ -866,6 +866,10 @@
       });
     }
 
+    fetchUserData() {
+      return $.getJSON('/api/v2/users/me')
+    }
+
     withToken() {
       return $.getJSON('/hc/api/v2/integration/token').then(data => data.token);
     }
