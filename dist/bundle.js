@@ -833,9 +833,10 @@
 
         data.custom_object_records.forEach((asset, index) => {
           const { resource_type: resourceType, sequence_num: sequenceNum, asset_name: assetName } = asset.custom_object_fields;
+          debugger;
           const prefix = RESOURCE_PREFIXES[resourceType] || '';
           assetsData.data[index] = {
-            sequenceNum,
+            id:   sequenceNum,
             text: `${prefix} # ${sequenceNum} - ${assetName}`,
           };
         });
