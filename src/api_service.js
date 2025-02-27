@@ -64,7 +64,6 @@ class ApiService {
         .then(userData => userData.user.email)
         .then(userEmail => {
             if (userEmail) {
-              debugger;
               const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
               const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
@@ -112,7 +111,6 @@ class ApiService {
                           };
                         }
 
-                        debugger;
                         if (resourceType === 'FixedAsset') {
                           restructuredData[categoryKey].service_items.push({
                             id: record.custom_object_fields.asset_id,
