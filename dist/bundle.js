@@ -1764,6 +1764,7 @@
           .then(userData => userData.user.email)
           .then(userEmail => {
               if (userEmail) {
+                debugger;
                 const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
                 const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
 
