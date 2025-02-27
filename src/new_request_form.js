@@ -62,6 +62,7 @@ class NewRequestForm {
       const assetsData = { data: [] };
       const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
+      debugger;
       data.custom_object_records.forEach((asset, index) => {
         assetsData.data[index] = {
           id: asset.custom_object_fields.asset_id,
