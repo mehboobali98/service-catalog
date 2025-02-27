@@ -1,5 +1,6 @@
 import { t }                  from './i18n.js';
 import { loadExternalFiles }  from './utility.js';
+import { RESOURCE_PREFIXES }  from './constant.js';
 
 class NewRequestForm {
   constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId, integrationMode) {
@@ -64,9 +65,13 @@ class NewRequestForm {
 
       data.custom_object_records.forEach((asset, index) => {
         debugger;
+        const { resource_type: resourceType, sequence_num: id, asset_name: assetName } = asset.custom_object_fields;
+        const prefix = RESOURCE_PREFIXES[resourceType] || '';
+
+        debugger;
         assetsData.data[index] = {
-          id: asset.custom_object_fields.sequence_num,
-          text: asset.custom_object_fields.asset_name,
+            id,
+            text: `${prefix} ${assetName}`,
         };
       });
 
