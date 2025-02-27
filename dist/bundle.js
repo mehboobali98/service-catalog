@@ -5,7 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const TRANSLATIONS                            = {};
-  const RESOURCE_PREFIXES                       = { 'Asset': 'Asset', 'SoftwareLicense': 'Software License' };
+  const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'SoftwareLicense': 'Software License' };
   const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE                     = '--';
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
@@ -833,7 +833,6 @@
 
         data.custom_object_records.forEach((asset, index) => {
           const { resource_type: resourceType, sequence_num: sequenceNum, asset_name: assetName } = asset.custom_object_fields;
-          debugger;
           const prefix = RESOURCE_PREFIXES[resourceType] || '';
           assetsData.data[index] = {
             id:   sequenceNum,
