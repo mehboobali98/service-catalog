@@ -62,10 +62,9 @@ class NewRequestForm {
       const assetsData = { data: [] };
       const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
-      debugger;
       data.custom_object_records.forEach((asset, index) => {
         assetsData.data[index] = {
-          id: asset.custom_object_fields.asset_id,
+          id: asset.custom_object_fields.sequence_num,
           text: asset.custom_object_fields.asset_name,
         };
       });
@@ -260,7 +259,6 @@ class NewRequestForm {
     let ezoSelectEle = $('#ezo-asset-select');
     if (ezoSelectEle.length === 0) { this.renderEzoSelect2Field(ezoCustomFieldEle); }
 
-    debugger;
     // Set the value, creating a new option if necessary
     if (ezoSelectEle.find("option[value='" + assetId + "']").length) {
       ezoSelectEle.val(assetId).trigger('change');
