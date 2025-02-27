@@ -835,8 +835,8 @@
           const { resource_type: resourceType, sequence_num: sequenceNum, asset_name: assetName } = asset.custom_object_fields;
           const prefix = RESOURCE_PREFIXES[resourceType] || '';
           assetsData.data[index] = {
-              id,
-              text: `${prefix} # ${sequenceNum} - ${assetName}`,
+            sequenceNum,
+            text: `${prefix} # ${sequenceNum} - ${assetName}`,
           };
         });
 
