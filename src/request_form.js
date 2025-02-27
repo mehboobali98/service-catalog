@@ -144,6 +144,7 @@ class RequestForm {
   showLinkedAsset(assetName) {
     const assetUrl         = this.getAssetUrl(assetName);
     const ezoContainerBody = $('#ezo-assets-container dd ul');
+    debugger;
     if (assetUrl) {
       ezoContainerBody.append("<li><a target='_blank' href='" + assetUrl + "'>" + assetName + "</a></li>");
     } else {
@@ -152,6 +153,7 @@ class RequestForm {
   }
 
   getAssetUrl(assetName) {
+    debugger;
     if (!assetName) { return null; }
 
     assetName       = assetName.trim();
