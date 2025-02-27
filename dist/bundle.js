@@ -1072,6 +1072,8 @@
         return oldTemplateSelector.text() !== '-';
       } else if (newTemplateSelector.length) {
         return newTemplateSelector.val().trim().length > 0;
+      } else if (this.subjectFieldElement().length) {
+        return true;
       }
       return false;
     }
