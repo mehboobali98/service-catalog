@@ -726,7 +726,6 @@
     showLinkedAsset(assetName) {
       const assetUrl         = this.getAssetUrl(assetName);
       const ezoContainerBody = $('#ezo-assets-container dd ul');
-      debugger;
       if (assetUrl) {
         ezoContainerBody.append("<li><a target='_blank' href='" + assetUrl + "'>" + assetName + "</a></li>");
       } else {
@@ -735,7 +734,6 @@
     }
 
     getAssetUrl(assetName) {
-      debugger;
       if (!assetName) { return null; }
 
       assetName       = assetName.trim();
@@ -834,14 +832,11 @@
         const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
         data.custom_object_records.forEach((asset, index) => {
-          debugger;
-          const { resource_type: resourceType, sequence_num: id, asset_name: assetName } = asset.custom_object_fields;
+          const { resource_type: resourceType, sequence_num: sequenceNum, asset_name: assetName } = asset.custom_object_fields;
           const prefix = RESOURCE_PREFIXES[resourceType] || '';
-
-          debugger;
           assetsData.data[index] = {
               id,
-              text: `${prefix} ${assetName}`,
+              text: `${prefix} # ${sequenceNum} - ${assetName}`,
           };
         });
 
