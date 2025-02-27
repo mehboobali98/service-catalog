@@ -65,13 +65,12 @@ class NewRequestForm {
       data.custom_object_records.forEach((asset, index) => {
         assetsData.data[index] = {
           id: asset.custom_object_fields.asset_id,
-          text: asset.custom_object_fields.name,
+          text: asset.custom_object_fields.asset_name,
         };
       });
 
       ezoCustomFieldEle.hide();
       ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
-      debugger;
       $("#ezo-asset-select").select2({
         data: assetsData.data
       });
