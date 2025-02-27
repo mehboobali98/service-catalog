@@ -1811,6 +1811,7 @@
                             };
                           }
 
+                          debugger;
                           if (resourceType === 'FixedAsset') {
                             restructuredData[categoryKey].service_items.push({
                               id: record.custom_object_fields.asset_id,
