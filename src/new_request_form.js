@@ -61,6 +61,7 @@ class NewRequestForm {
         const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
         this.processData(data.assets, assetsData, 'Asset');
+        this.processData(data.stock_assets, assetsData, 'Asset Stock')
         this.processData(data.software_entitlements, assetsData, 'Software License');
 
         ezoCustomFieldEle.hide();
@@ -111,12 +112,17 @@ class NewRequestForm {
             return { id: sequenceNum, text: `Asset # ${sequenceNum} - ${asset.name}` };
           });
 
+          var assignedStockAssets = $.map(data.stock_assets, function(asset) {
+            var sequenceNum = asset.sequence_num;
+            return { id: sequenceNum, text: `Asset Stock # ${sequenceNum} - ${asset.name}` };
+          });
+
           var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
             var sequenceNum = softwareEntitlement.sequence_num;
             return { id: sequenceNum, text: `Software License # ${sequenceNum} - ${softwareEntitlement.name}` };
           });
 
-          var records = assignedAssets.concat(assignedSoftwareLicenses);
+          var records = assignedAssets.concat(assignedStockAssets, assignedSoftwareLicenses);
           return {
             results:    records,
             pagination: { more: data.page < data.total_pages }
