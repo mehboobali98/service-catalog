@@ -5,7 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const TRANSLATIONS                            = {};
-  const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'SoftwareLicense': 'Software License' };
+  const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'StockAsset': 'Asset Stock', 'SoftwareLicense': 'Software License' };
   const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE                     = '--';
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
