@@ -31,36 +31,57 @@ class RequestForm {
       const ezoServiceItemFieldDataPresent  = self.fieldDataPresent(ezoServiceItemFieldData);
 
       if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
+      const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
 
-      const options = { headers: { } };
-
-      return self.withToken(token => {
-        if (token) {
-          options.headers['Authorization']              = 'Bearer ' + token;
-
-          if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
-
-          if (ezoFieldDataPresent) {
-            const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-            const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
-            const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
-
-            if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
-
-            if (parsedEzoFieldValue.linked != 'true') {
-              self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
-            }
-
-            if (assetNames) {
-              self.addEZOContainer();
-              assetNames.map(name => {
-                self.showLinkedAsset(name);
-              });
-            }
-          }
-        }
-      });
+      if (self.integrationMode === 'custom_objects') {
+        self.handleCustomObjectsIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent);
+      } else {
+        self.handleJWTIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent);
+      }
     });
+  }
+
+  handleJWTIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent) {
+    const options = { headers: {} };
+    this.withToken(token => {
+        if (!token) return;
+
+        options.headers['Authorization'] = `Bearer ${token}`;
+        if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
+            this.linkResources(requestId, { headers: options.headers, serviceItemFieldId: this.ezoServiceItemFieldId });
+        }
+        if (ezoFieldDataPresent) {
+            this.processAssetData(requestId, parsedEzoFieldValue, options);
+        }
+    });
+  }
+
+  handleCustomObjectsIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent) {
+    if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
+        this.linkResources(requestId, { serviceItemFieldId: this.ezoServiceItemFieldId });
+    }
+
+    if (ezoFieldDataPresent) {
+        this.processAssetData(requestId, parsedEzoFieldValue);
+    }
+  }
+
+  processAssetData(requestId, parsedEzoFieldValue, options = {}) {
+    if (!parsedEzoFieldValue || !parsedEzoFieldValue.assets) return;
+
+    const assetNames = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
+    const assetSequenceNums = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
+
+    if (!assetSequenceNums.length) return;
+    
+    if (parsedEzoFieldValue.linked !== 'true') {
+      this.linkResources(requestId, options);
+    }
+
+    if (assetNames.length) {
+      this.addEZOContainer();
+      assetNames.forEach(name => this.showLinkedAsset(name));
+    }
   }
 
   extractRequestId() {
@@ -84,24 +105,25 @@ class RequestForm {
   }
 
   linkResources(requestId, options) {
-    const self               = this;
-    const assetsFieldId      = options.ezoFieldId;
-    const serviceItemFieldId = options.serviceItemFieldId;
+    const url =
+      this.integrationMode === 'custom_objects'
+        ? `https://${this.ezoSubdomain}/webhooks/zendesk/sync_tickets_to_assets_relation.json`
+        : `https://${this.ezoSubdomain}/webhooks/zendesk/link_ticket_to_resource.json`;
+    const self                = this;
+    const queryParams         = { ticket_id: requestId };
+    const assetsFieldId       = options.ezoFieldId;
+    const serviceItemFieldId  = options.serviceItemFieldId;
 
-    const queryParams = {
-      ticket_id: requestId,
-    };
 
     if (assetsFieldId)      { queryParams.assets_field_id       = assetsFieldId;      }
     if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
 
-    const headers = options.headers || {};
 
     $.ajax({
-      url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
+      url:      url,
       type:     'POST',
       data:     { 'ticket': queryParams },
-      headers:  headers,
+      headers:  options.headers || {},
       success: function(response) {
         if (response['show_ces_survey']) {
           new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();

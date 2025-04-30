@@ -31,7 +31,7 @@ class ServiceCatalogItemDetailBuilder {
       let containerId = `${serviceCategory}_container`;
       let container   = $(`#${containerId}`);
       if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
-        let serviceItems = JSON.parse(data.service_items);
+        let serviceItems = Array.isArray(data.service_items) ? data.service_items : JSON.parse(data.service_items);
         $.each(serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
           this.bindItemDetailEventListener(this.userRole, serviceCategory, serviceCategoryItem);

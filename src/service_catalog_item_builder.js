@@ -30,9 +30,10 @@ import {
 } from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogItemBuilder {
-  constructor(locale) {
+  constructor(locale, integrationMode) {
     this.locale                 = locale;
     this.currency               = null;
+    this.integrationMode        = integrationMode;
     this.zendeskFormData        = null;
     this.serviceCategoriesItems = null;
   }
@@ -56,7 +57,6 @@ class ServiceCatalogItemBuilder {
   buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
     const serviceCategoryItemsContainer = $('<div>');
     serviceCategoryItemsContainer.attr('id', `${serviceCategory}_container`);
-
     if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
     const serviceCategoryTitle       = serviceCategoryItems.title;
@@ -73,14 +73,17 @@ class ServiceCatalogItemBuilder {
     if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
-
     if (serviceCategoryItems.service_items) {
       let serviceItems = [];
       if (isMyAssignedAssets(serviceCategory)) {
-        serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
-        this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+        if (this.integrationMode === 'custom_objects') {
+          serviceItems = serviceCategoryItems.service_items;
+        } else {
+          serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
+          this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+        }
       } else {
-        serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+        serviceItems = Array.isArray(serviceCategoryItems.service_items) ? serviceCategoryItems.service_items : JSON.parse(serviceCategoryItems.service_items);
       }
 
       if (serviceItems.length) {
@@ -149,7 +152,7 @@ class ServiceCatalogItemBuilder {
 
     queryParams['item_id']              = serviceCategoryItem.sequence_num;
     queryParams['item_name']            = assetName;
-    queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
+    queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem) || serviceCategoryItem.zendesk_form_id;
     queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
     queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
 
@@ -192,7 +195,6 @@ class ServiceCatalogItemBuilder {
                                     .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                     .data('name', displayFields.title.value)
                                     .data('container-id', `${serviceCategory}_service_items_container`);
-
     // Create the card image element
     const cardImageContainer = $('<div>').addClass('col-4');
     const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
@@ -250,8 +252,7 @@ class ServiceCatalogItemBuilder {
   }
 
   populateCardContent(cardContentElement, serviceCategoryItem) {
-    const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-
+    const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns || serviceCategoryItem.display_fields;
     if (Object.keys(fields).length === 0) {
       const noAttributesText = 'No attributes configured';
       cardContentElement.append($('<tr>').append(

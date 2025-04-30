@@ -33,6 +33,7 @@ class ServiceCatalogManager {
     this.timeStamp              = initializationData.timeStamp;
     this.ezoFieldId             = initializationData.ezoFieldId;
     this.ezoSubdomain           = initializationData.ezoSubdomain;
+    this.integrationMode        = initializationData.integrationMode || 'JWT';
     this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
     const files = this.filesToLoad();
@@ -42,7 +43,7 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain, this.integrationMode);
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }
@@ -56,9 +57,9 @@ class ServiceCatalogManager {
     if (isServiceCatalogPage()) {
       this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
-      new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+      new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
     } else if (isRequestPage()) {
-      new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+      new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
     } else {
       // Handle other cases if needed
     }

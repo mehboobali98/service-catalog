@@ -9,12 +9,13 @@ import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
-  constructor(locale, ezoSubdomain) {
+  constructor(locale, ezoSubdomain, integrationMode) {
     this.locale                          = locale;
-    this.apiService                      = new ApiService(locale, ezoSubdomain);
+    this.apiService                      = new ApiService(locale, ezoSubdomain, integrationMode);
     this.ezoSubdomain                    = ezoSubdomain;
-    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
+    this.integrationMode                 = integrationMode;
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale, integrationMode);
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale, integrationMode);
     this.search                          = new Search();
   }
 
@@ -36,7 +37,11 @@ class ServiceCatalogBuilder {
   buildServiceCatalog() {
     this.buildServiceCatalogHeaderSection();
     $('main').append(loadingIcon('mt-5'));
-    this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+    if (this.integrationMode === 'custom_objects') {
+      this.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(this.buildUI, this.noAccessPage, {});
+    } else {
+      this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+    }
   }
 
   buildServiceCatalogHeaderSection() {
@@ -155,16 +160,23 @@ class ServiceCatalogBuilder {
         serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
       };
       const categoryId = categoryLinkId.split('_')[0];
-      self.apiService.fetchServiceCategoryItems(
-        categoryId,
-        self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
-        callbackOptions
-      );
+      if (self.integrationMode !== 'custom_objects') {
+        self.apiService.fetchServiceCategoryItems(
+          categoryId,
+          self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
+          callbackOptions
+        );
+      }
       $('#service_catalog_item_search_results_container').hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
+      if (self.integrationMode === 'custom_objects') {
+        const $loadingIcon = $('#' + containerId).find('#loading_icon_container');
+        if ($loadingIcon.length) {
+          $loadingIcon.empty();
+        }
+      }
       $('#service_items_container').show();
-
     });
 
     $('#search_input').on('keyup', function(e) {
@@ -194,16 +206,29 @@ class ServiceCatalogBuilder {
 
         timer = setTimeout(
           function () {
-            self.apiService.fetchServiceCategoriesAndItems(
-              self.search.updateResults,
-              self.noAccessPage,
-              {
-                searchQuery: query,
-                searchResultsContainer: searchResultsContainer,
-                itemBuilder: self.serviceCatalogItemBuilder,
-                itemDetailBuilder: self.serviceCatalogItemDetailBuilder
-              }
-            );
+            if (self.integrationMode === 'custom_objects') {
+              self.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(
+                self.search.updateResults,
+                self.noAccessPage,
+                {
+                  searchQuery: query,
+                  searchResultsContainer: searchResultsContainer,
+                  itemBuilder: self.serviceCatalogItemBuilder,
+                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                }
+              );
+            } else {
+              self.apiService.fetchServiceCategoriesAndItems(
+                self.search.updateResults,
+                self.noAccessPage,
+                {
+                  searchQuery: query,
+                  searchResultsContainer: searchResultsContainer,
+                  itemBuilder: self.serviceCatalogItemBuilder,
+                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                }
+              );
+            }
           },
           500
         );

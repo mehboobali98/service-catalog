@@ -5,6 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const TRANSLATIONS                            = {};
+  const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'SoftwareLicense': 'Software License' };
   const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE                     = '--';
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
@@ -163,7 +164,7 @@
   }
 
   function isMyAssignedAssets(serviceCategory) {
-    const regex = /^\d*_my_assigned_assets$/;
+    const regex = /^\d*_my_assigned_assets$/i;
     return regex.test(serviceCategory);
   }
 
@@ -612,36 +613,57 @@
         const ezoServiceItemFieldDataPresent  = self.fieldDataPresent(ezoServiceItemFieldData);
 
         if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
+        const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
 
-        const options = { headers: { } };
-
-        return self.withToken(token => {
-          if (token) {
-            options.headers['Authorization']              = 'Bearer ' + token;
-
-            if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) { self.linkResources(requestId, { headers: options.headers, serviceItemFieldId: self.ezoServiceItemFieldId }); }
-
-            if (ezoFieldDataPresent) {
-              const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
-              const assetNames          = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
-              const assetSequenceNums   = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
-
-              if (!assetSequenceNums || assetSequenceNums.length == 0) { return true; }
-
-              if (parsedEzoFieldValue.linked != 'true') {
-                self.linkResources(requestId, { headers: options.headers, ezoFieldId: self.ezoFieldId });
-              }
-
-              if (assetNames) {
-                self.addEZOContainer();
-                assetNames.map(name => {
-                  self.showLinkedAsset(name);
-                });
-              }
-            }
-          }
-        });
+        if (self.integrationMode === 'custom_objects') {
+          self.handleCustomObjectsIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent);
+        } else {
+          self.handleJWTIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent);
+        }
       });
+    }
+
+    handleJWTIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent) {
+      const options = { headers: {} };
+      this.withToken(token => {
+          if (!token) return;
+
+          options.headers['Authorization'] = `Bearer ${token}`;
+          if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
+              this.linkResources(requestId, { headers: options.headers, serviceItemFieldId: this.ezoServiceItemFieldId });
+          }
+          if (ezoFieldDataPresent) {
+              this.processAssetData(requestId, parsedEzoFieldValue, options);
+          }
+      });
+    }
+
+    handleCustomObjectsIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent) {
+      if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
+          this.linkResources(requestId, { serviceItemFieldId: this.ezoServiceItemFieldId });
+      }
+
+      if (ezoFieldDataPresent) {
+          this.processAssetData(requestId, parsedEzoFieldValue);
+      }
+    }
+
+    processAssetData(requestId, parsedEzoFieldValue, options = {}) {
+      if (!parsedEzoFieldValue || !parsedEzoFieldValue.assets) return;
+
+      const assetNames = parsedEzoFieldValue.assets.map(asset => Object.values(asset)[0]);
+      const assetSequenceNums = parsedEzoFieldValue.assets.map(asset => Object.keys(asset)[0]);
+
+      if (!assetSequenceNums.length) return;
+      
+      if (parsedEzoFieldValue.linked !== 'true') {
+        this.linkResources(requestId, options);
+      }
+
+      if (assetNames.length) {
+        this.addEZOContainer();
+        assetNames.forEach(name => this.showLinkedAsset(name));
+      }
     }
 
     extractRequestId() {
@@ -665,24 +687,25 @@
     }
 
     linkResources(requestId, options) {
-      const self               = this;
-      const assetsFieldId      = options.ezoFieldId;
-      const serviceItemFieldId = options.serviceItemFieldId;
+      const url =
+        this.integrationMode === 'custom_objects'
+          ? `https://${this.ezoSubdomain}/webhooks/zendesk/sync_tickets_to_assets_relation.json`
+          : `https://${this.ezoSubdomain}/webhooks/zendesk/link_ticket_to_resource.json`;
+      const self                = this;
+      const queryParams         = { ticket_id: requestId };
+      const assetsFieldId       = options.ezoFieldId;
+      const serviceItemFieldId  = options.serviceItemFieldId;
 
-      const queryParams = {
-        ticket_id: requestId,
-      };
 
       if (assetsFieldId)      { queryParams.assets_field_id       = assetsFieldId;      }
       if (serviceItemFieldId) { queryParams.service_item_field_id = serviceItemFieldId; }
 
-      const headers = options.headers || {};
 
       $.ajax({
-        url:      'https://' + this.ezoSubdomain + '/webhooks/zendesk/link_ticket_to_resource.json',
+        url:      url,
         type:     'POST',
         data:     { 'ticket': queryParams },
-        headers:  headers,
+        headers:  options.headers || {},
         success: function(response) {
           if (response['show_ces_survey']) {
             new CustomerEffortSurvery(self.locale, requestId, self.ezoSubdomain).render();
@@ -748,10 +771,11 @@
   }
 
   class NewRequestForm {
-    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId, integrationMode) {
       this.locale                 = locale;
       this.ezoFieldId             = ezoFieldId;
       this.ezoSubdomain           = ezoSubdomain;
+      this.integrationMode        = integrationMode;
       this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
     }
 
@@ -772,7 +796,79 @@
       if (formSubject) { this.subjectFieldElement().val(formSubject); }
       if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
-      this.getTokenAndFetchAssignedAssets();
+      if (this.integrationMode === 'custom_objects') {
+        this.fetchCustomObjects();
+      } else {
+        this.getTokenAndFetchAssignedAssets();
+      }
+    }
+
+    fetchCustomObjects() {
+      this.fetchUserData()
+        .done((userData) => this.handleUserData(userData))
+        .fail(function(error) {
+          console.error("Failed to fetch user data:", error);
+        });
+    }
+
+    handleUserData(userData) {
+      var userId    = userData.user.id;
+      var userEmail = userData.user.email;
+      if (userId) {
+        this.populateAssetFieldUsingCustomObjects(userId, userEmail);
+      } else {
+        console.error("User ID not found in response.");
+      }
+    }
+
+    populateAssetFieldUsingCustomObjects(userId, userEmail) {
+      $.getJSON(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`).done((data) => {
+        if (!data || !data.custom_object_records) {
+          console.error("No custom object records found");
+          return;
+        }
+
+        const assetsData = { data: [] };
+        const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
+
+        data.custom_object_records.forEach((asset, index) => {
+          const { resource_type: resourceType, sequence_num: sequenceNum, asset_name: assetName } = asset.custom_object_fields;
+          const prefix = RESOURCE_PREFIXES[resourceType] || '';
+          assetsData.data[index] = {
+            id:   sequenceNum,
+            text: `${prefix} # ${sequenceNum} - ${assetName}`,
+          };
+        });
+
+        ezoCustomFieldEle.hide();
+        ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
+        $("#ezo-asset-select").select2({
+          data: assetsData.data
+        });
+        $("#ezo-asset-select").next().css("font-size", "15px");
+
+        $("#ezo-asset-select").on("change", function () {
+          const selectedIds = $(this).val();
+
+          if (selectedIds && selectedIds.length > 0) {
+            const selectedAssets = assetsData.data.filter((asset) =>
+              selectedIds.includes(asset.id.toString())
+            );
+
+            const mappedAssets = selectedAssets.map((asset) => ({
+              [asset.id]: asset.text,
+            }));
+
+            ezoCustomFieldEle.val(JSON.stringify({ assets: mappedAssets }));
+          } else {
+            ezoCustomFieldEle.val("");
+          }
+        });
+
+        this.preselectAssetsCustomField(this.extractQueryParams(window.location));
+      }).fail((error) => {
+        console.error("Error fetching custom object records:", error);
+      });
     }
 
     extractQueryParams(url) {
@@ -793,6 +889,10 @@
           return this.populateAssignedAssets(url, options);
         }
       });
+    }
+
+    fetchUserData() {
+      return $.getJSON('/api/v2/users/me')
     }
 
     withToken() {
@@ -978,6 +1078,8 @@
         return oldTemplateSelector.text() !== '-';
       } else if (newTemplateSelector.length) {
         return newTemplateSelector.val().trim().length > 0;
+      } else if (this.subjectFieldElement().length) {
+        return true;
       }
       return false;
     }
@@ -1128,7 +1230,7 @@
         let containerId = `${serviceCategory}_container`;
         let container   = $(`#${containerId}`);
         if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
-          let serviceItems = JSON.parse(data.service_items);
+          let serviceItems = Array.isArray(data.service_items) ? data.service_items : JSON.parse(data.service_items);
           $.each(serviceItems, (index, serviceCategoryItem) => {
             container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
             this.bindItemDetailEventListener(this.userRole, serviceCategory, serviceCategoryItem);
@@ -1265,9 +1367,10 @@
   }
 
   class ServiceCatalogItemBuilder {
-    constructor(locale) {
+    constructor(locale, integrationMode) {
       this.locale                 = locale;
       this.currency               = null;
+      this.integrationMode        = integrationMode;
       this.zendeskFormData        = null;
       this.serviceCategoriesItems = null;
     }
@@ -1291,7 +1394,6 @@
     buildServiceCategoryItems(serviceCategory, serviceCategoryItems, isVisible) {
       const serviceCategoryItemsContainer = $('<div>');
       serviceCategoryItemsContainer.attr('id', `${serviceCategory}_container`);
-
       if (!isVisible) { serviceCategoryItemsContainer.addClass('collapse'); }
 
       const serviceCategoryTitle       = serviceCategoryItems.title;
@@ -1308,14 +1410,17 @@
       if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
-
       if (serviceCategoryItems.service_items) {
         let serviceItems = [];
         if (isMyAssignedAssets(serviceCategory)) {
-          serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
-          this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+          if (this.integrationMode === 'custom_objects') {
+            serviceItems = serviceCategoryItems.service_items;
+          } else {
+            serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
+            this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
+          }
         } else {
-          serviceItems = serviceCategoryItems.service_items ? JSON.parse(serviceCategoryItems.service_items) : [];
+          serviceItems = Array.isArray(serviceCategoryItems.service_items) ? serviceCategoryItems.service_items : JSON.parse(serviceCategoryItems.service_items);
         }
 
         if (serviceItems.length) {
@@ -1383,7 +1488,7 @@
 
       queryParams['item_id']              = serviceCategoryItem.sequence_num;
       queryParams['item_name']            = assetName;
-      queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem);
+      queryParams['ticket_form_id']       = this.zendeskFormId(serviceCategoryItem) || serviceCategoryItem.zendesk_form_id;
       queryParams['service_category']     = t(generateI18nKey(serviceCategoryTitle), serviceCategoryTitle);
       queryParams['subject-placeholder']  = t('report-issue', 'Report Issue');
 
@@ -1426,7 +1531,6 @@
                                       .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                       .data('name', displayFields.title.value)
                                       .data('container-id', `${serviceCategory}_service_items_container`);
-
       // Create the card image element
       const cardImageContainer = $('<div>').addClass('col-4');
       const cardImageFlex      = $('<div>').addClass('d-flex flex-column h-100 service-item-card-image-container');
@@ -1484,8 +1588,7 @@
     }
 
     populateCardContent(cardContentElement, serviceCategoryItem) {
-      const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns;
-
+      const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns || serviceCategoryItem.display_fields;
       if (Object.keys(fields).length === 0) {
         const noAttributesText = 'No attributes configured';
         cardContentElement.append($('<tr>').append(
@@ -1554,96 +1657,274 @@
 
   class Search {
       constructor() {
-          this.itemBuilder        = null;
-          this.itemDetailBuilder  = null;
+          this.itemBuilder = null;
+          this.itemDetailBuilder = null;
       }
 
-      // Function to update search results
-      updateResults = (data, options) => {
-          const searchResultsContainer = options.searchResultsContainer;
-          searchResultsContainer.empty();
-          if (!data.search_results.length) {
-              searchResultsContainer.append(noResultsFound());
-              return;
+      /**
+       * Safely parses search results from JSON string or returns array directly.
+       * @param {Array|string} searchResults
+       * @returns {Array}
+       */
+      parseSearchResults = (searchResults) => {
+          if (Array.isArray(searchResults)) return searchResults;
+
+          if (typeof searchResults === 'string') {
+              try {
+                  return JSON.parse(searchResults);
+              } catch (e) {
+                  console.error('Invalid JSON string:', e);
+              }
           }
+          return [];
+      };
 
-          self                    = this;
-          self.itemBuilder        = options.itemBuilder;
-          const searchItemsFlex   = $('<div>').addClass('d-flex flex-wrap gap-3');
-          self.itemDetailBuilder  = options.itemDetailBuilder;       
-          const searchResults     = Array.isArray(data.search_results) ? data.search_results : JSON.parse(data.search_results);
+      /**
+       * Clears previous results and displays a no-results message if needed.
+       * @param {Object} container
+       * @param {Array} results
+       * @returns {boolean} - Returns true if no results found.
+       */
+      handleNoResults = (container, results) => {
+          container.empty();
+          if (results.length === 0) {
+              container.append(noResultsFound());
+              return true;
+          }
+          return false;
+      };
 
-          $.each(searchResults, function(index, serviceItem) {
-              if (serviceItem) {
-                  let serviceCategory     = serviceItem.service_category_title_with_id;
-                  let serviceCategoryItem = self.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
-                  self.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
+      /**
+       * Renders the search results.
+       * @param {Array} results
+       * @param {Object} container
+       */
+      renderResults = (results, container) => {
+          const searchItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
+
+          results.forEach((serviceItem) => {
+              if (serviceItem && serviceItem.service_category_title_with_id) {
+                  const serviceCategory = serviceItem.service_category_title_with_id;
+                  const serviceCategoryItem = this.itemBuilder.buildServiceCategoryItem(serviceCategory, serviceItem);
+
+                  this.itemDetailBuilder.bindItemDetailEventListener(serviceCategoryItem);
                   searchItemsFlex.append(serviceCategoryItem);
               }
           });
-          searchResultsContainer.append(searchItemsFlex);
-      }
+
+          container.append(searchItemsFlex);
+      };
+
+      /**
+       * Updates the search results and renders them in the provided container.
+       * @param {Object} data - The data containing search results.
+       * @param {Object} options - Options including the container and builders.
+       */
+      updateResults = (data, options) => {
+          if (!options || !options.searchResultsContainer) {
+              console.error('Invalid options provided.');
+              return;
+          }
+
+          // Parse and validate search results
+          const searchResults = this.parseSearchResults(data.search_results);
+
+          // Initialize builders
+          this.itemBuilder = options.itemBuilder;
+          this.itemDetailBuilder = options.itemDetailBuilder;
+
+          // Handle no results case
+          if (this.handleNoResults(options.searchResultsContainer, searchResults)) return;
+
+          // Render search results
+          this.renderResults(searchResults, options.searchResultsContainer);
+      };
   }
 
   class ApiService {
-    constructor(locale, ezoSubdomain) {
-      this.locale       = locale;
-      this.ezoSubdomain = ezoSubdomain;
+    constructor(locale, ezoSubdomain, integrationMode) {
+      this.locale           = locale;
+      this.ezoSubdomain     = ezoSubdomain;
+      this.integrationMode  = integrationMode;
     }
 
     fetchServiceCategoriesAndItems(callback, noAccessPageCallback, options) {
       $.getJSON('/hc/api/v2/integration/token').then(data => data.token).then(token => {
-          if (token) {
-            const endPoint        = 'visible_service_categories_and_items';
-            const queryParams     = {};
-            const requestOptions  = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+        if (token) {
+          const endPoint        = 'visible_service_categories_and_items';
+          const queryParams     = {};
+          const requestOptions  = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token }};
 
-            if(options.searchQuery) {
-              queryParams.search_query = options.searchQuery; 
-            }
-
-            const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
-            fetch(url, requestOptions)
-              .then(response => {
-                if (response.status == 400) {
-                  throw new Error('Bad Request: There was an issue with the request.');
-                } else if (response.status == 403) {
-                  return response.json().catch(() => {
-                    // Handle non-JSON response here
-                    return noAccessPageCallback();
-                  });
-                } else if (response.status == 404) {
-                  return noAccessPageCallback();
-                }
-
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-
-                return response.json();
-              })
-              .then(data => {
-                $('#loading_icon_container').empty();
-                if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
-                  $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
-                } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
-                  $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
-                } else {
-                  callback(data, options);
-                }
-                setLocale(this.locale, true);
-              })
-              .catch(error => {
-                console.error('An error occurred while fetching service categories and items: ' + error.message);
-              });
+          if(options.searchQuery) {
+            queryParams.search_query = options.searchQuery; 
           }
+
+          const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
+          fetch(url, requestOptions)
+            .then(response => {
+              if (response.status == 400) {
+                throw new Error('Bad Request: There was an issue with the request.');
+              } else if (response.status == 403) {
+                return response.json().catch(() => {
+                  return noAccessPageCallback();
+                });
+              } else if (response.status == 404) {
+                return noAccessPageCallback();
+              }
+
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+
+              return response.json();
+            })
+            .then(data => {
+              $('#loading_icon_container').empty();
+              if (data.service_catalog_enabled !== undefined && !data.service_catalog_enabled) {
+                $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
+              } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
+                $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
+              } else {
+                callback(data, options);
+              }
+              setLocale(this.locale, true);
+            })
+            .catch(error => {
+              console.error('An error occurred while fetching service categories and items: ' + error.message);
+            });
+        }
       });
+    }
+
+    fetchServiceCategoriesAndItemsUsingCustomObjects(callback, noAccessPageCallback, options) {
+      $.getJSON("/api/v2/users/me")
+          .then(userData => userData.user.email)
+          .then(userEmail => {
+              if (userEmail) {
+                const assetsRequest       = fetch(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`);
+                const serviceItemsRequest = fetch("/api/v2/custom_objects/assetsonar_service_items/records/search");
+
+                Promise.all([assetsRequest, serviceItemsRequest])
+                    .then(responses => {
+                        // Check response statuses
+                        responses.forEach(response => {
+                          if (response.status === 400) {
+                            throw new Error('Bad Request: There was an issue with the request.');
+                          } else if (response.status === 403 || response.status === 404) {
+                            throw new Error('Access or resource not found.');
+                          } else if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                          }
+                        });
+
+                        // Parse JSON responses
+                        return Promise.all(responses.map(response => response.json()));
+                    })
+                    .then(([assetsData, serviceItemsData]) => {
+                        $('#loading_icon_container').empty();
+
+                        const restructuredData = {};
+                        const combinedCustomObjectRecords = [
+                          ...(assetsData.custom_object_records || []),
+                          ...(serviceItemsData.custom_object_records || [])
+                        ];
+
+                        const filteredCustomObjectRecords = combinedCustomObjectRecords.filter(record => {
+                          const isVisible = record.custom_object_fields.visible === 'true';
+                          const matchesSearchQuery = options.searchQuery
+                              ? record.name && record.name.toLowerCase().includes(options.searchQuery.toLowerCase())
+                              : true; // If no search query, include all visible records
+                          return isVisible && matchesSearchQuery;
+                        });
+                        filteredCustomObjectRecords.forEach((record, index) => {
+                          const categoryKey = `${record.custom_object_fields.service_category_id || index}_${(record.custom_object_fields.service_category_title || 'Unknown').replace(/\s+/g, '_')}`;
+                          const resourceType = record.custom_object_fields.resource_type;
+
+                          if (!restructuredData[categoryKey]) {
+                            restructuredData[categoryKey] = {
+                              title:          record.custom_object_fields.service_category_title || 'Unknown',
+                              description:    record.custom_object_fields.service_category_description || '',
+                              service_items:  []
+                            };
+                          }
+
+                          if (resourceType === 'FixedAsset') {
+                            restructuredData[categoryKey].service_items.push({
+                              id: record.custom_object_fields.asset_id,
+                              name: record.custom_object_fields.asset_name || record.name, 
+                              display_fields: {
+                                'AIN':       record.custom_object_fields.identifier,
+                                'Asset #':   record.custom_object_fields.sequence_num,
+                                'Location':  record.custom_object_fields.location
+                              },
+                              sequence_num:                     record.custom_object_fields.sequence_num,
+                              zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                              display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                              service_category_title_with_id:   categoryKey
+                            });
+                          } else if (resourceType === 'SoftwareLicense') {
+                            restructuredData[categoryKey].service_items.push({
+                              id: record.custom_object_fields.asset_id,
+                              name: record.custom_object_fields.asset_name || record.name, 
+                              display_fields: {
+                                'Entitled on':      record.custom_object_fields.entitled_on,
+                                'Expiring in':      record.custom_object_fields.expiring_in,
+                                'Available seats':  record.custom_object_fields.available_seats
+                              },
+                              sequence_num:                     record.custom_object_fields.sequence_num,
+                              zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                              display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                              service_category_title_with_id:   categoryKey
+                            });
+                          } else if (resourceType === 'EzPortal::Card') {
+                            var serviceItemHash = {
+                              id: record.custom_object_fields.service_item_id,
+                              display_fields: {
+                                title:              { value: record.custom_object_fields.title || '' },
+                                cost_price:         { value: record.custom_object_fields.cost_price || null },
+                                description:        { value: record.custom_object_fields.description || '' },
+                                short_description:  { value: record.custom_object_fields.short_description || '' },
+                              },
+                              zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                              display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                              service_category_title_with_id:   categoryKey
+                            };
+                            restructuredData[categoryKey].service_items.push(serviceItemHash);
+                          }
+                        });
+
+                        // Create the final data structure
+                        const combinedData = {
+                          service_catalog_data:    restructuredData,
+                          service_catalog_enabled: true,
+                        };
+
+                        if (options.searchQuery && options.searchQuery.length) {
+                          combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
+                        }
+
+                        if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
+                          $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
+                        } else if (!serviceCatalogDataPresent(combinedData) && Object.keys(combinedData.service_catalog_data).length === 0 && !combinedData.search_results) {
+                          $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
+                        } else {
+                          callback(combinedData, options);
+                        }
+
+                        setLocale(this.locale, true);
+                    })
+                    .catch(error => {
+                        console.error('An error occurred while fetching service categories and items: ' + error.message);
+                        noAccessPageCallback();
+                    });
+              }
+          });
     }
 
     fetchServiceCategoryItems(categoryId, callback, callBackOptions) {
       $.getJSON('/hc/api/v2/integration/token').then(data => data.token).then(token => {
         if (token) {
-          const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token, 'ngrok-skip-browser-warning': true } };
+          const options       = { method: 'GET', headers: { 'Authorization': 'Bearer ' + token } };
           const endPoint      = 'visible_service_categories_and_items';
           const queryParams   = {
             service_category_id: categoryId
@@ -1658,11 +1939,9 @@
               } else if (response.status === 404) {
                 return noAccessPageCallback();
               }
-
               if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
-
               return response.json();
             })
             .then(data => {
@@ -1682,12 +1961,13 @@
   }
 
   class ServiceCatalogBuilder {
-    constructor(locale, ezoSubdomain) {
+    constructor(locale, ezoSubdomain, integrationMode) {
       this.locale                          = locale;
-      this.apiService                      = new ApiService(locale, ezoSubdomain);
+      this.apiService                      = new ApiService(locale, ezoSubdomain, integrationMode);
       this.ezoSubdomain                    = ezoSubdomain;
-      this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
-      this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
+      this.integrationMode                 = integrationMode;
+      this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale, integrationMode);
+      this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale, integrationMode);
       this.search                          = new Search();
     }
 
@@ -1709,7 +1989,11 @@
     buildServiceCatalog() {
       this.buildServiceCatalogHeaderSection();
       $('main').append(loadingIcon('mt-5'));
-      this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+      if (this.integrationMode === 'custom_objects') {
+        this.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(this.buildUI, this.noAccessPage, {});
+      } else {
+        this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+      }
     }
 
     buildServiceCatalogHeaderSection() {
@@ -1826,16 +2110,23 @@
           serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
         };
         const categoryId = categoryLinkId.split('_')[0];
-        self.apiService.fetchServiceCategoryItems(
-          categoryId,
-          self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
-          callbackOptions
-        );
+        if (self.integrationMode !== 'custom_objects') {
+          self.apiService.fetchServiceCategoryItems(
+            categoryId,
+            self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
+            callbackOptions
+          );
+        }
         $('#service_catalog_item_search_results_container').hide();
         $('#' + containerId).show();
         $('#' + containerId.replace('_container', '_service_items_container')).show();
+        if (self.integrationMode === 'custom_objects') {
+          const $loadingIcon = $('#' + containerId).find('#loading_icon_container');
+          if ($loadingIcon.length) {
+            $loadingIcon.empty();
+          }
+        }
         $('#service_items_container').show();
-
       });
 
       $('#search_input').on('keyup', function(e) {
@@ -1865,16 +2156,29 @@
 
           timer = setTimeout(
             function () {
-              self.apiService.fetchServiceCategoriesAndItems(
-                self.search.updateResults,
-                self.noAccessPage,
-                {
-                  searchQuery: query,
-                  searchResultsContainer: searchResultsContainer,
-                  itemBuilder: self.serviceCatalogItemBuilder,
-                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
-                }
-              );
+              if (self.integrationMode === 'custom_objects') {
+                self.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(
+                  self.search.updateResults,
+                  self.noAccessPage,
+                  {
+                    searchQuery: query,
+                    searchResultsContainer: searchResultsContainer,
+                    itemBuilder: self.serviceCatalogItemBuilder,
+                    itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                  }
+                );
+              } else {
+                self.apiService.fetchServiceCategoriesAndItems(
+                  self.search.updateResults,
+                  self.noAccessPage,
+                  {
+                    searchQuery: query,
+                    searchResultsContainer: searchResultsContainer,
+                    itemBuilder: self.serviceCatalogItemBuilder,
+                    itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                  }
+                );
+              }
             },
             500
           );
@@ -1930,6 +2234,7 @@
       this.timeStamp              = initializationData.timeStamp;
       this.ezoFieldId             = initializationData.ezoFieldId;
       this.ezoSubdomain           = initializationData.ezoSubdomain;
+      this.integrationMode        = initializationData.integrationMode || 'JWT';
       this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
 
       const files = this.filesToLoad();
@@ -1939,7 +2244,7 @@
     }
 
     initialize() {
-      this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
+      this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain, this.integrationMode);
       this.addServiceCatalogMenuItem();
       this.initServiceCatalog();
     }
@@ -1953,9 +2258,9 @@
       if (isServiceCatalogPage()) {
         this.handleServiceCatalogRequest();
       } else if (isNewRequestPage()) {
-        new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+        new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else if (isRequestPage()) {
-        new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+        new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else ;
     }
 
