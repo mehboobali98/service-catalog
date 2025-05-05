@@ -112,6 +112,7 @@ class ApiService {
                         }
 
                         if (resourceType === 'FixedAsset') {
+                          debugger;
                           restructuredData[categoryKey].service_items.push({
                             id: record.custom_object_fields.asset_id,
                             name: record.custom_object_fields.asset_name || record.name, 
