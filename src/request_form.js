@@ -165,9 +165,9 @@ class RequestForm {
 
   getAssetPath(id, type) {
     const pathMappings = {
-      'Asset':                '/assets/',
-      'Stock Asset':          '/stock_assets/',
-      'Software License':     '/software_licenses/'
+      'Asset':             '/assets/',
+      'Asset Stock':       '/stock_assets/',
+      'Software License':  '/software_licenses/'
     };
 
     const defaultPath = '/dashboard';

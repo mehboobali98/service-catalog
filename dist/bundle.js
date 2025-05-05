@@ -5,7 +5,7 @@
 })(this, (function (exports) { 'use strict';
 
   const TRANSLATIONS                            = {};
-  const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'SoftwareLicense': 'Software License' };
+  const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'StockAsset': 'Asset Stock', 'SoftwareLicense': 'Software License' };
   const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE                     = '--';
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
@@ -747,9 +747,9 @@
 
     getAssetPath(id, type) {
       const pathMappings = {
-        'Asset':                '/assets/',
-        'Stock Asset':          '/stock_assets/',
-        'Software License':     '/software_licenses/'
+        'Asset':             '/assets/',
+        'Asset Stock':       '/stock_assets/',
+        'Software License':  '/software_licenses/'
       };
 
       const defaultPath = '/dashboard';
@@ -907,6 +907,7 @@
           const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
           this.processData(data.assets, assetsData, 'Asset');
+          this.processData(data.stock_assets, assetsData, 'Asset Stock');
           this.processData(data.software_entitlements, assetsData, 'Software License');
 
           ezoCustomFieldEle.hide();
@@ -957,12 +958,17 @@
               return { id: sequenceNum, text: `Asset # ${sequenceNum} - ${asset.name}` };
             });
 
+            var assignedStockAssets = $.map(data.stock_assets, function(asset) {
+              var sequenceNum = asset.sequence_num;
+              return { id: sequenceNum, text: `Asset Stock # ${sequenceNum} - ${asset.name}` };
+            });
+
             var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
               var sequenceNum = softwareEntitlement.sequence_num;
               return { id: sequenceNum, text: `Software License # ${sequenceNum} - ${softwareEntitlement.name}` };
             });
 
-            var records = assignedAssets.concat(assignedSoftwareLicenses);
+            var records = assignedAssets.concat(assignedStockAssets, assignedSoftwareLicenses);
             return {
               results:    records,
               pagination: { more: data.page < data.total_pages }
@@ -1849,6 +1855,20 @@
                               display_fields: {
                                 'AIN':       record.custom_object_fields.identifier,
                                 'Asset #':   record.custom_object_fields.sequence_num,
+                                'Location':  record.custom_object_fields.location
+                              },
+                              sequence_num:                     record.custom_object_fields.sequence_num,
+                              zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                              display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                              service_category_title_with_id:   categoryKey
+                            });
+                          } else if (resourceType === 'StockAsset') {
+                            restructuredData[categoryKey].service_items.push({
+                              id: record.custom_object_fields.asset_id,
+                              name: record.custom_object_fields.asset_name || record.name, 
+                              display_fields: {
+                                'Asset #':   record.custom_object_fields.sequence_num,
+                                'Quantiy':   record.custom_object_fields.quantity,
                                 'Location':  record.custom_object_fields.location
                               },
                               sequence_num:                     record.custom_object_fields.sequence_num,

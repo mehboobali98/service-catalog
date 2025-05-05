@@ -125,6 +125,20 @@ class ApiService {
                             display_picture_url:              record.custom_object_fields.display_picture_url || '',
                             service_category_title_with_id:   categoryKey
                           });
+                        } else if (resourceType === 'StockAsset') {
+                          restructuredData[categoryKey].service_items.push({
+                            id: record.custom_object_fields.asset_id,
+                            name: record.custom_object_fields.asset_name || record.name, 
+                            display_fields: {
+                              'Asset #':   record.custom_object_fields.sequence_num,
+                              'Quantiy':   record.custom_object_fields.quantity,
+                              'Location':  record.custom_object_fields.location
+                            },
+                            sequence_num:                     record.custom_object_fields.sequence_num,
+                            zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
+                            display_picture_url:              record.custom_object_fields.display_picture_url || '',
+                            service_category_title_with_id:   categoryKey
+                          });
                         } else if (resourceType === 'SoftwareLicense') {
                           restructuredData[categoryKey].service_items.push({
                             id: record.custom_object_fields.asset_id,
