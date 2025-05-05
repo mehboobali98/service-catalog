@@ -116,6 +116,7 @@ class ServiceCatalogItemBuilder {
     const card                 = $('<div>').addClass('row service-item-card js-service-item-card h-100');
     const queryParams          = {};
     const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
+    debugger;
 
     // Card image
     const cardImageContainer    = $('<div>').addClass('col-4');

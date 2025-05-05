@@ -181,6 +181,7 @@ class ApiService {
                         combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
                       }
 
+                      debugger;
                       if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                         $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                       } else if (!serviceCatalogDataPresent(combinedData) && Object.keys(combinedData.service_catalog_data).length === 0 && !combinedData.search_results) {
