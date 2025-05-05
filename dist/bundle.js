@@ -1452,7 +1452,6 @@
       const card                 = $('<div>').addClass('row service-item-card js-service-item-card h-100');
       const queryParams          = {};
       const serviceCategoryTitle = this.serviceCategoriesItems[serviceCategory].title;
-      debugger;
 
       // Card image
       const cardImageContainer    = $('<div>').addClass('col-4');
@@ -1850,7 +1849,6 @@
                           }
 
                           if (resourceType === 'FixedAsset') {
-                            debugger;
                             restructuredData[categoryKey].service_items.push({
                               id: record.custom_object_fields.asset_id,
                               name: record.custom_object_fields.asset_name || record.name, 
@@ -1919,7 +1917,6 @@
                           combinedData.search_results = Object.values(restructuredData).flatMap(category => category.service_items);
                         }
 
-                        debugger;
                         if (combinedData.service_catalog_enabled !== undefined && !combinedData.service_catalog_enabled) {
                           $('main').append(serviceCatalogDisabled(this.ezoSubdomain));
                         } else if (!serviceCatalogDataPresent(combinedData) && Object.keys(combinedData.service_catalog_data).length === 0 && !combinedData.search_results) {
