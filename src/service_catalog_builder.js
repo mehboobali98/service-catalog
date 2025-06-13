@@ -1,9 +1,11 @@
 import { generateI18nKey }                  from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
+         shouldScrollToCatalog,
          serviceCatalogDataPresent }        from './utility.js';
 import { STAGING_CDN_URL,
-         PRODUCTION_CDN_URL }               from './constant.js';
+         PRODUCTION_CDN_URL,
+         SERVICE_CATALOG_ANCHOR }           from './constant.js';
 import { ApiService }                       from './api_service.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';

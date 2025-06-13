@@ -1,6 +1,7 @@
 import {
   STAGING_CDN_URL,
   PRODUCTION_CDN_URL,
+  SERVICE_CATALOG_ANCHOR,
   AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
   SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
 } from './constant.js';
@@ -183,6 +184,7 @@ export {
   isSignedIn,
   signInPath,
   loadingIcon,
+  isLandingPage,
   isCorrectPage,
   isRequestPage,
   isNewRequestPage,
@@ -192,6 +194,7 @@ export {
   getCssVariableValue,
   placeholderImagePath,
   isServiceCatalogPage,
+  shouldScrollToCatalog,
   serviceCatalogDataPresent,
   getMyAssignedAssetsServiceItems,
   requestSubmissionSettingMessageForAgent

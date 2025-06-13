@@ -5,6 +5,7 @@ import {
   isSignedIn,
   signInPath,
   isRequestPage,
+  isLandingPage,
   isNewRequestPage,
   loadExternalFiles,
   isServiceCatalogPage
@@ -12,7 +13,8 @@ import {
 
 import {
   STAGING_CDN_URL,
-  PRODUCTION_CDN_URL
+  PRODUCTION_CDN_URL,
+  SERVICE_CATALOG_ANCHOR
 } from './constant.js';
 
 import {
