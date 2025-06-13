@@ -2011,7 +2011,7 @@
     }
 
     buildServiceCatalogHeaderSection() {
-      const headerSection     = $('<section>');
+      const headerSection     = $('<section>').attr('id', SERVICE_CATALOG_ANCHOR);
       const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
       const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                          .attr('data-i18n', 'service-catalog')
@@ -2049,6 +2049,7 @@
         serviceCatalogContainer: serviceCatalogContainer
       };
       this.createServiceCategoriesView(containers);
+      if (shouldScrollToCatalog()) { $(".service-catalog-nav-item")[0].click(); }
     }
 
     createServiceCategoriesView(containers) {
@@ -2244,12 +2245,13 @@
 
   class ServiceCatalogManager {
     constructor(initializationData) {
-      this.locale                 = getLocale();
-      this.timeStamp              = initializationData.timeStamp;
-      this.ezoFieldId             = initializationData.ezoFieldId;
-      this.ezoSubdomain           = initializationData.ezoSubdomain;
-      this.integrationMode        = initializationData.integrationMode || 'JWT';
-      this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
+      this.locale                     = getLocale();
+      this.timeStamp                  = initializationData.timeStamp;
+      this.ezoFieldId                 = initializationData.ezoFieldId;
+      this.ezoSubdomain               = initializationData.ezoSubdomain;
+      this.integrationMode            = initializationData.integrationMode || 'JWT';
+      this.ezoServiceItemFieldId      = initializationData.ezoServiceItemFieldId;
+      this.renderCatalogOnLandingPage = initializationData.renderCatalogOnLandingPage || false;
 
       const files = this.filesToLoad();
       loadExternalFiles(files, () => {
@@ -2264,18 +2266,34 @@
     }
 
     addServiceCatalogMenuItem() {
-      this.serviceCatalogBuilder.addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
+      this.serviceCatalogBuilder.addMenuItem(
+        'Service Catalog',
+        this.serviceCatalogUrl(),
+        'user-nav'
+      );
+    }
+
+    serviceCatalogUrl() {
+      return this.renderCatalogOnLandingPage ? `/hc/${window.HelpCenter.user.locale}#${SERVICE_CATALOG_ANCHOR}` : '/hc/p/service_catalog';
     }
 
     initServiceCatalog() {
       setLocale(this.locale, true);
-      if (isServiceCatalogPage()) {
+      if (this.shouldRenderServiceCatalog()) {
         this.handleServiceCatalogRequest();
       } else if (isNewRequestPage()) {
         new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else if (isRequestPage()) {
         new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else ;
+    }
+
+    shouldRenderServiceCatalog() {
+      return this.shouldRenderCatalogOnLandingPage() || isServiceCatalogPage();
+    }
+
+    shouldRenderCatalogOnLandingPage() {
+      return this.renderCatalogOnLandingPage && isLandingPage();
     }
 
     handleServiceCatalogRequest() {
