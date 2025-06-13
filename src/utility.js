@@ -20,6 +20,16 @@ function isServiceCatalogPage() {
   return isCorrectPage(regex);
 }
 
+function isLandingPage() {
+  const regex = new RegExp(`/hc/${window.HelpCenter.user.locale}/?$`, "i");
+
+  return isCorrectPage(regex);
+}
+
+function shouldScrollToCatalog() {
+  return window.location.hash == `#${SERVICE_CATALOG_ANCHOR}`;
+}
+
 function isCorrectPage(regex) {
   return regex.test(currentPage());
 }

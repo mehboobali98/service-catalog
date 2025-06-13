@@ -29,12 +29,13 @@ import {
 
 class ServiceCatalogManager {
   constructor(initializationData) {
-    this.locale                 = getLocale();
-    this.timeStamp              = initializationData.timeStamp;
-    this.ezoFieldId             = initializationData.ezoFieldId;
-    this.ezoSubdomain           = initializationData.ezoSubdomain;
-    this.integrationMode        = initializationData.integrationMode || 'JWT';
-    this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
+    this.locale                     = getLocale();
+    this.timeStamp                  = initializationData.timeStamp;
+    this.ezoFieldId                 = initializationData.ezoFieldId;
+    this.ezoSubdomain               = initializationData.ezoSubdomain;
+    this.integrationMode            = initializationData.integrationMode || 'JWT';
+    this.ezoServiceItemFieldId      = initializationData.ezoServiceItemFieldId;
+    this.renderCatalogOnLandingPage = initializationData.renderCatalogOnLandingPage || false;
 
     const files = this.filesToLoad();
     loadExternalFiles(files, () => {
@@ -49,12 +50,20 @@ class ServiceCatalogManager {
   }
 
   addServiceCatalogMenuItem() {
-    this.serviceCatalogBuilder.addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
+    this.serviceCatalogBuilder.addMenuItem(
+      'Service Catalog',
+      this.serviceCatalogUrl(),
+      'user-nav'
+    );
+  }
+
+  serviceCatalogUrl() {
+    return this.renderCatalogOnLandingPage ? `/hc/${window.HelpCenter.user.locale}#${SERVICE_CATALOG_ANCHOR}` : '/hc/p/service_catalog';
   }
 
   initServiceCatalog() {
     setLocale(this.locale, true);
-    if (isServiceCatalogPage()) {
+    if (this.shouldRenderServiceCatalog()) {
       this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
       new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
@@ -63,6 +72,14 @@ class ServiceCatalogManager {
     } else {
       // Handle other cases if needed
     }
+  }
+
+  shouldRenderServiceCatalog() {
+    return this.shouldRenderCatalogOnLandingPage() || isServiceCatalogPage();
+  }
+
+  shouldRenderCatalogOnLandingPage() {
+    return this.renderCatalogOnLandingPage && isLandingPage();
   }
 
   handleServiceCatalogRequest() {

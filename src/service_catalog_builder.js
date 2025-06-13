@@ -45,7 +45,7 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalogHeaderSection() {
-    const headerSection     = $('<section>');
+    const headerSection     = $('<section>').attr('id', SERVICE_CATALOG_ANCHOR);
     const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
     const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                        .attr('data-i18n', 'service-catalog')
@@ -83,6 +83,7 @@ class ServiceCatalogBuilder {
       serviceCatalogContainer: serviceCatalogContainer
     };
     this.createServiceCategoriesView(containers);
+    if (shouldScrollToCatalog()) { $(".service-catalog-nav-item")[0].click(); }
   }
 
   createServiceCategoriesView(containers) {
