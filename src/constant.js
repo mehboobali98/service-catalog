@@ -4,6 +4,7 @@ const STAGING_CDN_URL                         = 'https://cdn.inventoryontrack.co
 const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'StockAsset': 'Asset Stock', 'SoftwareLicense': 'Software License' };
 const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
 const DEFAULT_FIELD_VALUE                     = '--';
+const SERVICE_CATALOG_ANCHOR                  = 'service_catalog';
 const DEFAULT_TRUNCATE_LENGTH                 = 30;
 const CARD_TITLE_TRUNCATE_LENGTH              = 20;
 const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
@@ -22,6 +23,7 @@ export {
   RESOURCE_PREFIXES,
   PRODUCTION_CDN_URL,
   DEFAULT_FIELD_VALUE,
+  SERVICE_CATALOG_ANCHOR,
   DEFAULT_TRUNCATE_LENGTH,
   CARD_TITLE_TRUNCATE_LENGTH,
   CARD_FIELD_VALUE_TRUNCATE_LENGTH,

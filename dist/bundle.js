@@ -8,6 +8,7 @@
   const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'StockAsset': 'Asset Stock', 'SoftwareLicense': 'Software License' };
   const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
   const DEFAULT_FIELD_VALUE                     = '--';
+  const SERVICE_CATALOG_ANCHOR                  = 'service_catalog';
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
   const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
   const CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH   = 1000;
@@ -109,6 +110,16 @@
   function isServiceCatalogPage() {
     const regex = /\/service_catalog$/i;
     return isCorrectPage(regex);
+  }
+
+  function isLandingPage() {
+    const regex = new RegExp(`/hc/${window.HelpCenter.user.locale}/?$`, "i");
+
+    return isCorrectPage(regex);
+  }
+
+  function shouldScrollToCatalog() {
+    return window.location.hash == `#${SERVICE_CATALOG_ANCHOR}`;
   }
 
   function isCorrectPage(regex) {
@@ -2011,7 +2022,7 @@
     }
 
     buildServiceCatalogHeaderSection() {
-      const headerSection     = $('<section>');
+      const headerSection     = $('<section>').attr('id', SERVICE_CATALOG_ANCHOR);
       const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
       const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                          .attr('data-i18n', 'service-catalog')
@@ -2049,6 +2060,7 @@
         serviceCatalogContainer: serviceCatalogContainer
       };
       this.createServiceCategoriesView(containers);
+      if (shouldScrollToCatalog()) { $(".service-catalog-nav-item")[0].click(); }
     }
 
     createServiceCategoriesView(containers) {
@@ -2244,12 +2256,13 @@
 
   class ServiceCatalogManager {
     constructor(initializationData) {
-      this.locale                 = getLocale();
-      this.timeStamp              = initializationData.timeStamp;
-      this.ezoFieldId             = initializationData.ezoFieldId;
-      this.ezoSubdomain           = initializationData.ezoSubdomain;
-      this.integrationMode        = initializationData.integrationMode || 'JWT';
-      this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
+      this.locale                     = getLocale();
+      this.timeStamp                  = initializationData.timeStamp;
+      this.ezoFieldId                 = initializationData.ezoFieldId;
+      this.ezoSubdomain               = initializationData.ezoSubdomain;
+      this.integrationMode            = initializationData.integrationMode || 'JWT';
+      this.ezoServiceItemFieldId      = initializationData.ezoServiceItemFieldId;
+      this.renderCatalogOnLandingPage = initializationData.renderCatalogOnLandingPage || false;
 
       const files = this.filesToLoad();
       loadExternalFiles(files, () => {
@@ -2264,18 +2277,34 @@
     }
 
     addServiceCatalogMenuItem() {
-      this.serviceCatalogBuilder.addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
+      this.serviceCatalogBuilder.addMenuItem(
+        'Service Catalog',
+        this.serviceCatalogUrl(),
+        'user-nav'
+      );
+    }
+
+    serviceCatalogUrl() {
+      return this.renderCatalogOnLandingPage ? `/hc/${window.HelpCenter.user.locale}#${SERVICE_CATALOG_ANCHOR}` : '/hc/p/service_catalog';
     }
 
     initServiceCatalog() {
       setLocale(this.locale, true);
-      if (isServiceCatalogPage()) {
+      if (this.shouldRenderServiceCatalog()) {
         this.handleServiceCatalogRequest();
       } else if (isNewRequestPage()) {
         new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else if (isRequestPage()) {
         new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
       } else ;
+    }
+
+    shouldRenderServiceCatalog() {
+      return this.shouldRenderCatalogOnLandingPage() || isServiceCatalogPage();
+    }
+
+    shouldRenderCatalogOnLandingPage() {
+      return this.renderCatalogOnLandingPage && isLandingPage();
     }
 
     handleServiceCatalogRequest() {

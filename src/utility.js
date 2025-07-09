@@ -1,6 +1,7 @@
 import {
   STAGING_CDN_URL,
   PRODUCTION_CDN_URL,
+  SERVICE_CATALOG_ANCHOR,
   AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
   SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
 } from './constant.js';
@@ -18,6 +19,16 @@ function isNewRequestPage() {
 function isServiceCatalogPage() {
   const regex = /\/service_catalog$/i;
   return isCorrectPage(regex);
+}
+
+function isLandingPage() {
+  const regex = new RegExp(`/hc/${window.HelpCenter.user.locale}/?$`, "i");
+
+  return isCorrectPage(regex);
+}
+
+function shouldScrollToCatalog() {
+  return window.location.hash == `#${SERVICE_CATALOG_ANCHOR}`;
 }
 
 function isCorrectPage(regex) {
@@ -173,6 +184,7 @@ export {
   isSignedIn,
   signInPath,
   loadingIcon,
+  isLandingPage,
   isCorrectPage,
   isRequestPage,
   isNewRequestPage,
@@ -182,6 +194,7 @@ export {
   getCssVariableValue,
   placeholderImagePath,
   isServiceCatalogPage,
+  shouldScrollToCatalog,
   serviceCatalogDataPresent,
   getMyAssignedAssetsServiceItems,
   requestSubmissionSettingMessageForAgent
