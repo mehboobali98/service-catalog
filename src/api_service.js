@@ -154,6 +154,7 @@ class ApiService {
                             service_category_title_with_id:   categoryKey
                           });
                         } else if (resourceType === 'EzPortal::Card') {
+                          debugger;
                           var serviceItemHash = {
                             id: record.custom_object_fields.service_item_id,
                             display_fields: {
