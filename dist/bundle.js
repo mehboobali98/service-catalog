@@ -1492,7 +1492,9 @@
       const cardContentContainer = $('<div>').addClass('card-content-container');
       const cardContent          = $('<table>').addClass('card-content-table');
 
+      debugger;
       this.populateCardContent(cardContent, serviceCategoryItem);
+      debugger;
 
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);
@@ -1600,6 +1602,7 @@
 
     populateCardContent(cardContentElement, serviceCategoryItem) {
       const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns || serviceCategoryItem.display_fields;
+      debugger;
       if (Object.keys(fields).length === 0) {
         const noAttributesText = 'No attributes configured';
         cardContentElement.append($('<tr>').append(
@@ -1860,6 +1863,7 @@
                           }
 
                           if (resourceType === 'FixedAsset') {
+                            debugger;
                             restructuredData[categoryKey].service_items.push({
                               id: record.custom_object_fields.asset_id,
                               name: record.custom_object_fields.asset_name || record.name, 

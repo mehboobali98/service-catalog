@@ -145,7 +145,9 @@ class ServiceCatalogItemBuilder {
     const cardContentContainer = $('<div>').addClass('card-content-container');
     const cardContent          = $('<table>').addClass('card-content-table');
 
+    debugger;
     this.populateCardContent(cardContent, serviceCategoryItem);
+    debugger;
 
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
@@ -253,6 +255,7 @@ class ServiceCatalogItemBuilder {
 
   populateCardContent(cardContentElement, serviceCategoryItem) {
     const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns || serviceCategoryItem.display_fields;
+    debugger;
     if (Object.keys(fields).length === 0) {
       const noAttributesText = 'No attributes configured';
       cardContentElement.append($('<tr>').append(
