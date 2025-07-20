@@ -112,7 +112,6 @@ class ApiService {
                         }
 
                         if (resourceType === 'FixedAsset') {
-                          debugger;
                           restructuredData[categoryKey].service_items.push({
                             id: record.custom_object_fields.asset_id,
                             name: record.custom_object_fields.asset_name || record.name, 
@@ -122,42 +121,45 @@ class ApiService {
                               'Location':  record.custom_object_fields.location
                             },
                             sequence_num:                     record.custom_object_fields.sequence_num,
+                            resource_type:                    resourceType,
                             zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
                             display_picture_url:              record.custom_object_fields.display_picture_url || '',
                             service_category_title_with_id:   categoryKey
                           });
                         } else if (resourceType === 'StockAsset') {
                           restructuredData[categoryKey].service_items.push({
-                            id: record.custom_object_fields.asset_id,
-                            name: record.custom_object_fields.asset_name || record.name, 
+                            id:                               record.custom_object_fields.asset_id,
+                            name:                             record.custom_object_fields.asset_name || record.name, 
+                            sequence_num:                     record.custom_object_fields.sequence_num,
+                            resource_type:                    resourceType,
                             display_fields: {
                               'Asset #':   record.custom_object_fields.sequence_num,
                               'Quantiy':   record.custom_object_fields.quantity,
                               'Location':  record.custom_object_fields.location
                             },
-                            sequence_num:                     record.custom_object_fields.sequence_num,
                             zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
                             display_picture_url:              record.custom_object_fields.display_picture_url || '',
                             service_category_title_with_id:   categoryKey
                           });
                         } else if (resourceType === 'SoftwareLicense') {
                           restructuredData[categoryKey].service_items.push({
-                            id: record.custom_object_fields.asset_id,
-                            name: record.custom_object_fields.asset_name || record.name, 
+                            id:                               record.custom_object_fields.asset_id,
+                            name:                             record.custom_object_fields.asset_name || record.name, 
+                            sequence_num:                     record.custom_object_fields.sequence_num,
+                            resource_type:                    resourceType,
                             display_fields: {
                               'Entitled on':      record.custom_object_fields.entitled_on,
                               'Expiring in':      record.custom_object_fields.expiring_in,
                               'Available seats':  record.custom_object_fields.available_seats
                             },
-                            sequence_num:                     record.custom_object_fields.sequence_num,
                             zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
                             display_picture_url:              record.custom_object_fields.display_picture_url || '',
                             service_category_title_with_id:   categoryKey
                           });
                         } else if (resourceType === 'EzPortal::Card') {
-                          debugger;
                           var serviceItemHash = {
-                            id: record.custom_object_fields.service_item_id,
+                            id:                               record.custom_object_fields.service_item_id,
+                            resource_type:                    resourceType,
                             display_fields: {
                               title:              { value: record.custom_object_fields.title || '' },
                               cost_price:         { value: record.custom_object_fields.cost_price || null },
