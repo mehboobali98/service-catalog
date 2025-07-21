@@ -83,7 +83,7 @@ function serviceCatalogDataPresent(data) {
   return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
 }
 
-function isMyAssignedAssets(resourceType) {
+function isMyAssignedAssets(serviceCategory) {
   const regex = /^\d*_my_assigned_assets$/i;
   return regex.test(serviceCategory);
 }

@@ -174,7 +174,7 @@
     return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
   }
 
-  function isMyAssignedAssets(resourceType) {
+  function isMyAssignedAssets(serviceCategory) {
     const regex = /^\d*_my_assigned_assets$/i;
     return regex.test(serviceCategory);
   }
@@ -1242,7 +1242,7 @@
         let containerId = `${serviceCategory}_container`;
         let container   = $(`#${containerId}`);
         debugger;
-        if (!isMyAssignedAssets() && data.service_items) {
+        if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
           let serviceItems = Array.isArray(data.service_items) ? data.service_items : JSON.parse(data.service_items);
           $.each(serviceItems, (index, serviceCategoryItem) => {
             container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
@@ -1426,7 +1426,7 @@
       if (serviceCategoryItems.service_items) {
         debugger;
         let serviceItems = [];
-        if (isMyAssignedAssets()) {
+        if (isMyAssignedAssets(serviceCategory)) {
           if (this.integrationMode === 'custom_objects') {
             serviceItems = serviceCategoryItems.service_items;
           } else {
@@ -1443,7 +1443,7 @@
         }
       } else {
         debugger;
-        if (isMyAssignedAssets()) {
+        if (isMyAssignedAssets(serviceCategory)) {
           // render empty screen
           serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
         }
@@ -1457,7 +1457,7 @@
 
     buildServiceCategoryItem(serviceCategory, serviceItem) {
       debugger;
-      if (isMyAssignedAssets()) {
+      if (isMyAssignedAssets(serviceCategory)) {
         return this.buildItAssetServiceItem(serviceCategory, serviceItem);
       } else {
         return this.buildDefaultServiceItem(serviceCategory, serviceItem);
@@ -1662,7 +1662,7 @@
 
       let serviceCategoryItems = [];
       debugger;
-      if (isMyAssignedAssets()) {
+      if (isMyAssignedAssets(categoryName)) {
         serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
       } else {
         serviceCategoryItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
@@ -1673,7 +1673,7 @@
           if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)); }      });
       }
       debugger;
-      if (!isMyAssignedAssets()) { new ServiceCatalogItemDetailBuilder().build(data); }  }
+      if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(data); }  }
   }
 
   class Search {
