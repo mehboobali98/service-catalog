@@ -33,7 +33,6 @@ class ServiceCatalogItemDetailBuilder {
       let container           = $(`#${containerId}`);
       let serviceItems        = getServiceItems(data);
       const isAssetsCategory  = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
-      debugger;
 
       if (!isAssetsCategory && serviceItems) {
         $.each(serviceItems, (index, serviceCategoryItem) => {

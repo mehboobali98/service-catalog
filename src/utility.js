@@ -186,7 +186,7 @@ function getServiceItems(serviceCategoryData) {
   if (Array.isArray(serviceItems)) return serviceItems;
   
   // Check if it's assets structure by looking at first item
-  const firstItem = this.getFirstItemFromStructure(serviceItems);
+  const firstItem = getFirstItemFromStructure(serviceItems);
   if (firstItem && isMyAssignedAssets(firstItem)) {
     return getMyAssignedAssetsServiceItems(serviceCategoryData);
   }

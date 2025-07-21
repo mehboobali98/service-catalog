@@ -280,7 +280,7 @@
     if (Array.isArray(serviceItems)) return serviceItems;
     
     // Check if it's assets structure by looking at first item
-    const firstItem = this.getFirstItemFromStructure(serviceItems);
+    const firstItem = getFirstItemFromStructure(serviceItems);
     if (firstItem && isMyAssignedAssets(firstItem)) {
       return getMyAssignedAssetsServiceItems(serviceCategoryData);
     }
@@ -295,6 +295,16 @@
     }
     
     return [];
+  }
+
+  function getFirstItemFromStructure(serviceItems) {
+    if (Array.isArray(serviceItems)) return serviceItems[0];
+    if (typeof serviceItems === 'object') {
+      const assets = serviceItems['assets'] || [];
+      const software = serviceItems['software_entitlements'] || [];
+      return assets[0] || software[0];
+    }
+    return null;
   }
 
   class SvgBuilder {
@@ -1275,7 +1285,6 @@
         let container           = $(`#${containerId}`);
         let serviceItems        = getServiceItems(data);
         const isAssetsCategory  = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
-        debugger;
 
         if (!isAssetsCategory && serviceItems) {
           $.each(serviceItems, (index, serviceCategoryItem) => {
