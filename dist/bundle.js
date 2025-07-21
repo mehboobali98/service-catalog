@@ -2280,7 +2280,9 @@
         const callbackOptions = {
           serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
         };
+        debugger;
         const categoryId = categoryLinkId.split('_')[0];
+        debugger;
         if (self.integrationMode !== 'custom_objects') {
           self.apiService.fetchServiceCategoryItems(
             categoryId,
