@@ -1,6 +1,7 @@
 const TRANSLATIONS                            = {};
 const DEFAULT_LOCALE                          = 'en';
 const STAGING_CDN_URL                         = 'https://cdn.inventoryontrack.com';
+const DEFAULT_CURRENCY                        = '$';
 const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'StockAsset': 'Asset Stock', 'SoftwareLicense': 'Software License' };
 const PRODUCTION_CDN_URL                      = 'https://cdn.ezassets.com';
 const DEFAULT_FIELD_VALUE                     = '--';
@@ -27,6 +28,7 @@ export {
   TRANSLATIONS,
   DEFAULT_LOCALE,
   STAGING_CDN_URL,
+  DEFAULT_CURRENCY,
   RESOURCE_PREFIXES,
   PRODUCTION_CDN_URL,
   DEFAULT_FIELD_VALUE,

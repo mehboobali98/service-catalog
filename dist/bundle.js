@@ -6,6 +6,7 @@
 
   const TRANSLATIONS                            = {};
   const STAGING_CDN_URL                         = 'https://cdn.inventoryontrack.com';
+  const DEFAULT_CURRENCY                        = '$';
   const RESOURCE_PREFIXES                       = { 'FixedAsset': 'Asset', 'StockAsset': 'Asset Stock', 'SoftwareLicense': 'Software License' };
   const DEFAULT_FIELD_VALUE                     = '--';
   const SERVICE_CATALOG_ANCHOR                  = 'service_catalog';
@@ -1141,6 +1142,7 @@
       } else if (this.subjectFieldElement().length) {
         return true;
       }
+      
       return false;
     }
 
@@ -1330,7 +1332,7 @@
       const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
                                                       .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-weight': '600', 'font-size': '16px' }));
       if (displayFields.cost_price.value > 0) {
-        headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
+        headerContent.append($('<p>').text(`${this.currency || DEFAULT_CURRENCY} ${parseFloat(displayFields.cost_price['value'])}`)
                                      .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
       }
 
@@ -1621,7 +1623,7 @@
       const cardFooter = $('<div>').addClass('card-footer w-100');
 
       if (displayFields.cost_price.value > 0) {
-        const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
+        const price = $('<span>').text(`${this.currency || DEFAULT_CURRENCY} ${parseFloat(displayFields.cost_price['value'])}`);
         cardFooter.append(price);
       }
 
@@ -2010,7 +2012,7 @@
               title: { value: record.custom_object_fields.title },
               cost_price: { value: record.custom_object_fields.cost_price || null },
               description: { value: record.custom_object_fields.description },
-              short_description: { value: record.custom_object_fields.shortDescription }
+              short_description: { value: record.custom_object_fields.short_description }
             },
             zendesk_form_id: record.custom_object_fields.zd_form_id || null,
             display_picture_url: record.custom_object_fields.display_picture_url || '',
