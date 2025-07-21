@@ -49,6 +49,7 @@ class ApiService {
             } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
               $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
             } else {
+              debugger;
               callback(data, options);
             }
             setLocale(this.locale, true);

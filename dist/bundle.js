@@ -1828,6 +1828,7 @@
               } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
                 $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
               } else {
+                debugger;
                 callback(data, options);
               }
               setLocale(this.locale, true);
@@ -2212,6 +2213,7 @@
       let activeClassAdded         = false;
       const serviceCategoriesItems = this.data.service_catalog_data;
 
+      debugger;
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
@@ -2232,6 +2234,7 @@
       const self                 = this;
       const serviceCategories    = Object.keys(this.data.service_catalog_data);
       const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
+      debugger;
 
       $(serviceCategoriesIds.join(', ')).click(function(e) {
         var categoryLinkId = $(this).attr('id');
@@ -2244,8 +2247,10 @@
 
         var containerId = categoryLinkId.replace('_link', '_container');
 
+        debugger;
         // hide service items of remaining categories
         $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
+          debugger;
           if ('#' + categoryLinkId === serviceCategoryId) ; else {
             $(serviceCategoryId.replace('_link', '_container')).hide(); // Fix the replacement for hiding containers.
           }
@@ -2263,6 +2268,7 @@
             callbackOptions
           );
         }
+        debugger;
         $('#service_catalog_item_search_results_container').hide();
         $('#' + containerId).show();
         $('#' + containerId.replace('_container', '_service_items_container')).show();
