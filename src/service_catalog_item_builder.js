@@ -221,6 +221,7 @@ class ServiceCatalogItemBuilder {
     // Create the card body
     const cardBody = $('<div>').addClass('col-8 card-body service-item-card-body');
 
+    debugger;
     // card title
     const itemName   = displayFields.title.value;
     const cardTitle  = $('<p>').text(itemName)
