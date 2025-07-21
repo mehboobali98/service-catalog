@@ -1621,7 +1621,7 @@
       const cardFooter = $('<div>').addClass('card-footer w-100');
 
       if (displayFields.cost_price.value > 0) {
-        const price = $('<span>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`);
+        const price = $('<span>').text(`${this.currency || DEFAULT_CURRENCY} ${parseFloat(displayFields.cost_price['value'])}`);
         cardFooter.append(price);
       }
 
