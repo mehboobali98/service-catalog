@@ -182,9 +182,8 @@
   }
 
   function isMyAssignedAssets(serviceItem) {
-    debugger;
     if (!serviceItem || !serviceItem.resource_type) return false;
-    const assetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset'];
+    const assetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset', 'SoftwareLicense'];
     return assetTypes.includes(serviceItem.resource_type);
   }
 
@@ -1245,12 +1244,11 @@
       this.userRole               = userRole();
       this.currency               = data.currency;
       this.serviceCategoriesItems = data.service_catalog_data;
-      debugger;
 
       $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
         let containerId = `${serviceCategory}_container`;
         let container   = $(`#${containerId}`);
-        debugger;
+
         const firstItem = data.service_items && data.service_items[0];
         if ((!firstItem || !isMyAssignedAssets(firstItem)) && data.service_items) {
           let serviceItems = Array.isArray(data.service_items) ? data.service_items : JSON.parse(data.service_items);
@@ -1434,7 +1432,6 @@
 
       const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
       if (serviceCategoryItems.service_items) {
-        debugger;
         let serviceItems = [];
         // Check the first service item to determine if this is an assets category
         const firstItem = serviceCategoryItems.service_items && serviceCategoryItems.service_items[0];
@@ -1454,7 +1451,6 @@
             if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(serviceCategory, serviceCategoryItem)); }        });
         }
       } else {
-        debugger;
         // Check if this is an assets category
         const firstItem = serviceCategoryItems.service_items && serviceCategoryItems.service_items[0];
         if (firstItem && isMyAssignedAssets(firstItem)) {
@@ -1470,7 +1466,6 @@
     }
 
     buildServiceCategoryItem(serviceCategory, serviceItem) {
-      debugger;
       if (isMyAssignedAssets(serviceItem)) {
         return this.buildItAssetServiceItem(serviceCategory, serviceItem);
       } else {
@@ -1511,10 +1506,7 @@
       const cardContentContainer = $('<div>').addClass('card-content-container');
       const cardContent          = $('<table>').addClass('card-content-table');
 
-      debugger;
       this.populateCardContent(cardContent, serviceCategoryItem);
-      debugger;
-
       cardContentContainer.append(cardContent);
       cardBody.append(cardContentContainer);
 
@@ -1584,7 +1576,6 @@
       // Create the card body
       const cardBody = $('<div>').addClass('col-8 card-body service-item-card-body');
 
-      debugger;
       // card title
       const itemName   = displayFields.title.value;
       const cardTitle  = $('<p>').text(itemName)
@@ -1626,7 +1617,6 @@
 
     populateCardContent(cardContentElement, serviceCategoryItem) {
       const fields  = serviceCategoryItem.asset_columns || serviceCategoryItem.software_license_columns || serviceCategoryItem.display_fields;
-      debugger;
       if (Object.keys(fields).length === 0) {
         const noAttributesText = 'No attributes configured';
         cardContentElement.append($('<tr>').append(
@@ -1680,7 +1670,6 @@
       serviceCategoryItemsFlex.empty();
 
       let serviceCategoryItems = [];
-      debugger;
       // Check the first service item to determine if this is an assets category
       const firstItem = serviceCategoryData.service_items && serviceCategoryData.service_items[0];
       if (firstItem && isMyAssignedAssets(firstItem)) {
@@ -1693,7 +1682,6 @@
         serviceCategoryItems.forEach((serviceCategoryItem, index) => {
           if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)); }      });
       }
-      debugger;
       if (!firstItem || !isMyAssignedAssets(firstItem)) { new ServiceCatalogItemDetailBuilder().build(data); }  }
   }
 

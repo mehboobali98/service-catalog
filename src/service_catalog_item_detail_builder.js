@@ -26,12 +26,11 @@ class ServiceCatalogItemDetailBuilder {
     this.userRole               = userRole();
     this.currency               = data.currency;
     this.serviceCategoriesItems = data.service_catalog_data;
-    debugger;
 
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId = `${serviceCategory}_container`;
       let container   = $(`#${containerId}`);
-      debugger;
+
       const firstItem = data.service_items && data.service_items[0];
       if ((!firstItem || !isMyAssignedAssets(firstItem)) && data.service_items) {
         let serviceItems = Array.isArray(data.service_items) ? data.service_items : JSON.parse(data.service_items);
