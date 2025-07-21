@@ -185,7 +185,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
-    const displayFields = serviceCategoryItem.display_fields
+    const displayFields = serviceCategoryItem.display_fields;
     const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item')
                                     .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                     .data('name', displayFields.title.value)
