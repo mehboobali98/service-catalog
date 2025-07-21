@@ -74,6 +74,7 @@ class ServiceCatalogItemBuilder {
 
     const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
     if (serviceCategoryItems.service_items) {
+      debugger;
       let serviceItems = [];
       if (isMyAssignedAssets(serviceCategory)) {
         if (this.integrationMode === 'custom_objects') {
@@ -92,6 +93,7 @@ class ServiceCatalogItemBuilder {
         });
       }
     } else {
+      debugger;
       if (isMyAssignedAssets(serviceCategory)) {
         // render empty screen
         serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
@@ -310,6 +312,7 @@ class ServiceCatalogItemBuilder {
     serviceCategoryItemsFlex.empty();
 
     let serviceCategoryItems = [];
+    debugger;
     if (isMyAssignedAssets(categoryName)) {
       serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
     } else {
@@ -321,6 +324,7 @@ class ServiceCatalogItemBuilder {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)) };
       });
     }
+    debugger;
     if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(data) };
   }
 }
