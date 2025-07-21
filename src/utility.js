@@ -85,9 +85,17 @@ function serviceCatalogDataPresent(data) {
 
 function isMyAssignedAssets(serviceItem) {
   debugger;
-  if (!serviceItem || !serviceItem.resource_type) return false;
-  const assetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset', 'SoftwareLicense'];
-  return assetTypes.includes(serviceItem.resource_type);
+  if (!serviceItem) return false;
+  
+  const resourceAssetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset', 'SoftwareLicense'];
+  const assignedAssetTypes = ['assigned_asset', 'assigned_software_license'];
+  const allAssetTypes = [...resourceAssetTypes, ...assignedAssetTypes];
+  
+  // Check both resource_type and type keys
+  const resourceType = serviceItem.resource_type;
+  const type = serviceItem.type;
+  
+  return allAssetTypes.includes(resourceType) || allAssetTypes.includes(type);
 }
 
 function isSignedIn() {
