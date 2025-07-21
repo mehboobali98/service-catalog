@@ -5,6 +5,7 @@ import {
   isSignedIn,
   signInPath,
   isRequestPage,
+  isLandingPage,
   isNewRequestPage,
   loadExternalFiles,
   isServiceCatalogPage
@@ -12,7 +13,8 @@ import {
 
 import {
   STAGING_CDN_URL,
-  PRODUCTION_CDN_URL
+  PRODUCTION_CDN_URL,
+  SERVICE_CATALOG_ANCHOR
 } from './constant.js';
 
 import {
@@ -29,11 +31,13 @@ import {
 
 class ServiceCatalogManager {
   constructor(initializationData) {
-    this.locale                 = getLocale();
-    this.timeStamp              = initializationData.timeStamp;
-    this.ezoFieldId             = initializationData.ezoFieldId;
-    this.ezoSubdomain           = initializationData.ezoSubdomain;
-    this.ezoServiceItemFieldId  = initializationData.ezoServiceItemFieldId;
+    this.locale                     = getLocale();
+    this.timeStamp                  = initializationData.timeStamp;
+    this.ezoFieldId                 = initializationData.ezoFieldId;
+    this.ezoSubdomain               = initializationData.ezoSubdomain;
+    this.integrationMode            = initializationData.integrationMode || 'JWT';
+    this.ezoServiceItemFieldId      = initializationData.ezoServiceItemFieldId;
+    this.renderCatalogOnLandingPage = initializationData.renderCatalogOnLandingPage || false;
 
     const files = this.filesToLoad();
     loadExternalFiles(files, () => {
@@ -42,26 +46,42 @@ class ServiceCatalogManager {
   }
 
   initialize() {
-    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain);
+    this.serviceCatalogBuilder = new ServiceCatalogBuilder(this.locale, this.ezoSubdomain, this.integrationMode);
     this.addServiceCatalogMenuItem();
     this.initServiceCatalog();
   }
 
   addServiceCatalogMenuItem() {
-    this.serviceCatalogBuilder.addMenuItem('Service Catalog', '/hc/p/service_catalog', 'user-nav');
+    this.serviceCatalogBuilder.addMenuItem(
+      'Service Catalog',
+      this.serviceCatalogUrl(),
+      'user-nav'
+    );
+  }
+
+  serviceCatalogUrl() {
+    return this.renderCatalogOnLandingPage ? `/hc/${window.HelpCenter.user.locale}#${SERVICE_CATALOG_ANCHOR}` : '/hc/p/service_catalog';
   }
 
   initServiceCatalog() {
     setLocale(this.locale, true);
-    if (isServiceCatalogPage()) {
+    if (this.shouldRenderServiceCatalog()) {
       this.handleServiceCatalogRequest();
     } else if (isNewRequestPage()) {
-      new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+      new NewRequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
     } else if (isRequestPage()) {
-      new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId).updateRequestForm();
+      new RequestForm(this.locale, this.ezoFieldId, this.ezoSubdomain, this.ezoServiceItemFieldId, this.integrationMode).updateRequestForm();
     } else {
       // Handle other cases if needed
     }
+  }
+
+  shouldRenderServiceCatalog() {
+    return this.shouldRenderCatalogOnLandingPage() || isServiceCatalogPage();
+  }
+
+  shouldRenderCatalogOnLandingPage() {
+    return this.renderCatalogOnLandingPage && isLandingPage();
   }
 
   handleServiceCatalogRequest() {
@@ -74,7 +94,7 @@ class ServiceCatalogManager {
 
   filesToLoad() {
     return [
-              { type: 'link',   url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', placement: 'prepend' },
+              { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/dist/public/bootstrap.css`, placement: 'prepend' },
               { type: 'link',   url: `${STAGING_CDN_URL}/shared/service_catalog/dist/public/service_catalog.css?${this.timeStamp}`},
               { type: 'script', url: 'https://code.jquery.com/jquery-3.6.0.min.js' }
            ];

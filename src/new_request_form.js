@@ -1,11 +1,13 @@
 import { t }                  from './i18n.js';
 import { loadExternalFiles }  from './utility.js';
+import { RESOURCE_PREFIXES }  from './constant.js';
 
 class NewRequestForm {
-  constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+  constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId, integrationMode) {
     this.locale                 = locale;
     this.ezoFieldId             = ezoFieldId;
     this.ezoSubdomain           = ezoSubdomain;
+    this.integrationMode        = integrationMode;
     this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
   }
 
@@ -26,7 +28,79 @@ class NewRequestForm {
     if (formSubject) { this.subjectFieldElement().val(formSubject); }
     if (serviceItemFieldValue) { this.customFieldElement(this.ezoServiceItemFieldId).val(serviceItemFieldValue); }
 
-    this.getTokenAndFetchAssignedAssets();
+    if (this.integrationMode === 'custom_objects') {
+      this.fetchCustomObjects();
+    } else {
+      this.getTokenAndFetchAssignedAssets();
+    }
+  }
+
+  fetchCustomObjects() {
+    this.fetchUserData()
+      .done((userData) => this.handleUserData(userData))
+      .fail(function(error) {
+        console.error("Failed to fetch user data:", error);
+      });
+  }
+
+  handleUserData(userData) {
+    var userId    = userData.user.id;
+    var userEmail = userData.user.email;
+    if (userId) {
+      this.populateAssetFieldUsingCustomObjects(userId, userEmail);
+    } else {
+      console.error("User ID not found in response.");
+    }
+  }
+
+  populateAssetFieldUsingCustomObjects(userId, userEmail) {
+    $.getJSON(`/api/v2/custom_objects/assetsonar_assets/records/search?query=${userEmail}`).done((data) => {
+      if (!data || !data.custom_object_records) {
+        console.error("No custom object records found");
+        return;
+      }
+
+      const assetsData = { data: [] };
+      const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
+
+      data.custom_object_records.forEach((asset, index) => {
+        const { resource_type: resourceType, sequence_num: sequenceNum, asset_name: assetName } = asset.custom_object_fields;
+        const prefix = RESOURCE_PREFIXES[resourceType] || '';
+        assetsData.data[index] = {
+          id:   sequenceNum,
+          text: `${prefix} # ${sequenceNum} - ${assetName}`,
+        };
+      });
+
+      ezoCustomFieldEle.hide();
+      ezoCustomFieldEle.after("<select multiple='multiple' id='ezo-asset-select' style='width: 100%;'></select>");
+      $("#ezo-asset-select").select2({
+        data: assetsData.data
+      });
+      $("#ezo-asset-select").next().css("font-size", "15px");
+
+      $("#ezo-asset-select").on("change", function () {
+        const selectedIds = $(this).val();
+
+        if (selectedIds && selectedIds.length > 0) {
+          const selectedAssets = assetsData.data.filter((asset) =>
+            selectedIds.includes(asset.id.toString())
+          );
+
+          const mappedAssets = selectedAssets.map((asset) => ({
+            [asset.id]: asset.text,
+          }));
+
+          ezoCustomFieldEle.val(JSON.stringify({ assets: mappedAssets }));
+        } else {
+          ezoCustomFieldEle.val("");
+        }
+      });
+
+      this.preselectAssetsCustomField(this.extractQueryParams(window.location));
+    }).fail((error) => {
+      console.error("Error fetching custom object records:", error);
+    });
   }
 
   extractQueryParams(url) {
@@ -49,6 +123,10 @@ class NewRequestForm {
     });
   }
 
+  fetchUserData() {
+    return $.getJSON('/api/v2/users/me')
+  }
+
   withToken() {
     return $.getJSON('/hc/api/v2/integration/token').then(data => data.token);
   }
@@ -61,6 +139,7 @@ class NewRequestForm {
         const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
         this.processData(data.assets, assetsData, 'Asset');
+        this.processData(data.stock_assets, assetsData, 'Asset Stock')
         this.processData(data.software_entitlements, assetsData, 'Software License');
 
         ezoCustomFieldEle.hide();
@@ -111,12 +190,17 @@ class NewRequestForm {
             return { id: sequenceNum, text: `Asset # ${sequenceNum} - ${asset.name}` };
           });
 
+          var assignedStockAssets = $.map(data.stock_assets, function(asset) {
+            var sequenceNum = asset.sequence_num;
+            return { id: sequenceNum, text: `Asset Stock # ${sequenceNum} - ${asset.name}` };
+          });
+
           var assignedSoftwareLicenses = $.map(data.software_entitlements, function(softwareEntitlement) {
             var sequenceNum = softwareEntitlement.sequence_num;
             return { id: sequenceNum, text: `Software License # ${sequenceNum} - ${softwareEntitlement.name}` };
           });
 
-          var records = assignedAssets.concat(assignedSoftwareLicenses);
+          var records = assignedAssets.concat(assignedStockAssets, assignedSoftwareLicenses);
           return {
             results:    records,
             pagination: { more: data.page < data.total_pages }
@@ -226,6 +310,8 @@ class NewRequestForm {
       return oldTemplateSelector.text() !== '-';
     } else if (newTemplateSelector.length) {
       return newTemplateSelector.val().trim().length > 0;
+    } else if (this.subjectFieldElement().length) {
+      return true;
     }
     return false;
   }
