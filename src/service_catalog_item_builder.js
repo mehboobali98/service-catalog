@@ -80,7 +80,7 @@ class ServiceCatalogItemBuilder {
 
     if (serviceItems) {
       if (isAssetsCategory && this.integrationMode !== 'custom_objects') {
-        this.zendeskFormData = serviceItems.zendesk_form_data;
+        this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
       }
 
       if (serviceItems.length) {
@@ -288,6 +288,7 @@ class ServiceCatalogItemBuilder {
 
   zendeskFormId(serviceItem) {
     const type = serviceItem.type;
+    debugger;
     if (type === 'assigned_asset') {
       return this.zendeskFormData.assets;
     } else if (type === 'assigned_software_license') {
