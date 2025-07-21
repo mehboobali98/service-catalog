@@ -179,6 +179,40 @@ function getCookie(name) {
   return null;
 }
 
+function getServiceItems(serviceCategoryData) {
+  const serviceItems = serviceCategoryData.service_items;
+  
+  if (!serviceItems) return [];
+  if (Array.isArray(serviceItems)) return serviceItems;
+  
+  // Check if it's assets structure by looking at first item
+  const firstItem = this.getFirstItemFromStructure(serviceItems);
+  if (firstItem && isMyAssignedAssets(firstItem)) {
+    return getMyAssignedAssetsServiceItems(serviceCategoryData);
+  }
+  
+  // Try parsing as JSON string
+  if (typeof serviceItems === 'string') {
+    try {
+      return JSON.parse(serviceItems);
+    } catch {
+      return [];
+    }
+  }
+  
+  return [];
+}
+
+function getFirstItemFromStructure(serviceItems) {
+  if (Array.isArray(serviceItems)) return serviceItems[0];
+  if (typeof serviceItems === 'object') {
+    const assets = serviceItems['assets'] || [];
+    const software = serviceItems['software_entitlements'] || [];
+    return assets[0] || software[0];
+  }
+  return null;
+}
+
 export {
   userRole,
   getCookie,
@@ -189,6 +223,7 @@ export {
   isLandingPage,
   isCorrectPage,
   isRequestPage,
+  getServiceItems,
   isNewRequestPage,
   loadExternalFiles,
   setCookieForXHours,

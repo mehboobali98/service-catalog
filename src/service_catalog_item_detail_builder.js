@@ -6,6 +6,7 @@ import {
 import {
   userRole,
   getCookie,
+  getServiceItems,
   setCookieForXHours,
   isMyAssignedAssets,
   placeholderImagePath,
@@ -28,12 +29,13 @@ class ServiceCatalogItemDetailBuilder {
     this.serviceCategoriesItems = data.service_catalog_data;
 
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
-      let containerId = `${serviceCategory}_container`;
-      let container   = $(`#${containerId}`);
+      let containerId         = `${serviceCategory}_container`;
+      let container           = $(`#${containerId}`);
+      let serviceItems        = getServiceItems(serviceCategoryData);
+      const isAssetsCategory  = serviceCategoryItems.length > 0 && isMyAssignedAssets(serviceCategoryItems[0]);
+      debugger;
 
-      const firstItem = data.service_items && data.service_items[0];
-      if ((!firstItem || !isMyAssignedAssets(firstItem)) && data.service_items) {
-        let serviceItems = Array.isArray(data.service_items) ? data.service_items : JSON.parse(data.service_items);
+      if (!isAssetsCategory && serviceItems) {
         $.each(serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
           this.bindItemDetailEventListener(this.userRole, serviceCategory, serviceCategoryItem);
