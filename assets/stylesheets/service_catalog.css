@@ -137,7 +137,6 @@ main {
   margin-left:    inherit;
   margin-right:   20px;
   border-radius:  7px;
-  overflow:       hidden;
 }
 
 .service-item-card a {
@@ -167,9 +166,7 @@ main {
 
 .service-item-card .card-body .card-content-container {
   padding-top:    10px;
-  padding-bottom: 35px;
-  max-height:     80px;
-  overflow-y:     auto;
+  padding-bottom: 10px;
 }
 
 .service-item-card .card-body .card-content-table {
@@ -208,7 +205,6 @@ main {
   text-overflow:      ellipsis;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  line-clamp: 3;
 }
 
 .service-item-card .card-footer {
