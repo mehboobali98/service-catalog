@@ -31,7 +31,7 @@ class ServiceCatalogItemDetailBuilder {
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
       let containerId         = `${serviceCategory}_container`;
       let container           = $(`#${containerId}`);
-      let serviceItems        = getServiceItems(serviceCategoryData);
+      let serviceItems        = getServiceItems(data);
       const isAssetsCategory  = serviceCategoryItems.length > 0 && isMyAssignedAssets(serviceCategoryItems[0]);
       debugger;
 

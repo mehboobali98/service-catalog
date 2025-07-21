@@ -1273,7 +1273,7 @@
       $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
         let containerId         = `${serviceCategory}_container`;
         let container           = $(`#${containerId}`);
-        let serviceItems        = getServiceItems(serviceCategoryData);
+        let serviceItems        = getServiceItems(data);
         const isAssetsCategory  = serviceCategoryItems.length > 0 && isMyAssignedAssets(serviceCategoryItems[0]);
         debugger;
 
@@ -1456,7 +1456,7 @@
       const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
       if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
-      let serviceItems                = getServiceItems(serviceCategoryData);
+      let serviceItems                = getServiceItems(serviceCategoryItems);
       const isAssetsCategory          = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
       const serviceCategoryItemsFlex  = $('<div>').addClass('d-flex flex-wrap gap-3');
       debugger;
