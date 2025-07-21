@@ -19,6 +19,13 @@
     'assigned_software_license':   'software_license_placeholder'
   };
 
+  const MANDATORY_SERVICE_ITEM_FIELDS = {
+    'EzPortal::Card': ['title', 'description', 'short_description'],
+    'FixedAsset': ['asset_id', 'asset_name', 'sequence_num'],
+    'StockAsset': ['asset_id', 'asset_name', 'sequence_num'],
+    'SoftwareLicense': ['asset_id', 'asset_name', 'sequence_num']
+  };
+
   // Load translations for the given locale and translate the page to this locale
   function setLocale(newLocale, shouldTranslatePage) {
     if (Object.keys(TRANSLATIONS).length !== 0 && shouldTranslatePage) { return translatePage(); }
@@ -1928,14 +1935,25 @@
                               service_category_title_with_id:   categoryKey
                             });
                           } else if (resourceType === 'EzPortal::Card') {
+                            // Validate mandatory fields for this resource type
+                            const mandatoryFields = MANDATORY_SERVICE_ITEM_FIELDS[resourceType] || [];
+                            const hasMissingFields = mandatoryFields.some(field => {
+                              const value = record.custom_object_fields[field]?.trim() || '';
+                              return !value;
+                            });
+                            
+                            if (hasMissingFields) {
+                              return;
+                            }
+
                             var serviceItemHash = {
                               id:                               record.custom_object_fields.service_item_id,
                               resource_type:                    resourceType,
                               display_fields: {
-                                title:              { value: record.custom_object_fields.title || '' },
+                                title:              { value: record.custom_object_fields.title },
                                 cost_price:         { value: record.custom_object_fields.cost_price || null },
-                                description:        { value: record.custom_object_fields.description || '' },
-                                short_description:  { value: record.custom_object_fields.short_description || '' },
+                                description:        { value: record.custom_object_fields.description },
+                                short_description:  { value: record.custom_object_fields.shortDescription },
                               },
                               zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
                               display_picture_url:              record.custom_object_fields.display_picture_url || '',

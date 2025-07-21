@@ -1,5 +1,6 @@
 import { setLocale } from './i18n.js';
 import { serviceCatalogDataPresent } from './utility.js';
+import { MANDATORY_SERVICE_ITEM_FIELDS } from './constant.js';
 import { 
   noResultsFound, serviceCatalogEmpty, serviceCatalogDisabled
 } from './view_helper.js';
@@ -157,14 +158,25 @@ class ApiService {
                             service_category_title_with_id:   categoryKey
                           });
                         } else if (resourceType === 'EzPortal::Card') {
+                          // Validate mandatory fields for this resource type
+                          const mandatoryFields = MANDATORY_SERVICE_ITEM_FIELDS[resourceType] || [];
+                          const hasMissingFields = mandatoryFields.some(field => {
+                            const value = record.custom_object_fields[field]?.trim() || '';
+                            return !value;
+                          });
+                          
+                          if (hasMissingFields) {
+                            return;
+                          }
+
                           var serviceItemHash = {
                             id:                               record.custom_object_fields.service_item_id,
                             resource_type:                    resourceType,
                             display_fields: {
-                              title:              { value: record.custom_object_fields.title || '' },
+                              title:              { value: record.custom_object_fields.title },
                               cost_price:         { value: record.custom_object_fields.cost_price || null },
-                              description:        { value: record.custom_object_fields.description || '' },
-                              short_description:  { value: record.custom_object_fields.short_description || '' },
+                              description:        { value: record.custom_object_fields.description },
+                              short_description:  { value: record.custom_object_fields.shortDescription },
                             },
                             zendesk_form_id:                  record.custom_object_fields.zd_form_id || null,
                             display_picture_url:              record.custom_object_fields.display_picture_url || '',

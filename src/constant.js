@@ -16,18 +16,26 @@ const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING  = {
   'assigned_software_license':   'software_license_placeholder'
 };
 
+const MANDATORY_SERVICE_ITEM_FIELDS = {
+  'EzPortal::Card': ['title', 'description', 'short_description'],
+  'FixedAsset': ['asset_id', 'asset_name', 'sequence_num'],
+  'StockAsset': ['asset_id', 'asset_name', 'sequence_num'],
+  'SoftwareLicense': ['asset_id', 'asset_name', 'sequence_num']
+};
+
 export {
   TRANSLATIONS,
   DEFAULT_LOCALE,
   STAGING_CDN_URL,
-  RESOURCE_PREFIXES,
   PRODUCTION_CDN_URL,
   DEFAULT_FIELD_VALUE,
+  RESOURCE_PREFIXES,
   SERVICE_CATALOG_ANCHOR,
   DEFAULT_TRUNCATE_LENGTH,
   CARD_TITLE_TRUNCATE_LENGTH,
   CARD_FIELD_VALUE_TRUNCATE_LENGTH,
   CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH,
   AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
-  SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
+  SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING,
+  MANDATORY_SERVICE_ITEM_FIELDS
 };
