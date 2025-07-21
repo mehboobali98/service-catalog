@@ -195,7 +195,7 @@ class ApiService {
           ...commonFields,
           display_fields: {
             'Asset #': record.custom_object_fields.sequence_num,
-            'Quantiy': record.custom_object_fields.quantity,
+            'Quantity': record.custom_object_fields.quantity,
             'Location': record.custom_object_fields.location
           }
         };
