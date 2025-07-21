@@ -3,12 +3,14 @@ import {
   generateI18nKey
 } from './i18n.js';
 
+import { DEFAULT_CURRENCY } from './constant.js';
+
 import {
   userRole,
   getCookie,
   getServiceItems,
-  setCookieForXHours,
   isMyAssignedAssets,
+  setCookieForXHours,
   placeholderImagePath,
   requestSubmissionSettingMessageForAgent
 } from './utility.js';
@@ -71,7 +73,7 @@ class ServiceCatalogItemDetailBuilder {
     const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-weight': '600', 'font-size': '16px' }));
     if (displayFields.cost_price.value > 0) {
-      headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
+      headerContent.append($('<p>').text(`${this.currency || DEFAULT_CURRENCY} ${parseFloat(displayFields.cost_price['value'])}`)
                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
     }
 
