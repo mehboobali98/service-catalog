@@ -106,7 +106,9 @@ class ServiceCatalogBuilder {
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
+    debugger;
     this.serviceCatalogItemDetailBuilder.build(this.data);
+    debugger;
     this.bindEventListeners();
     this.addTooltipsForTruncatedText();
   }
