@@ -10,6 +10,12 @@
   const DEFAULT_FIELD_VALUE                     = '--';
   const SERVICE_CATALOG_ANCHOR                  = 'service_catalog';
   const DEFAULT_TRUNCATE_LENGTH                 = 30;
+  const MANDATORY_SERVICE_ITEM_FIELDS           = {
+    'FixedAsset':       ['asset_id', 'asset_name', 'sequence_num'],
+    'StockAsset':       ['asset_id', 'asset_name', 'sequence_num'],
+    'EzPortal::Card':   ['title', 'description', 'short_description'],
+    'SoftwareLicense':  ['asset_id', 'asset_name', 'sequence_num']
+  };
   const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
   const CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH   = 1000;
   const AGENT_REQUEST_SUBMISSION_SETTING_BLOG   = 'https://support.zendesk.com/hc/en-us/articles/4408828251930-Enabling-agents-to-access-request-forms';
@@ -17,13 +23,6 @@
     'service_item':                'service_item_placeholder',
     'assigned_asset':              'asset_placeholder',
     'assigned_software_license':   'software_license_placeholder'
-  };
-
-  const MANDATORY_SERVICE_ITEM_FIELDS = {
-    'EzPortal::Card': ['title', 'description', 'short_description'],
-    'FixedAsset': ['asset_id', 'asset_name', 'sequence_num'],
-    'StockAsset': ['asset_id', 'asset_name', 'sequence_num'],
-    'SoftwareLicense': ['asset_id', 'asset_name', 'sequence_num']
   };
 
   // Load translations for the given locale and translate the page to this locale
@@ -1583,11 +1582,7 @@
     }
 
     buildDefaultServiceItem(serviceCategory, serviceCategoryItem) {
-      const displayFields = serviceCategoryItem.display_fields || { 
-        title: { value: 'No Title' },
-        short_description: { value: '' },
-        cost_price: { value: 0 }
-      };
+      const displayFields = serviceCategoryItem.display_fields;
       const card          = $('<div>').addClass('row service-item-card border border-light js-default-service-item')
                                       .data('id', `${serviceCategoryItem.id}${serviceCategory}`)
                                       .data('name', displayFields.title.value)
@@ -2223,7 +2218,8 @@
     generateNavbar() {
       const navbar                 = $('<ul>');
       let activeClassAdded         = false;
-      const serviceCategoriesItems = this.data.service_catalog_data;    
+      const serviceCategoriesItems = this.data.service_catalog_data;
+      
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
