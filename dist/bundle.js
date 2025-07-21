@@ -182,6 +182,7 @@
   }
 
   function isMyAssignedAssets(serviceItem) {
+    debugger;
     if (!serviceItem || !serviceItem.resource_type) return false;
     const assetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset'];
     return assetTypes.includes(serviceItem.resource_type);
