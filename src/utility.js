@@ -1,6 +1,7 @@
 import {
   STAGING_CDN_URL,
   PRODUCTION_CDN_URL,
+  SERVICE_CATALOG_ANCHOR,
   AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
   SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
 } from './constant.js';
@@ -18,6 +19,16 @@ function isNewRequestPage() {
 function isServiceCatalogPage() {
   const regex = /\/service_catalog$/i;
   return isCorrectPage(regex);
+}
+
+function isLandingPage() {
+  const regex = new RegExp(`/hc/${window.HelpCenter.user.locale}/?$`, "i");
+
+  return isCorrectPage(regex);
+}
+
+function shouldScrollToCatalog() {
+  return window.location.hash == `#${SERVICE_CATALOG_ANCHOR}`;
 }
 
 function isCorrectPage(regex) {
@@ -72,9 +83,18 @@ function serviceCatalogDataPresent(data) {
   return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
 }
 
-function isMyAssignedAssets(serviceCategory) {
-  const regex = /^\d*_my_assigned_assets$/;
-  return regex.test(serviceCategory);
+function isMyAssignedAssets(serviceItem) {
+  if (!serviceItem) return false;
+  
+  const resourceAssetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset', 'SoftwareLicense'];
+  const assignedAssetTypes = ['assigned_asset', 'assigned_software_license'];
+  const allAssetTypes = [...resourceAssetTypes, ...assignedAssetTypes];
+  
+  // Check both resource_type and type keys
+  const resourceType = serviceItem.resource_type;
+  const type = serviceItem.type;
+  
+  return allAssetTypes.includes(resourceType) || allAssetTypes.includes(type);
 }
 
 function isSignedIn() {
@@ -166,6 +186,40 @@ function getCookie(name) {
   return null;
 }
 
+function getServiceItems(serviceCategoryData) {
+  const serviceItems = serviceCategoryData.service_items;
+  
+  if (!serviceItems) return [];
+  if (Array.isArray(serviceItems)) return serviceItems;
+  
+  // Check if it's assets structure by looking at first item
+  const firstItem = getFirstItemFromStructure(serviceItems);
+  if (firstItem && isMyAssignedAssets(firstItem)) {
+    return getMyAssignedAssetsServiceItems(serviceCategoryData);
+  }
+  
+  // Try parsing as JSON string
+  if (typeof serviceItems === 'string') {
+    try {
+      return JSON.parse(serviceItems);
+    } catch {
+      return [];
+    }
+  }
+  
+  return [];
+}
+
+function getFirstItemFromStructure(serviceItems) {
+  if (Array.isArray(serviceItems)) return serviceItems[0];
+  if (typeof serviceItems === 'object') {
+    const assets = serviceItems['assets'] || [];
+    const software = serviceItems['software_entitlements'] || [];
+    return assets[0] || software[0];
+  }
+  return null;
+}
+
 export {
   userRole,
   getCookie,
@@ -173,8 +227,10 @@ export {
   isSignedIn,
   signInPath,
   loadingIcon,
+  isLandingPage,
   isCorrectPage,
   isRequestPage,
+  getServiceItems,
   isNewRequestPage,
   loadExternalFiles,
   setCookieForXHours,
@@ -182,6 +238,7 @@ export {
   getCssVariableValue,
   placeholderImagePath,
   isServiceCatalogPage,
+  shouldScrollToCatalog,
   serviceCatalogDataPresent,
   getMyAssignedAssetsServiceItems,
   requestSubmissionSettingMessageForAgent

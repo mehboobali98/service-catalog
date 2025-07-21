@@ -3,11 +3,14 @@ import {
   generateI18nKey
 } from './i18n.js';
 
+import { DEFAULT_CURRENCY } from './constant.js';
+
 import {
   userRole,
   getCookie,
-  setCookieForXHours,
+  getServiceItems,
   isMyAssignedAssets,
+  setCookieForXHours,
   placeholderImagePath,
   requestSubmissionSettingMessageForAgent
 } from './utility.js';
@@ -28,10 +31,12 @@ class ServiceCatalogItemDetailBuilder {
     this.serviceCategoriesItems = data.service_catalog_data;
 
     $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
-      let containerId = `${serviceCategory}_container`;
-      let container   = $(`#${containerId}`);
-      if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
-        let serviceItems = JSON.parse(data.service_items);
+      let containerId         = `${serviceCategory}_container`;
+      let container           = $(`#${containerId}`);
+      let serviceItems        = getServiceItems(data);
+      const isAssetsCategory  = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
+
+      if (!isAssetsCategory && serviceItems) {
         $.each(serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
           this.bindItemDetailEventListener(this.userRole, serviceCategory, serviceCategoryItem);
@@ -68,7 +73,7 @@ class ServiceCatalogItemDetailBuilder {
     const headerContent = $('<div>').append($('<p>').text(displayFields.title.value)
                                                     .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-weight': '600', 'font-size': '16px' }));
     if (displayFields.cost_price.value > 0) {
-      headerContent.append($('<p>').text(`${this.currency} ${parseFloat(displayFields.cost_price['value'])}`)
+      headerContent.append($('<p>').text(`${this.currency || DEFAULT_CURRENCY} ${parseFloat(displayFields.cost_price['value'])}`)
                                    .css({ 'color': textColor, 'line-height': '17px', 'font-family': headingFont, 'font-size': '14px' }));
     }
 

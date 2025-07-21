@@ -1,20 +1,23 @@
 import { generateI18nKey }                  from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
+         shouldScrollToCatalog,
          serviceCatalogDataPresent }        from './utility.js';
 import { STAGING_CDN_URL,
-         PRODUCTION_CDN_URL }               from './constant.js';
+         PRODUCTION_CDN_URL,
+         SERVICE_CATALOG_ANCHOR }           from './constant.js';
 import { ApiService }                       from './api_service.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
 
 class ServiceCatalogBuilder {
-  constructor(locale, ezoSubdomain) {
+  constructor(locale, ezoSubdomain, integrationMode) {
     this.locale                          = locale;
-    this.apiService                      = new ApiService(locale, ezoSubdomain);
+    this.apiService                      = new ApiService(locale, ezoSubdomain, integrationMode);
     this.ezoSubdomain                    = ezoSubdomain;
-    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale);
-    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale);
+    this.integrationMode                 = integrationMode;
+    this.serviceCatalogItemBuilder       = new ServiceCatalogItemBuilder(locale, integrationMode);
+    this.serviceCatalogItemDetailBuilder = new ServiceCatalogItemDetailBuilder(locale, integrationMode);
     this.search                          = new Search();
   }
 
@@ -36,11 +39,15 @@ class ServiceCatalogBuilder {
   buildServiceCatalog() {
     this.buildServiceCatalogHeaderSection();
     $('main').append(loadingIcon('mt-5'));
-    this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+    if (this.integrationMode === 'custom_objects') {
+      this.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(this.buildUI, this.noAccessPage, {});
+    } else {
+      this.apiService.fetchServiceCategoriesAndItems(this.buildUI, this.noAccessPage, {});
+    }
   }
 
   buildServiceCatalogHeaderSection() {
-    const headerSection     = $('<section>');
+    const headerSection     = $('<section>').attr('id', SERVICE_CATALOG_ANCHOR);
     const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
     const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                        .attr('data-i18n', 'service-catalog')
@@ -78,6 +85,7 @@ class ServiceCatalogBuilder {
       serviceCatalogContainer: serviceCatalogContainer
     };
     this.createServiceCategoriesView(containers);
+    if (shouldScrollToCatalog()) { $(".service-catalog-nav-item")[0].click(); }
   }
 
   createServiceCategoriesView(containers) {
@@ -108,7 +116,7 @@ class ServiceCatalogBuilder {
     const navbar                 = $('<ul>');
     let activeClassAdded         = false;
     const serviceCategoriesItems = this.data.service_catalog_data;
-
+    
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
@@ -155,16 +163,23 @@ class ServiceCatalogBuilder {
         serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
       };
       const categoryId = categoryLinkId.split('_')[0];
-      self.apiService.fetchServiceCategoryItems(
-        categoryId,
-        self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
-        callbackOptions
-      );
+      if (self.integrationMode !== 'custom_objects') {
+        self.apiService.fetchServiceCategoryItems(
+          categoryId,
+          self.serviceCatalogItemBuilder.buildAndRenderServiceItems,
+          callbackOptions
+        );
+      }
       $('#service_catalog_item_search_results_container').hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
+      if (self.integrationMode === 'custom_objects') {
+        const $loadingIcon = $('#' + containerId).find('#loading_icon_container');
+        if ($loadingIcon.length) {
+          $loadingIcon.empty();
+        }
+      }
       $('#service_items_container').show();
-
     });
 
     $('#search_input').on('keyup', function(e) {
@@ -194,16 +209,29 @@ class ServiceCatalogBuilder {
 
         timer = setTimeout(
           function () {
-            self.apiService.fetchServiceCategoriesAndItems(
-              self.search.updateResults,
-              self.noAccessPage,
-              {
-                searchQuery: query,
-                searchResultsContainer: searchResultsContainer,
-                itemBuilder: self.serviceCatalogItemBuilder,
-                itemDetailBuilder: self.serviceCatalogItemDetailBuilder
-              }
-            );
+            if (self.integrationMode === 'custom_objects') {
+              self.apiService.fetchServiceCategoriesAndItemsUsingCustomObjects(
+                self.search.updateResults,
+                self.noAccessPage,
+                {
+                  searchQuery: query,
+                  searchResultsContainer: searchResultsContainer,
+                  itemBuilder: self.serviceCatalogItemBuilder,
+                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                }
+              );
+            } else {
+              self.apiService.fetchServiceCategoriesAndItems(
+                self.search.updateResults,
+                self.noAccessPage,
+                {
+                  searchQuery: query,
+                  searchResultsContainer: searchResultsContainer,
+                  itemBuilder: self.serviceCatalogItemBuilder,
+                  itemDetailBuilder: self.serviceCatalogItemDetailBuilder
+                }
+              );
+            }
           },
           500
         );
