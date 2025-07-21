@@ -49,7 +49,6 @@ class ApiService {
             } else if (!serviceCatalogDataPresent(data) && !data.search_results) {
               $('main').append(serviceCatalogEmpty(this.ezoSubdomain));
             } else {
-              debugger;
               callback(data, options);
             }
             setLocale(this.locale, true);
@@ -298,8 +297,6 @@ class ApiService {
         }; 
         const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
         $('#loading_icon_container').show();
-        debugger;
-
         fetch(url, options)
           .then(response => {
             if (response.status === 400) {

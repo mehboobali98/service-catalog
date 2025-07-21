@@ -84,7 +84,6 @@ function serviceCatalogDataPresent(data) {
 }
 
 function isMyAssignedAssets(serviceItem) {
-  debugger;
   if (!serviceItem) return false;
   
   const resourceAssetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset', 'SoftwareLicense'];

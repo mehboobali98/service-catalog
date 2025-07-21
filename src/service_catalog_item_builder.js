@@ -76,7 +76,6 @@ class ServiceCatalogItemBuilder {
     let serviceItems                = getServiceItems(serviceCategoryItems);
     const isAssetsCategory          = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
     const serviceCategoryItemsFlex  = $('<div>').addClass('d-flex flex-wrap gap-3');
-    debugger;
 
     if (serviceItems) {
       if (isAssetsCategory && this.integrationMode !== 'custom_objects') {
@@ -288,7 +287,6 @@ class ServiceCatalogItemBuilder {
 
   zendeskFormId(serviceItem) {
     const type = serviceItem.type;
-    debugger;
     if (type === 'assigned_asset') {
       return this.zendeskFormData.assets;
     } else if (type === 'assigned_software_license') {
@@ -308,7 +306,6 @@ class ServiceCatalogItemBuilder {
 
     let serviceItems        = getServiceItems(serviceCategoryData);
     const isAssetsCategory  = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
-    debugger;
 
     if (serviceItems.length) {
       serviceItems.forEach((serviceCategoryItem, index) => {

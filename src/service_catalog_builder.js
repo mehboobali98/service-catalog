@@ -106,9 +106,7 @@ class ServiceCatalogBuilder {
     newSection.append(serviceCatalogContainer);
 
     $('main').append(newSection);
-    debugger;
     this.serviceCatalogItemDetailBuilder.build(this.data);
-    debugger;
     this.bindEventListeners();
     this.addTooltipsForTruncatedText();
   }
@@ -117,9 +115,7 @@ class ServiceCatalogBuilder {
   generateNavbar() {
     const navbar                 = $('<ul>');
     let activeClassAdded         = false;
-    const serviceCategoriesItems = this.data.service_catalog_data;
-
-    debugger;
+    const serviceCategoriesItems = this.data.service_catalog_data;    
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
@@ -140,7 +136,6 @@ class ServiceCatalogBuilder {
     const self                 = this;
     const serviceCategories    = Object.keys(this.data.service_catalog_data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
-    debugger;
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
       var categoryLinkId = $(this).attr('id');
@@ -153,10 +148,8 @@ class ServiceCatalogBuilder {
 
       var containerId = categoryLinkId.replace('_link', '_container');
 
-      debugger;
       // hide service items of remaining categories
       $.each(serviceCategoriesIds, function(index, serviceCategoryId) {
-        debugger;
         if ('#' + categoryLinkId === serviceCategoryId) {
           // do nothing
         } else {
@@ -168,9 +161,7 @@ class ServiceCatalogBuilder {
       const callbackOptions = {
         serviceItemsContainerId: '#' + containerId.replace('_container', '_service_items_container')  
       };
-      debugger;
       const categoryId = categoryLinkId.split('_')[0];
-      debugger;
       if (self.integrationMode !== 'custom_objects') {
         self.apiService.fetchServiceCategoryItems(
           categoryId,
@@ -178,7 +169,6 @@ class ServiceCatalogBuilder {
           callbackOptions
         );
       }
-      debugger;
       $('#service_catalog_item_search_results_container').hide();
       $('#' + containerId).show();
       $('#' + containerId.replace('_container', '_service_items_container')).show();
