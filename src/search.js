@@ -1,5 +1,4 @@
 import { noResultsFound } from './view_helper.js';
-import { isMyAssignedAssets } from './utility.js';
 import { ServiceCatalogItemBuilder } from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder } from './service_catalog_item_detail_builder.js';
 

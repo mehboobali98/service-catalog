@@ -13,6 +13,7 @@ import {
   userRole,
   getCookie,
   loadingIcon,
+  getServiceItems,
   isMyAssignedAssets,
   setCookieForXHours,
   placeholderImagePath,
@@ -72,18 +73,13 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlexContainer = $('<div>').attr('id', `${serviceCategory}_service_items_container`);
     if (!isVisible) { serviceCategoryItemsFlexContainer.append(loadingIcon('col-10')); }
 
-    const serviceCategoryItemsFlex = $('<div>').addClass('d-flex flex-wrap gap-3');
-    if (serviceCategoryItems.service_items) {
-      let serviceItems = [];
-      if (isMyAssignedAssets(serviceCategory)) {
-        if (this.integrationMode === 'custom_objects') {
-          serviceItems = serviceCategoryItems.service_items;
-        } else {
-          serviceItems         = getMyAssignedAssetsServiceItems(serviceCategoryItems);
-          this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
-        }
-      } else {
-        serviceItems = Array.isArray(serviceCategoryItems.service_items) ? serviceCategoryItems.service_items : JSON.parse(serviceCategoryItems.service_items);
+    let serviceItems                = getServiceItems(serviceCategoryItems);
+    const isAssetsCategory          = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
+    const serviceCategoryItemsFlex  = $('<div>').addClass('d-flex flex-wrap gap-3');
+
+    if (serviceItems) {
+      if (isAssetsCategory && this.integrationMode !== 'custom_objects') {
+        this.zendeskFormData = serviceCategoryItems.zendesk_form_data;
       }
 
       if (serviceItems.length) {
@@ -92,7 +88,7 @@ class ServiceCatalogItemBuilder {
         });
       }
     } else {
-      if (isMyAssignedAssets(serviceCategory)) {
+      if (isAssetsCategory) {
         // render empty screen
         serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
       }
@@ -105,7 +101,7 @@ class ServiceCatalogItemBuilder {
   }
 
   buildServiceCategoryItem(serviceCategory, serviceItem) {
-    if (isMyAssignedAssets(serviceCategory)) {
+    if (isMyAssignedAssets(serviceItem)) {
       return this.buildItAssetServiceItem(serviceCategory, serviceItem);
     } else {
       return this.buildDefaultServiceItem(serviceCategory, serviceItem);
@@ -146,7 +142,6 @@ class ServiceCatalogItemBuilder {
     const cardContent          = $('<table>').addClass('card-content-table');
 
     this.populateCardContent(cardContent, serviceCategoryItem);
-
     cardContentContainer.append(cardContent);
     cardBody.append(cardContentContainer);
 
@@ -305,19 +300,15 @@ class ServiceCatalogItemBuilder {
     const serviceCategoryItemsFlex = $(serviceItemsContainer).children().last();
     serviceCategoryItemsFlex.empty();
 
-    let serviceCategoryItems = [];
-    if (isMyAssignedAssets(categoryName)) {
-      serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
-    } else {
-      serviceCategoryItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
-    }
+    let serviceItems        = getServiceItems(serviceCategoryData);
+    const isAssetsCategory  = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
 
-    if (serviceCategoryItems.length) {
-      serviceCategoryItems.forEach((serviceCategoryItem, index) => {
+    if (serviceItems.length) {
+      serviceItems.forEach((serviceCategoryItem, index) => {
         if(serviceCategoryItem) { serviceCategoryItemsFlex.append(this.buildServiceCategoryItem(categoryName, serviceCategoryItem)) };
       });
     }
-    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(data) };
+    if (!isAssetsCategory) { new ServiceCatalogItemDetailBuilder().build(data) };
   }
 }
 

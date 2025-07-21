@@ -1,9 +1,11 @@
 import { generateI18nKey }                  from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
+         shouldScrollToCatalog,
          serviceCatalogDataPresent }        from './utility.js';
 import { STAGING_CDN_URL,
-         PRODUCTION_CDN_URL }               from './constant.js';
+         PRODUCTION_CDN_URL,
+         SERVICE_CATALOG_ANCHOR }           from './constant.js';
 import { ApiService }                       from './api_service.js';
 import { ServiceCatalogItemBuilder }        from './service_catalog_item_builder.js';
 import { ServiceCatalogItemDetailBuilder }  from './service_catalog_item_detail_builder.js';
@@ -45,7 +47,7 @@ class ServiceCatalogBuilder {
   }
 
   buildServiceCatalogHeaderSection() {
-    const headerSection     = $('<section>');
+    const headerSection     = $('<section>').attr('id', SERVICE_CATALOG_ANCHOR);
     const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
     const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                        .attr('data-i18n', 'service-catalog')
@@ -83,6 +85,7 @@ class ServiceCatalogBuilder {
       serviceCatalogContainer: serviceCatalogContainer
     };
     this.createServiceCategoriesView(containers);
+    if (shouldScrollToCatalog()) { $(".service-catalog-nav-item")[0].click(); }
   }
 
   createServiceCategoriesView(containers) {
@@ -113,7 +116,7 @@ class ServiceCatalogBuilder {
     const navbar                 = $('<ul>');
     let activeClassAdded         = false;
     const serviceCategoriesItems = this.data.service_catalog_data;
-
+    
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
