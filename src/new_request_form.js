@@ -313,6 +313,7 @@ class NewRequestForm {
     } else if (this.subjectFieldElement().length) {
       return true;
     }
+    
     return false;
   }
 
