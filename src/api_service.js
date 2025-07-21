@@ -221,7 +221,7 @@ class ApiService {
             title: { value: record.custom_object_fields.title },
             cost_price: { value: record.custom_object_fields.cost_price || null },
             description: { value: record.custom_object_fields.description },
-            short_description: { value: record.custom_object_fields.shortDescription }
+            short_description: { value: record.custom_object_fields.short_description }
           },
           zendesk_form_id: record.custom_object_fields.zd_form_id || null,
           display_picture_url: record.custom_object_fields.display_picture_url || '',
