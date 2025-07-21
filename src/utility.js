@@ -83,9 +83,18 @@ function serviceCatalogDataPresent(data) {
   return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
 }
 
-function isMyAssignedAssets(serviceCategory) {
-  const regex = /^\d*_my_assigned_assets$/i;
-  return regex.test(serviceCategory);
+function isMyAssignedAssets(serviceItem) {
+  if (!serviceItem) return false;
+  
+  const resourceAssetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset', 'SoftwareLicense'];
+  const assignedAssetTypes = ['assigned_asset', 'assigned_software_license'];
+  const allAssetTypes = [...resourceAssetTypes, ...assignedAssetTypes];
+  
+  // Check both resource_type and type keys
+  const resourceType = serviceItem.resource_type;
+  const type = serviceItem.type;
+  
+  return allAssetTypes.includes(resourceType) || allAssetTypes.includes(type);
 }
 
 function isSignedIn() {
@@ -177,6 +186,40 @@ function getCookie(name) {
   return null;
 }
 
+function getServiceItems(serviceCategoryData) {
+  const serviceItems = serviceCategoryData.service_items;
+  
+  if (!serviceItems) return [];
+  if (Array.isArray(serviceItems)) return serviceItems;
+  
+  // Check if it's assets structure by looking at first item
+  const firstItem = getFirstItemFromStructure(serviceItems);
+  if (firstItem && isMyAssignedAssets(firstItem)) {
+    return getMyAssignedAssetsServiceItems(serviceCategoryData);
+  }
+  
+  // Try parsing as JSON string
+  if (typeof serviceItems === 'string') {
+    try {
+      return JSON.parse(serviceItems);
+    } catch {
+      return [];
+    }
+  }
+  
+  return [];
+}
+
+function getFirstItemFromStructure(serviceItems) {
+  if (Array.isArray(serviceItems)) return serviceItems[0];
+  if (typeof serviceItems === 'object') {
+    const assets = serviceItems['assets'] || [];
+    const software = serviceItems['software_entitlements'] || [];
+    return assets[0] || software[0];
+  }
+  return null;
+}
+
 export {
   userRole,
   getCookie,
@@ -187,6 +230,7 @@ export {
   isLandingPage,
   isCorrectPage,
   isRequestPage,
+  getServiceItems,
   isNewRequestPage,
   loadExternalFiles,
   setCookieForXHours,

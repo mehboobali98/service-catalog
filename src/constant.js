@@ -7,6 +7,12 @@ const DEFAULT_FIELD_VALUE                     = '--';
 const SERVICE_CATALOG_ANCHOR                  = 'service_catalog';
 const DEFAULT_TRUNCATE_LENGTH                 = 30;
 const CARD_TITLE_TRUNCATE_LENGTH              = 20;
+const MANDATORY_SERVICE_ITEM_FIELDS           = {
+  'FixedAsset':       ['asset_id', 'asset_name', 'sequence_num'],
+  'StockAsset':       ['asset_id', 'asset_name', 'sequence_num'],
+  'EzPortal::Card':   ['title', 'description', 'short_description'],
+  'SoftwareLicense':  ['asset_id', 'asset_name', 'sequence_num']
+};
 const CARD_FIELD_VALUE_TRUNCATE_LENGTH        = 15;
 const CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH   = 1000;
 const AGENT_REQUEST_SUBMISSION_SETTING_BLOG   = 'https://support.zendesk.com/hc/en-us/articles/4408828251930-Enabling-agents-to-access-request-forms';
@@ -15,6 +21,7 @@ const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING  = {
   'assigned_asset':              'asset_placeholder',
   'assigned_software_license':   'software_license_placeholder'
 };
+
 
 export {
   TRANSLATIONS,
@@ -26,6 +33,7 @@ export {
   SERVICE_CATALOG_ANCHOR,
   DEFAULT_TRUNCATE_LENGTH,
   CARD_TITLE_TRUNCATE_LENGTH,
+  MANDATORY_SERVICE_ITEM_FIELDS,
   CARD_FIELD_VALUE_TRUNCATE_LENGTH,
   CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH,
   AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
