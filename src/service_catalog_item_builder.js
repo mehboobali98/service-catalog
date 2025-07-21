@@ -76,7 +76,9 @@ class ServiceCatalogItemBuilder {
     if (serviceCategoryItems.service_items) {
       debugger;
       let serviceItems = [];
-      if (isMyAssignedAssets(serviceCategory)) {
+      // Check the first service item to determine if this is an assets category
+      const firstItem = serviceCategoryItems.service_items && serviceCategoryItems.service_items[0];
+      if (firstItem && isMyAssignedAssets(firstItem)) {
         if (this.integrationMode === 'custom_objects') {
           serviceItems = serviceCategoryItems.service_items;
         } else {
@@ -94,7 +96,9 @@ class ServiceCatalogItemBuilder {
       }
     } else {
       debugger;
-      if (isMyAssignedAssets(serviceCategory)) {
+      // Check if this is an assets category
+      const firstItem = serviceCategoryItems.service_items && serviceCategoryItems.service_items[0];
+      if (firstItem && isMyAssignedAssets(firstItem)) {
         // render empty screen
         serviceCategoryItemsFlexContainer.append(noServiceItems(t('no-assigned-items')));
       }
@@ -108,7 +112,7 @@ class ServiceCatalogItemBuilder {
 
   buildServiceCategoryItem(serviceCategory, serviceItem) {
     debugger;
-    if (isMyAssignedAssets(serviceCategory)) {
+    if (isMyAssignedAssets(serviceItem)) {
       return this.buildItAssetServiceItem(serviceCategory, serviceItem);
     } else {
       return this.buildDefaultServiceItem(serviceCategory, serviceItem);
@@ -313,7 +317,9 @@ class ServiceCatalogItemBuilder {
 
     let serviceCategoryItems = [];
     debugger;
-    if (isMyAssignedAssets(categoryName)) {
+    // Check the first service item to determine if this is an assets category
+    const firstItem = serviceCategoryData.service_items && serviceCategoryData.service_items[0];
+    if (firstItem && isMyAssignedAssets(firstItem)) {
       serviceCategoryItems = getMyAssignedAssetsServiceItems(serviceCategoryData);
     } else {
       serviceCategoryItems = serviceCategoryData.service_items ? JSON.parse(serviceCategoryData.service_items) : [];
@@ -325,7 +331,7 @@ class ServiceCatalogItemBuilder {
       });
     }
     debugger;
-    if (!isMyAssignedAssets(categoryName)) { new ServiceCatalogItemDetailBuilder().build(data) };
+    if (!firstItem || !isMyAssignedAssets(firstItem)) { new ServiceCatalogItemDetailBuilder().build(data) };
   }
 }
 

@@ -83,9 +83,10 @@ function serviceCatalogDataPresent(data) {
   return data && data.service_catalog_data && Object.keys(data.service_catalog_data).length > 0;
 }
 
-function isMyAssignedAssets(serviceCategory) {
-  const regex = /^\d*_my_assigned_assets$/i;
-  return regex.test(serviceCategory);
+function isMyAssignedAssets(serviceItem) {
+  if (!serviceItem || !serviceItem.resource_type) return false;
+  const assetTypes = ['FixedAsset', 'StockAsset', 'VolatileAsset'];
+  return assetTypes.includes(serviceItem.resource_type);
 }
 
 function isSignedIn() {

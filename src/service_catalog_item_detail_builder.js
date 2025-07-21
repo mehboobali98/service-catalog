@@ -32,7 +32,8 @@ class ServiceCatalogItemDetailBuilder {
       let containerId = `${serviceCategory}_container`;
       let container   = $(`#${containerId}`);
       debugger;
-      if (!isMyAssignedAssets(serviceCategory) && data.service_items) {
+      const firstItem = data.service_items && data.service_items[0];
+      if ((!firstItem || !isMyAssignedAssets(firstItem)) && data.service_items) {
         let serviceItems = Array.isArray(data.service_items) ? data.service_items : JSON.parse(data.service_items);
         $.each(serviceItems, (index, serviceCategoryItem) => {
           container.after(this.buildDetailPage(serviceCategory, serviceCategoryItem));
