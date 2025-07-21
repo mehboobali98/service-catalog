@@ -298,6 +298,7 @@ class ApiService {
         }; 
         const url = 'https://' + this.ezoSubdomain + '/webhooks/zendesk/' + endPoint + '.json' + '?' + $.param(queryParams);
         $('#loading_icon_container').show();
+        debugger;
 
         fetch(url, options)
           .then(response => {
