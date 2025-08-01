@@ -34,7 +34,6 @@ class RequestForm {
       if (!ezoFieldDataPresent && !ezoServiceItemFieldDataPresent) { return true; }
       const parsedEzoFieldValue = JSON.parse(ezoFieldData.value);
 
-      debugger;
       if (self.integrationMode === 'custom_objects') {
         self.handleCustomObjectsIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent);
       } else {
@@ -52,7 +51,7 @@ class RequestForm {
       if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
         this.linkResources(requestId, { headers: options.headers, serviceItemFieldId: this.ezoServiceItemFieldId });
       }
-      debugger;
+
       if (ezoFieldDataPresent) {
         options.ezoFieldId = this.ezoFieldId;
         this.processAssetData(requestId, parsedEzoFieldValue, options);
@@ -65,7 +64,6 @@ class RequestForm {
       this.linkResources(requestId, { serviceItemFieldId: this.ezoServiceItemFieldId });
     }
 
-    debugger;
     if (ezoFieldDataPresent) {
       this.processAssetData(requestId, parsedEzoFieldValue, { ezoFieldId: this.ezoFieldId });
     }
