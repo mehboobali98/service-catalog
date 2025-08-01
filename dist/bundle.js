@@ -646,11 +646,12 @@
   }
 
   class RequestForm {
-    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId) {
+    constructor(locale, ezoFieldId, ezoSubdomain, ezoServiceItemFieldId, integrationMode) {
       this.locale                 = locale;
       this.ezoFieldId             = ezoFieldId;
       this.ezoSubdomain           = ezoSubdomain;
       this.ezoServiceItemFieldId  = ezoServiceItemFieldId;
+      this.integrationMode        = integrationMode;
     }
 
     updateRequestForm() {
@@ -687,25 +688,26 @@
     handleJWTIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent) {
       const options = { headers: {} };
       this.withToken(token => {
-          if (!token) return;
+        if (!token) return;
 
-          options.headers['Authorization'] = `Bearer ${token}`;
-          if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
-              this.linkResources(requestId, { headers: options.headers, serviceItemFieldId: this.ezoServiceItemFieldId });
-          }
-          if (ezoFieldDataPresent) {
-              this.processAssetData(requestId, parsedEzoFieldValue, options);
-          }
+        options.headers['Authorization'] = `Bearer ${token}`;
+        if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
+          this.linkResources(requestId, { headers: options.headers, serviceItemFieldId: this.ezoServiceItemFieldId });
+        }
+        if (ezoFieldDataPresent) {
+          options.ezoFieldId = this.ezoFieldId;
+          this.processAssetData(requestId, parsedEzoFieldValue, options);
+        }
       });
     }
 
     handleCustomObjectsIntegration(requestId, parsedEzoFieldValue, ezoFieldDataPresent, ezoServiceItemFieldDataPresent) {
       if (ezoServiceItemFieldDataPresent && !ezoFieldDataPresent) {
-          this.linkResources(requestId, { serviceItemFieldId: this.ezoServiceItemFieldId });
+        this.linkResources(requestId, { serviceItemFieldId: this.ezoServiceItemFieldId });
       }
 
       if (ezoFieldDataPresent) {
-          this.processAssetData(requestId, parsedEzoFieldValue);
+        this.processAssetData(requestId, parsedEzoFieldValue, { ezoFieldId: this.ezoFieldId });
       }
     }
 
