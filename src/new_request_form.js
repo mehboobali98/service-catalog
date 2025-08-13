@@ -60,10 +60,18 @@ class NewRequestForm {
         return;
       }
 
+      // Filter records to only include those where zd_user_email matches the current user and record is visible
+      const filteredRecords = data.custom_object_records.filter(record => {
+        const isVisible = record.custom_object_fields.visible === 'true';
+        const recordEmail = record.custom_object_fields.zd_user_email;
+        const userEmailMatches = recordEmail && userEmail && recordEmail === userEmail;
+        return isVisible && userEmailMatches;
+      });
+
       const assetsData = { data: [] };
       const ezoCustomFieldEle = this.customFieldElement(this.ezoFieldId);
 
-      data.custom_object_records.forEach((asset, index) => {
+      filteredRecords.forEach((asset, index) => {
         const { resource_type: resourceType, sequence_num: sequenceNum, asset_name: assetName } = asset.custom_object_fields;
         const prefix = RESOURCE_PREFIXES[resourceType] || '';
         assetsData.data[index] = {
