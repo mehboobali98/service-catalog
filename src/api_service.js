@@ -68,7 +68,7 @@ class ApiService {
       }
 
       const customObjectData = await this._fetchCustomObjectData(userEmail);
-      const filteredRecords = this._filterVisibleRecords(customObjectData, options.searchQuery);
+      const filteredRecords = this._filterVisibleRecords(customObjectData, options.searchQuery, userEmail);
       const { data: restructuredData, ezPortalCategories } = this._restructureServiceData(filteredRecords);
       const cleanedData = this._removeEmptyEzPortalCategories(restructuredData, ezPortalCategories);
       
@@ -117,13 +117,23 @@ class ApiService {
     });
   }
 
-  _filterVisibleRecords(records, searchQuery) {
+  _filterVisibleRecords(records, searchQuery, userEmail) {
     return records.filter(record => {
       const isVisible = record.custom_object_fields.visible === 'true';
+      const resourceType = record.custom_object_fields.resource_type;
+      
+      // For assets (FixedAsset, StockAsset, SoftwareLicense), check if zd_user_email matches current user
+      const isAsset = ['FixedAsset', 'StockAsset', 'SoftwareLicense'].includes(resourceType);
+      const recordEmail = record.custom_object_fields.zd_user_email;
+      const userEmailMatches = isAsset ? 
+        (recordEmail && userEmail && recordEmail === userEmail) : 
+        true; // Always include service items (EzPortal::Card)
+      
       const matchesSearchQuery = searchQuery
         ? record.name && record.name.toLowerCase().includes(searchQuery.toLowerCase())
         : true;
-      return isVisible && matchesSearchQuery;
+      
+      return isVisible && userEmailMatches && matchesSearchQuery;
     });
   }
 
