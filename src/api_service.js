@@ -166,7 +166,8 @@ class ApiService {
   _generateCategoryKey(record, index) {
     const categoryId = record.custom_object_fields.service_category_id || index;
     const categoryTitle = (record.custom_object_fields.service_category_title || 'Unknown')
-      .replace(/\s+/g, '_');
+      .replace(/\s+/g, '_')
+      .replace(/[^A-Za-z0-9_-]/g, '');;
     return `${categoryId}_${categoryTitle}`;
   }
 
