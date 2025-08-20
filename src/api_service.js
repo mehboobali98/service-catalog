@@ -54,6 +54,7 @@ class ApiService {
             setLocale(this.locale, true);
           })
           .catch(error => {
+            debugger;
             console.error('An error occurred while fetching service categories and items: ' + error.message);
           });
       }
