@@ -116,8 +116,7 @@ class ServiceCatalogBuilder {
     const navbar                 = $('<ul>');
     let activeClassAdded         = false;
     const serviceCategoriesItems = this.data.service_catalog_data;
-    debugger;
-    
+
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
@@ -138,7 +137,6 @@ class ServiceCatalogBuilder {
     const self                 = this;
     const serviceCategories    = Object.keys(this.data.service_catalog_data);
     const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
-    debugger;
 
     $(serviceCategoriesIds.join(', ')).click(function(e) {
       var categoryLinkId = $(this).attr('id');

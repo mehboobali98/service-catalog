@@ -1855,7 +1855,6 @@
               setLocale(this.locale, true);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
@@ -1878,7 +1877,6 @@
         
         this._handleUIUpdates(finalData, callback, options);
       } catch (error) {
-        debugger;
         console.error('An error occurred while fetching service categories and items: ' + error.message);
         noAccessPageCallback();
       }
@@ -1968,7 +1966,8 @@
       const categoryId = record.custom_object_fields.service_category_id || index;
       const categoryTitle = (record.custom_object_fields.service_category_title || 'Unknown')
         .replace(/\s+/g, '_')
-        .replace(/[^A-Za-z0-9_-]/g, '');    return `${categoryId}_${categoryTitle}`;
+        .replace(/[^A-Za-z0-9_-]/g, '');
+      return `${categoryId}_${categoryTitle}`;
     }
 
     _ensureCategoryExists(data, categoryKey, record) {
@@ -2127,7 +2126,6 @@
               setLocale(this.locale, true);
             })
             .catch(error => {
-              debugger;
               console.error('An error occurred while fetching service categories and items: ' + error.message);
             });
         }
@@ -2245,8 +2243,7 @@
       const navbar                 = $('<ul>');
       let activeClassAdded         = false;
       const serviceCategoriesItems = this.data.service_catalog_data;
-      debugger;
-      
+
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
@@ -2267,7 +2264,6 @@
       const self                 = this;
       const serviceCategories    = Object.keys(this.data.service_catalog_data);
       const serviceCategoriesIds = serviceCategories.map(serviceCategory => '#' + serviceCategory + '_link');
-      debugger;
 
       $(serviceCategoriesIds.join(', ')).click(function(e) {
         var categoryLinkId = $(this).attr('id');

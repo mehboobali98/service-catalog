@@ -54,7 +54,6 @@ class ApiService {
             setLocale(this.locale, true);
           })
           .catch(error => {
-            debugger;
             console.error('An error occurred while fetching service categories and items: ' + error.message);
           });
       }
@@ -77,7 +76,6 @@ class ApiService {
       
       this._handleUIUpdates(finalData, callback, options);
     } catch (error) {
-      debugger;
       console.error('An error occurred while fetching service categories and items: ' + error.message);
       noAccessPageCallback();
     }
@@ -167,7 +165,7 @@ class ApiService {
     const categoryId = record.custom_object_fields.service_category_id || index;
     const categoryTitle = (record.custom_object_fields.service_category_title || 'Unknown')
       .replace(/\s+/g, '_')
-      .replace(/[^A-Za-z0-9_-]/g, '');;
+      .replace(/[^A-Za-z0-9_-]/g, '');
     return `${categoryId}_${categoryTitle}`;
   }
 
@@ -327,7 +325,6 @@ class ApiService {
             setLocale(this.locale, true);
           })
           .catch(error => {
-            debugger;
             console.error('An error occurred while fetching service categories and items: ' + error.message);
           });
       }
