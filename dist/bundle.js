@@ -1302,7 +1302,7 @@
 
       $.each(this.serviceCategoriesItems, (serviceCategory, data) => {
         let containerId         = `${serviceCategory}_container`;
-        let container           = $(`#${containerId}`);
+        let container           = $(document.getElementById(containerId));
         let serviceItems        = getServiceItems(data);
         const isAssetsCategory  = serviceItems.length > 0 && isMyAssignedAssets(serviceItems[0]);
 
@@ -1966,7 +1966,8 @@
     _generateCategoryKey(record, index) {
       const categoryId = record.custom_object_fields.service_category_id || index;
       const categoryTitle = (record.custom_object_fields.service_category_title || 'Unknown')
-        .replace(/\s+/g, '_');
+        .replace(/\s+/g, '_')
+        .replace(/[^A-Za-z0-9_-]/g, '');
       return `${categoryId}_${categoryTitle}`;
     }
 
@@ -2243,7 +2244,7 @@
       const navbar                 = $('<ul>');
       let activeClassAdded         = false;
       const serviceCategoriesItems = this.data.service_catalog_data;
-      
+
       $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
         let link     = '#_';
         let listItem = $('<li>').append($('<a>')
