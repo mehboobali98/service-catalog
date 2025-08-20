@@ -116,7 +116,7 @@ class ServiceCatalogBuilder {
     const navbar                 = $('<ul>');
     let activeClassAdded         = false;
     const serviceCategoriesItems = this.data.service_catalog_data;
-    
+
     $.each(serviceCategoriesItems, function(serviceCategory, serviceCategoryData) {
       let link     = '#_';
       let listItem = $('<li>').append($('<a>')
