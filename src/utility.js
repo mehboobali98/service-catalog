@@ -3,7 +3,9 @@ import {
   PRODUCTION_CDN_URL,
   SERVICE_CATALOG_ANCHOR,
   AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
-  SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
+  SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING,
+  SERVICE_CATALOG_BACKGROUND_MAPPING,
+  DEFAULT_SERVICE_CATALOG_BACKGROUND
 } from './constant.js';
 
 function isRequestPage() {
@@ -220,6 +222,19 @@ function getFirstItemFromStructure(serviceItems) {
   return null;
 }
 
+function getServiceCatalogBackground(hostname) {
+  // Extract subdomain from hostname (e.g., "mehboobastesting" from "mehboobastesting.assetsonar.com")
+  const subdomain = hostname.split('.assetsonar.com')[0];
+  
+  // Get background URL from mapping or use default
+  const backgroundImage = SERVICE_CATALOG_BACKGROUND_MAPPING[subdomain];
+  if (backgroundImage) {
+    return `${STAGING_CDN_URL}/shared/service_catalog/dist/public/${backgroundImage}`;
+  }
+  
+  return DEFAULT_SERVICE_CATALOG_BACKGROUND;
+}
+
 export {
   userRole,
   getCookie,
@@ -241,5 +256,6 @@ export {
   shouldScrollToCatalog,
   serviceCatalogDataPresent,
   getMyAssignedAssetsServiceItems,
-  requestSubmissionSettingMessageForAgent
+  requestSubmissionSettingMessageForAgent,
+  getServiceCatalogBackground
 };

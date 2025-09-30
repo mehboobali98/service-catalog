@@ -2,7 +2,8 @@ import { generateI18nKey }                  from './i18n.js';
 import { Search }                           from './search.js';
 import { loadingIcon,
          shouldScrollToCatalog,
-         serviceCatalogDataPresent }        from './utility.js';
+         serviceCatalogDataPresent,
+         getServiceCatalogBackground }      from './utility.js';
 import { STAGING_CDN_URL,
          PRODUCTION_CDN_URL,
          SERVICE_CATALOG_ANCHOR }           from './constant.js';
@@ -49,6 +50,11 @@ class ServiceCatalogBuilder {
   buildServiceCatalogHeaderSection() {
     const headerSection     = $('<section>').attr('id', SERVICE_CATALOG_ANCHOR);
     const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
+    
+    // Set background image based on subdomain
+    const backgroundUrl = getServiceCatalogBackground(this.ezoSubdomain);
+    headerContainer.css('background-image', `url(${backgroundUrl})`);
+    
     const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                        .attr('data-i18n', 'service-catalog')
                                        .text('Service Catalog');
