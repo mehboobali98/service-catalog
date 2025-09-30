@@ -24,7 +24,8 @@ const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING  = {
 };
 
 const SERVICE_CATALOG_BACKGROUND_MAPPING = {
-  'volarisgroup': 'service-catalog-bg-volarisgroup.png'
+  'volarisgroup': 'service-catalog-bg-volarisgroup.png',
+  'mehboobastesting': 'service-catalog-bg-volarisgroup.png'
 };
 
 const DEFAULT_SERVICE_CATALOG_BACKGROUND = 'https://cdn.ezassets.com/shared/service_catalog/dist/public/service-catalog-bg.jpg';
