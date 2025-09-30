@@ -229,8 +229,7 @@ function getServiceCatalogBackground(hostname) {
   // Get background URL from mapping or use default
   const backgroundImage = SERVICE_CATALOG_BACKGROUND_MAPPING[subdomain];
   if (backgroundImage) {
-    // return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${backgroundImage}`;
-    return `https://mehboobali98.github.io/service-catalog/dist/public/service-catalog-bg-volarisgroup.png`;
+    return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${backgroundImage}`;
   }
   
   return DEFAULT_SERVICE_CATALOG_BACKGROUND;
