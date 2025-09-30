@@ -23,6 +23,12 @@ const SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING  = {
   'assigned_software_license':   'software_license_placeholder'
 };
 
+const SERVICE_CATALOG_BACKGROUND_MAPPING = {
+  'volarisgroup': 'service-catalog-bg-volarisgroup.png'
+};
+
+const DEFAULT_SERVICE_CATALOG_BACKGROUND = 'https://cdn.ezassets.com/shared/service_catalog/dist/public/service-catalog-bg.jpg';
+
 
 export {
   TRANSLATIONS,
@@ -39,5 +45,7 @@ export {
   CARD_FIELD_VALUE_TRUNCATE_LENGTH,
   CUSTOMER_EFFORT_SURVEY_COMMENT_LENGTH,
   AGENT_REQUEST_SUBMISSION_SETTING_BLOG,
-  SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING
+  SERVICE_ITEM_PLACEHOLDER_IMAGE_MAPPING,
+  SERVICE_CATALOG_BACKGROUND_MAPPING,
+  DEFAULT_SERVICE_CATALOG_BACKGROUND
 };

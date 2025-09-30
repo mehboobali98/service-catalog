@@ -26,6 +26,12 @@
     'assigned_software_license':   'software_license_placeholder'
   };
 
+  const SERVICE_CATALOG_BACKGROUND_MAPPING = {
+    'volarisgroup': 'service-catalog-bg-volarisgroup.png'
+  };
+
+  const DEFAULT_SERVICE_CATALOG_BACKGROUND = 'https://cdn.ezassets.com/shared/service_catalog/dist/public/service-catalog-bg.jpg';
+
   // Load translations for the given locale and translate the page to this locale
   function setLocale(newLocale, shouldTranslatePage) {
     if (Object.keys(TRANSLATIONS).length !== 0 && shouldTranslatePage) { return translatePage(); }
@@ -312,6 +318,19 @@
       return assets[0] || software[0];
     }
     return null;
+  }
+
+  function getServiceCatalogBackground(hostname) {
+    // Extract subdomain from hostname (e.g., "mehboobastesting" from "mehboobastesting.assetsonar.com")
+    const subdomain = hostname.split('.assetsonar.com')[0];
+    
+    // Get background URL from mapping or use default
+    const backgroundImage = SERVICE_CATALOG_BACKGROUND_MAPPING[subdomain];
+    if (backgroundImage) {
+      return `${PRODUCTION_CDN_URL}/shared/service_catalog/dist/public/${backgroundImage}`;
+    }
+    
+    return DEFAULT_SERVICE_CATALOG_BACKGROUND;
   }
 
   class SvgBuilder {
@@ -2176,6 +2195,11 @@
     buildServiceCatalogHeaderSection() {
       const headerSection     = $('<section>').attr('id', SERVICE_CATALOG_ANCHOR);
       const headerContainer   = $('<div>').addClass('jumbotron jumbotron-fluid service-catalog-header-container');
+      
+      // Set background image based on subdomain
+      const backgroundUrl = getServiceCatalogBackground(this.ezoSubdomain);
+      headerContainer.css('background-image', `url(${backgroundUrl})`);
+      
       const headerEle         = $('<h2>').addClass('service-catalog-header-label')
                                          .attr('data-i18n', 'service-catalog')
                                          .text('Service Catalog');
